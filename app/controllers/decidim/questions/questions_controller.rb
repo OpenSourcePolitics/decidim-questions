@@ -19,6 +19,7 @@ module Decidim
         @questions = search
                       .results
                       .published
+                      .answered
                       .not_hidden
                       .includes(:author)
                       .includes(:category)

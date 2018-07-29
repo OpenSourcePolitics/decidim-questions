@@ -29,6 +29,7 @@ module Decidim
           .where(component: @components)
           .where(question_type: @question_type)
           .published
+          .answered
           .where(
             "GREATEST(#{title_similarity}, #{body_similarity}) >= ?",
             @question[:title],
