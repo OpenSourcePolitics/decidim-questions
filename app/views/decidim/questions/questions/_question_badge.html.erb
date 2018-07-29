@@ -1,0 +1,6 @@
+<% if question.answered? %>
+  <span class="<%= question_state_badge_css_class(question.state) %> label question-status"><%= humanize_question_state question.state %></span>
+<% end %>
+<% if question.withdrawn? %>
+  <span class="<%= question_state_badge_css_class(question.state) %> label question-status"><%= humanize_question_state question.state %></span>
+<% end %>

@@ -1,0 +1,34 @@
+<div class="card card--action card--list">
+  <% resources.each do |question| %>
+    <div class="card--list__item">
+      <div class="card--list__text">
+        <%= link_to resource_locator(question).path do %>
+          <%= icon "questions", class: "card--list__icon", remove_icon_class: true %>
+        <% end %>
+        <div>
+          <%= link_to resource_locator(question).path, class: "card__link" do %>
+            <h5 class="card--list__heading"><%= question.title %></h5>
+          <% end %>
+          <% present(question) do |question| %>
+            <div class="author">
+              <span class="author__avatar">
+                <%= image_tag question.author.avatar_url %>
+              </span>
+              <span class="author__name">
+                <strong><%= question.author.name %></strong>
+                <%= question.author.nickname %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <% if !current_settings.try(:votes_hidden?) && !question.component.current_settings.votes_hidden? %>
+        <div class="card--list__data">
+          <span class="card--list__data__number">
+            <%= question.votes.size %>
+          </span> <%= t(".question_votes", count: question.votes.size) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

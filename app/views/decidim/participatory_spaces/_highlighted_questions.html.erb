@@ -1,0 +1,10 @@
+<% if questions.any? %>
+  <section class="section row collapse highlighted_questions">
+    <h4 class="section-heading">
+      <%= t(".questions") %>  <a href="<%= main_component_path(questions.first.component) %>" class="text-small"><%= t(".see_all_questions") %></a>
+    </h4>
+    <div class="row small-up-1 medium-up-2 card-grid">
+      <%= render partial: "decidim/participatory_spaces/question", collection: questions %>
+    </div>
+  </section>
+<% end %>

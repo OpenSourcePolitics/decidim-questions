@@ -1,0 +1,47 @@
+var $questionVoteButton = $('#question-<%= question.id %>-vote-button');
+
+<% if current_settings.votes_weight_enabled? %>
+
+  var $questionUpVotesCount = $questionVoteButton.find('.up-votes-count');
+  var $questionDownVotesCount = $questionVoteButton.find('.down-votes-count');
+  var $questionNeutralVotesCount = $questionVoteButton.find('.neutral-votes-count');
+
+  morphdom($questionVoteButton[0], '<%= j(render partial: 'decidim/questions/questions/vote_weight', locals: { question: question, from_questions_list: @from_questions_list }).strip.html_safe %>');
+
+  <% if vote_limit_enabled? %>
+    var $remainingVotesCount = $('#remaining-votes-count');
+    var $notVotedButtons = $('.card__button.button').not('.voted');
+    var $votesInfo = $('.votes_block').not('.voted').next('.votes-info');
+
+    morphdom($remainingVotesCount[0], '<%= j(render partial: 'decidim/questions/questions/remaining_votes_count').strip.html_safe %>');
+
+    <% if remaining_votes_count_for(current_user) == 0 %>
+      $notVotedButtons.attr('disabled', true);
+      $votesInfo.text('<%= t('decidim.questions.questions.vote_button.no_votes_remaining') %>');
+    <% else %>
+      $notVotedButtons.attr('disabled', false).removeClass('disabled');
+      $votesInfo.empty();
+    <% end %>
+  <% end %>
+
+<% elsif current_settings.votes_enabled? %>
+
+  var $questionVotesCount = $('#question-<%= question.id %>-votes-count');
+
+  morphdom($questionVotesCount[0], '<%= j(render partial: 'decidim/questions/questions/votes_count', locals: { question: question, from_questions_list: @from_questions_list }).strip.html_safe %>');
+  morphdom($questionVoteButton[0], '<%= j(render partial: 'decidim/questions/questions/vote_button', locals: { question: question, from_questions_list: @from_questions_list }).strip.html_safe %>');
+  <% if vote_limit_enabled? %>
+    var $remainingVotesCount = $('#remaining-votes-count');
+    var $notVotedButtons = $('.card__button.button').not('.success');
+
+    morphdom($remainingVotesCount[0], '<%= j(render partial: 'decidim/questions/questions/remaining_votes_count').strip.html_safe %>');
+
+    <% if remaining_votes_count_for(current_user) == 0 %>
+      $notVotedButtons.attr('disabled', true);
+      $notVotedButtons.val('<%= t('decidim.questions.questions.vote_button.no_votes_remaining') %>');
+    <% else %>
+      $notVotedButtons.attr('disabled', false);
+      $notVotedButtons.val('<%= t('decidim.questions.questions.vote_button.vote') %>');
+    <% end %>
+  <% end %>
+<% end %>

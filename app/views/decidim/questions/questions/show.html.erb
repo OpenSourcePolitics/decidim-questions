@@ -1,0 +1,91 @@
+<% add_decidim_meta_tags({
+  description: @question.body,
+  title: @question.title,
+  url: question_url(@question.id)
+}) %>
+
+<%= render partial: "voting_rules" %>
+<div class="row column view-header">
+  <h2 class="heading2"><%= @question.title %></h2>
+  <%= cell "decidim/author", present(@question).author, from: @question %>
+</div>
+<div class="row">
+  <div class="columns section view-side mediumlarge-4 mediumlarge-push-8 large-3 large-push-9">
+    <% if allowed_to?(:edit, :question, question: @question) %>
+      <%= link_to t(".edit_question"), edit_question_path(@question), class: "button secondary hollow expanded button-sc button--icon follow-button" %>
+    <% end %>
+    <% if current_settings.votes_enabled? || show_endorsements_card? || current_settings.votes_weight_enabled? || current_user %>
+      <div class="card">
+        <div class="card__content">
+          <% if current_settings.votes_weight_enabled? %>
+            <%= render partial: "vote_weight", locals: { question: @question, from_questions_list: false } %>
+          <% elsif current_settings.votes_enabled? %>
+            <%= render partial: "votes_count", locals: { question: @question, from_questions_list: false } %>
+            <%= render partial: "vote_button", locals: { question: @question, from_questions_list: false } %>
+          <% end %>
+          <%= render partial: "endorsements_card_row", locals: { question: @question } %>
+          <br />
+          <%= follow_button_for(@question) %>
+        </div>
+      </div>
+    <% end %>
+    <%= resource_reference(@question) %>
+    <%= cell("decidim/fingerprint", @question) %>
+    <%= render partial: "decidim/shared/share_modal" %>
+    <%= embed_modal_for question_question_widget_url(@question, format: :js) %>
+  </div>
+  <div class="columns mediumlarge-8 mediumlarge-pull-4">
+    <div class="section">
+      <%== cell("decidim/questions/question_m", @question, full_badge: true).badge %>
+      <%= simple_format @question.body %>
+      <% if component_settings.geocoding_enabled? %>
+        <%= render partial: "decidim/shared/static_map", locals: { icon_name: "questions", geolocalizable: @question } %>
+      <% end %>
+      <%= cell "decidim/questions/question_tags", @question %>
+    </div>
+    <% if @question.answered? && translated_attribute(@question.answer).present? %>
+      <% if @question.accepted? %>
+        <div class="section">
+          <div class="callout success">
+            <h5><%= t(".question_accepted_reason") %></h5>
+            <p><%= decidim_sanitize translated_attribute @question.answer %></p>
+          </div>
+        </div>
+      <% elsif @question.rejected? %>
+        <div class="section">
+          <div class="callout warning">
+            <h5><%= t(".question_rejected_reason") %></h5>
+            <p><%= decidim_sanitize translated_attribute @question.answer %></p>
+          </div>
+        </div>
+      <% else %>
+        <div class="section">
+          <div class="callout secondary">
+            <h5><%= t(".question_in_evaluation_reason") %></h5>
+            <p><%= decidim_sanitize translated_attribute @question.answer %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <%= linked_resources_for @question, :results, "included_questions" %>
+    <%= linked_resources_for @question, :projects, "included_questions" %>
+    <%= linked_resources_for @question, :meetings, "questions_from_meeting" %>
+    <%= linked_resources_for @question, :questions, "copied_from_component" %>
+
+    <%= cell "decidim/questions/endorsers_list", @question %>
+  </div>
+</div>
+<%= attachments_for @question %>
+
+<%= comments_for @question %>
+
+<%= javascript_include_tag "decidim/questions/social_share" %>
+<%= stylesheet_link_tag "decidim/questions/social_share" %>
+
+<%=
+  render partial: "decidim/shared/flag_modal", locals: {
+    reportable: @question,
+    form: @report_form,
+    url: decidim.report_path(sgid: @question.to_sgid.to_s)
+  }
+%>

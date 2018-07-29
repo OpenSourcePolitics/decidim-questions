@@ -1,0 +1,15 @@
+<% if !current_settings.votes_hidden? && current_component.participatory_space.can_participate?(current_user) %>
+  <% progress ||= question.question_votes_count || 0 %>
+  <% total ||= question.maximum_votes || 0 %>
+  <% tr_path = current_settings.votes_weight_enabled? ? "votes_weight": "votes_count" %>
+  <% subtitle_text = progress >= total ? t("decidim.questions.questions.#{tr_path}.most_popular_question") : t("decidim.questions.questions.#{tr_path}.need_more_votes") %>
+  <%= cell(
+    "decidim/progress_bar",
+    progress,
+    total: total,
+    units_name: "decidim.questions.questions.#{tr_path}.count",
+    element_id: "question-#{question.id}-votes-count",
+    subtitle_text: subtitle_text,
+    small: from_questions_list
+  ) %>
+<% end %>

@@ -1,0 +1,15 @@
+<div class="flex--cc flex-gap--1">
+  <%= bulk_actions_dropdown %>
+
+  <div id="js-other-actions-wrapper">
+    <%= link_to t("actions.import", scope: "decidim.questions", name: t("models.question.name", scope: "decidim.questions.admin")), new_questions_import_path, class: "button tiny button--simple" if allowed_to? :import, :questions %>
+
+    <% if allowed_to? :create, :question %>
+      <%= link_to t("actions.new", scope: "decidim.questions", name: t("models.question.name", scope: "decidim.questions.admin")), new_question_path, class: "button tiny button--simple" %>
+    <% end %>
+
+    <%= export_dropdown %>
+  </div>
+
+  <%= bulk_action_recategorize %>
+</div>

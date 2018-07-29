@@ -1,0 +1,45 @@
+<% if question.rejected? %>
+  <div></div>
+<% else %>
+  <div id="question-<%= question.id %>-vote-button">
+    <% if !current_user %>
+      <% if current_settings.votes_blocked? %>
+        <%= action_authorized_button_to :vote, t("decidim.questions.questions.vote_button.votes_blocked"), question_question_vote_path(question_id: question, from_questions_list: from_questions_list), class: "button #{vote_button_classes(from_questions_list)} disabled", disabled: true %>
+      <% else %>
+        <%= action_authorized_button_to :vote, t("decidim.questions.questions.vote_button.vote"), question_question_vote_path(question_id: question, from_questions_list: from_questions_list), class: "button #{vote_button_classes(from_questions_list)}", data: { disable: true, "redirect-url": question_path(question) } %>
+      <% end %>
+    <% else %>
+      <% if @voted_questions ? @voted_questions.include?(question.id) : question.voted_by?(current_user) %>
+        <%= action_authorized_button_to(
+          :vote,
+          question_question_vote_path(question_id: question, from_questions_list: from_questions_list),
+          method: :delete,
+          remote: true,
+          data: {
+            disable: true,
+            original: t("decidim.questions.questions.vote_button.already_voted"),
+            replace: t("decidim.questions.questions.vote_button.already_voted_hover"),
+            "redirect-url": question_path(question)
+          },
+          class: "button #{vote_button_classes(from_questions_list)} success light",
+          id: "vote_button"
+        ) do %>
+          <%= icon("check", class: "icon--small") %>
+          <%= t("decidim.questions.questions.vote_button.already_voted") %>
+        <% end %>
+      <% else %>
+        <% if question.maximum_votes_reached? && !question.can_accumulate_supports_beyond_threshold && current_component.participatory_space.can_participate?(current_user) %>
+          <%= content_tag :span, t("decidim.questions.questions.vote_button.maximum_votes_reached"), class: "button #{vote_button_classes(from_questions_list)} disabled", disabled: true %>
+        <% else %>
+          <% if vote_limit_enabled? && remaining_votes_count_for(current_user) == 0 %>
+            <%= content_tag :span, t("decidim.questions.questions.vote_button.no_votes_remaining"), class: "button #{vote_button_classes(from_questions_list)}", disabled: true %>
+          <% elsif current_settings.votes_blocked? || !current_component.participatory_space.can_participate?(current_user) %>
+            <%= content_tag :span, t("decidim.questions.questions.vote_button.votes_blocked"), class: "button #{vote_button_classes(from_questions_list)} disabled", disabled: true %>
+          <% else %>
+            <%= action_authorized_button_to :vote, t("decidim.questions.questions.vote_button.vote"), question_question_vote_path(question_id: question, from_questions_list: from_questions_list), remote: true, data: { disable: true, "redirect-url": question_path(question) }, class: "button #{vote_button_classes(from_questions_list)}" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

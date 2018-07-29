@@ -1,0 +1,10 @@
+var $questions = $('#questions');
+var $questionsCount = $('#questions-count');
+var $orderFilterInput = $('.order_filter');
+
+$questions.html('<%= j(render partial: "questions").strip.html_safe %>');
+$questionsCount.html('<%= j(render partial: "count").strip.html_safe %>');
+$orderFilterInput.val('<%= order %>');
+
+var $dropdownMenu = $('.dropdown.menu', $questions);
+$dropdownMenu.foundation();

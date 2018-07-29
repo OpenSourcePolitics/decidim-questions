@@ -1,0 +1,4 @@
+<% content_for(:title, model.title) %>
+
+<%== cell("decidim/questions/question_m", model).badge %>
+<p><%= truncate(model.body, length: 100) %></p>

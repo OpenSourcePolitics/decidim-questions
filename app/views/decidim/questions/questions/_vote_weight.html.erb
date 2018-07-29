@@ -1,0 +1,66 @@
+<% @question = @question.nil? ? model : @question %>
+<% if @question.nil? || @question.rejected? %>
+  <div></div>
+<% else %>
+  <div id="question-<%= question.id %>-vote-button" class="vote_weight_section">
+    <% if !current_user %>
+      <% if current_settings.votes_blocked? %>
+        <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+          question: @question,
+          from_questions_list: false,
+          disabled: true,
+          info: t('decidim.questions.questions.vote_weight.votes_blocked')
+        } %>
+      <% else %>
+        <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+          question: @question,
+          from_questions_list: false,
+          disabled: false,
+          info: false
+        } %>
+      <% end %>
+    <% else %>
+      <% if @voted_questions ? @voted_questions.include?(question.id) : question.voted_by?(current_user) %>
+        <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+          question: @question,
+          from_questions_list: false,
+          disabled: false,
+          info: false
+        } %>
+      <% else %>
+        <% # if question.maximum_votes_reached? && !question.can_accumulate_supports_beyond_threshold && current_component.participatory_space.can_participate?(current_user) %>
+        <% if  question.maximum_votes_reached? && current_component.participatory_space.can_participate?(current_user) %>
+          <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+            question: @question,
+            from_questions_list: false,
+            disabled: true,
+            info: t('decidim.questions.questions.vote_weight.maximum_votes_reached')
+          } %>
+        <% else %>
+          <% if vote_limit_enabled? && remaining_votes_count_for(current_user) == 0 %>
+            <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+              question: @question,
+              from_questions_list: false,
+              disabled: true,
+              info: t('decidim.questions.questions.vote_weight.no_votes_remaining')
+            } %>
+          <% elsif current_settings.votes_blocked? || !current_component.participatory_space.can_participate?(current_user) %>
+            <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+              question: @question,
+              from_questions_list: false,
+              disabled: true,
+              info: t('decidim.questions.questions.vote_weight.votes_blocked')
+            } %>
+          <% else %>
+            <%= render partial: "decidim/questions/questions/vote_weight/row.html", locals: {
+              question: @question,
+              from_questions_list: false,
+              disabled: false,
+              info: false
+            } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

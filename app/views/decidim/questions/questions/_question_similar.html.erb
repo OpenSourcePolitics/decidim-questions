@@ -1,0 +1,22 @@
+<div class="column">
+  <article class="card card--question">
+    <div class="card__content">
+      <div class="card__header">
+        <%= link_to question, target: "_blank" do %>
+          <h5 class="card__title"><%= question.title %></h5>
+        <% end %>
+        <%= cell "decidim/author", present(question).author, context: {extra_classes: ["author-data--small"]} %>
+
+        <div class="tech-info tech-info--text-left">
+          <%= t("decidim.questions.questions.question.creation_date", date: l(question.created_at, format: :decidim_short)) %>
+        </div>
+        <%= resource_reference(question, class: "tech-info--text-left") %>
+      </div>
+
+      <%== cell("decidim/questions/question_m", question).badge %>
+
+      <p><%= truncate(question.body, length: 100) %></p>
+      <%= cell "decidim/tags", question, context: {extra_classes: ["tags--question"]} %>
+    </div>
+  </article>
+</div>

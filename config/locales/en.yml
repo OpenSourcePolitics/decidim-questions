@@ -1,0 +1,444 @@
+en:
+  activemodel:
+    attributes:
+      question:
+        answer: Answer
+        answered_at: Answered at
+        body: Body
+        category_id: Category
+        has_address: Has address
+        scope_id: Scope
+        state: State
+        title: Title
+        user_group_id: Create question as
+      question_answer:
+        answer: Answer
+      questions_copy:
+        copy_questions: I understand that this will import all questions from the selected component to the current one and that this action can't be reversed.
+        origin_component_id: Component to copy the questions from
+    errors:
+      models:
+        question:
+          attributes:
+            attachment:
+              needs_to_be_reattached: Needs to be reattached
+    models:
+      decidim/questions/accepted_question_event: Question accepted
+      decidim/questions/admin/update_question_category_event: Question category changed
+      decidim/questions/creation_enabled_event: Question creation enabled
+      decidim/questions/endorsing_enabled_event: Question endorsing enabled
+      decidim/questions/evaluating_question_event: Question is being evaluated
+      decidim/questions/publish_question_event: Question published
+      decidim/questions/question_endorsed_event: Question endorsed
+      decidim/questions/question_mentioned_event: Question mentioned
+      decidim/questions/rejected_question_event: Question rejected
+      decidim/questions/voting_enabled_event: Question voting enabled
+  activerecord:
+    models:
+      decidim/questions/question:
+        one: Question
+        other: Questions
+      decidim/questions/question_endorsement:
+        one: Endorsement
+        other: Endorsements
+      decidim/questions/question_note:
+        one: Note
+        other: Notes
+      decidim/questions/question_vote:
+        one: Vote
+        other: Votes
+  decidim:
+    components:
+      questions:
+        actions:
+          create: Create
+          endorse: Endorse
+          vote: Vote
+          withdraw: Withdraw
+        name: Questions
+        settings:
+          global:
+            announcement: Announcement
+            attachments_allowed: Allow attachments
+            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond threshold
+            comments_enabled: Comments enabled
+            geocoding_enabled: Geocoding enabled
+            new_question_help_text: New question help text
+            official_questions_enabled: Official questions enabled
+            question_answering_enabled: Question answering enabled
+            question_edit_before_minutes: Questions can be edited by authors before this many minutes passes
+            question_length: Maximum question body length
+            question_limit: Question limit per user
+            question_wizard_step_1_help_text: Question wizard "Create" step help text
+            question_wizard_step_2_help_text: Question wizard "Compare" step help text
+            question_wizard_step_3_help_text: Question wizard "Complete" step help text
+            question_wizard_step_4_help_text: Question wizard "Publish" step help text
+            threshold_per_question: Threshold per question
+            vote_limit: Vote limit per user
+          step:
+            announcement: Announcement
+            comments_blocked: Comments blocked
+            creation_enabled: Question creation enabled
+            endorsements_blocked: Endorsements blocked
+            endorsements_enabled: Endorsements enabled
+            question_answering_enabled: Question answering enabled
+            votes_blocked: Votes blocked
+            votes_enabled: Votes enabled
+            votes_hidden: 'Votes hidden (if votes are enabled, checking this will hide the number of votes)'
+            votes_weight_enabled: Up / Down / Neutral votes enabled
+    events:
+      question_created:
+        email_subject: 'New question from %{author_name}'
+        notification_title: 'There is a new question from %{author_name} in <a href="%{resource_path}">%{resource_title}</a>'
+        url: 'Comment''s url : %{resource_url}'
+      questions:
+        creation_enabled:
+          email_intro: 'You can now create new questions in %{participatory_space_title}! Start participating in this page:'
+          email_outro: 'You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.'
+          email_subject: 'Questions now available in %{participatory_space_title}'
+          notification_title: 'You can now start <a href="%{resource_path}">new questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>'
+        endorsing_enabled:
+          email_intro: 'You can endorse questions in %{participatory_space_title}! Start participating in this page:'
+          email_outro: 'You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.'
+          email_subject: 'Questions endorsing has started for %{participatory_space_title}'
+          notification_title: 'You can now start <a href="%{resource_path}">endorsing questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>'
+        question_accepted:
+          email_intro: 'The question "%{resource_title}" has been accepted. You can read the answer in this page:'
+          email_outro: 'You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.'
+          email_subject: A question you're following has been accepted
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question has been accepted.'
+        question_endorsed:
+          email_intro: '%{endorser_name} %{endorser_nickname}, who you are following, has just endorsed a question that may be interesting to you, check it out and contribute:'
+          email_outro: 'You have received this notification because you are following %{endorser_nickname}. You can stop receiving notifications following the previous link.'
+          email_subject: '%{endorser_nickname} has endorsed a new question'
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question has been endorsed by <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.'
+        question_evaluating:
+          email_intro: 'The question "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+          email_outro: 'You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.'
+          email_subject: A question you're following is being evaluated
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question is being evaluated.'
+        question_mentioned:
+          email_intro: 'Your question "%{mentioned_question_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.'
+          email_subject: 'Your question "%{mentioned_question_title}" has been mentioned'
+          notification_title: 'Your question "%{mentioned_question_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.'
+        question_published:
+          email_intro: '%{author_name} %{author_nickname}, who you are following, has published a new question, check it out and contribute:'
+          email_outro: 'You have received this notification because you are following %{author_nickname}. You can stop receiving notifications following the previous link.'
+          email_subject: 'New question by %{author_nickname}'
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.'
+        question_published_for_space:
+          email_intro: 'The question "%{resource_title}" has been added to "%{participatory_space_title}" that you are following.'
+          email_outro: 'You have received this notification because you are following "%{participatory_space_title}". You can unfollow it from the previous link.'
+          email_subject: 'New question added to %{participatory_space_title}'
+          notification_title: 'The question <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}'
+        question_rejected:
+          email_intro: 'The question "%{resource_title}" has been rejected. You can read the answer in this page:'
+          email_outro: 'You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.'
+          email_subject: A question you're following has been rejected
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question has been rejected.'
+        question_update_category:
+          email_intro: 'An admin has updated the category of your question "%{resource_title}", check it out:'
+          email_outro: You have received this notification because you are the author of the question.
+          email_subject: 'The %{resource_title} question category has been updated'
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question category has been updated by an admin.'
+        voting_enabled:
+          email_intro: 'You can vote questions in %{participatory_space_title}! Start participating in this page:'
+          email_outro: 'You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.'
+          email_subject: 'Questions voting has started for %{participatory_space_title}'
+          notification_title: 'You can now start <a href="%{resource_path}">voting questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>'
+    participatory_processes:
+      participatory_process_groups:
+        highlighted_questions:
+          questions: Questions
+    participatory_spaces:
+      highlighted_questions:
+        questions: Questions
+        see_all_questions: See all questions
+    questions:
+      actions:
+        answer: Answer
+        import: Import from another component
+        new: New
+        private_notes: Private notes
+        title: Actions
+      admin:
+        actions:
+          preview: Preview
+        exports:
+          comments: Comments
+          questions: Questions
+        models:
+          question:
+            name: Question
+        question_answers:
+          edit:
+            accepted: Accepted
+            answer_question: Answer
+            evaluating: Evaluating
+            rejected: Rejected
+            title: 'Answer for question %{title}'
+        question_notes:
+          create:
+            error: There's been a problem creating this question note
+            success: Question note successfully created
+          form:
+            note: Note
+            submit: Submit
+          leave_your_note: Leave your note
+          title: Private notes
+        questions:
+          answer:
+            invalid: There's been a problem answering this question
+            success: Question successfully answered
+          create:
+            invalid: There's been a problem creating this question
+            success: Question successfully created.
+          form:
+            attachment_legend: (Optional) Add an attachment
+            select_a_category: Select a category
+          index:
+            actions: Actions
+            cancel: Cancel
+            change_category: Change category
+            selected: selected
+            title: Questions
+            update: Update
+          new:
+            create: Create
+            title: Create question
+          update_category:
+            invalid: 'These questions already had the %{category} category: %{questions}.'
+            select_a_category: Please select a category
+            select_a_question: Please select a question
+            success: 'Questions successfully updated to the %{category} category: %{questions}.'
+        questions_imports:
+          create:
+            invalid: There's been a problem importing the questions
+            success: '%{number} questions successfully imported'
+          new:
+            create: Import questions
+            no_components: There are no other question components in this participatory space to import the questions from.
+            select_component: Please select a component
+            select_states: Check the states of the questions to import
+        shared:
+          info_question:
+            body: Body
+            created_at: Creation date
+            question_votes_count: Votes count
+            question_votes_weight: Votes count
+            questions: Questions
+      admin_log:
+        question:
+          answer: '%{user_name} answered the %{resource_name} question on the %{space_name} space'
+          create: '%{user_name} created the %{resource_name} question on the %{space_name} space as an official question'
+        question_note:
+          create: '%{user_name} left a private note on the %{resource_name} question on the %{space_name} space'
+      answers:
+        accepted: Accepted
+        evaluating: Evaluating
+        not_answered: Not answered
+        rejected: Rejected
+        withdrawn: Withdrawn
+      create:
+        error: There's been errors when saving the question.
+        success: Question created successfully. Saved as a Draft.
+      destroy_draft:
+        error: There's been errors deleting the question draft.
+        success: Question draft was successfully destroyed.
+      models:
+        question:
+          fields:
+            category: Category
+            comments: Comments
+            created_at: Created at
+            endorsements: Endorsements
+            id: ID
+            notes: Notes
+            official_question: Official question
+            scope: Scope
+            state: State
+            title: Title
+            votes: Votes
+      new:
+        limit_reached: You can't create new questions since you've exceeded the limit.
+      publish:
+        error: There's been errors when publishing the question.
+        success: Question published successfully.
+      question_endorsements:
+        create:
+          error: There's been errors when endorsing the question.
+        identities:
+          done: Done
+          select_identity: Select identity
+      question_endorsements_helper:
+        endorsement_button:
+          already_endorsed: Endorsed
+          endorse: Endorse
+      question_votes:
+        create:
+          error: There's been errors when voting the question.
+      questions:
+        compare:
+          mine_is_different: My question is different
+          no_similars_found: Well done! No similar questions found
+          title: Similar Questions
+        complete:
+          attachment_legend: (Optional) Add an attachment
+          select_a_category: Please select a category
+          send: Send
+          title: Complete your question
+        count:
+          questions_count:
+            one: 1 question
+            other: '%{count} questions'
+        edit:
+          back: Back
+          select_a_category: Please select a category
+          send: Send
+          title: Edit question
+        edit_draft:
+          discard: Discard this draft
+          discard_confirmation: Are you sure you want to discard this question draft?
+          send: Preview
+          title: Edit Question Draft
+        endorsement_identities_cabin:
+          endorse: Endorse
+        endorsements_card_row:
+          comments: Comments
+          endorse: Endorse
+        filters:
+          accepted: Accepted
+          activity: Activity
+          all: All
+          category: Category
+          category_prompt: Select a category
+          citizens: Citizens
+          evaluating: Evaluating
+          except_rejected: All except rejected
+          official: Official
+          origin: Origin
+          rejected: Rejected
+          related_to: Related to
+          search: Search
+          state: State
+          voted: Voted
+        filters_small_view:
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          unfold: Unfold
+        index:
+          new_question: New question
+          see_all_withdrawn: See all withdrawn questions
+          view_question: View question
+        linked_questions:
+          question_votes:
+            one: vote
+            other: votes
+        new:
+          send: Continue
+          title: Create Your Question
+        orders:
+          label: 'Order questions by:'
+          most_voted: Most voted
+          random: Random
+          recent: Recent
+        preview:
+          modify: Modify the question
+          publish: Publish
+          question_edit_before_minutes:
+            one: 'You will be able to edit this question during the first minute after the question is published. Once this time window passes, you will not be able to edit the question.'
+            other: 'You will be able to edit this question during the first %{count} minutes after the question is published. Once this time window passes, you will not be able to edit the question.'
+          title: Publish your question
+        question:
+          creation_date: 'Creation: %{date}'
+          view_question: View question
+        show:
+          edit_question: Edit question
+          endorsements_list: List of Endorsements
+          hidden_endorsers_count:
+            one: and 1 more person
+            other: 'and %{count} more people'
+          question_accepted_reason: 'This question has been accepted because:'
+          question_in_evaluation_reason: This question is being evaluated
+          question_rejected_reason: 'This question has been rejected because:'
+          report: Report
+          sign_in: Sign in
+          sign_in_or_up: '%{in} or %{up} to participate'
+          sign_up: sign up
+          withdraw_btn_hint: 'You can withdraw your question if you change your mind, as long as you have not received any support. The question is not deleted, it will appear in the list of withdrawn questions.'
+          withdraw_confirmation: Are you sure to withdraw this question?
+          withdraw_question: Withdraw question
+        tags:
+          changed_from: '(changed from <u>%{previous_category}</u> by an administrator)'
+          filed_as: Filed as
+        vote_button:
+          already_voted: Already voted
+          already_voted_hover: Unvote
+          maximum_votes_reached: Vote limit reached
+          no_votes_remaining: No votes remaining
+          vote: Vote
+          votes_blocked: Voting disabled
+        vote_weight:
+          count:
+            one: VOTE
+            other: VOTES
+          maximum_votes_reached: Vote limit reached
+          most_popular_question: Most popular question
+          need_more_votes: Need more votes
+          neutral: Neutral
+          no_votes_remaining: No votes remaining
+          votes_blocked: Voting disabled
+        votes_count:
+          count:
+            one: VOTE
+            other: VOTES
+          most_popular_question: Most popular question
+          need_more_votes: Need more votes
+        votes_weight:
+          count:
+            one: VOTE
+            other: VOTES
+          most_popular_question: Most popular question
+          need_more_votes: Need more votes
+        voting_rules:
+          can_accumulate_supports_beyond_threshold:
+            description: 'Each question can accumulate more than %{limit} supports'
+          question_limit:
+            description: 'You can create up to %{limit} questions.'
+          threshold_per_question:
+            description: 'In order to be validated questions need to reach %{limit} supports'
+          title: 'Voting is subject to the following rules:'
+          vote_limit:
+            description: 'You can vote up to %{limit} questions.'
+            left: Remaining
+            votes: Votes
+        wizard_aside:
+          back: Back
+          info: You are creating a <strong>question</strong>.
+        wizard_steps:
+          see_steps: see steps
+          step_1: Create your question
+          step_2: Compare
+          step_3: Complete
+          step_4: Publish your question
+          step_of: 'Step %{current_step_num} of %{total_steps}'
+      shared:
+        type:
+          question: question
+          opinion: avis
+          contribution: contribution
+      update:
+        error: There's been errors when saving the question.
+        success: Question updated successfully.
+      update_draft:
+        error: There's been errors when saving the question draft.
+        success: Question draft updated successfully.
+    resource_links:
+      copied_from_component:
+        question_question: Related questions
+      included_projects:
+        project_result: 'Results appearing in this project:'
+      included_questions:
+        question_project: 'Question appearing in these projects:'
+        question_result: 'Question appearing in these results:'

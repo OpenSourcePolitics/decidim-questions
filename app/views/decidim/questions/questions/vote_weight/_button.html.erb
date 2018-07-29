@@ -1,0 +1,40 @@
+<% if disabled %>
+  <%= content_tag(
+    :span,
+    t("decidim.questions.questions.vote_button.maximum_votes_reached"),
+    class: "button tiny compact #{vote_button_classes(from_questions_list)} #{type}-weight disabled",
+    remote: true,
+    disabled: true
+  ) do %>
+    <% unless current_settings.votes_hidden? %>
+      <div id="#{type}-votes-count">
+        <%= question.has_attribute?("#{type}_votes") ? question.read_attribute("#{type}_votes").count : 0 %>
+      </div>
+    <% end %>
+    <%= icon "thumb-#{type}"%>
+  <% end %>
+<% else %>
+  <%= action_authorized_button_to(
+    :vote,
+    question_question_vote_path(question_id: question, from_questions_list: from_questions_list, weight: weight),
+    class: "button tiny compact #{vote_button_classes(from_questions_list)} #{type}-weight #{'highlighted' if question.weighted_by?(current_user, type)} light",
+    method: Decidim::Questions::QuestionVote.create_or_delete(question, current_user, weight),
+    remote: true, data: {
+      disable: true,
+      "redirect-url": question_path(question)
+    }
+  ) do %>
+    <% unless current_settings.votes_hidden? %>
+      <div class="#{type}-votes-count">
+        <% if type === 'up' %>
+          <%= question.up_votes.count %>
+        <% elsif type ===  'neutral' %>
+          <%= question.neutral_votes.count %>
+        <% elsif type ===  'down' %>
+          <%= question.down_votes.count %>
+        <% end %>
+      </div>
+    <% end %>
+    <%= icon "thumb-#{type}"%>
+  <% end %>
+<% end %>
