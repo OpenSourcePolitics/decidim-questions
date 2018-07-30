@@ -48,6 +48,12 @@ fr:
         one: Vote
         other: Votes
   decidim:
+    admin:
+      models:
+        participatory_process_user_role:
+          roles:
+            service: MOA
+            committee: CPDP
     components:
       questions:
         actions:
