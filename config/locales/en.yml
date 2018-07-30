@@ -31,6 +31,7 @@ en:
       decidim/questions/publish_question_event: Question published
       decidim/questions/question_endorsed_event: Question endorsed
       decidim/questions/question_mentioned_event: Question mentioned
+      decidim/questions/question_need_moderation_event: Question awaiting moderation
       decidim/questions/rejected_question_event: Question rejected
       decidim/questions/voting_enabled_event: Question voting enabled
   activerecord:
@@ -52,8 +53,8 @@ en:
       models:
         participatory_process_user_role:
           roles:
-            service: Service
             committee: Committee
+            service: Service
     components:
       questions:
         actions:
@@ -93,10 +94,6 @@ en:
             votes_hidden: 'Votes hidden (if votes are enabled, checking this will hide the number of votes)'
             votes_weight_enabled: Up / Down / Neutral votes enabled
     events:
-      question_created:
-        email_subject: 'New question from %{author_name}'
-        notification_title: 'There is a new question from %{author_name} in <a href="%{resource_path}">%{resource_title}</a>'
-        url: 'Comment''s url : %{resource_url}'
       questions:
         creation_enabled:
           email_intro: 'You can now create new questions in %{participatory_space_title}! Start participating in this page:'
@@ -127,6 +124,11 @@ en:
           email_intro: 'Your question "%{mentioned_question_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.'
           email_subject: 'Your question "%{mentioned_question_title}" has been mentioned'
           notification_title: 'Your question "%{mentioned_question_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.'
+        question_need_moderation:
+          email_intro: 'The question <b><i><a href="%{resource_path}">%{resource_title}</a></i></b> has been added by %{author_name} %{author_nickname}.'
+          email_outro: 'You have received this notification because you are registered as moderator for "%{participatory_space_title}".'
+          email_subject: 'New question from %{author_nickname}'
+          notification_title: 'The <a href="%{resource_path}">%{resource_title}</a> question was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.'
         question_published:
           email_intro: '%{author_name} %{author_nickname}, who you are following, has published a new question, check it out and contribute:'
           email_outro: 'You have received this notification because you are following %{author_nickname}. You can stop receiving notifications following the previous link.'
@@ -431,9 +433,9 @@ en:
           step_of: 'Step %{current_step_num} of %{total_steps}'
       shared:
         type:
-          question: question
-          opinion: avis
           contribution: contribution
+          opinion: avis
+          question: question
       update:
         error: There's been errors when saving the question.
         success: Question updated successfully.

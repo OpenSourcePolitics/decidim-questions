@@ -25,7 +25,6 @@ module Decidim
         transaction do
           @question.update published_at: Time.current
           send_notification
-          send_notification_to_participatory_space
         end
 
         broadcast(:ok, @question)
@@ -33,25 +32,15 @@ module Decidim
 
       private
 
-      def send_notification
-        return if @question.author.blank?
-
+      def send_notification # to moderators
         Decidim::EventsManager.publish(
-          event: "decidim.events.questions.question_published",
-          event_class: Decidim::Questions::PublishQuestionEvent,
+          event: "decidim.events.questions.question_need_moderation",
+          event_class: Decidim::Questions::QuestionNeedModerationEvent,
           resource: @question,
-          recipient_ids: @question.author.followers.pluck(:id)
-        )
-      end
-
-      def send_notification_to_participatory_space
-        Decidim::EventsManager.publish(
-          event: "decidim.events.questions.question_published",
-          event_class: Decidim::Questions::PublishQuestionEvent,
-          resource: @question,
-          recipient_ids: @question.participatory_space.followers.pluck(:id) - @question.author.followers.pluck(:id),
+          recipient_ids: (@question.users_to_notify_on_question_need_moderation - [@question.author]).pluck(:id),
           extra: {
-            participatory_space: true
+            # new_content: true,
+            # process_slug: @question.participatory_space.slug
           }
         )
       end

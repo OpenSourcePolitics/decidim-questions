@@ -217,8 +217,9 @@ module Decidim
         end
       end
 
-      def users_to_notify_on_questions_created
-        get_all_users_with_role
+      def users_to_notify_on_question_need_moderation
+        users = get_user_with_process_role(component.participatory_space.id)
+        return users
       end
 
       def users_to_notify_on_comment_created
