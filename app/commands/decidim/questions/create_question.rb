@@ -35,10 +35,7 @@ module Decidim
         transaction do
           create_question
           create_attachment if process_attachments?
-          #create_report!
         end
-
-        #hide!
 
         broadcast(:ok, question)
       end
@@ -121,37 +118,6 @@ module Decidim
 
       def user_group_questions
         Question.where(user_group: @user_group, component: form.current_component).except_withdrawn
-      end
-
-      def create_report!
-        @moderation = Moderation.find_or_create_by!(
-          reportable: @question,
-          participatory_space: @question.component.participatory_space
-        )
-        @report = Report.create!(
-          moderation: @moderation,
-          user: @current_user,
-          reason: "does_not_belong",
-          details: form.title
-        )
-        @moderation.update!(report_count: @moderation.report_count + 1)
-      end
-
-      def hide!
-        Decidim::Admin::HideResource.new(@question, @current_user).call
-      end
-
-      def send_notification #to moderators
-        Decidim::EventsManager.publish(
-          event: "decidim.events.questions.question_created",
-          event_class: Decidim::Questions::QuestionCreatedEvent,
-          resource: @question,
-          recipient_ids: (@question.users_to_notify_on_question_created - [@question.author]).pluck(:id),
-          extra: {
-            new_content: true,
-            process_slug: @question.feature.participatory_space.slug
-          }
-        )
       end
 
     end

@@ -28,6 +28,9 @@ module Decidim
 
         transaction do
           update_question
+
+          # send_notification
+          # send_notification_to_participatory_space
         end
 
         broadcast(:ok, question)
@@ -77,6 +80,29 @@ module Decidim
 
       def user_group_questions
         Question.where(user_group: user_group, component: form.current_component).published.where.not(id: question.id)
+      end
+
+      def send_notification
+        return if @question.author.blank?
+
+        Decidim::EventsManager.publish(
+          event: "decidim.events.questions.question_published",
+          event_class: Decidim::Questions::PublishQuestionEvent,
+          resource: @question,
+          recipient_ids: @question.author.followers.pluck(:id)
+        )
+      end
+
+      def send_notification_to_participatory_space
+        Decidim::EventsManager.publish(
+          event: "decidim.events.questions.question_published",
+          event_class: Decidim::Questions::PublishQuestionEvent,
+          resource: @question,
+          recipient_ids: @question.participatory_space.followers.pluck(:id) - @question.author.followers.pluck(:id),
+          extra: {
+            participatory_space: true
+          }
+        )
       end
     end
   end
