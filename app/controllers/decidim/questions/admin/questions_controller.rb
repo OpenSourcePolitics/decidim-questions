@@ -64,7 +64,9 @@ module Decidim
         private
 
         def query
-          @query ||= Question.where(component: current_component).published.ransack(params[:q])
+          @search = Question.where(component: current_component).published.ransack(params[:q])
+          @search.sorts = Questions.default_order_on_admin_index if @search.sorts.empty?
+          @query ||= @search
         end
 
         def questions

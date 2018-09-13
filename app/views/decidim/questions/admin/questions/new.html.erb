@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "decidim/questions/admin/questions" %>
 <%= decidim_form_for(@form, html: { class: "form new_question" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 
@@ -5,3 +6,5 @@
     <%= f.submit t(".create") %>
   </div>
 <% end %>
+
+<%= javascript_include_tag "decidim/questions/admin/form" %>

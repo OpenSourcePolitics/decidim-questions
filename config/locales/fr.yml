@@ -12,7 +12,7 @@ fr:
         title: Titre
         user_group_id: Créer une question en tant que
       question_answer:
-        answer: Répondre
+        answer: Réponse / Justification
       questions_copy:
         copy_questions: Je comprends que cela va importer toutes les questions de la fonctionnalité sélectionnée vers la fonctionnalité actuelle et que cette action ne peut pas être inversée.
         origin_component_id: Fonctionnalité dont on veut copier les questions
@@ -203,6 +203,7 @@ fr:
             success: Question créée avec succès
           form:
             attachment_legend: (Facultatif) Ajouter une pièce jointe
+            recipient_role: Destinataires
             select_a_category: Sélectionner une catégorie
           index:
             actions: Actions
@@ -264,9 +265,11 @@ fr:
             notes: Remarques
             official_question: Question officielle
             published_at: Publiée à
+            reference: Référence
             scope: Secteur
             state: État
             title: Titre
+            question_type: Type
             votes: Votes
       new:
         limit_reached: Vous ne pouvez pas créer de nouvelles questions car vous avez dépassé le nombre autorisé.
@@ -432,6 +435,16 @@ fr:
           contribution: contribution
           opinion: avis
           question: question
+        submodels:
+          contribution:
+            one: Contribution
+            other: Contributions
+          opinion:
+            one: Avis
+            other: Avis
+          question:
+            one: Question
+            other: Questions
       update:
         error: Des erreurs se sont produites lors de l'enregistrement de la question.
         success: Question mise à jour avec succès.

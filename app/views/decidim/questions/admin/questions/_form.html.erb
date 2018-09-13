@@ -4,6 +4,17 @@
   </div>
 
   <div class="card-section">
+
+    <div class="row column no-field-label">
+      <%= form.collection_radio_buttons :question_type, [
+          ["question", t("question", scope: "decidim.questions.shared.type").capitalize],
+          ["opinion", t("opinion", scope: "decidim.questions.shared.type").capitalize],
+          ["contribution", t("contribution", scope: "decidim.questions.shared.type").capitalize]
+        ], :first, :last, prompt: true %>
+    </div>
+
+    <%= render partial: "decidim/questions/admin/shared/forward_question", locals: {form: form} %>
+
     <div class="row column">
       <%= form.text_field :title %>
     </div>

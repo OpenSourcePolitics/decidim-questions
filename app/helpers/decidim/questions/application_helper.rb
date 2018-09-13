@@ -83,6 +83,18 @@ module Decidim
           end
         end
       end
+
+      def question_recipient_roles
+        roles = []
+        %w(service committee).each do |role|
+          roles.push [role, t("#{role}", scope: "decidim.admin.models.participatory_process_user_role.roles")]
+        end
+        return roles
+      end
+
+      def question_recipient_role(question)
+        t("#{question.recipient_role}", scope: "decidim.admin.models.participatory_process_user_role.roles")
+      end
     end
   end
 end

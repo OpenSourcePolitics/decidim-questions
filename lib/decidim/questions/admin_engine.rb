@@ -21,7 +21,8 @@ module Decidim
       end
 
       initializer "decidim_questions.admin_assets" do |app|
-        app.config.assets.precompile += %w(admin/decidim_questions_manifest.js)
+        app.config.assets.precompile += %w(admin/decidim_questions_manifest.js
+                                            admin/decidim_questions_manifest.css)
       end
 
       def load_seed

@@ -7,6 +7,7 @@ module Decidim
       class QuestionForm < Decidim::Form
         mimic :question
 
+        attribute :question_type, String
         attribute :title, String
         attribute :body, String
         attribute :address, String
@@ -15,7 +16,9 @@ module Decidim
         attribute :category_id, Integer
         attribute :scope_id, Integer
         attribute :attachment, AttachmentForm
+        attribute :recipient_role, String
 
+        # validates :question_type, presence: true, inclusion: { in: Decidim::Questions::Question::TYPES }
         validates :title, :body, presence: true
         validates :address, geocoding: true, if: -> { current_component.settings.geocoding_enabled? }
         validates :category, presence: true, if: ->(form) { form.category_id.present? }
@@ -24,6 +27,8 @@ module Decidim
         validate :scope_belongs_to_participatory_space_scope
 
         validate :notify_missing_attachment_if_errored
+
+        # validates :recipient_role, presence: true, if: ->(form) { form.question_type == "question" }
 
         delegate :categories, to: :current_component
 

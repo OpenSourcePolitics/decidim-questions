@@ -1,0 +1,48 @@
+
+$current-border-radius: 4px;
+
+.container {
+  max-width: none;
+}
+
+.table-list {
+  th {
+    white-space: nowrap;
+  }
+}
+
+.card-section .callout {
+
+  border-radius: $current-border-radius;
+  border-color: #eee;
+  margin-top: 5px;
+
+  .callout-header {
+    position: absolute;
+    top: -18px;
+    left: 5px;
+    background: inherit;
+    display: block;
+    padding: 2px 8px;
+  }
+  .callout-content.inline {
+    input[type="radio"] {
+      margin-bottom: .5rem
+    }
+  }
+}
+
+.form {
+  .no-field-label {
+    padding-left: 15px;
+  }
+}
+
+.ql-toolbar.ql-snow {
+  border-top-left-radius: $current-border-radius;
+  border-top-right-radius: $current-border-radius;
+}
+.ql-container.ql-snow {
+  border-bottom-left-radius: $current-border-radius;
+  border-bottom-right-radius: $current-border-radius;
+}

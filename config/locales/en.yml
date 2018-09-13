@@ -203,6 +203,7 @@ en:
             success: Question successfully created.
           form:
             attachment_legend: (Optional) Add an attachment
+            recipient_role: Recipients
             select_a_category: Select a category
           index:
             actions: Actions
@@ -265,7 +266,9 @@ en:
             official_question: Official question
             scope: Scope
             state: State
+            reference: Reference
             title: Title
+            question_type: Type
             votes: Votes
       new:
         limit_reached: You can't create new questions since you've exceeded the limit.

@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "decidim/questions/admin/questions" %>
 <div class="card">
   <div class="card-divider">
     <h2 class="card-title flex--sbc">
@@ -17,7 +18,10 @@
               <%= check_box_tag "questions_recategorize", "all", false, class: "js-check-all" %>
             </th>
             <th>
-              <%= sort_link(query, :id, t("models.question.fields.id", scope: "decidim.questions"), default_order: :desc ) %>
+              <%= sort_link(query, :reference, t("models.question.fields.reference", scope: "decidim.questions") ) %>
+            </th>
+            <th>
+              <%= sort_link(query, :question_type, t("models.question.fields.question_type", scope: "decidim.questions") ) %>
             </th>
             <th>
               <%= sort_link(query, :title, t("models.question.fields.title", scope: "decidim.questions") ) %>
@@ -55,7 +59,7 @@
             <% end %>
 
             <th>
-              <%= sort_link(query, :created_at, t("models.question.fields.created_at", scope: "decidim.questions") ) %>
+              <%= sort_link(query, :created_at, t("models.question.fields.created_at", scope: "decidim.questions"), default_order: :desc ) %>
             </th>
 
             <th class="actions"><%= t("actions.title", scope: "decidim.questions") %></th>

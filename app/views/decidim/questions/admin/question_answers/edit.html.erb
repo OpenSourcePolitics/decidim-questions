@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "decidim/questions/admin/questions" %>
 <%= render "decidim/questions/admin/shared/info_question" %>
 <%= decidim_form_for(@form, url: question_question_answer_path(question, @form), html: { class: "form edit_question_answer" }) do |f| %>
   <div class="card">
@@ -6,9 +7,14 @@
     </div>
 
     <div class="card-section">
-      <div class="row column">
+      <div class="row column no-field-label">
         <%= f.collection_radio_buttons :state, [["accepted", t(".accepted")], ["rejected", t(".rejected")], ["evaluating", t(".evaluating")]], :first, :last, prompt: true %>
       </div>
+
+      <% if question.question_type == 'question' %>
+        <%= render partial: "decidim/questions/admin/shared/forward_question", locals: {form: f} %>
+      <% end %>
+
 
       <div class="row column">
         <%= f.translated :editor, :answer, autofocus: true, rows: 15 %>
@@ -20,3 +26,5 @@
     <%= f.submit t(".answer_question") %>
   </div>
 <% end %>
+
+<%= javascript_include_tag "decidim/questions/admin/form" %>

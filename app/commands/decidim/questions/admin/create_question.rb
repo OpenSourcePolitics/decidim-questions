@@ -40,10 +40,12 @@ module Decidim
         attr_reader :form, :question, :attachment
 
         def create_question
+          _attributes = attributes
+          _attributes[:state] = 'accepted' if %w(opinion contribution).include?(form.question_type)
           @question = Decidim.traceability.create!(
             Question,
             form.current_user,
-            attributes
+            _attributes
           )
         end
 
@@ -51,6 +53,7 @@ module Decidim
           {
             title: form.title,
             body: form.body,
+            question_type: form.question_type,
             category: form.category,
             scope: form.scope,
             component: form.component,

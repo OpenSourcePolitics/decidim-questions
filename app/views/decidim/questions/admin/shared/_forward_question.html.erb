@@ -1,0 +1,11 @@
+<div class="row column" id="recipient_role_wrapper">
+  <div class="callout">
+    <label for="recipient_role" class="callout-header">
+      <%= t("form.recipient_role", scope: "decidim.questions.admin.questions") %>
+      &#xFE61;
+    </label>
+    <div class="callout-content inline">
+      <%= form.collection_radio_buttons :recipient_role, question_recipient_roles, :first, :last, prompt: true %>
+    </div>
+  </div>
+</div>

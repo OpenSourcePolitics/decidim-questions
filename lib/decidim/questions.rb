@@ -39,6 +39,11 @@ module Decidim
     config_accessor :process_group_highlighted_questions_limit do
       3
     end
+
+    # Public Setting that defines the default order for question list on admin index
+    config_accessor :default_order_on_admin_index do
+      "created_at desc"
+    end
   end
 
   module ContentParsers

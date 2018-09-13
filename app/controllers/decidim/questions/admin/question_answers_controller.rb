@@ -5,6 +5,7 @@ module Decidim
     module Admin
       # This controller allows admins to answer questions in a participatory process.
       class QuestionAnswersController < Admin::ApplicationController
+        helper Questions::ApplicationHelper
         helper_method :question
 
         def edit

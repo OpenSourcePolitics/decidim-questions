@@ -3,7 +3,10 @@
   <%= check_box_tag "question_ids_s[]", question.id, false, class: "js-check-all-question js-question-list-check  js-question-id-#{question.id}" %><br />
 </td>
 <td>
-  <%= question.id %><br />
+  <%= question.reference %><br />
+</td>
+<td>
+  <%= t(question.question_type, scope: "decidim.questions.shared.type").capitalize %><br />
 </td>
 <td>
   <%= question.title %><br />
