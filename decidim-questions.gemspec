@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "decidim-comments", Decidim::Questions.version
   s.add_dependency "decidim-core", Decidim::Questions.version
   s.add_dependency "kaminari", "~> 1.0"
-  s.add_dependency "ransack", "~> 1.8"
+  s.add_dependency "ransack", "~> 2.0"
   s.add_dependency "social-share-button", "~> 1.0"
 
   s.add_development_dependency "decidim-admin", Decidim::Questions.version
