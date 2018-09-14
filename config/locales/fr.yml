@@ -124,11 +124,16 @@ fr:
           email_intro: 'Votre question "%{mentioned_question_title}" a été mentionnée <a href="%{resource_path}">dans cet espace</a>, dans les commentaires.'
           email_subject: 'Votre question "%{mentioned_question_title}" a été mentionnée'
           notification_title: 'Votre question "%{mentioned_question_title}" a été mentionnée <a href="%{resource_path}">dans cet espace</a>, dans les commentaires.'
-        question_need_moderation:
-          email_intro: 'La question <b><i><a href="%{resource_path}">%{resource_title}</a></i></b> a été publiée par %{author_name} %{author_nickname}.'
+        question_need_moderation_for_author:
+          email_intro: 'Votre question "<a href="%{resource_path}">%{resource_title}</a>" posée dans "%{participatory_space_title}" est en <b>attente de validation</b>.'
+          email_outro: ''
+          email_subject: 'Votre question a été publiée dans %{participatory_space_title}'
+          notification_title: 'Votre question <a href="%{resource_path}">%{resource_title}</a> a été publiée dans %{participatory_space_title}'
+        question_need_moderation_for_moderators:
+          email_intro: 'La question "%{resource_title}" publiée dans "%{participatory_space_title}" <b>requiert votre validation</b>.'
           email_outro: 'Vous avez reçu cette notification car vous êtes enregistré en tant que modérateur de "%{participatory_space_title}".'
-          email_subject: 'Nouvelle question de %{author_name}'
-          notification_title: 'La question <a href="%{resource_path}">%{resource_title}</a> a été publiée par <a href="%{author_path}">%{author_name} %{author_nickname}</a>.'
+          email_subject: 'Nouvelle question en attente de validation dans %{participatory_space_title}'
+          notification_title: 'La question <a href="%{resource_path}">%{resource_title}</a> publiée dans %{participatory_space_title} requiert votre validation.'
         question_published:
           email_intro: '%{author_name} %{author_nickname}, que vous suivez, a publié une nouvelle question. Découvrez-la et contribuez :'
           email_outro: 'Vous avez reçu cette notification car vous suivez %{author_nickname}. Vous pouvez cesser de recevoir des notifications en suivant le lien précédent.'

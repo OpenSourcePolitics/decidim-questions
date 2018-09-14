@@ -100,7 +100,7 @@ module Decidim
           Decidim::EventsManager.publish(
             event: "decidim.events.questions.question_published",
             event_class: Decidim::Questions::PublishQuestionEvent,
-            resource: question,
+            resource: @question,
             recipient_ids: @question.participatory_space.followers.pluck(:id),
             extra: {
               participatory_space: true

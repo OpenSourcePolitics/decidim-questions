@@ -25,6 +25,7 @@ module Decidim
         transaction do
           @question.update published_at: Time.current
           send_notification
+          send_confirmation
         end
 
         broadcast(:ok, @question)
@@ -37,13 +38,33 @@ module Decidim
           event: "decidim.events.questions.question_need_moderation",
           event_class: Decidim::Questions::QuestionNeedModerationEvent,
           resource: @question,
-          recipient_ids: (@question.users_to_notify_on_question_need_moderation - [@question.author]).pluck(:id),
+          recipient_ids: ( @question.participatory_space.moderators_only - [@question.author] ).pluck(:id),
           extra: {
             # new_content: true,
-            # process_slug: @question.participatory_space.slug
+            # process_slug: @question.participatory_space.slug,
+            participatory_space: true
           }
         )
       end
+
+      def send_confirmation # to author
+        Decidim::EventsManager.publish(
+          event: "decidim.events.questions.question_need_moderation",
+          event_class: Decidim::Questions::QuestionNeedModerationEvent,
+          resource: @question,
+          recipient_ids: [@question.author].pluck(:id),
+          extra: {
+            # new_content: true,
+            # process_slug: @question.participatory_space.slug,
+            participatory_space: true,
+            author: true
+          }
+        )
+      end
+
+
+
+
     end
   end
 end
