@@ -1,31 +1,35 @@
 # frozen_string_literal: true
 
 module Decidim
-  module ParticipatoryProcessExtends
-    def has_questions_component?
-      components.where(manifest_name: "questions").any?
-    end
+  module ParticipatoryProcesses
+    module ParticipatoryProcessExtends
 
-    def questions_component
-      i = components.index { |i| i["manifest_name"] == "questions" }
-      components[i]
-    end
+      def has_questions_component?
+        components.where(manifest_name: "questions").any?
+      end
 
-    def moderators_only
-      "#{admin_module_name}::ModeratorsOnly".constantize.for(self)
-    end
+      # Will return the FIRST if the process has many questions components
+      def questions_component
+        i = components.index { |i| i["manifest_name"] == "questions" }
+        components[i]
+      end
 
-    def service_users
-      "#{admin_module_name}::ServiceUsers".constantize.for(self)
-    end
+      def moderators_only
+        "#{admin_module_name}::ModeratorsOnly".constantize.for(self)
+      end
 
-    def committee_users
-      "#{admin_module_name}::CommitteeUsers".constantize.for(self)
-    end
+      def service_users
+        "#{admin_module_name}::ServiceUsers".constantize.for(self)
+      end
 
-  end # end module ParticipatoryProcessExtends
+      def committee_users
+        "#{admin_module_name}::CommitteeUsers".constantize.for(self)
+      end
+
+    end # end module ParticipatoryProcessExtends
+  end # end module ParticipatoryProcesses
 end # end module Decidim
 
 Decidim::ParticipatoryProcess.class_eval do
-  prepend(Decidim::ParticipatoryProcessExtends)
+  prepend(Decidim::ParticipatoryProcesses::ParticipatoryProcessExtends)
 end

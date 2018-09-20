@@ -1,1 +1,2 @@
 require "decidim/questions/extends/participatory_processes/participatory_process_extends.rb"
+require "decidim/questions/extends/participatory_processes/participatory_processes_controller_extends.rb"
