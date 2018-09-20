@@ -13,7 +13,7 @@ Decidim.register_component(:questions) do |component|
   end
 
   # These actions permissions can be configured in the admin panel
-  component.actions = %w(endorse vote create withdraw)
+  component.actions = %w(endorse vote create withdraw answer)
 
   component.query_type = "Decidim::Questions::QuestionsType"
 
