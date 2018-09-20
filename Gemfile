@@ -4,16 +4,18 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", git: "https://github.com/decidim/decidim", tag: "v0.12.1"
+gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "0.12-questions"
 gem "decidim-questions", path: "."
 
 gem "puma", "~> 3.0"
 gem "uglifier", "~> 4.1"
 
+gem "rubyzip", "~> 1.2.2"
+
 group :development, :test do
   gem "byebug", "~> 10.0", platform: :mri
 
-  gem "decidim-dev", git: "https://github.com/decidim/decidim", tag: "v0.12.1"
+  gem "decidim-dev", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "0.12-questions"
 end
 
 group :development do
