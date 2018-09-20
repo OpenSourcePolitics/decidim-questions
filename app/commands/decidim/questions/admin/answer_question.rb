@@ -23,6 +23,15 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          if question.evaluating?
+            forward_question
+          elsif question.rejected?
+            reject_question
+          elsif question.accepted?
+            answer_question
+          end
+
+
           answer_question
           notify_followers
 
@@ -33,9 +42,10 @@ module Decidim
 
         attr_reader :form, :question
 
-        def answer_question
+        def reject_question
+
           Decidim.traceability.perform_action!(
-            "answer",
+            "reject",
             question,
             form.current_user
           ) do
@@ -45,37 +55,121 @@ module Decidim
               answered_at: Time.current
             )
           end
+
+          Decidim::EventsManager.publish(
+            event: "decidim.events.questions.question_rejected",
+            event_class: Decidim::Questions::RejectedQuestionEvent,
+            resource: question,
+            recipient_ids: [@question.author].pluck(:id)
+          )
+
+        end
+
+        def forward_question
+          Decidim.traceability.perform_action!(
+            "forward",
+            question,
+            form.current_user
+          ) do
+            question.update!(
+              state: @form.state,
+              recipient_role: @form.recipient_role,
+              answered_at: Time.current
+            )
+          end
+
+          if @form.recipient_role == "service"
+            recipients = @question.participatory_space.service_users
+          elsif @form.recipient_role == "committer"
+            recipients = @question.participatory_space.committee_users
+          else
+            recipients = @question.participatory_space.moderators
+          end
+
+          Decidim::EventsManager.publish(
+            event: "decidim.events.questions.evaluating_question_event",
+            event_class: Decidim::Questions::EvaluatingQuestionEvent,
+            resource: question,
+            recipient_ids: recipients
+          )
+
+          # Decidim::EventsManager.publish(
+          #   event: "decidim.events.questions.question_forward",
+          #   event_class: Decidim::Questions::ForwardQuestionEvent,
+          #   resource: question,
+          #   recipient_ids: [@question.author].pluck(:id)
+          # )
+        end
+
+        def answer_question
+
+          if question.question_type == "question"
+            Decidim.traceability.perform_action!(
+              "answer",
+              question,
+              form.current_user
+            ) do
+              question.update!(
+                state: @form.state,
+                answer: @form.answer,
+                answered_at: Time.current
+              )
+            end
+            # Notify followers
+            # Notify author
+          else
+            Decidim.traceability.perform_action!(
+              "answer",
+              question,
+              form.current_user
+            ) do
+              question.update!(
+                state: @form.state,
+                answered_at: Time.current
+              )
+            end
+            # Notify followers
+            # Notify author
+          end
+
+
         end
 
         def notify_followers
           return if (question.previous_changes.keys & %w(state)).empty?
 
+          recipients = question.followers.pluck(:id)
+
           if question.accepted?
             publish_event(
               "decidim.events.questions.question_accepted",
-              Decidim::Questions::AcceptedQuestionEvent
+              Decidim::Questions::AcceptedQuestionEvent,
+              recipients
             )
           elsif question.rejected?
             publish_event(
               "decidim.events.questions.question_rejected",
-              Decidim::Questions::RejectedQuestionEvent
+              Decidim::Questions::RejectedQuestionEvent,
+              recipients
             )
           elsif question.evaluating?
             publish_event(
               "decidim.events.questions.question_evaluating",
-              Decidim::Questions::EvaluatingQuestionEvent
+              Decidim::Questions::EvaluatingQuestionEvent,
+              recipients
             )
           end
         end
 
-        def publish_event(event, event_class)
+        def publish_event(event, event_class, recipients)
           Decidim::EventsManager.publish(
             event: event,
             event_class: event_class,
             resource: question,
-            recipient_ids: question.followers.pluck(:id)
+            recipient_ids: recipients
           )
         end
+
       end
     end
   end

@@ -210,6 +210,10 @@ en:
             cancel: Cancel
             change_category: Change category
             selected: selected
+            tabs:
+              todo: à traiter
+              ongoing: en cours
+              done: terminé
             title: Questions
             update: Update
           new:

@@ -10,6 +10,15 @@
     </h2>
   </div>
   <div class="card-section">
+    <ul class="menu align-center expanded card-tabs">
+      <% @tabs.each do |tab| %>
+        <li>
+          <%= link_to t(".tabs.#{tab}"), questions_path(tab: tab), class: "#{'active' if @current_tab == tab}" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="card-section">
     <div class="table-scroll">
       <table class="table-list">
         <thead>
@@ -30,33 +39,9 @@
               <%= sort_link(query, :category_name, t("models.question.fields.category", scope: "decidim.questions") ) %>
             </th>
 
-            <% if current_participatory_space.scopes_enabled? %>
-              <th>
-                <%= sort_link(query, :scope_name, t("models.question.fields.scope", scope: "decidim.questions") ) %>
-              </th>
-            <% end %>
-
             <th>
               <%= sort_link(query, :state, t("models.question.fields.state", scope: "decidim.questions") ) %>
             </th>
-
-            <% if current_settings.votes_enabled? %>
-              <th>
-                <%= sort_link(query, :question_votes_count, t("models.question.fields.votes", scope: "decidim.questions") ) %>
-              </th>
-            <% end %>
-
-            <% if current_component.settings.comments_enabled? and !current_settings.comments_blocked? %>
-              <th>
-                <%= sort_link(query, :commentable_comments_count, t("models.question.fields.comments", scope: "decidim.questions") ) %>
-              </th>
-            <% end %>
-
-            <% if allowed_to? :create, :question_note %>
-              <th>
-                <%= sort_link(query, :question_notes_count, t("models.question.fields.notes", scope: "decidim.questions") ) %>
-              </th>
-            <% end %>
 
             <th>
               <%= sort_link(query, :created_at, t("models.question.fields.created_at", scope: "decidim.questions"), default_order: :desc ) %>

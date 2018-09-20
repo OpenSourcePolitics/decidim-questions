@@ -6,7 +6,13 @@ module Decidim
       # This controller allows admins to manage questions in a participatory process.
       class QuestionsController < Admin::ApplicationController
         helper Questions::ApplicationHelper
-        helper_method :questions, :query
+        helper_method :questions, :query, :current_user_role
+
+        def index
+          enforce_permission_to :read, :question
+          @current_tab = params[:tab] || default_tab
+          @tabs = ["todo","ongoing","done"]
+        end
 
         def new
           enforce_permission_to :create, :question
@@ -63,8 +69,41 @@ module Decidim
 
         private
 
+        def default_tab
+          if allowed_to? :manage, Decidim::Questions::Question
+            @current_tab = "todo"
+          else
+            @current_tab = "done"
+          end
+        end
+
         def query
-          @search = Question.where(component: current_component).published.ransack(params[:q])
+          @search = Question.where(component: current_component).published
+
+          case @current_tab
+          when "done"
+            @search = @search.where(state: ["accepted","rejected"])
+          when "ongoing"
+            @search = @search.where(state: ["evaluating","validating"], question_type: "question")
+          when "todo"
+            @search = @search.where(state: nil)
+
+            case current_user_role
+            when "service"
+              @search = @search.where(state: ["evaluating"], question_type: "question", recipient_role: current_user_role)
+            when "committee"
+              @search = @search.where(state: ["evaluating"], question_type: "question", recipient_role: current_user_role)
+            end
+
+            if ["service","committee"].include?(current_user_role)
+              @search = @search.where(state: ["evaluating"], question_type: "question", recipient_role: current_user_role)
+            else # admins & moderators
+              @search = @search.where(state: [nil,"validating"])
+            end
+
+          end
+
+          @search = @search.ransack(params[:q])
           @search.sorts = Questions.default_order_on_admin_index if @search.sorts.empty?
           @query ||= @search
         end
@@ -95,6 +134,11 @@ module Decidim
             questions: response[:errored].to_sentence,
             scope: "decidim.questions.admin"
           )
+        end
+        
+        def current_user_role
+          return "admin" if current_user.admin
+          ParticipatoryProcessUserRole.where(user: current_user, participatory_process: current_participatory_space).first.role
         end
       end
     end

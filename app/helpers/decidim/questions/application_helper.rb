@@ -95,6 +95,11 @@ module Decidim
       def question_recipient_role(question)
         t("#{question.recipient_role}", scope: "decidim.admin.models.participatory_process_user_role.roles")
       end
+
+      def current_user_role
+        return "admin" if current_user.admin
+        ParticipatoryProcessUserRole.where(user: current_user, participatory_process: current_participatory_space).first.role
+      end
     end
   end
 end

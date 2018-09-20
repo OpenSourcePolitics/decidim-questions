@@ -1,5 +1,12 @@
 
 $current-border-radius: 4px;
+$foundation-palette: (
+  primary: #039be5,
+  secondary: #eee,
+  success: #5dc560,
+  warning: #ffb300,
+  alert: #e66a5d,
+);
 
 .container {
   max-width: none;
@@ -29,6 +36,14 @@ $current-border-radius: 4px;
     input[type="radio"] {
       margin-bottom: .5rem
     }
+  }
+}
+
+.card-section .card-tabs {
+  text-transform: uppercase;
+  font-weight: bold;
+  li > *.active {
+    border-bottom: 2px solid map-get($foundation-palette, primary);
   }
 }
 
