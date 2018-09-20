@@ -43,7 +43,7 @@ module Decidim
       scope :rejected, -> { where(state: "rejected") }
       scope :evaluating, -> { where(state: "evaluating") }
       scope :withdrawn, -> { where(state: "withdrawn") }
-      scope :answered, -> { where.not(state: nil) }
+      scope :answered, -> { where(question_type: "question", state: "accepted").where.not(answered_at: nil) }
       scope :except_rejected, -> { where.not(state: "rejected").or(where(state: nil)) }
       scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
       scope :published, -> { where.not(published_at: nil) }
@@ -95,28 +95,28 @@ module Decidim
       #
       # Returns Boolean.
       def answered?
-        answered_at.present? && state.present?
+        question_type == "question" && accepted? && answered_at.present?
       end
 
       # Public: Checks if the organization has accepted a question.
       #
       # Returns Boolean.
       def accepted?
-        answered? && state == "accepted"
+        state == "accepted"
       end
 
       # Public: Checks if the organization has rejected a question.
       #
       # Returns Boolean.
       def rejected?
-        answered? && state == "rejected"
+        state == "rejected"
       end
 
       # Public: Checks if the organization has marked the question as evaluating it.
       #
       # Returns Boolean.
       def evaluating?
-        answered? && state == "evaluating"
+        state == "evaluating"
       end
 
       # Public: Checks if the author has withdrawn the question.
