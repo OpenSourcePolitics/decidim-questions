@@ -19,7 +19,7 @@ module Decidim
         @questions = search
                       .results
                       .published
-                      .answered
+                      .where(state: ["evaluating","accepted"])
                       .not_hidden
                       .includes(:author)
                       .includes(:category)

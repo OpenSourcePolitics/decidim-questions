@@ -12,6 +12,12 @@ module Decidim
         render if has_badge?
       end
 
+      def label
+        return if [false, "false"].include? context[:label]
+        return @label ||= t(model.question_type, scope: "decidim.questions.shared.type") if [true, "true"].include? context[:label]
+        context[:label]
+      end
+
       private
 
       def has_state?
