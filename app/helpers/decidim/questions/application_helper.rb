@@ -18,7 +18,7 @@ module Decidim
       #
       # Returns a String.
       def humanize_question_state(state)
-        I18n.t(state, scope: "decidim.questions.answers", default: :not_answered)
+        I18n.t(state, scope: "decidim.questions.answers", default: :need_moderation)
       end
 
       # Public: The css class applied based on the question state.
@@ -52,6 +52,8 @@ module Decidim
         when "rejected"
           "warning"
         when "evaluating"
+          "secondary"
+        when "need_moderation"
           "secondary"
         when "withdrawn"
           "alert"

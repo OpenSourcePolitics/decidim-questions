@@ -119,6 +119,14 @@ module Decidim
         state == "evaluating"
       end
 
+
+      # Public: Checks if the question needs moderation.
+      #
+      # Returns Boolean.
+      def need_moderation?
+        state.blank? || state == "need_moderation"
+      end
+
       # Public: Checks if the author has withdrawn the question.
       #
       # Returns Boolean.

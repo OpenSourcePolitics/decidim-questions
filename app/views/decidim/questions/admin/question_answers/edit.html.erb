@@ -20,7 +20,7 @@
         <%= render partial: "decidim/questions/admin/shared/forward_question", locals: {form: f} %>
       <% end %>
 
-      <% if allowed_to? :answer, :question %>
+      <% if allowed_to? :answer, :question, question: question %>
         <div id="answer_body" class="row column">
           <%= f.translated :editor, :answer, autofocus: true, rows: 15 %>
         </div>

@@ -11,8 +11,24 @@ module Decidim
         Rails.logger.debug "==========="
 
         committee_action?
+        committee_action?
         service_action?
+
+        org_admin_action?
+
+        Rails.logger.debug permission_action.inspect
+        Rails.logger.debug "==========="
         permission_action
+      end
+
+      def moderator_action?
+        return unless can_manage_process?(role: :moderator)
+
+        is_allowed = [
+          :questions,
+          :question
+        ].include?(permission_action.subject)
+        allow! if is_allowed
       end
 
       def committee_action?
@@ -28,14 +44,15 @@ module Decidim
       private
 
       def questions_action?
-        return if permission_action.action == :update &&
-                      permission_action.subject == :process
+        return if permission_action.subject == :process &&
+                    [:create,:update].include?(permission_action.action)
 
         is_allowed = [
           :component,
           :component_data,
           :questions,
           :question,
+          :participatory_space,
           :process
         ].include?(permission_action.subject)
         allow! if is_allowed

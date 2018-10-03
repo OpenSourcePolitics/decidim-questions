@@ -6,7 +6,7 @@ module Decidim
       # This controller allows admins to manage questions in a participatory process.
       class QuestionsController < Admin::ApplicationController
         helper Questions::ApplicationHelper
-        helper_method :questions, :query, :current_user_role
+        helper_method :questions, :query, :current_user_role, :admin_creation_is_enabled?
 
         def index
           enforce_permission_to :read, :question
@@ -70,7 +70,7 @@ module Decidim
         private
 
         def default_tab
-          if allowed_to? :manage, Decidim::Questions::Question
+          if current_user_role != 'collaborator'
             @current_tab = "todo"
           else
             @current_tab = "done"
@@ -86,19 +86,10 @@ module Decidim
           when "ongoing"
             @search = @search.where(state: ["evaluating","validating"], question_type: "question")
           when "todo"
-            @search = @search.where(state: nil)
-
-            case current_user_role
-            when "service"
-              @search = @search.where(state: ["evaluating"], question_type: "question", recipient_role: current_user_role)
-            when "committee"
-              @search = @search.where(state: ["evaluating"], question_type: "question", recipient_role: current_user_role)
-            end
-
             if ["service","committee"].include?(current_user_role)
               @search = @search.where(state: ["evaluating"], question_type: "question", recipient_role: current_user_role)
             else # admins & moderators
-              @search = @search.where(state: [nil,"validating"])
+              @search = @search.where(state: [nil,"need_moderation"])
             end
 
           end
@@ -135,10 +126,15 @@ module Decidim
             scope: "decidim.questions.admin"
           )
         end
-        
+
         def current_user_role
           return "admin" if current_user.admin
           ParticipatoryProcessUserRole.where(user: current_user, participatory_process: current_participatory_space).first.role
+        end
+
+        def admin_creation_is_enabled?
+          current_settings.try(:creation_enabled?) &&
+            component_settings.try(:official_questions_enabled)
         end
       end
     end

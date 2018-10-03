@@ -23,17 +23,14 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
-          if question.evaluating?
+          if question.evaluating? || question.need_moderation?
             forward_question
           elsif question.rejected?
             reject_question
           elsif question.accepted?
             answer_question
+            notify_followers
           end
-
-
-          answer_question
-          notify_followers
 
           broadcast(:ok)
         end
@@ -43,6 +40,10 @@ module Decidim
         attr_reader :form, :question
 
         def reject_question
+          Rails.logger.debug "==========="
+          Rails.logger.debug "Decidim::Questions::Admin::AnswerQuestion.reject_question"
+          # Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
 
           Decidim.traceability.perform_action!(
             "reject",
@@ -66,6 +67,11 @@ module Decidim
         end
 
         def forward_question
+          Rails.logger.debug "==========="
+          Rails.logger.debug "Decidim::Questions::Admin::AnswerQuestion.forward_question"
+          # Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
+
           Decidim.traceability.perform_action!(
             "forward",
             question,
@@ -102,6 +108,10 @@ module Decidim
         end
 
         def answer_question
+          Rails.logger.debug "==========="
+          Rails.logger.debug "Decidim::Questions::Admin::AnswerQuestion.answer_question"
+          # Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
 
           if question.question_type == "question"
             Decidim.traceability.perform_action!(
@@ -136,6 +146,11 @@ module Decidim
         end
 
         def notify_followers
+          Rails.logger.debug "==========="
+          Rails.logger.debug "Decidim::Questions::Admin::AnswerQuestion.notify_followers"
+          # Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
+
           return if (question.previous_changes.keys & %w(state)).empty?
 
           recipients = question.followers.pluck(:id)
@@ -162,6 +177,11 @@ module Decidim
         end
 
         def publish_event(event, event_class, recipients)
+          Rails.logger.debug "==========="
+          Rails.logger.debug "Decidim::Questions::Admin::AnswerQuestion.publish_event"
+          # Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
+
           Decidim::EventsManager.publish(
             event: event,
             event_class: event_class,
