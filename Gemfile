@@ -12,7 +12,7 @@ gem "uglifier", "~> 4.1"
 
 gem "rubyzip", "~> 1.2.2"
 
-gem "loofah", ">= 2.2.3"
+gem "rack", ">= 2.0.6"
 gem "loofah", ">= 2.2.3"
 
 group :development, :test do
