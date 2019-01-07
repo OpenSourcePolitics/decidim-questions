@@ -7,16 +7,16 @@
             "decidim/progress_bar",
             progress_bar_progress,
             total: progress_bar_total,
-            units_name: "decidim.proposals.proposals.votes_count.count",
-            element_id: "proposal-#{model.id}-votes-count",
+            units_name: "decidim.questions.questions.votes_count.count",
+            element_id: "question-#{model.id}-votes-count",
             subtitle_text: progress_bar_subtitle_text,
             small: true
           ) %>
         <% end %>
-        <%= render partial: "decidim/proposals/proposals/vote_button.html", locals: { proposal: model, from_proposals_list: true } %>
+        <%= render partial: "decidim/questions/questions/vote_button.html", locals: { question: model, from_questions_list: true } %>
       <% elsif has_footer? %>
         <div class="card__support__data"></div>
-        <%= link_to t("decidim.proposals.proposals.proposal.view_proposal"), resource_path, class: "card__button button--sc light button small secondary" %>
+        <%= link_to t("decidim.questions.questions.question.view_question"), resource_path, class: "card__button button--sc light button small secondary" %>
       <% end %>
     </div>
   </div>

@@ -30,10 +30,10 @@
     <% if allowed_to?(:publish, :collaborative_draft, collaborative_draft: @collaborative_draft) %>
       <div class="card text-center" id="collaborative_draft_publish">
         <div class="card__content">
-          <%= cell "decidim/proposals/irreversible_action_modal", @collaborative_draft, action: :publish %>
+          <%= cell "decidim/questions/irreversible_action_modal", @collaborative_draft, action: :publish %>
           <small>
-            <%= t("publish_info", scope:"decidim.proposals.collaborative_drafts.show") %>
-            <%= cell "decidim/proposals/irreversible_action_modal", @collaborative_draft, action: :withdraw %>
+            <%= t("publish_info", scope:"decidim.questions.collaborative_drafts.show") %>
+            <%= cell "decidim/questions/irreversible_action_modal", @collaborative_draft, action: :withdraw %>
           </small>
         </div>
       </div>
@@ -42,33 +42,33 @@
     <div class="card text-center">
       <div class="card__content">
         <% if @collaborative_draft.published? %>
-          <%= cell "decidim/proposals/collaborative_draft_link_to_proposal", @collaborative_draft %>
+          <%= cell "decidim/questions/collaborative_draft_link_to_question", @collaborative_draft %>
         <% else %>
           <div>
             <strong class="text-large text-uppercase">
-              <%= t("version", scope:"decidim.proposals.collaborative_drafts.show", number: "#{@collaborative_draft.versions_count}") %>
+              <%= t("version", scope:"decidim.questions.collaborative_drafts.show", number: "#{@collaborative_draft.versions_count}") %>
             </strong>
             <small class="text-medium">
-              <%= t("of_versions", scope:"decidim.proposals.collaborative_drafts.show", number: "#{@collaborative_draft.versions_count}") %>
+              <%= t("of_versions", scope:"decidim.questions.collaborative_drafts.show", number: "#{@collaborative_draft.versions_count}") %>
             </small>
           </div>
 
           <div>
             <span class="text-medium">
-              <%= link_to t("see_other_versions", scope:"decidim.proposals.collaborative_drafts.show"), collaborative_draft_versions_path(@collaborative_draft) %>
+              <%= link_to t("see_other_versions", scope:"decidim.questions.collaborative_drafts.show"), collaborative_draft_versions_path(@collaborative_draft) %>
             </span>
           </div>
         <% end %>
 
         <% if allowed_to?(:edit, :collaborative_draft, collaborative_draft: @collaborative_draft) %>
-          <%= link_to t("edit", scope:"decidim.proposals.collaborative_drafts.show"), edit_collaborative_draft_path(@collaborative_draft), class: "button secondary hollow expanded button--sc mt-s", id: "collaborative_draft_edit" %>
+          <%= link_to t("edit", scope:"decidim.questions.collaborative_drafts.show"), edit_collaborative_draft_path(@collaborative_draft), class: "button secondary hollow expanded button--sc mt-s", id: "collaborative_draft_edit" %>
         <% end %>
 
         <%= render "request_access_form" %>
 
         <% if @collaborative_draft.requesters.include? current_user %>
           <button type="button" class="button secondary light expanded button--sc mt-s">
-            <%= t("requested_access", scope:"decidim.proposals.collaborative_drafts.show") %>
+            <%= t("requested_access", scope:"decidim.questions.collaborative_drafts.show") %>
           </button>
         <% end %>
       </div>
@@ -76,21 +76,21 @@
       <div class="card__status">
         <ul class="card-data">
           <li class="card-data__item authors_status">
-            <%= with_tooltip t("decidim.proposals.models.collaborative_draft.fields.authors") do %>
+            <%= with_tooltip t("decidim.questions.models.collaborative_draft.fields.authors") do %>
               <%= icon("people", class: "icon--small") + " " + "#{@collaborative_draft.versions.group_by(&:whodunnit).size}" %>
             <% end %>
           </li>
 
           <li class="card-data__item versions_status">
             <%= link_to collaborative_draft_versions_path(@collaborative_draft) do %>
-              <%= with_tooltip t("decidim.proposals.models.collaborative_draft.fields.contributions") do %>
+              <%= with_tooltip t("decidim.questions.models.collaborative_draft.fields.contributions") do %>
                 <%= icon("pencil", class: "icon--small") + " " + "#{@collaborative_draft.versions.count}" %>
               <% end %>
             <% end %>
           </li>
           <li class="card-data__item">
             <%= link_to "#comments" do %>
-              <%= with_tooltip t("decidim.proposals.models.collaborative_draft.fields.comments") do %>
+              <%= with_tooltip t("decidim.questions.models.collaborative_draft.fields.comments") do %>
                 <%= icon("comment-square", class: "icon--small") + " " + "#{@collaborative_draft.comments.count}" %>
               <% end %>
             <% end %>
@@ -108,12 +108,12 @@
 
   <div class="columns mediumlarge-8 mediumlarge-pull-4">
     <div class="section">
-      <%== cell("decidim/proposals/collaborative_draft_m", @collaborative_draft, full_badge: true).badge %>
+      <%== cell("decidim/questions/collaborative_draft_m", @collaborative_draft, full_badge: true).badge %>
 
       <%= simple_format present(@collaborative_draft).body(links: true) %>
 
       <% if component_settings.geocoding_enabled? %>
-        <%= render partial: "decidim/shared/static_map", locals: { icon_name: "proposals", geolocalizable: @collaborative_draft } %>
+        <%= render partial: "decidim/shared/static_map", locals: { icon_name: "questions", geolocalizable: @collaborative_draft } %>
       <% end %>
 
       <%= cell "decidim/tags", @collaborative_draft, context: { extra_classes: ["tags--collaborative-draft"] } %>
@@ -124,8 +124,8 @@
 <%= attachments_for @collaborative_draft %>
 <%= comments_for @collaborative_draft %>
 
-<%= javascript_include_tag "decidim/proposals/social_share" %>
-<%= stylesheet_link_tag "decidim/proposals/social_share" %>
+<%= javascript_include_tag "decidim/questions/social_share" %>
+<%= stylesheet_link_tag "decidim/questions/social_share" %>
 
 <%=
   render partial: "decidim/shared/flag_modal", locals: {

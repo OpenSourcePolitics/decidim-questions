@@ -1,45 +1,45 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A command with all the business logic when a user withdraws a new proposal.
-    class WithdrawProposal < Rectify::Command
+  module Questions
+    # A command with all the business logic when a user withdraws a new question.
+    class WithdrawQuestion < Rectify::Command
       # Public: Initializes the command.
       #
-      # proposal     - The proposal to withdraw.
+      # question     - The question to withdraw.
       # current_user - The current user.
-      def initialize(proposal, current_user)
-        @proposal = proposal
+      def initialize(question, current_user)
+        @question = question
         @current_user = current_user
       end
 
       # Executes the command. Broadcasts these events:
       #
-      # - :ok when everything is valid, together with the proposal.
-      # - :invalid if the proposal already has supports or does not belong to current user.
+      # - :ok when everything is valid, together with the question.
+      # - :invalid if the question already has supports or does not belong to current user.
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) if @proposal.votes.any?
+        return broadcast(:invalid) if @question.votes.any?
 
         transaction do
-          change_proposal_state_to_withdrawn
+          change_question_state_to_withdrawn
           reject_emendations_if_any
         end
 
-        broadcast(:ok, @proposal)
+        broadcast(:ok, @question)
       end
 
       private
 
-      def change_proposal_state_to_withdrawn
-        @proposal.update state: "withdrawn"
+      def change_question_state_to_withdrawn
+        @question.update state: "withdrawn"
       end
 
       def reject_emendations_if_any
-        return if @proposal.emendations.empty?
+        return if @question.emendations.empty?
 
-        @proposal.emendations.each do |emendation|
+        @question.emendations.each do |emendation|
           @form = form(Decidim::Amendable::RejectForm).from_params(id: emendation.amendment.id)
           result = Decidim::Amendable::Reject.call(@form)
           return result[:ok] if result[:ok]

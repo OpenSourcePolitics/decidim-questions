@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::Metrics::EndorsementsMetricManage do
+describe Decidim::Questions::Metrics::EndorsementsMetricManage do
   let(:organization) { create(:organization) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:proposal_component, :published, participatory_space: participatory_space) }
-  let(:proposal) { create(:proposal, component: component) }
+  let(:component) { create(:question_component, :published, participatory_space: participatory_space) }
+  let(:question) { create(:question, component: component) }
   let(:day) { Time.zone.today - 1.day }
-  let!(:endorsements) { create_list(:proposal_endorsement, 5, proposal: proposal, created_at: day) }
-  let!(:old_endorsements) { create_list(:proposal_endorsement, 5, proposal: proposal, created_at: day - 1.week) }
+  let!(:endorsements) { create_list(:question_endorsement, 5, question: question, created_at: day) }
+  let!(:old_endorsements) { create_list(:question_endorsement, 5, question: question, created_at: day - 1.week) }
 
   context "when executing" do
     it "creates new metric records" do
@@ -28,7 +28,7 @@ describe Decidim::Proposals::Metrics::EndorsementsMetricManage do
     end
 
     it "updates metric records" do
-      create(:metric, metric_type: "endorsements", day: day, cumulative: 1, quantity: 1, organization: organization, category: nil, participatory_space: participatory_space, related_object: proposal)
+      create(:metric, metric_type: "endorsements", day: day, cumulative: 1, quantity: 1, organization: organization, category: nil, participatory_space: participatory_space, related_object: question)
       registry = generate_metric_registry
 
       expect(Decidim::Metric.count).to eq(1)

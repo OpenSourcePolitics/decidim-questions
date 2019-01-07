@@ -2,49 +2,49 @@
 
 require "spec_helper"
 
-describe "Amend Proposal", type: :system do
+describe "Amend Question", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
-  let!(:proposals) { create_list(:proposal, 3, component: component) }
-  let!(:proposal) { Decidim::Proposals::Proposal.find_by(component: component) }
-  let!(:emendation) { create(:proposal, component: component) }
-  let!(:amendment) { create :amendment, amendable: proposal, emendation: emendation }
+  let!(:questions) { create_list(:question, 3, component: component) }
+  let!(:question) { Decidim::Questions::Question.find_by(component: component) }
+  let!(:emendation) { create(:question, component: component) }
+  let!(:amendment) { create :amendment, amendable: question, emendation: emendation }
   let!(:user) { create :user, :confirmed, organization: organization }
   let!(:user_group) { create(:user_group, :verified, organization: organization, users: [user]) }
   let(:emendation_path) { Decidim::ResourceLocatorPresenter.new(emendation).path }
 
   context "when amendments are not enabled" do
-    it "doesn't show the amend proposal button" do
+    it "doesn't show the amend question button" do
       visit_component
 
-      click_link proposal.title
-      expect(page).to have_no_link("Amend Proposal")
+      click_link question.title
+      expect(page).to have_no_link("Amend Question")
     end
   end
 
   context "when amendments are enabled" do
     let!(:component) do
-      create(:proposal_component,
+      create(:question_component,
              :with_amendments_enabled,
              manifest: manifest,
              participatory_space: participatory_process)
     end
 
-    context "and visits an amendable proposal" do
+    context "and visits an amendable question" do
       before do
         visit_component
-        click_link proposal.title
+        click_link question.title
       end
 
       it "renders a link to Ammend it" do
-        expect(page).to have_link("Amend Proposal")
+        expect(page).to have_link("Amend Question")
       end
 
       context "when the user is not logged in and clicks" do
         it "is shown the login modal" do
           within ".card__amend-button", match: :first do
-            click_link "Amend Proposal"
+            click_link "Amend Question"
           end
 
           expect(page).to have_css("#loginModal", visible: true)
@@ -55,12 +55,12 @@ describe "Amend Proposal", type: :system do
         before do
           login_as user, scope: :user
           visit_component
-          click_link proposal.title
+          click_link question.title
         end
 
         it "is shown the amend form" do
           within ".card__amend-button", match: :first do
-            click_link "Amend Proposal"
+            click_link "Amend Question"
           end
 
           expect(page).to have_css(".new_amend", visible: true)
@@ -71,7 +71,7 @@ describe "Amend Proposal", type: :system do
       context "and the amend form shows all the fields" do
         before do
           login_as user, scope: :user
-          visit decidim.new_amend_path(amendable_gid: proposal.to_sgid.to_s)
+          visit decidim.new_amend_path(amendable_gid: question.to_sgid.to_s)
         end
 
         it "is shown the amend title field" do
@@ -91,7 +91,7 @@ describe "Amend Proposal", type: :system do
       context "and the amend form is filled" do
         before do
           login_as user, scope: :user
-          visit decidim.new_amend_path(amendable_gid: proposal.to_sgid.to_s)
+          visit decidim.new_amend_path(amendable_gid: question.to_sgid.to_s)
           within ".new_amend" do
             fill_in "amend[emendation_fields][title]", with: "More sidewalks and less roads"
             fill_in "amend[emendation_fields][body]", with: "Cities need more people, not more cars"
@@ -105,7 +105,7 @@ describe "Amend Proposal", type: :system do
         end
 
         it "is shown the emendation in the amendments list" do
-          emendation = Decidim::Proposals::Proposal.last
+          emendation = Decidim::Questions::Question.last
 
           expect(page).to have_content(emendation.title)
           expect(page).to have_content(emendation.body)
@@ -114,15 +114,15 @@ describe "Amend Proposal", type: :system do
       end
     end
 
-    context "when the user is the author of the amendable proposal" do
-      let(:user) { proposal.creator_author }
+    context "when the user is the author of the amendable question" do
+      let(:user) { question.creator_author }
 
       before do
         visit_component
         login_as user, scope: :user
       end
 
-      context "and visits an emendation to their proposal" do
+      context "and visits an emendation to their question" do
         before do
           click_link emendation.title
         end
@@ -180,7 +180,7 @@ describe "Amend Proposal", type: :system do
 
     context "when the user is the author of the emendation" do
       let(:user) { emendation.creator_author }
-      let!(:amendment) { create :amendment, amendable: proposal, emendation: emendation, state: "rejected" }
+      let!(:amendment) { create :amendment, amendable: question, emendation: emendation, state: "rejected" }
 
       before do
         visit_component

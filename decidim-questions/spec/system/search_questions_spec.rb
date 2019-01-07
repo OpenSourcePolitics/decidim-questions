@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe "Search proposals", type: :system do
+describe "Search questions", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
-  let!(:searchables) { create_list(:proposal, 3, component: component) }
+  let(:manifest_name) { "questions" }
+  let!(:searchables) { create_list(:question, 3, component: component) }
   let!(:term) { searchables.first.title.split(" ").sample }
 
   before do

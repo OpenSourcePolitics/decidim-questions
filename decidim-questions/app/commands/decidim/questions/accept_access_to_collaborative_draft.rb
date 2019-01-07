@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A command with all the business logic to accept a user request to
     # contribute to a collaborative draft.
     class AcceptAccessToCollaborativeDraft < Rectify::Command
       # Public: Initializes the command.
       #
       # form         - A form object with the params.
-      # collaborative_draft     - A Decidim::Proposals::CollaborativeDraft object.
+      # collaborative_draft     - A Decidim::Questions::CollaborativeDraft object.
       # current_user - The current user.
       # requester_user - The user that requested to collaborate.
       def initialize(form, current_user)
@@ -47,8 +47,8 @@ module Decidim
       def notify_collaborative_draft_authors
         affected_users = @collaborative_draft.notifiable_identities - [@requester_user]
         Decidim::EventsManager.publish(
-          event: "decidim.events.proposals.collaborative_draft_access_accepted",
-          event_class: Decidim::Proposals::CollaborativeDraftAccessAcceptedEvent,
+          event: "decidim.events.questions.collaborative_draft_access_accepted",
+          event_class: Decidim::Questions::CollaborativeDraftAccessAcceptedEvent,
           resource: @collaborative_draft,
           affected_users: affected_users.uniq,
           extra: {
@@ -59,8 +59,8 @@ module Decidim
 
       def notify_collaborative_draft_requester
         Decidim::EventsManager.publish(
-          event: "decidim.events.proposals.collaborative_draft_access_requester_accepted",
-          event_class: Decidim::Proposals::CollaborativeDraftAccessRequesterAcceptedEvent,
+          event: "decidim.events.questions.collaborative_draft_access_requester_accepted",
+          event_class: Decidim::Questions::CollaborativeDraftAccessRequesterAcceptedEvent,
           resource: @collaborative_draft,
           affected_users: [@requester_user]
         )

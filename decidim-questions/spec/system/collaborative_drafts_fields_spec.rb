@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Collaborative drafts", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
   let!(:category) { create :category, participatory_space: participatory_process }
   let!(:scope) { create :scope, organization: organization }
@@ -37,7 +37,7 @@ describe "Collaborative drafts", type: :system do
 
       context "with creation enabled" do
         let!(:component) do
-          create(:proposal_component,
+          create(:question_component,
                  :with_creation_enabled,
                  :with_collaborative_drafts_enabled,
                  manifest: manifest,
@@ -88,7 +88,7 @@ describe "Collaborative drafts", type: :system do
 
         context "when geocoding is enabled", :serves_map do
           let!(:component) do
-            create(:proposal_component,
+            create(:question_component,
                    :with_creation_enabled,
                    :with_geocoding_and_collaborative_drafts_enabled,
                    manifest: manifest,
@@ -121,7 +121,7 @@ describe "Collaborative drafts", type: :system do
 
         context "when component has extra hashtags defined" do
           let(:component) do
-            create(:proposal_component,
+            create(:question_component,
                    :with_collaborative_drafts_enabled,
                    :with_extra_hashtags,
                    suggested_hashtags: component_suggested_hashtags,
@@ -180,7 +180,7 @@ describe "Collaborative drafts", type: :system do
 
           context "when geocoding is enabled", :serves_map do
             let!(:component) do
-              create(:proposal_component,
+              create(:question_component,
                      :with_creation_enabled,
                      :with_geocoding_and_collaborative_drafts_enabled,
                      manifest: manifest,
@@ -234,7 +234,7 @@ describe "Collaborative drafts", type: :system do
 
         context "when attachments are allowed", processing_uploads_for: Decidim::AttachmentUploader do
           let!(:component) do
-            create(:proposal_component,
+            create(:question_component,
                    :with_creation_enabled,
                    :with_attachments_allowed_and_collaborative_drafts_enabled,
                    manifest: manifest,
@@ -263,7 +263,7 @@ describe "Collaborative drafts", type: :system do
 
       context "when creation is not enabled" do
         let!(:component) do
-          create(:proposal_component,
+          create(:question_component,
                  :with_collaborative_drafts_enabled,
                  manifest: manifest,
                  participatory_space: participatory_process)

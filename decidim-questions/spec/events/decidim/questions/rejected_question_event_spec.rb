@@ -2,23 +2,23 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::RejectedProposalEvent do
-  let(:resource) { create :proposal, :with_answer }
-  let(:event_name) { "decidim.events.proposals.proposal_rejected" }
+describe Decidim::Questions::RejectedQuestionEvent do
+  let(:resource) { create :question, :with_answer }
+  let(:event_name) { "decidim.events.questions.question_rejected" }
 
   include_context "when a simple event"
   it_behaves_like "a simple event"
 
   describe "email_subject" do
     it "is generated correctly" do
-      expect(subject.email_subject).to eq("A proposal you're following has been rejected")
+      expect(subject.email_subject).to eq("A question you're following has been rejected")
     end
   end
 
   describe "email_intro" do
     it "is generated correctly" do
       expect(subject.email_intro)
-        .to eq("The proposal \"#{resource.title}\" has been rejected. You can read the answer in this page:")
+        .to eq("The question \"#{resource.title}\" has been rejected. You can read the answer in this page:")
     end
   end
 
@@ -32,12 +32,12 @@ describe Decidim::Proposals::RejectedProposalEvent do
   describe "notification_title" do
     it "is generated correctly" do
       expect(subject.notification_title)
-        .to include("The <a href=\"#{resource_path}\">#{resource.title}</a> proposal has been rejected")
+        .to include("The <a href=\"#{resource_path}\">#{resource.title}</a> question has been rejected")
     end
   end
 
   describe "resource_text" do
-    it "shows the proposal answer" do
+    it "shows the question answer" do
       expect(subject.resource_text).to eq translated(resource.answer)
     end
   end

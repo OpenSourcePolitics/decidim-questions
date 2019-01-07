@@ -3,13 +3,13 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe CreateProposalNote do
+      describe CreateQuestionNote do
         describe "call" do
-          let(:proposal) { create(:proposal) }
-          let(:current_user) { create(:user, :admin, organization: proposal.component.organization) }
-          let(:form) { ProposalNoteForm.from_params(form_params).with_context(current_user: current_user) }
+          let(:question) { create(:question) }
+          let(:current_user) { create(:user, :admin, organization: question.component.organization) }
+          let(:form) { QuestionNoteForm.from_params(form_params).with_context(current_user: current_user) }
 
           let(:form_params) do
             {
@@ -17,7 +17,7 @@ module Decidim
             }
           end
 
-          let(:command) { described_class.new(form, proposal) }
+          let(:command) { described_class.new(form, question) }
 
           describe "when the form is not valid" do
             before do
@@ -28,10 +28,10 @@ module Decidim
               expect { command.call }.to broadcast(:invalid)
             end
 
-            it "doesn't create the proposal note" do
+            it "doesn't create the question note" do
               expect do
                 command.call
-              end.to change(ProposalVote, :count).by(0)
+              end.to change(QuestionVote, :count).by(0)
             end
           end
 
@@ -44,16 +44,16 @@ module Decidim
               expect { command.call }.to broadcast(:ok)
             end
 
-            it "creates the proposal notes" do
+            it "creates the question notes" do
               expect do
                 command.call
-              end.to change(ProposalNote, :count).by(1)
+              end.to change(QuestionNote, :count).by(1)
             end
 
             it "traces the action", versioning: true do
               expect(Decidim.traceability)
                 .to receive(:create!)
-                .with(ProposalNote, current_user, hash_including(:body, :proposal, :author), resource: hash_including(:title))
+                .with(QuestionNote, current_user, hash_including(:body, :question, :author), resource: hash_including(:title))
                 .and_call_original
 
               expect { command.call }.to change(ActionLog, :count)

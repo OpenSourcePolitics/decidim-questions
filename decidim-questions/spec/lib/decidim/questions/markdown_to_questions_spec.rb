@@ -3,21 +3,21 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe MarkdownToProposals do
-      def should_parse_and_produce_proposals(num_proposals)
-        proposals = Decidim::Proposals::Proposal.where(component: component)
-        expect { parser.parse(document) }.to change { proposals.count }.by(num_proposals)
-        proposals
+  module Questions
+    describe MarkdownToQuestions do
+      def should_parse_and_produce_questions(num_questions)
+        questions = Decidim::Questions::Question.where(component: component)
+        expect { parser.parse(document) }.to change { questions.count }.by(num_questions)
+        questions
       end
 
-      def should_have_expected_states(proposal)
-        expect(proposal.draft?).to be true
-        expect(proposal.official?).to be true
+      def should_have_expected_states(question)
+        expect(question.draft?).to be true
+        expect(question.official?).to be true
       end
 
-      let!(:component) { create(:proposal_component) }
-      let(:parser) { MarkdownToProposals.new(component, create(:user)) }
+      let!(:component) { create(:question_component) }
+      let(:parser) { MarkdownToQuestions.new(component, create(:user)) }
       let(:items) { [] }
       let(:document) do
         items.join("\n")
@@ -32,14 +32,14 @@ module Decidim
           end
 
           it "create sections" do
-            should_parse_and_produce_proposals(1)
+            should_parse_and_produce_questions(1)
 
-            proposal = Proposal.last
-            expect(proposal.title).to eq(title)
-            expect(proposal.body).to eq(title)
-            expect(proposal.position).to eq(1)
-            expect(proposal.participatory_text_level).to eq(ParticipatoryTextSection::LEVELS[:section])
-            should_have_expected_states(proposal)
+            question = Question.last
+            expect(question.title).to eq(title)
+            expect(question.body).to eq(title)
+            expect(question.position).to eq(1)
+            expect(question.participatory_text_level).to eq(ParticipatoryTextSection::LEVELS[:section])
+            should_have_expected_states(question)
           end
         end
 
@@ -53,15 +53,15 @@ module Decidim
           it "create sub-sections" do
             expected_pos = 1
 
-            proposals = should_parse_and_produce_proposals(5)
+            questions = should_parse_and_produce_questions(5)
 
-            proposals.order(:position).each_with_index do |proposal, idx|
-              expect(proposal.title).to eq(titles[idx])
-              expect(proposal.body).to eq(titles[idx])
-              expect(proposal.position).to eq(expected_pos)
+            questions.order(:position).each_with_index do |question, idx|
+              expect(question.title).to eq(titles[idx])
+              expect(question.body).to eq(titles[idx])
+              expect(question.position).to eq(expected_pos)
               expected_pos += 1
-              expect(proposal.participatory_text_level).to eq("sub-section")
-              should_have_expected_states(proposal)
+              expect(question.participatory_text_level).to eq("sub-section")
+              should_have_expected_states(question)
             end
           end
         end
@@ -74,17 +74,17 @@ module Decidim
           items << "#{paragraph}\n"
         end
 
-        it "produces a proposal like an article" do
-          should_parse_and_produce_proposals(1)
+        it "produces a question like an article" do
+          should_parse_and_produce_questions(1)
 
-          proposal = Proposal.last
-          # proposal titled with its numbering (position)
-          # the paragraph ans proposal's body
-          expect(proposal.title).to eq("1")
-          expect(proposal.body).to eq(paragraph)
-          expect(proposal.position).to eq(1)
-          expect(proposal.participatory_text_level).to eq(ParticipatoryTextSection::LEVELS[:article])
-          should_have_expected_states(proposal)
+          question = Question.last
+          # question titled with its numbering (position)
+          # the paragraph ans question's body
+          expect(question.title).to eq("1")
+          expect(question.body).to eq(paragraph)
+          expect(question.position).to eq(1)
+          expect(question.participatory_text_level).to eq(ParticipatoryTextSection::LEVELS[:article])
+          should_have_expected_states(question)
         end
       end
 
@@ -96,7 +96,7 @@ module Decidim
         end
 
         it "are ignored" do
-          should_parse_and_produce_proposals(0)
+          should_parse_and_produce_questions(0)
         end
       end
     end

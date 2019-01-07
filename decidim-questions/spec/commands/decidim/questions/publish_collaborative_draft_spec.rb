@@ -3,9 +3,9 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe PublishCollaborativeDraft do
-      let(:component) { create(:proposal_component) }
+      let(:component) { create(:question_component) }
       let(:state) { :open }
       let!(:collaborative_draft) { create(:collaborative_draft, component: component, state: state) }
       let(:current_user) { collaborative_draft.creator_author }
@@ -42,19 +42,19 @@ module Decidim
             expect { command.call }.to broadcast(:ok)
           end
 
-          it "creates a new proposal" do
+          it "creates a new question" do
             expect { command.call }
-              .to change(Decidim::Proposals::Proposal, :count)
+              .to change(Decidim::Questions::Question, :count)
               .by(1)
           end
 
           it "transfers the attributes correctly" do
             command.call
-            proposal = Decidim::Proposals::Proposal.last
+            question = Decidim::Questions::Question.last
 
-            expect(proposal.category).to eq(collaborative_draft.category)
-            expect(proposal.scope).to eq(collaborative_draft.scope)
-            expect(proposal.address).to eq(collaborative_draft.address)
+            expect(question.category).to eq(collaborative_draft.category)
+            expect(question.scope).to eq(collaborative_draft.scope)
+            expect(question.address).to eq(collaborative_draft.address)
           end
         end
       end

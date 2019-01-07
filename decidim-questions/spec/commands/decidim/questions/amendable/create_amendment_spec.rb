@@ -5,9 +5,9 @@ require "spec_helper"
 module Decidim
   module Amendable
     describe Create do
-      let!(:component) { create(:proposal_component, :with_amendments_enabled) }
+      let!(:component) { create(:question_component, :with_amendments_enabled) }
       let!(:user) { create :user, :confirmed, organization: component.organization }
-      let!(:amendable) { create(:proposal, component: component) }
+      let!(:amendable) { create(:question, component: component) }
       let(:title) { "More sidewalks and less roads!" }
       let(:body) { "Everything would be better" }
       let(:command) { described_class.new(form) }

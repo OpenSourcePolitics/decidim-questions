@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A form object to be used when admin users want to import a collection of proposals
+      # A form object to be used when admin users want to import a collection of questions
       # from a participatory text.
       class ImportParticipatoryTextForm < Decidim::Form
         include TranslatableAttributes

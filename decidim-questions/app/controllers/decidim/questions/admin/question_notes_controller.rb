@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # This controller allows admins to make private notes on proposals in a participatory process.
-      class ProposalNotesController < Admin::ApplicationController
-        helper_method :proposal
+      # This controller allows admins to make private notes on questions in a participatory process.
+      class QuestionNotesController < Admin::ApplicationController
+        helper_method :question
 
         def index
-          enforce_permission_to :create, :proposal_note
-          @form = form(ProposalNoteForm).instance
+          enforce_permission_to :create, :question_note
+          @form = form(QuestionNoteForm).instance
         end
 
         def create
-          enforce_permission_to :create, :proposal_note
-          @form = form(ProposalNoteForm).from_params(params)
+          enforce_permission_to :create, :question_note
+          @form = form(QuestionNoteForm).from_params(params)
 
-          CreateProposalNote.call(@form, proposal) do
+          CreateQuestionNote.call(@form, question) do
             on(:ok) do
-              flash[:notice] = I18n.t("proposal_notes.create.success", scope: "decidim.proposals.admin")
-              redirect_to proposal_proposal_notes_path(proposal_id: proposal.id)
+              flash[:notice] = I18n.t("question_notes.create.success", scope: "decidim.questions.admin")
+              redirect_to question_question_notes_path(question_id: question.id)
             end
 
             on(:invalid) do
-              flash.now[:alert] = I18n.t("proposal_notes.create.error", scope: "decidim.proposals.admin")
+              flash.now[:alert] = I18n.t("question_notes.create.error", scope: "decidim.questions.admin")
               render :index
             end
           end
@@ -31,8 +31,8 @@ module Decidim
 
         private
 
-        def proposal
-          @proposal ||= Proposal.where(component: current_component).find(params[:proposal_id])
+        def question
+          @question ||= Question.where(component: current_component).find(params[:question_id])
         end
       end
     end

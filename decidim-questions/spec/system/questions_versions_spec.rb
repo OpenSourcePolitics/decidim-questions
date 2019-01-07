@@ -4,10 +4,10 @@ require "spec_helper"
 
 describe "Explore versions", versioning: true, type: :system do
   include_context "with a component"
-  let(:component) { create(:proposal_component, organization: organization) }
-  let!(:proposal) { create(:proposal, component: component) }
-  let!(:emendation) { create(:proposal, component: component) }
-  let!(:amendment) { create :amendment, amendable: proposal, emendation: emendation }
+  let(:component) { create(:question_component, organization: organization) }
+  let!(:question) { create(:question, component: component) }
+  let!(:emendation) { create(:question, component: component) }
+  let!(:amendment) { create :amendment, amendable: question, emendation: emendation }
   let(:command) { Decidim::Amendable::Accept.new(form) }
 
   let(:form) { Decidim::Amendable::ReviewForm.from_params(form_params) }
@@ -22,19 +22,19 @@ describe "Explore versions", versioning: true, type: :system do
   let(:form_params) do
     {
       id: amendment.id,
-      amendable_gid: proposal.to_sgid.to_s,
+      amendable_gid: question.to_sgid.to_s,
       emendation_gid: emendation.to_sgid.to_s,
       emendation_fields: emendation_fields
     }
   end
 
-  let(:proposal_path) do
-    Decidim::ResourceLocatorPresenter.new(proposal).path
+  let(:question_path) do
+    Decidim::ResourceLocatorPresenter.new(question).path
   end
 
-  context "when visiting a proposal details" do
+  context "when visiting a question details" do
     before do
-      visit proposal_path
+      visit question_path
     end
 
     it "has only one version" do
@@ -48,7 +48,7 @@ describe "Explore versions", versioning: true, type: :system do
     context "when accepting an amendment" do
       before do
         command.call
-        visit proposal_path
+        visit question_path
       end
 
       it "creates a new version" do
@@ -59,7 +59,7 @@ describe "Explore versions", versioning: true, type: :system do
 
   context "when visiting versions index" do
     before do
-      visit proposal_path
+      visit question_path
       command.call
       click_link "see other versions"
     end
@@ -73,9 +73,9 @@ describe "Explore versions", versioning: true, type: :system do
       expect(page).to have_content("VERSIONS\n2")
     end
 
-    it "allows going back to the proposal" do
-      click_link "Go back to proposal"
-      expect(page).to have_current_path proposal_path
+    it "allows going back to the question" do
+      click_link "Go back to question"
+      expect(page).to have_current_path question_path
     end
 
     it "shows the creation date" do
@@ -87,7 +87,7 @@ describe "Explore versions", versioning: true, type: :system do
 
   context "when showing version" do
     before do
-      visit proposal_path
+      visit question_path
       command.call
       click_link "see other versions"
 
@@ -100,14 +100,14 @@ describe "Explore versions", versioning: true, type: :system do
       expect(page).to have_content("VERSION NUMBER\n2 out of 2")
     end
 
-    it "allows going back to the proposal" do
-      click_link "Go back to proposal"
-      expect(page).to have_current_path proposal_path
+    it "allows going back to the question" do
+      click_link "Go back to question"
+      expect(page).to have_current_path question_path
     end
 
     it "allows going back to the versions list" do
       click_link "Show all versions"
-      expect(page).to have_current_path proposal_path + "/versions"
+      expect(page).to have_current_path question_path + "/versions"
     end
 
     it "shows the creation date" do
@@ -122,14 +122,14 @@ describe "Explore versions", versioning: true, type: :system do
       expect(page).to have_content("BODY")
 
       first ".diff-string > .removal" do
-        expect(page).to have_content(proposal.title)
+        expect(page).to have_content(question.title)
       end
       first ".diff-string > .addition" do
         expect(page).to have_content(emendation.title)
       end
 
       all(".diff-string > .removal").last do
-        expect(page).to have_content(proposal.body)
+        expect(page).to have_content(question.body)
       end
       all(".diff-string > .addition").last do
         expect(page).to have_content(emendation.body)

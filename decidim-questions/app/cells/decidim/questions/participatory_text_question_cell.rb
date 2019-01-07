@@ -3,11 +3,11 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders the participatory text proposal card for an instance of a Proposal
+  module Questions
+    # This cell renders the participatory text question card for an instance of a Question
     # the default size is the Medium Card (:m)
-    class ParticipatoryTextProposalCell < Decidim::ViewModel
-      include ProposalCellsHelper
+    class ParticipatoryTextQuestionCell < Decidim::ViewModel
+      include QuestionCellsHelper
       include Cell::ViewModel::Partial
       include Messaging::ConversationHelper
 

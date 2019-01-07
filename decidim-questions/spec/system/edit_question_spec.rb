@@ -2,21 +2,21 @@
 
 require "spec_helper"
 
-describe "Edit proposals", type: :system do
+describe "Edit questions", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
   let!(:user) { create :user, :confirmed, organization: participatory_process.organization }
   let!(:another_user) { create :user, :confirmed, organization: participatory_process.organization }
-  let!(:proposal) { create :proposal, users: [user], component: component }
+  let!(:question) { create :question, users: [user], component: component }
 
   before do
     switch_to_host user.organization.host
   end
 
-  describe "editing my own proposal" do
-    let(:new_title) { "This is my proposal new title" }
-    let(:new_body) { "This is my proposal new body" }
+  describe "editing my own question" do
+    let(:new_title) { "This is my question new title" }
+    let(:new_body) { "This is my question new body" }
 
     before do
       login_as user, scope: :user
@@ -25,14 +25,14 @@ describe "Edit proposals", type: :system do
     it "can be updated" do
       visit_component
 
-      click_link proposal.title
-      click_link "Edit proposal"
+      click_link question.title
+      click_link "Edit question"
 
       expect(page).to have_content "EDIT PROPOSAL"
 
-      within "form.edit_proposal" do
-        fill_in :proposal_title, with: new_title
-        fill_in :proposal_body, with: new_body
+      within "form.edit_question" do
+        fill_in :question_title, with: new_title
+        fill_in :question_body, with: new_body
         click_button "Send"
       end
 
@@ -41,18 +41,18 @@ describe "Edit proposals", type: :system do
     end
 
     context "when updating with wrong data" do
-      let(:component) { create(:proposal_component, :with_creation_enabled, :with_attachments_allowed, participatory_space: participatory_process) }
+      let(:component) { create(:question_component, :with_creation_enabled, :with_attachments_allowed, participatory_space: participatory_process) }
 
       it "returns an error message" do
         visit_component
 
-        click_link proposal.title
-        click_link "Edit proposal"
+        click_link question.title
+        click_link "Edit question"
 
         expect(page).to have_content "EDIT PROPOSAL"
 
-        within "form.edit_proposal" do
-          fill_in :proposal_body, with: "A"
+        within "form.edit_question" do
+          fill_in :question_body, with: "A"
           click_button "Send"
         end
 
@@ -62,14 +62,14 @@ describe "Edit proposals", type: :system do
       it "keeps the submitted values" do
         visit_component
 
-        click_link proposal.title
-        click_link "Edit proposal"
+        click_link question.title
+        click_link "Edit question"
 
         expect(page).to have_content "EDIT PROPOSAL"
 
-        within "form.edit_proposal" do
-          fill_in :proposal_title, with: "A title with a #hashtag"
-          fill_in :proposal_body, with: "Ỳü"
+        within "form.edit_question" do
+          fill_in :question_title, with: "A title with a #hashtag"
+          fill_in :question_body, with: "Ỳü"
         end
         click_button "Send"
 
@@ -79,7 +79,7 @@ describe "Edit proposals", type: :system do
     end
   end
 
-  describe "editing someone else's proposal" do
+  describe "editing someone else's question" do
     before do
       login_as another_user, scope: :user
     end
@@ -87,16 +87,16 @@ describe "Edit proposals", type: :system do
     it "renders an error" do
       visit_component
 
-      click_link proposal.title
-      expect(page).to have_no_content("Edit proposal")
+      click_link question.title
+      expect(page).to have_no_content("Edit question")
       visit current_path + "/edit"
 
       expect(page).to have_content("not authorized")
     end
   end
 
-  describe "editing my proposal outside the time limit" do
-    let!(:proposal) { create :proposal, users: [user], component: component, created_at: 1.hour.ago }
+  describe "editing my question outside the time limit" do
+    let!(:question) { create :question, users: [user], component: component, created_at: 1.hour.ago }
 
     before do
       login_as another_user, scope: :user
@@ -105,8 +105,8 @@ describe "Edit proposals", type: :system do
     it "renders an error" do
       visit_component
 
-      click_link proposal.title
-      expect(page).to have_no_content("Edit proposal")
+      click_link question.title
+      expect(page).to have_no_content("Edit question")
       visit current_path + "/edit"
 
       expect(page).to have_content("not authorized")

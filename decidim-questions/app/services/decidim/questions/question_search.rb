@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A service to encapsualte all the logic when searching and filtering
-    # proposals in a participatory process.
-    class ProposalSearch < ResourceSearch
+    # questions in a participatory process.
+    class QuestionSearch < ResourceSearch
       # Public: Initializes the service.
-      # component     - A Decidim::Component to get the proposals from.
+      # component     - A Decidim::Component to get the questions from.
       # page        - The page number to paginate the results.
-      # per_page    - The number of proposals to return per page.
+      # per_page    - The number of questions to return per page.
       def initialize(options = {})
-        super(Proposal.all, options)
+        super(Question.all, options)
       end
 
       # Handle the search_text filter
@@ -54,7 +54,7 @@ module Decidim
         if activity.include? "voted"
           query
             .includes(:votes)
-            .where(decidim_proposals_proposal_votes: {
+            .where(decidim_questions_question_votes: {
                      decidim_author_id: options[:current_user]
                    })
         else
@@ -83,7 +83,7 @@ module Decidim
       # Handle the amendment type filter
       def search_type
         case type
-        when "proposals"
+        when "questions"
           query.where.not(id: query.joins(:amendable).pluck(:id))
         when "amendments"
           query.where(id: query.joins(:amendable).pluck(:id))
@@ -92,9 +92,9 @@ module Decidim
         end
       end
 
-      # Filters Proposals by the name of the classes they are linked to. By default,
-      # returns all Proposals. When a `related_to` param is given, then it camelcases item
-      # to find the real class name and checks the links for the Proposals.
+      # Filters Questions by the name of the classes they are linked to. By default,
+      # returns all Questions. When a `related_to` param is given, then it camelcases item
+      # to find the real class name and checks the links for the Questions.
       #
       # The `related_to` param is expected to be in this form:
       #
@@ -102,7 +102,7 @@ module Decidim
       #
       # This can be achieved by performing `klass.name.underscore`.
       #
-      # Returns only those proposals that are linked to the given class name.
+      # Returns only those questions that are linked to the given class name.
       def search_related_to
         from = query
                .joins(:resource_links_from)
@@ -124,7 +124,7 @@ module Decidim
       #
       # The correct behaviour is backed by tests.
       def results
-        Proposal.where(id: super.pluck(:id))
+        Question.where(id: super.pluck(:id))
       end
     end
   end

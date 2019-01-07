@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
 class MoveAuthorshipsToCoauthorships < ActiveRecord::Migration[5.1]
-  class Proposal < ApplicationRecord
-    self.table_name = :decidim_proposals_proposals
+  class Question < ApplicationRecord
+    self.table_name = :decidim_questions_questions
   end
   class Coauthorship < ApplicationRecord
     self.table_name = :decidim_coauthorships
   end
 
   def change
-    proposals = Proposal.all
+    questions = Question.all
 
-    proposals.each do |proposal|
-      author_id = proposal.attributes["decidim_author_id"]
-      user_group_id = proposal.attributes["decidim_user_group_id"]
+    questions.each do |question|
+      author_id = question.attributes["decidim_author_id"]
+      user_group_id = question.attributes["decidim_user_group_id"]
 
       next if author_id.nil?
 
       Coauthorship.create!(
-        coauthorable_id: proposal.id,
-        coauthorable_type: "Decidim::Proposals::Proposal",
+        coauthorable_id: question.id,
+        coauthorable_type: "Decidim::Questions::Question",
         decidim_author_id: author_id,
         decidim_user_group_id: user_group_id
       )

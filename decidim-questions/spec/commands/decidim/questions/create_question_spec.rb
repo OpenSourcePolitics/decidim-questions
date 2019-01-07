@@ -3,10 +3,10 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe CreateProposal do
-      let(:form_klass) { ProposalWizardCreateStepForm }
-      let(:component) { create(:proposal_component) }
+  module Questions
+    describe CreateQuestion do
+      let(:form_klass) { QuestionWizardCreateStepForm }
+      let(:component) { create(:question_component) }
       let(:organization) { component.organization }
       let(:user) { create :user, :admin, :confirmed, organization: organization }
       let(:form) do
@@ -29,8 +29,8 @@ module Decidim
       describe "call" do
         let(:form_params) do
           {
-            title: "A reasonable proposal title",
-            body: "A reasonable proposal body",
+            title: "A reasonable question title",
+            body: "A reasonable question body",
             user_group_id: user_group.try(:id)
           }
         end
@@ -48,10 +48,10 @@ module Decidim
             expect { command.call }.to broadcast(:invalid)
           end
 
-          it "doesn't create a proposal" do
+          it "doesn't create a question" do
             expect do
               command.call
-            end.not_to change(Decidim::Proposals::Proposal, :count)
+            end.not_to change(Decidim::Questions::Question, :count)
           end
         end
 
@@ -60,10 +60,10 @@ module Decidim
             expect { command.call }.to broadcast(:ok)
           end
 
-          it "creates a new proposal" do
+          it "creates a new question" do
             expect do
               command.call
-            end.to change(Decidim::Proposals::Proposal, :count).by(1)
+            end.to change(Decidim::Questions::Question, :count).by(1)
           end
 
           it "traces the action", versioning: true do
@@ -71,7 +71,7 @@ module Decidim
               .to receive(:perform_action!)
               .with(
                 :create,
-                Decidim::Proposals::Proposal,
+                Decidim::Questions::Question,
                 author,
                 visibility: "public-only"
               ).and_call_original
@@ -84,8 +84,8 @@ module Decidim
 
             it "sets the author" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
-              creator = proposal.creator
+              question = Decidim::Questions::Question.last
+              creator = question.creator
 
               expect(creator.author).to eq(author)
               expect(creator.user_group).to eq(nil)
@@ -93,17 +93,17 @@ module Decidim
 
             it "adds the author as a follower" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
-              expect(proposal.followers).to include(author)
+              expect(question.followers).to include(author)
             end
 
-            context "with a proposal limit" do
+            context "with a question limit" do
               let(:component) do
-                create(:proposal_component, settings: { "proposal_limit" => 2 })
+                create(:question_component, settings: { "question_limit" => 2 })
               end
 
-              it "checks the author doesn't exceed the amount of proposals" do
+              it "checks the author doesn't exceed the amount of questions" do
                 expect { command.call }.to broadcast(:ok)
                 expect { command.call }.to broadcast(:ok)
                 expect { command.call }.to broadcast(:invalid)
@@ -114,23 +114,23 @@ module Decidim
           context "with a user group" do
             it "sets the user group" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
-              creator = proposal.creator
+              question = Decidim::Questions::Question.last
+              creator = question.creator
 
               expect(creator.author).to eq(author)
               expect(creator.user_group).to eq(user_group)
             end
 
-            context "with a proposal limit" do
+            context "with a question limit" do
               let(:component) do
-                create(:proposal_component, settings: { "proposal_limit" => 2 })
+                create(:question_component, settings: { "question_limit" => 2 })
               end
 
               before do
-                create_list(:proposal, 2, component: component, users: [author])
+                create_list(:question, 2, component: component, users: [author])
               end
 
-              it "checks the user group doesn't exceed the amount of proposals independently of the author" do
+              it "checks the user group doesn't exceed the amount of questions independently of the author" do
                 expect { command.call }.to broadcast(:ok)
                 expect { command.call }.to broadcast(:ok)
                 expect { command.call }.to broadcast(:invalid)
@@ -138,38 +138,38 @@ module Decidim
             end
           end
 
-          describe "the proposal limit excludes withdrawn proposals" do
+          describe "the question limit excludes withdrawn questions" do
             let(:component) do
-              create(:proposal_component, settings: { "proposal_limit" => 1 })
+              create(:question_component, settings: { "question_limit" => 1 })
             end
 
             describe "when the author is a user" do
               let(:user_group) { nil }
 
               before do
-                create(:proposal, :withdrawn, users: [author], component: component)
+                create(:question, :withdrawn, users: [author], component: component)
               end
 
-              it "checks the user doesn't exceed the amount of proposals" do
+              it "checks the user doesn't exceed the amount of questions" do
                 expect { command.call }.to broadcast(:ok)
                 expect { command.call }.to broadcast(:invalid)
 
-                user_proposal_count = Decidim::Coauthorship.where(author: author, coauthorable_type: "Decidim::Proposals::Proposal").count
-                expect(user_proposal_count).to eq(2)
+                user_question_count = Decidim::Coauthorship.where(author: author, coauthorable_type: "Decidim::Questions::Question").count
+                expect(user_question_count).to eq(2)
               end
             end
 
             describe "when the author is a user_group" do
               before do
-                create(:proposal, :withdrawn, users: [author], user_groups: [user_group], component: component)
+                create(:question, :withdrawn, users: [author], user_groups: [user_group], component: component)
               end
 
-              it "checks the user_group doesn't exceed the amount of proposals" do
+              it "checks the user_group doesn't exceed the amount of questions" do
                 expect { command.call }.to broadcast(:ok)
                 expect { command.call }.to broadcast(:invalid)
 
-                user_group_proposal_count = Decidim::Coauthorship.where(user_group: user_group, coauthorable_type: "Decidim::Proposals::Proposal").count
-                expect(user_group_proposal_count).to eq(2)
+                user_group_question_count = Decidim::Coauthorship.where(user_group: user_group, coauthorable_type: "Decidim::Questions::Question").count
+                expect(user_group_question_count).to eq(2)
               end
             end
           end

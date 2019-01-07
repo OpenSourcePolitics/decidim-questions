@@ -3,14 +3,14 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders the list of endorsers for the given Proposal.
+  module Questions
+    # This cell renders the list of endorsers for the given Question.
     #
     # Example:
     #
-    #    cell("decidim/proposals/endorsers_list", my_proposal)
+    #    cell("decidim/questions/endorsers_list", my_question)
     class EndorsersListCell < Decidim::ViewModel
-      include ProposalCellsHelper
+      include QuestionCellsHelper
 
       def show
         return unless endorsers.any?

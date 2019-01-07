@@ -3,64 +3,64 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalVote do
-      subject { proposal_vote }
+  module Questions
+    describe QuestionVote do
+      subject { question_vote }
 
       let!(:organization) { create(:organization) }
-      let!(:component) { create(:component, organization: organization, manifest_name: "proposals") }
+      let!(:component) { create(:component, organization: organization, manifest_name: "questions") }
       let!(:participatory_process) { create(:participatory_process, organization: organization) }
       let!(:author) { create(:user, organization: organization) }
-      let!(:proposal) { create(:proposal, component: component, users: [author]) }
-      let!(:proposal_vote) { build(:proposal_vote, proposal: proposal, author: author) }
+      let!(:question) { create(:question, component: component, users: [author]) }
+      let!(:question_vote) { build(:question_vote, question: question, author: author) }
 
       it "is valid" do
-        expect(proposal_vote).to be_valid
+        expect(question_vote).to be_valid
       end
 
       it "has an associated author" do
-        expect(proposal_vote.author).to be_a(Decidim::User)
+        expect(question_vote.author).to be_a(Decidim::User)
       end
 
-      it "has an associated proposal" do
-        expect(proposal_vote.proposal).to be_a(Decidim::Proposals::Proposal)
+      it "has an associated question" do
+        expect(question_vote.question).to be_a(Decidim::Questions::Question)
       end
 
-      it "validates uniqueness for author and proposal combination" do
-        proposal_vote.save!
+      it "validates uniqueness for author and question combination" do
+        question_vote.save!
         expect do
-          create(:proposal_vote, proposal: proposal, author: author)
+          create(:question_vote, question: question, author: author)
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       context "when no author" do
         before do
-          proposal_vote.author = nil
+          question_vote.author = nil
         end
 
         it { is_expected.to be_invalid }
       end
 
-      context "when no proposal" do
+      context "when no question" do
         before do
-          proposal_vote.proposal = nil
+          question_vote.question = nil
         end
 
         it { is_expected.to be_invalid }
       end
 
-      context "when proposal and author have different organization" do
+      context "when question and author have different organization" do
         let(:other_author) { create(:user) }
-        let(:other_proposal) { create(:proposal) }
+        let(:other_question) { create(:question) }
 
         it "is invalid" do
-          proposal_vote = build(:proposal_vote, proposal: other_proposal, author: other_author)
-          expect(proposal_vote).to be_invalid
+          question_vote = build(:question_vote, question: other_question, author: other_author)
+          expect(question_vote).to be_invalid
         end
       end
 
-      context "when proposal is rejected" do
-        let!(:proposal) { create(:proposal, :rejected, component: component, users: [author]) }
+      context "when question is rejected" do
+        let!(:question) { create(:question, :rejected, component: component, users: [author]) }
 
         it { is_expected.to be_invalid }
       end

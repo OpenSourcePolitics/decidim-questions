@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-shared_examples "a proposal form" do |options|
+shared_examples "a question form" do |options|
   subject { form }
 
   let(:organization) { create(:organization, available_locales: [:en]) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:proposal_component, participatory_space: participatory_space) }
+  let(:component) { create(:question_component, participatory_space: participatory_space) }
   let(:title) { "More sidewalks and less roads!" }
   let(:body) { "Everything would be better" }
   let(:author) { create(:user, organization: organization) }
@@ -103,7 +103,7 @@ shared_examples "a proposal form" do |options|
   end
 
   context "when geocoding is enabled" do
-    let(:component) { create(:proposal_component, :with_geocoding_enabled, participatory_space: participatory_space) }
+    let(:component) { create(:question_component, :with_geocoding_enabled, participatory_space: participatory_space) }
 
     context "when the has address checkbox is checked" do
       let(:has_address) { true }
@@ -189,16 +189,16 @@ shared_examples "a proposal form" do |options|
   end
 
   it "properly maps category id from model" do
-    proposal = create(:proposal, component: component, category: category)
+    question = create(:question, component: component, category: category)
 
-    expect(described_class.from_model(proposal).category_id).to eq(category_id)
+    expect(described_class.from_model(question).category_id).to eq(category_id)
   end
 
   if options && options[:user_group_check]
     it "properly maps user group id from model" do
-      proposal = create(:proposal, component: component, users: [author], user_groups: [user_group])
+      question = create(:question, component: component, users: [author], user_groups: [user_group])
 
-      expect(described_class.from_model(proposal).user_group_id).to eq(user_group_id)
+      expect(described_class.from_model(question).user_group_id).to eq(user_group_id)
     end
   end
 
@@ -228,7 +228,7 @@ shared_examples "a proposal form" do |options|
 
     let(:component) do
       create(
-        :proposal_component,
+        :question_component,
         :with_extra_hashtags,
         participatory_space: participatory_space,
         suggested_hashtags: component_suggested_hashtags,
@@ -270,12 +270,12 @@ shared_examples "a proposal form" do |options|
   end
 end
 
-shared_examples "a proposal form with meeting as author" do |_options|
+shared_examples "a question form with meeting as author" do |_options|
   subject { form }
 
   let(:organization) { create(:organization, available_locales: [:en]) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:proposal_component, participatory_space: participatory_space) }
+  let(:component) { create(:question_component, participatory_space: participatory_space) }
   let(:title) { "More sidewalks and less roads!" }
   let(:body) { "Everything would be better" }
   let(:created_in_meeting) { true }
@@ -329,7 +329,7 @@ shared_examples "a proposal form with meeting as author" do |_options|
     it { is_expected.to be_invalid }
   end
 
-  context "when proposals comes from a meeting" do
+  context "when questions comes from a meeting" do
     it "validates the meeting as author" do
       expect(subject).to be_valid
       expect(subject.author).to eq(author)

@@ -1,1 +1,1 @@
-//= link decidim/proposals/admin/proposals.js
+//= link decidim/questions/admin/questions.js

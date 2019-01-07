@@ -3,37 +3,37 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe WithdrawProposal do
-      let(:proposal) { create(:proposal) }
+  module Questions
+    describe WithdrawQuestion do
+      let(:question) { create(:question) }
 
       before do
-        proposal.save!
+        question.save!
       end
 
-      describe "when current user IS the author of the proposal" do
-        let(:current_user) { proposal.creator_author }
-        let(:command) { described_class.new(proposal, current_user) }
+      describe "when current user IS the author of the question" do
+        let(:current_user) { question.creator_author }
+        let(:command) { described_class.new(question, current_user) }
 
-        context "and the proposal has no supports" do
-          it "withdraws the proposal" do
+        context "and the question has no supports" do
+          it "withdraws the question" do
             expect do
               expect { command.call }.to broadcast(:ok)
-            end.to change { Decidim::Proposals::Proposal.count }.by(0)
-            expect(proposal.state).to eq("withdrawn")
+            end.to change { Decidim::Questions::Question.count }.by(0)
+            expect(question.state).to eq("withdrawn")
           end
         end
 
-        context "and the proposal HAS some supports" do
+        context "and the question HAS some supports" do
           before do
-            proposal.votes.create!(author: current_user)
+            question.votes.create!(author: current_user)
           end
 
-          it "is not able to withdraw the proposal" do
+          it "is not able to withdraw the question" do
             expect do
               expect { command.call }.to broadcast(:invalid)
-            end.to change { Decidim::Proposals::Proposal.count }.by(0)
-            expect(proposal.state).not_to eq("withdrawn")
+            end.to change { Decidim::Questions::Question.count }.by(0)
+            expect(question.state).not_to eq("withdrawn")
           end
         end
       end

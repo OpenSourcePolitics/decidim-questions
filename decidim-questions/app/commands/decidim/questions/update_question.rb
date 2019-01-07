@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A command with all the business logic when a user updates a proposal.
-    class UpdateProposal < Rectify::Command
+  module Questions
+    # A command with all the business logic when a user updates a question.
+    class UpdateQuestion < Rectify::Command
       include AttachmentMethods
       include HashtagsMethods
 
@@ -11,49 +11,49 @@ module Decidim
       #
       # form         - A form object with the params.
       # current_user - The current user.
-      # proposal - the proposal to update.
-      def initialize(form, current_user, proposal)
+      # question - the question to update.
+      def initialize(form, current_user, question)
         @form = form
         @current_user = current_user
-        @proposal = proposal
-        @attached_to = proposal
+        @question = question
+        @attached_to = question
       end
 
       # Executes the command. Broadcasts these events:
       #
-      # - :ok when everything is valid, together with the proposal.
+      # - :ok when everything is valid, together with the question.
       # - :invalid if the form wasn't valid and we couldn't proceed.
       #
       # Returns nothing.
       def call
         return broadcast(:invalid) if form.invalid?
-        return broadcast(:invalid) unless proposal.editable_by?(current_user)
-        return broadcast(:invalid) if proposal_limit_reached?
+        return broadcast(:invalid) unless question.editable_by?(current_user)
+        return broadcast(:invalid) if question_limit_reached?
 
         if process_attachments?
-          @proposal.attachments.destroy_all
+          @question.attachments.destroy_all
 
           build_attachment
           return broadcast(:invalid) if attachment_invalid?
         end
 
         transaction do
-          if @proposal.draft?
+          if @question.draft?
             update_draft
           else
-            update_proposal
+            update_question
           end
           create_attachment if process_attachments?
         end
 
-        broadcast(:ok, proposal)
+        broadcast(:ok, question)
       end
 
       private
 
-      attr_reader :form, :proposal, :current_user, :attachment
+      attr_reader :form, :question, :current_user, :attachment
 
-      def proposal_attributes
+      def question_attributes
         fields = {}
 
         fields[:title] = title_with_hashtags
@@ -68,35 +68,35 @@ module Decidim
       end
 
       # Prevent PaperTrail from creating an additional version
-      # in the proposal multi-step creation process (step 3: complete)
+      # in the question multi-step creation process (step 3: complete)
       def update_draft
         PaperTrail.request(enabled: false) do
-          @proposal.update(proposal_attributes)
-          @proposal.coauthorships.clear
-          @proposal.add_coauthor(current_user, user_group: user_group)
+          @question.update(question_attributes)
+          @question.coauthorships.clear
+          @question.add_coauthor(current_user, user_group: user_group)
         end
       end
 
-      def update_proposal
-        @proposal = Decidim.traceability.update!(
-          @proposal,
+      def update_question
+        @question = Decidim.traceability.update!(
+          @question,
           current_user,
-          proposal_attributes,
+          question_attributes,
           visibility: "public-only"
         )
-        @proposal.coauthorships.clear
-        @proposal.add_coauthor(current_user, user_group: user_group)
+        @question.coauthorships.clear
+        @question.add_coauthor(current_user, user_group: user_group)
       end
 
-      def proposal_limit_reached?
-        proposal_limit = form.current_component.settings.proposal_limit
+      def question_limit_reached?
+        question_limit = form.current_component.settings.question_limit
 
-        return false if proposal_limit.zero?
+        return false if question_limit.zero?
 
         if user_group
-          user_group_proposals.count >= proposal_limit
+          user_group_questions.count >= question_limit
         else
-          current_user_proposals.count >= proposal_limit
+          current_user_questions.count >= question_limit
         end
       end
 
@@ -108,12 +108,12 @@ module Decidim
         @organization ||= current_user.organization
       end
 
-      def current_user_proposals
-        Proposal.from_author(current_user).where(component: form.current_component).published.where.not(id: proposal.id)
+      def current_user_questions
+        Question.from_author(current_user).where(component: form.current_component).published.where.not(id: question.id)
       end
 
-      def user_group_proposals
-        Proposal.from_user_group(user_group).where(component: form.current_component).published.where.not(id: proposal.id)
+      def user_group_questions
+        Question.from_user_group(user_group).where(component: form.current_component).published.where.not(id: question.id)
       end
     end
   end

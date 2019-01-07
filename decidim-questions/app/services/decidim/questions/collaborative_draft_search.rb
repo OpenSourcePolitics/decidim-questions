@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A service to encapsualte all the logic when searching and filtering
     # collaborative drafts in a participatory process.
     class CollaborativeDraftSearch < ResourceSearch

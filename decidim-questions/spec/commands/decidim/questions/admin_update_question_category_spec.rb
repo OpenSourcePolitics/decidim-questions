@@ -3,54 +3,54 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe UpdateProposalCategory do
+      describe UpdateQuestionCategory do
         describe "call" do
           let(:organization) { create(:organization) }
 
-          let!(:proposal) { create :proposal }
-          let!(:proposals) { create_list(:proposal, 3, component: proposal.component) }
-          let!(:category_one) { create :category, participatory_space: proposal.component.participatory_space }
-          let!(:category) { create :category, participatory_space: proposal.component.participatory_space }
+          let!(:question) { create :question }
+          let!(:questions) { create_list(:question, 3, component: question.component) }
+          let!(:category_one) { create :category, participatory_space: question.component.participatory_space }
+          let!(:category) { create :category, participatory_space: question.component.participatory_space }
 
           context "with no category" do
             it "broadcasts invalid_category" do
-              expect { described_class.call(nil, proposal.id) }.to broadcast(:invalid_category)
+              expect { described_class.call(nil, question.id) }.to broadcast(:invalid_category)
             end
           end
 
-          context "with no proposals" do
-            it "broadcasts invalid_proposal_ids" do
-              expect { described_class.call(category.id, nil) }.to broadcast(:invalid_proposal_ids)
+          context "with no questions" do
+            it "broadcasts invalid_question_ids" do
+              expect { described_class.call(category.id, nil) }.to broadcast(:invalid_question_ids)
             end
           end
 
-          describe "with a category and proposals" do
-            context "when the category is the same as the proposal's category" do
+          describe "with a category and questions" do
+            context "when the category is the same as the question's category" do
               before do
-                proposal.update!(category: category)
+                question.update!(category: category)
               end
 
-              it "doesn't update the proposal" do
-                expect(proposal).not_to receive(:update!)
-                described_class.call(proposal.category.id, proposal.id)
+              it "doesn't update the question" do
+                expect(question).not_to receive(:update!)
+                described_class.call(question.category.id, question.id)
               end
             end
 
-            context "when the category is diferent from the proposal's category" do
+            context "when the category is diferent from the question's category" do
               before do
-                proposals.each { |p| p.update!(category: category_one) }
+                questions.each { |p| p.update!(category: category_one) }
               end
 
-              it "broadcasts update_proposals_category" do
-                expect { described_class.call(category.id, proposals.pluck(:id)) }.to broadcast(:update_proposals_category)
+              it "broadcasts update_questions_category" do
+                expect { described_class.call(category.id, questions.pluck(:id)) }.to broadcast(:update_questions_category)
               end
 
-              it "updates the proposal" do
-                described_class.call(category.id, proposal.id)
+              it "updates the question" do
+                described_class.call(category.id, question.id)
 
-                expect(proposal.reload.category).to eq(category)
+                expect(question.reload.category).to eq(category)
               end
             end
           end

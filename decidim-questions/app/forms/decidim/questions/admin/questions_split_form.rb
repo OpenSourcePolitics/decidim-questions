@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
       # A form object to be used when admin users wants to split two or more
-      # proposals into a new one to another proposal component in the same space.
-      class ProposalsSplitForm < ProposalsForkForm
+      # questions into a new one to another question component in the same space.
+      class QuestionsSplitForm < QuestionsForkForm
       end
     end
   end

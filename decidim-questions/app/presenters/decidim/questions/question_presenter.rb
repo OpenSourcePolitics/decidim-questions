@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     #
-    # Decorator for proposals
+    # Decorator for questions
     #
-    class ProposalPresenter < SimpleDelegator
+    class QuestionPresenter < SimpleDelegator
       include Rails.application.routes.mounted_helpers
       include ActionView::Helpers::UrlHelper
 
       def author
         @author ||= if official?
-                      Decidim::Proposals::OfficialAuthorPresenter.new
+                      Decidim::Questions::OfficialAuthorPresenter.new
                     else
                       coauthorship = coauthorships.first
                       if coauthorship.user_group
@@ -22,31 +22,31 @@ module Decidim
                     end
       end
 
-      def proposal
+      def question
         __getobj__
       end
 
-      def proposal_path
-        Decidim::ResourceLocatorPresenter.new(proposal).path
+      def question_path
+        Decidim::ResourceLocatorPresenter.new(question).path
       end
 
       def display_mention
-        link_to title, proposal_path
+        link_to title, question_path
       end
 
-      # Render the proposal title
+      # Render the question title
       #
       # links - should render hashtags as links?
       # extras - should include extra hashtags?
       #
       # Returns a String.
       def title(links: false, extras: true)
-        renderer = Decidim::ContentRenderers::HashtagRenderer.new(proposal.title)
+        renderer = Decidim::ContentRenderers::HashtagRenderer.new(question.title)
         renderer.render(links: links, extras: extras).html_safe
       end
 
       def body(links: false, extras: true)
-        renderer = Decidim::ContentRenderers::HashtagRenderer.new(proposal.body)
+        renderer = Decidim::ContentRenderers::HashtagRenderer.new(question.body)
         renderer.render(links: links, extras: extras).html_safe
       end
     end

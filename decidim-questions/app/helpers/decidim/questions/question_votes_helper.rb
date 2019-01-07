@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Simple helpers to handle markup variations for proposal votes partials
-    module ProposalVotesHelper
-      # Returns the css classes used for proposal votes count in both proposals list and show pages
+  module Questions
+    # Simple helpers to handle markup variations for question votes partials
+    module QuestionVotesHelper
+      # Returns the css classes used for question votes count in both questions list and show pages
       #
-      # from_proposals_list - A boolean to indicate if the template is rendered from the proposals list page
+      # from_questions_list - A boolean to indicate if the template is rendered from the questions list page
       #
       # Returns a hash with the css classes for the count number and label
-      def votes_count_classes(from_proposals_list)
-        return { number: "card__support__number", label: "" } if from_proposals_list
+      def votes_count_classes(from_questions_list)
+        return { number: "card__support__number", label: "" } if from_questions_list
         { number: "extra__suport-number", label: "extra__suport-text" }
       end
 
-      # Returns the css classes used for proposal vote button in both proposals list and show pages
+      # Returns the css classes used for question vote button in both questions list and show pages
       #
-      # from_proposals_list - A boolean to indicate if the template is rendered from the proposals list page
+      # from_questions_list - A boolean to indicate if the template is rendered from the questions list page
       #
       # Returns a string with the value of the css classes.
-      def vote_button_classes(from_proposals_list)
-        return "card__button button--sc" if from_proposals_list
+      def vote_button_classes(from_questions_list)
+        return "card__button button--sc" if from_questions_list
         "expanded button--sc"
       end
 
@@ -39,19 +39,19 @@ module Decidim
         vote_limit.present?
       end
 
-      # Public: Checks if threshold per proposal are set.
+      # Public: Checks if threshold per question are set.
       #
       # Returns true if set, false otherwise.
-      def threshold_per_proposal_enabled?
-        threshold_per_proposal.present?
+      def threshold_per_question_enabled?
+        threshold_per_question.present?
       end
 
-      # Public: Fetches the maximum amount of votes per proposal.
+      # Public: Fetches the maximum amount of votes per question.
       #
       # Returns an Integer with the maximum amount of votes, nil otherwise.
-      def threshold_per_proposal
-        return nil unless component_settings.threshold_per_proposal.positive?
-        component_settings.threshold_per_proposal
+      def threshold_per_question
+        return nil unless component_settings.threshold_per_question.positive?
+        component_settings.threshold_per_question
       end
 
       # Public: Checks if can accumulate more than maxium is enabled
@@ -89,8 +89,8 @@ module Decidim
       # Returns a number with the remaining votes for that user
       def remaining_votes_count_for(user)
         return 0 unless vote_limit_enabled?
-        proposals = Proposal.where(component: current_component)
-        votes_count = ProposalVote.where(author: user, proposal: proposals).size
+        questions = Question.where(component: current_component)
+        votes_count = QuestionVote.where(author: user, question: questions).size
         component_settings.vote_limit - votes_count
       end
     end

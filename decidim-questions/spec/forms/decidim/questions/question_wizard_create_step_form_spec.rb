@@ -3,8 +3,8 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalWizardCreateStepForm do
+  module Questions
+    describe QuestionWizardCreateStepForm do
       subject { form }
 
       let(:params) do
@@ -17,7 +17,7 @@ module Decidim
 
       let(:organization) { create(:organization, available_locales: [:en]) }
       let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-      let(:component) { create(:proposal_component, participatory_space: participatory_space) }
+      let(:component) { create(:question_component, participatory_space: participatory_space) }
       let(:title) { "More sidewalks and less roads" }
       let(:body) { "Cities need more people, not more cars" }
       let(:author) { create(:user, organization: organization) }
@@ -53,7 +53,7 @@ module Decidim
       end
 
       context "when the body exceed the permited length" do
-        let(:component) { create(:proposal_component, :with_proposal_length, participatory_space: participatory_space, proposal_length: 15) }
+        let(:component) { create(:question_component, :with_question_length, participatory_space: participatory_space, question_length: 15) }
         let(:body) { "A body longer than the permitted" }
 
         it { is_expected.to be_invalid }

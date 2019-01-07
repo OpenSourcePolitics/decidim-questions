@@ -3,10 +3,10 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders a proposal with its M-size card.
-    class ProposalMCell < Decidim::CardMCell
-      include ProposalCellsHelper
+  module Questions
+    # This cell renders a question with its M-size card.
+    class QuestionMCell < Decidim::CardMCell
+      include QuestionCellsHelper
 
       def badge
         render if has_badge?
@@ -45,7 +45,7 @@ module Decidim
 
       def badge_classes
         return super unless options[:full_badge]
-        state_classes.concat(["label", "proposal-status"]).join(" ")
+        state_classes.concat(["label", "question-status"]).join(" ")
       end
 
       def statuses
@@ -67,13 +67,13 @@ module Decidim
       end
 
       def endorsements_count
-        with_tooltip t("decidim.proposals.models.proposal.fields.endorsements") do
-          icon("bullhorn", class: "icon--small") + " " + model.proposal_endorsements_count.to_s
+        with_tooltip t("decidim.questions.models.question.fields.endorsements") do
+          icon("bullhorn", class: "icon--small") + " " + model.question_endorsements_count.to_s
         end
       end
 
       def progress_bar_progress
-        model.proposal_votes_count || 0
+        model.question_votes_count || 0
       end
 
       def progress_bar_total
@@ -82,9 +82,9 @@ module Decidim
 
       def progress_bar_subtitle_text
         if progress_bar_progress >= progress_bar_total
-          t("decidim.proposals.proposals.votes_count.most_popular_proposal")
+          t("decidim.questions.questions.votes_count.most_popular_question")
         else
-          t("decidim.proposals.proposals.votes_count.need_more_votes")
+          t("decidim.questions.questions.votes_count.need_more_votes")
         end
       end
     end

@@ -1,8 +1,8 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
-    class ProposalEndorsedEvent < Decidim::Events::SimpleEvent
+  module Questions
+    class QuestionEndorsedEvent < Decidim::Events::SimpleEvent
       i18n_attributes :endorser_nickname, :endorser_name, :endorser_path, :nickname
 
       delegate :nickname, :name, to: :endorser, prefix: true

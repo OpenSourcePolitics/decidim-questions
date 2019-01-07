@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when a user updates a proposal.
-      class UpdateProposal < Rectify::Command
+      # A command with all the business logic when a user updates a question.
+      class UpdateQuestion < Rectify::Command
         include AttachmentMethods
         include HashtagsMethods
 
         # Public: Initializes the command.
         #
         # form         - A form object with the params.
-        # proposal - the proposal to update.
-        def initialize(form, proposal)
+        # question - the question to update.
+        def initialize(form, question)
           @form = form
-          @proposal = proposal
-          @attached_to = proposal
+          @question = question
+          @attached_to = question
         end
 
         # Executes the command. Broadcasts these events:
         #
-        # - :ok when everything is valid, together with the proposal.
+        # - :ok when everything is valid, together with the question.
         # - :invalid if the form wasn't valid and we couldn't proceed.
         #
         # Returns nothing.
@@ -28,28 +28,28 @@ module Decidim
           return broadcast(:invalid) if form.invalid?
 
           if process_attachments?
-            @proposal.attachments.destroy_all
+            @question.attachments.destroy_all
 
             build_attachment
             return broadcast(:invalid) if attachment_invalid?
           end
 
           transaction do
-            update_proposal
-            update_proposal_author
+            update_question
+            update_question_author
             create_attachment if process_attachments?
           end
 
-          broadcast(:ok, proposal)
+          broadcast(:ok, question)
         end
 
         private
 
-        attr_reader :form, :proposal, :attachment
+        attr_reader :form, :question, :attachment
 
-        def update_proposal
+        def update_question
           Decidim.traceability.update!(
-            proposal,
+            question,
             form.current_user,
             title: title_with_hashtags,
             body: body_with_hashtags,
@@ -62,11 +62,11 @@ module Decidim
           )
         end
 
-        def update_proposal_author
-          proposal.coauthorships.clear
-          proposal.add_coauthor(form.author)
-          proposal.save!
-          proposal
+        def update_question_author
+          question.coauthorships.clear
+          question.add_coauthor(form.author)
+          question.save!
+          question
         end
       end
     end

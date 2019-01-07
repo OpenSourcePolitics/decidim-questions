@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-describe "Private Space Proposal", type: :system do
-  let(:manifest_name) { "proposals" }
+describe "Private Space Question", type: :system do
+  let(:manifest_name) { "questions" }
   let(:manifest) { Decidim.find_component_manifest(manifest_name) }
 
   let!(:organization) { create(:organization) }
@@ -29,11 +29,11 @@ describe "Private Space Proposal", type: :system do
     let!(:participatory_space_private) { create :assembly, :published, organization: organization, private_space: true, is_transparent: true }
 
     context "when the user is not logged in" do
-      it "does not allow create a proposal" do
+      it "does not allow create a question" do
         visit_component
 
         within ".title-action" do
-          expect(page).to have_no_link("New proposal")
+          expect(page).to have_no_link("New question")
         end
       end
     end
@@ -44,10 +44,10 @@ describe "Private Space Proposal", type: :system do
           login_as other_user, scope: :user
         end
 
-        it "not allows create a proposal" do
+        it "not allows create a question" do
           visit_component
 
-          expect(page).to have_link("New proposal")
+          expect(page).to have_link("New question")
         end
       end
 
@@ -56,11 +56,11 @@ describe "Private Space Proposal", type: :system do
           login_as user, scope: :user
         end
 
-        it "not allows create a proposal" do
+        it "not allows create a question" do
           visit_component
 
           within ".title-action" do
-            expect(page).to have_no_link("New proposal")
+            expect(page).to have_no_link("New question")
           end
         end
       end
@@ -88,14 +88,14 @@ describe "Private Space Proposal", type: :system do
           login_as other_user, scope: :user
         end
 
-        it "allows create a proposal" do
+        it "allows create a question" do
           visit_component
 
-          click_link "New proposal"
+          click_link "New question"
 
-          within ".new_proposal" do
-            fill_in :proposal_title, with: "Creating my proposal"
-            fill_in :proposal_body, with: "This is my proposal's body and I'm using it unwisely."
+          within ".new_question" do
+            fill_in :question_title, with: "Creating my question"
+            fill_in :question_body, with: "This is my question's body and I'm using it unwisely."
 
             find("*[type=submit]").click
           end

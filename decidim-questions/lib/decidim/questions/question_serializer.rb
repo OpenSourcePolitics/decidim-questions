@@ -1,73 +1,73 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # This class serializes a Proposal so can be exported to CSV, JSON or other
+  module Questions
+    # This class serializes a Question so can be exported to CSV, JSON or other
     # formats.
-    class ProposalSerializer < Decidim::Exporters::Serializer
+    class QuestionSerializer < Decidim::Exporters::Serializer
       include Decidim::ApplicationHelper
       include Decidim::ResourceHelper
 
-      # Public: Initializes the serializer with a proposal.
-      def initialize(proposal)
-        @proposal = proposal
+      # Public: Initializes the serializer with a question.
+      def initialize(question)
+        @question = question
       end
 
-      # Public: Exports a hash with the serialized data for this proposal.
+      # Public: Exports a hash with the serialized data for this question.
       def serialize
         {
-          id: proposal.id,
+          id: question.id,
           category: {
-            id: proposal.category.try(:id),
-            name: proposal.category.try(:name)
+            id: question.category.try(:id),
+            name: question.category.try(:name)
           },
           scope: {
-            id: proposal.scope.try(:id),
-            name: proposal.scope.try(:name)
+            id: question.scope.try(:id),
+            name: question.scope.try(:name)
           },
           participatory_space: {
-            id: proposal.participatory_space.id,
-            url: Decidim::ResourceLocatorPresenter.new(proposal.participatory_space).url
+            id: question.participatory_space.id,
+            url: Decidim::ResourceLocatorPresenter.new(question.participatory_space).url
           },
           component: { id: component.id },
-          title: present(proposal).title,
-          body: present(proposal).body,
-          state: proposal.state.to_s,
-          reference: proposal.reference,
-          supports: proposal.proposal_votes_count,
-          endorsements: proposal.endorsements.count,
-          comments: proposal.comments.count,
-          attachments: proposal.attachments.count,
-          followers: proposal.followers.count,
-          published_at: proposal.published_at,
+          title: present(question).title,
+          body: present(question).body,
+          state: question.state.to_s,
+          reference: question.reference,
+          supports: question.question_votes_count,
+          endorsements: question.endorsements.count,
+          comments: question.comments.count,
+          attachments: question.attachments.count,
+          followers: question.followers.count,
+          published_at: question.published_at,
           url: url,
           meeting_urls: meetings,
-          related_proposals: related_proposals
+          related_questions: related_questions
         }
       end
 
       private
 
-      attr_reader :proposal
+      attr_reader :question
 
       def component
-        proposal.component
+        question.component
       end
 
       def meetings
-        proposal.linked_resources(:meetings, "proposals_from_meeting").map do |meeting|
+        question.linked_resources(:meetings, "questions_from_meeting").map do |meeting|
           Decidim::ResourceLocatorPresenter.new(meeting).url
         end
       end
 
-      def related_proposals
-        proposal.linked_resources(:proposals, "copied_from_component").map do |proposal|
-          Decidim::ResourceLocatorPresenter.new(proposal).url
+      def related_questions
+        question.linked_resources(:questions, "copied_from_component").map do |question|
+          Decidim::ResourceLocatorPresenter.new(question).url
         end
       end
 
       def url
-        Decidim::ResourceLocatorPresenter.new(proposal).url
+        Decidim::ResourceLocatorPresenter.new(question).url
       end
     end
   end

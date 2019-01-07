@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     class Permissions < Decidim::DefaultPermissions
       def permissions
         return permission_action unless user
 
         # Delegate the admin permission checks to the admin permissions class
-        return Decidim::Proposals::Admin::Permissions.new(user, permission_action, context).permissions if permission_action.scope == :admin
+        return Decidim::Questions::Admin::Permissions.new(user, permission_action, context).permissions if permission_action.scope == :admin
         return permission_action if permission_action.scope != :public
 
-        if permission_action.subject == :proposal
-          apply_proposal_permissions(permission_action)
+        if permission_action.subject == :question
+          apply_question_permissions(permission_action)
         elsif permission_action.subject == :collaborative_draft
           apply_collaborative_draft_permissions(permission_action)
         else
@@ -23,29 +23,29 @@ module Decidim
 
       private
 
-      def apply_proposal_permissions(permission_action)
+      def apply_question_permissions(permission_action)
         case permission_action.action
         when :create
-          can_create_proposal?
+          can_create_question?
         when :edit
-          can_edit_proposal?
+          can_edit_question?
         when :withdraw
-          can_withdraw_proposal?
+          can_withdraw_question?
         when :endorse
-          can_endorse_proposal?
+          can_endorse_question?
         when :unendorse
-          can_unendorse_proposal?
+          can_unendorse_question?
         when :vote
-          can_vote_proposal?
+          can_vote_question?
         when :unvote
-          can_unvote_proposal?
+          can_unvote_question?
         when :report
           true
         end
       end
 
-      def proposal
-        @proposal ||= context.fetch(:proposal, nil)
+      def question
+        @question ||= context.fetch(:question, nil)
       end
 
       def voting_enabled?
@@ -61,52 +61,52 @@ module Decidim
       def remaining_votes
         return 1 unless vote_limit_enabled?
 
-        proposals = Proposal.where(component: component)
-        votes_count = ProposalVote.where(author: user, proposal: proposals).size
+        questions = Question.where(component: component)
+        votes_count = QuestionVote.where(author: user, question: questions).size
         component_settings.vote_limit - votes_count
       end
 
-      def can_create_proposal?
+      def can_create_question?
         toggle_allow(authorized?(:create) && current_settings&.creation_enabled?)
       end
 
-      def can_edit_proposal?
-        toggle_allow(proposal && proposal.editable_by?(user))
+      def can_edit_question?
+        toggle_allow(question && question.editable_by?(user))
       end
 
-      def can_withdraw_proposal?
-        toggle_allow(proposal && proposal.authored_by?(user))
+      def can_withdraw_question?
+        toggle_allow(question && question.authored_by?(user))
       end
 
-      def can_endorse_proposal?
-        is_allowed = proposal &&
-                     authorized?(:endorse, resource: proposal) &&
+      def can_endorse_question?
+        is_allowed = question &&
+                     authorized?(:endorse, resource: question) &&
                      current_settings&.endorsements_enabled? &&
                      !current_settings&.endorsements_blocked?
 
         toggle_allow(is_allowed)
       end
 
-      def can_unendorse_proposal?
-        is_allowed = proposal &&
-                     authorized?(:endorse, resource: proposal) &&
+      def can_unendorse_question?
+        is_allowed = question &&
+                     authorized?(:endorse, resource: question) &&
                      current_settings&.endorsements_enabled?
 
         toggle_allow(is_allowed)
       end
 
-      def can_vote_proposal?
-        is_allowed = proposal &&
-                     authorized?(:vote, resource: proposal) &&
+      def can_vote_question?
+        is_allowed = question &&
+                     authorized?(:vote, resource: question) &&
                      voting_enabled? &&
                      remaining_votes.positive?
 
         toggle_allow(is_allowed)
       end
 
-      def can_unvote_proposal?
-        is_allowed = proposal &&
-                     authorized?(:vote, resource: proposal) &&
+      def can_unvote_question?
+        is_allowed = question &&
+                     authorized?(:vote, resource: question) &&
                      voting_enabled?
 
         toggle_allow(is_allowed)

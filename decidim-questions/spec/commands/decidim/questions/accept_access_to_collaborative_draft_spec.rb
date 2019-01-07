@@ -3,9 +3,9 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe AcceptAccessToCollaborativeDraft do
-      let(:component) { create(:proposal_component) }
+      let(:component) { create(:question_component) }
       let(:state) { :open }
       let(:collaborative_draft) { create(:collaborative_draft, state, component: component, users: [author1, author2]) }
       let(:id) { collaborative_draft.id }
@@ -52,8 +52,8 @@ module Decidim
             expect(Decidim::EventsManager)
               .to receive(:publish)
               .with(
-                event: "decidim.events.proposals.collaborative_draft_access_accepted",
-                event_class: Decidim::Proposals::CollaborativeDraftAccessAcceptedEvent,
+                event: "decidim.events.questions.collaborative_draft_access_accepted",
+                event_class: Decidim::Questions::CollaborativeDraftAccessAcceptedEvent,
                 resource: collaborative_draft,
                 affected_users: collaborative_draft.notifiable_identities - [requester_user],
                 extra: {
@@ -64,8 +64,8 @@ module Decidim
             expect(Decidim::EventsManager)
               .to receive(:publish)
               .with(
-                event: "decidim.events.proposals.collaborative_draft_access_requester_accepted",
-                event_class: Decidim::Proposals::CollaborativeDraftAccessRequesterAcceptedEvent,
+                event: "decidim.events.questions.collaborative_draft_access_requester_accepted",
+                event_class: Decidim::Questions::CollaborativeDraftAccessRequesterAcceptedEvent,
                 resource: collaborative_draft,
                 affected_users: [requester_user]
               )

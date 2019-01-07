@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe "Admin manages particpatory texts", type: :system do
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
   let(:participatory_space_path) do
     decidim_admin_participatory_processes.edit_participatory_process_path(participatory_process)
   end
@@ -42,7 +42,7 @@ describe "Admin manages particpatory texts", type: :system do
     )
     attach_file :import_participatory_text_document, Decidim::Dev.asset("participatory_text.md")
     click_button "Upload document"
-    expect(page).to have_content "Congratulations, the following sections have been parsed from the imported document, they have been converted to proposals. Now you can review and adjust whatever you need before publishing."
+    expect(page).to have_content "Congratulations, the following sections have been parsed from the imported document, they have been converted to questions. Now you can review and adjust whatever you need before publishing."
     expect(page).to have_content "PREVIEW PARTICIPATORY TEXT"
   end
 
@@ -56,11 +56,11 @@ describe "Admin manages particpatory texts", type: :system do
 
   def publish_participatory_text
     find("button[name=commit]").click
-    expect(page).to have_content "All proposals have been published"
+    expect(page).to have_content "All questions have been published"
   end
 
   def validate_published
-    proposals = Decidim::Proposals::Proposal.where(component: current_component)
+    questions = Decidim::Questions::Question.where(component: current_component)
     titles = [
       "The great title for a new law",
       "A co-creation process to create creative creations",
@@ -76,13 +76,13 @@ describe "Admin manages particpatory texts", type: :system do
       "Summary",
       "11"
     ]
-    expect(proposals.count).to eq(titles.size)
-    expect(proposals.published.count).to eq(titles.size)
-    expect(proposals.published.order(:position).pluck(:title)).to eq(titles)
+    expect(questions.count).to eq(titles.size)
+    expect(questions.published.count).to eq(titles.size)
+    expect(questions.published.order(:position).pluck(:title)).to eq(titles)
   end
 
   describe "importing partipatory texts from a document" do
-    it "creates proposals" do
+    it "creates questions" do
       visit_participatory_texts
       import_document
       validate_occurrences(sections: 2, subsections: 5, articles: 11)
@@ -93,9 +93,9 @@ describe "Admin manages particpatory texts", type: :system do
   end
 
   describe "accessing participatory texts in draft mode" do
-    let!(:proposal) { create :proposal, component: current_component }
+    let!(:question) { create :question, component: current_component }
 
-    it "renders only draft proposals" do
+    it "renders only draft questions" do
       visit_participatory_texts
       validate_occurrences(sections: 0, subsections: 0, articles: 0)
     end

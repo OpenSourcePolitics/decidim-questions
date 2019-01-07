@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-describe "Admin edits proposals", type: :system do
-  let(:manifest_name) { "proposals" }
+describe "Admin edits questions", type: :system do
+  let(:manifest_name) { "questions" }
   let(:organization) { participatory_process.organization }
   let!(:user) { create :user, :admin, :confirmed, organization: organization }
-  let!(:proposal) { create :proposal, :official, component: component }
+  let!(:question) { create :question, :official, component: component }
   let(:creation_enabled?) { true }
 
   include_context "when managing a component as an admin"
@@ -21,14 +21,14 @@ describe "Admin edits proposals", type: :system do
     )
   end
 
-  describe "editing an official proposal" do
-    let(:new_title) { "This is my proposal new title" }
-    let(:new_body) { "This is my proposal new body" }
+  describe "editing an official question" do
+    let(:new_title) { "This is my question new title" }
+    let(:new_body) { "This is my question new body" }
 
     it "can be updated" do
       visit_component_admin
 
-      find("a.action-icon--edit-proposal").click
+      find("a.action-icon--edit-question").click
       expect(page).to have_content "UPDATE PROPOSAL"
 
       fill_in "Title", with: new_title
@@ -43,29 +43,29 @@ describe "Admin edits proposals", type: :system do
       end
     end
 
-    context "when the proposal has some votes" do
+    context "when the question has some votes" do
       before do
-        create :proposal_vote, proposal: proposal
+        create :question_vote, question: question
       end
 
       it "doesn't let the user edit it" do
         visit_component_admin
 
-        expect(page).to have_content(proposal.title)
-        expect(page).to have_no_css("a.action-icon--edit-proposal")
-        visit current_path + "proposals/#{proposal.id}/edit"
+        expect(page).to have_content(question.title)
+        expect(page).to have_no_css("a.action-icon--edit-question")
+        visit current_path + "questions/#{question.id}/edit"
 
         expect(page).to have_content("not authorized")
       end
     end
 
     context "when updating with wrong data" do
-      let(:component) { create(:proposal_component, :with_creation_enabled, :with_attachments_allowed, participatory_space: participatory_process) }
+      let(:component) { create(:question_component, :with_creation_enabled, :with_attachments_allowed, participatory_space: participatory_process) }
 
       it "returns an error message" do
         visit_component_admin
 
-        find("a.action-icon--edit-proposal").click
+        find("a.action-icon--edit-question").click
         expect(page).to have_content "UPDATE PROPOSAL"
 
         fill_in "Body", with: "A"
@@ -76,15 +76,15 @@ describe "Admin edits proposals", type: :system do
     end
   end
 
-  describe "editing a non-official proposal" do
-    let!(:proposal) { create :proposal, users: [user], component: component }
+  describe "editing a non-official question" do
+    let!(:question) { create :question, users: [user], component: component }
 
     it "renders an error" do
       visit_component_admin
 
-      expect(page).to have_content(proposal.title)
-      expect(page).to have_no_css("a.action-icon--edit-proposal")
-      visit current_path + "proposals/#{proposal.id}/edit"
+      expect(page).to have_content(question.title)
+      expect(page).to have_no_css("a.action-icon--edit-question")
+      visit current_path + "questions/#{question.id}/edit"
 
       expect(page).to have_content("not authorized")
     end

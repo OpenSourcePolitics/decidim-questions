@@ -1,14 +1,14 @@
 <div class="p-s">
   <h4><%= t(".document_index") %></h4>
   <div class="text-muted">
-    <% @proposals.each do |proposal| %>
+    <% @questions.each do |question| %>
       <div class="mb-s">
         <p>
-          <%= link_to resource_locator(proposal).path do %>
-            <% if proposal.participatory_text_level == "article" %>
-              <u><%= present(proposal).title %></u>
+          <%= link_to resource_locator(question).path do %>
+            <% if question.participatory_text_level == "article" %>
+              <u><%= present(question).title %></u>
             <% else %>
-              <u class="text-uppercase"><%= present(proposal).title %></u>
+              <u class="text-uppercase"><%= present(question).title %></u>
             <% end %>
             <br />
           <% end %>

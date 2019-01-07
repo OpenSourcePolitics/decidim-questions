@@ -3,9 +3,9 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe CollaborativeDraftSearch do
-      let(:component) { create(:component, manifest_name: "proposals") }
+      let(:component) { create(:component, manifest_name: "questions") }
       let(:scope1) { create :scope, organization: component.organization }
       let(:scope2) { create :scope, organization: component.organization }
       let(:subscope1) { create :scope, organization: component.organization, parent: scope1 }

@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe UpdateProposal do
-      let(:form_klass) { ProposalForm }
+  module Questions
+    describe UpdateQuestion do
+      let(:form_klass) { QuestionForm }
 
-      let(:component) { create(:proposal_component, :with_extra_hashtags, suggested_hashtags: suggested_hashtags.join(" ")) }
+      let(:component) { create(:question_component, :with_extra_hashtags, suggested_hashtags: suggested_hashtags.join(" ")) }
       let(:organization) { component.organization }
       let(:form) do
         form_klass.from_params(
@@ -19,7 +19,7 @@ module Decidim
         )
       end
 
-      let!(:proposal) { create :proposal, component: component, users: [author] }
+      let!(:question) { create :question, component: component, users: [author] }
       let(:author) { create(:user, organization: organization) }
 
       let(:user_group) do
@@ -35,8 +35,8 @@ module Decidim
       describe "call" do
         let(:form_params) do
           {
-            title: "A reasonable proposal title",
-            body: "A reasonable proposal body",
+            title: "A reasonable question title",
+            body: "A reasonable question body",
             address: address,
             has_address: has_address,
             user_group_id: user_group.try(:id),
@@ -45,7 +45,7 @@ module Decidim
         end
 
         let(:command) do
-          described_class.new(form, author, proposal)
+          described_class.new(form, author, question)
         end
 
         describe "when the form is not valid" do
@@ -57,32 +57,32 @@ module Decidim
             expect { command.call }.to broadcast(:invalid)
           end
 
-          it "doesn't update the proposal" do
+          it "doesn't update the question" do
             expect do
               command.call
-            end.not_to change(proposal, :title)
+            end.not_to change(question, :title)
           end
         end
 
-        describe "when the proposal is not editable by the user" do
+        describe "when the question is not editable by the user" do
           before do
-            expect(proposal).to receive(:editable_by?).and_return(false)
+            expect(question).to receive(:editable_by?).and_return(false)
           end
 
           it "broadcasts invalid" do
             expect { command.call }.to broadcast(:invalid)
           end
 
-          it "doesn't update the proposal" do
+          it "doesn't update the question" do
             expect do
               command.call
-            end.not_to change(proposal, :title)
+            end.not_to change(question, :title)
           end
         end
 
-        context "when the author changinng the author to one that has reached the proposal limit" do
-          let!(:other_proposal) { create :proposal, component: component, users: [author], user_groups: [user_group] }
-          let(:component) { create(:proposal_component, :with_proposal_limit) }
+        context "when the author changinng the author to one that has reached the question limit" do
+          let!(:other_question) { create :question, component: component, users: [author], user_groups: [user_group] }
+          let(:component) { create(:question_component, :with_question_limit) }
 
           it "broadcasts invalid" do
             expect { command.call }.to broadcast(:invalid)
@@ -94,10 +94,10 @@ module Decidim
             expect { command.call }.to broadcast(:ok)
           end
 
-          it "updates the proposal" do
+          it "updates the question" do
             expect do
               command.call
-            end.to change(proposal, :title)
+            end.to change(question, :title)
           end
 
           context "with an author" do
@@ -105,20 +105,20 @@ module Decidim
 
             it "sets the author" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
-              expect(proposal).to be_authored_by(author)
-              expect(proposal.identities.include?(user_group)).to be false
+              expect(question).to be_authored_by(author)
+              expect(question.identities.include?(user_group)).to be false
             end
           end
 
           context "with a user group" do
             it "sets the user group" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
-              expect(proposal).to be_authored_by(author)
-              expect(proposal.identities).to include(user_group)
+              expect(question).to be_authored_by(author)
+              expect(question.identities).to include(user_group)
             end
           end
 
@@ -127,14 +127,14 @@ module Decidim
 
             it "saves the extra hashtags" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
-              expect(proposal.body).to include("_Hashtag1")
-              expect(proposal.body).to include("_Hashtag2")
+              question = Decidim::Questions::Question.last
+              expect(question.body).to include("_Hashtag1")
+              expect(question.body).to include("_Hashtag2")
             end
           end
 
           context "when geocoding is enabled" do
-            let(:component) { create(:proposal_component, :with_geocoding_enabled) }
+            let(:component) { create(:question_component, :with_geocoding_enabled) }
 
             context "when the has address checkbox is checked" do
               let(:has_address) { true }
@@ -148,10 +148,10 @@ module Decidim
 
                 it "sets the latitude and longitude" do
                   command.call
-                  proposal = Decidim::Proposals::Proposal.last
+                  question = Decidim::Questions::Question.last
 
-                  expect(proposal.latitude).to eq(latitude)
-                  expect(proposal.longitude).to eq(longitude)
+                  expect(question.latitude).to eq(latitude)
+                  expect(question.longitude).to eq(longitude)
                 end
               end
             end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when an admin imports proposals from
+      # A command with all the business logic when an admin imports questions from
       # one component to another.
-      class ImportProposals < Rectify::Command
+      class ImportQuestions < Rectify::Command
         # Public: Initializes the command.
         #
         # form - A form object with the params.
@@ -22,19 +22,19 @@ module Decidim
         def call
           return broadcast(:invalid) unless form.valid?
 
-          broadcast(:ok, import_proposals)
+          broadcast(:ok, import_questions)
         end
 
         private
 
         attr_reader :form
 
-        def import_proposals
-          proposals.map do |original_proposal|
-            next if proposal_already_copied?(original_proposal, target_component)
+        def import_questions
+          questions.map do |original_question|
+            next if question_already_copied?(original_question, target_component)
 
-            Decidim::Proposals::ProposalBuilder.copy(
-              original_proposal,
+            Decidim::Questions::QuestionBuilder.copy(
+              original_question,
               author: form.current_organization,
               action_user: form.current_user,
               extra_attributes: {
@@ -44,21 +44,21 @@ module Decidim
           end.compact
         end
 
-        def proposals
-          Decidim::Proposals::Proposal
+        def questions
+          Decidim::Questions::Question
             .where(component: origin_component)
-            .where(state: proposal_states)
+            .where(state: question_states)
         end
 
-        def proposal_states
-          @proposal_states = @form.states
+        def question_states
+          @question_states = @form.states
 
           if @form.states.include?("not_answered")
-            @proposal_states.delete("not_answered")
-            @proposal_states.push(nil)
+            @question_states.delete("not_answered")
+            @question_states.push(nil)
           end
 
-          @proposal_states
+          @question_states
         end
 
         def origin_component
@@ -69,9 +69,9 @@ module Decidim
           @form.current_component
         end
 
-        def proposal_already_copied?(original_proposal, target_component)
-          original_proposal.linked_resources(:proposals, "copied_from_component").any? do |proposal|
-            proposal.component == target_component
+        def question_already_copied?(original_question, target_component)
+          original_question.linked_resources(:questions, "copied_from_component").any? do |question|
+            question.component == target_component
           end
         end
       end

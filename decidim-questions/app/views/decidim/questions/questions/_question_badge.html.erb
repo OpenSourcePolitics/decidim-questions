@@ -1,6 +1,6 @@
-<% if proposal.answered? %>
-  <span class="<%= proposal_state_badge_css_class(proposal.state) %> label proposal-status"><%= humanize_proposal_state proposal.state %></span>
+<% if question.answered? %>
+  <span class="<%= question_state_badge_css_class(question.state) %> label question-status"><%= humanize_question_state question.state %></span>
 <% end %>
-<% if proposal.withdrawn? %>
-  <span class="<%= proposal_state_badge_css_class(proposal.state) %> label proposal-status"><%= humanize_proposal_state proposal.state %></span>
+<% if question.withdrawn? %>
+  <span class="<%= question_state_badge_css_class(question.state) %> label question-status"><%= humanize_question_state question.state %></span>
 <% end %>

@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A common abstract to be used by the Merge and Split proposals forms.
-      class ProposalsForkForm < Decidim::Form
-        mimic :proposals_import
+      # A common abstract to be used by the Merge and Split questions forms.
+      class QuestionsForkForm < Decidim::Form
+        mimic :questions_import
 
         attribute :target_component_id, Integer
-        attribute :proposal_ids, Array
+        attribute :question_ids, Array
 
-        validates :target_component, :proposals, :current_component, presence: true
+        validates :target_component, :questions, :current_component, presence: true
         validate :same_participatory_space
         validate :mergeable_to_same_component
 
-        def proposals
-          @proposals ||= Decidim::Proposals::Proposal.where(component: current_component, id: proposal_ids).uniq
+        def questions
+          @questions ||= Decidim::Questions::Question.where(component: current_component, id: question_ids).uniq
         end
 
         def target_component
@@ -32,11 +32,11 @@ module Decidim
         def mergeable_to_same_component
           return true unless same_component?
 
-          public_proposals = proposals.any? do |proposal|
-            !proposal.official? || proposal.votes.any? || proposal.endorsements.any?
+          public_questions = questions.any? do |question|
+            !question.official? || question.votes.any? || question.endorsements.any?
           end
 
-          errors.add(:proposal_ids, :invalid) if public_proposals
+          errors.add(:question_ids, :invalid) if public_questions
         end
 
         def same_participatory_space

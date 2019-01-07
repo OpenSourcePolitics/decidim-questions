@@ -3,8 +3,8 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalEndorsementsHelper do
+  module Questions
+    describe QuestionEndorsementsHelper do
       describe "Show endorsements card" do
         subject { helper.show_endorsements_card? }
 

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    ProposalType = GraphQL::ObjectType.define do
-      name "Proposal"
-      description "A proposal"
+  module Questions
+    QuestionType = GraphQL::ObjectType.define do
+      name "Question"
+      description "A question"
 
       interfaces [
         -> { Decidim::Comments::CommentableInterface },
@@ -15,33 +15,33 @@ module Decidim
       ]
 
       field :id, !types.ID
-      field :title, !types.String, "This proposal's title"
-      field :body, types.String, "This proposal's body"
-      field :state, types.String, "The state in which proposal is in"
-      field :address, types.String, "The physical address (location) of this proposal"
+      field :title, !types.String, "This question's title"
+      field :body, types.String, "This question's body"
+      field :state, types.String, "The state in which question is in"
+      field :address, types.String, "The physical address (location) of this question"
       field :reference, types.String, "This proposa'ls unique reference"
 
       field :publishedAt, Decidim::Core::DateTimeType do
-        description "The date and time this proposal was published"
+        description "The date and time this question was published"
         property :published_at
       end
 
-      field :endorsements, !types[Decidim::Core::AuthorInterface], "The endorsements of this proposal." do
-        resolve ->(proposal, _, _) {
-          proposal.endorsements.map(&:normalized_author)
+      field :endorsements, !types[Decidim::Core::AuthorInterface], "The endorsements of this question." do
+        resolve ->(question, _, _) {
+          question.endorsements.map(&:normalized_author)
         }
       end
 
       field :endorsementsCount, types.Int do
-        description "The total amount of endorsements the proposal has received"
-        property :proposal_endorsements_count
+        description "The total amount of endorsements the question has received"
+        property :question_endorsements_count
       end
 
       field :voteCount, types.Int do
-        description "The total amount of votes the proposal has received"
-        resolve ->(proposal, _args, _ctx) {
-          current_component = proposal.component
-          proposal.proposal_votes_count unless current_component.current_settings.votes_hidden?
+        description "The total amount of votes the question has received"
+        resolve ->(question, _args, _ctx) {
+          current_component = question.component
+          question.question_votes_count unless current_component.current_settings.votes_hidden?
         }
       end
     end

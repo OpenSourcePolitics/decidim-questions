@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A form object to be used when public users want to request acces to a Collaborative Draft.
     class RequestAccessToCollaborativeDraftForm < Decidim::Form
       mimic :collaborative_draft
@@ -13,7 +13,7 @@ module Decidim
       validates :state, presence: true, inclusion: { in: %w(open) }
 
       def collaborative_draft
-        @collaborative_draft ||= Decidim::Proposals::CollaborativeDraft.find id
+        @collaborative_draft ||= Decidim::Questions::CollaborativeDraft.find id
       end
     end
   end

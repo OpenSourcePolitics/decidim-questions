@@ -3,14 +3,14 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
       describe ImportParticipatoryText do
         describe "call" do
           let!(:document_file) { IO.read(Decidim::Dev.asset(document_name)) }
           let(:current_component) do
             create(
-              :proposal_component,
+              :question_component,
               participatory_space: create(:participatory_process)
             )
           end
@@ -29,15 +29,15 @@ module Decidim
           let(:command) { described_class.new(form) }
 
           shared_examples "import participatory_text succeeds" do
-            it "broadcasts ok and creates the proposals" do
+            it "broadcasts ok and creates the questions" do
               sections = 2
               sub_sections = 5
               expect { command.call }.to(
                 broadcast(:ok) &&
                 change { ParticipatoryText.where(component: current_component).count }.by(1) &&
-                change { Proposal.where(component: current_component, participatory_text_level: Decidim::Proposals::ParticipatoryTextSection::LEVELS[:section]).count }.by(sections) &&
-                change { Proposal.where(component: current_component, participatory_text_level: Decidim::Proposals::ParticipatoryTextSection::LEVELS[:sub_section]).count }.by(sub_sections) &&
-                change { Proposal.where(component: current_component, participatory_text_level: Decidim::Proposals::ParticipatoryTextSection::LEVELS[:article]).count }.by(articles)
+                change { Question.where(component: current_component, participatory_text_level: Decidim::Questions::ParticipatoryTextSection::LEVELS[:section]).count }.by(sections) &&
+                change { Question.where(component: current_component, participatory_text_level: Decidim::Questions::ParticipatoryTextSection::LEVELS[:sub_section]).count }.by(sub_sections) &&
+                change { Question.where(component: current_component, participatory_text_level: Decidim::Questions::ParticipatoryTextSection::LEVELS[:article]).count }.by(articles)
               )
             end
           end
@@ -51,10 +51,10 @@ module Decidim
               expect { command.call }.to broadcast(:invalid)
             end
 
-            it "doesn't create any proposal" do
+            it "doesn't create any question" do
               expect do
                 command.call
-              end.to change(Proposal, :count).by(0)
+              end.to change(Question, :count).by(0)
             end
           end
 

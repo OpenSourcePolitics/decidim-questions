@@ -3,15 +3,15 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalSearch do
-      let(:component) { create(:component, manifest_name: "proposals") }
+  module Questions
+    describe QuestionSearch do
+      let(:component) { create(:component, manifest_name: "questions") }
       let(:scope1) { create :scope, organization: component.organization }
       let(:scope2) { create :scope, organization: component.organization }
       let(:subscope1) { create :scope, organization: component.organization, parent: scope1 }
       let(:participatory_process) { component.participatory_space }
       let(:user) { create(:user, organization: component.organization) }
-      let!(:proposal) { create(:proposal, component: component, scope: scope1) }
+      let!(:question) { create(:question, component: component, scope: scope1) }
 
       describe "results" do
         subject do
@@ -34,20 +34,20 @@ module Decidim
         let(:state) { "not_withdrawn" }
         let(:scope_id) { nil }
 
-        it "only includes proposals from the given component" do
-          other_proposal = create(:proposal)
+        it "only includes questions from the given component" do
+          other_question = create(:question)
 
-          expect(subject).to include(proposal)
-          expect(subject).not_to include(other_proposal)
+          expect(subject).to include(question)
+          expect(subject).not_to include(other_question)
         end
 
         describe "search_text filter" do
           let(:search_text) { "dog" }
 
-          it "returns the proposals containing the search in the title or the body" do
-            create_list(:proposal, 3, component: component)
-            create(:proposal, title: "A dog", component: component)
-            create(:proposal, body: "There is a dog in the office", component: component)
+          it "returns the questions containing the search in the title or the body" do
+            create_list(:question, 3, component: component)
+            create(:question, title: "A dog", component: component)
+            create(:question, body: "There is a dog in the office", component: component)
 
             expect(subject.size).to eq(2)
           end
@@ -56,176 +56,176 @@ module Decidim
         describe "activity filter" do
           let(:activity) { ["voted"] }
 
-          it "returns the proposals voted by the user" do
-            create_list(:proposal, 3, component: component)
-            create(:proposal_vote, proposal: Proposal.first, author: user)
+          it "returns the questions voted by the user" do
+            create_list(:question, 3, component: component)
+            create(:question_vote, question: Question.first, author: user)
 
             expect(subject.size).to eq(1)
           end
         end
 
         describe "origin filter" do
-          context "when filtering official proposals" do
+          context "when filtering official questions" do
             let(:origin) { "official" }
 
-            it "returns only official proposals" do
-              official_proposals = create_list(:proposal, 3, :official, component: component)
-              create_list(:proposal, 3, component: component)
+            it "returns only official questions" do
+              official_questions = create_list(:question, 3, :official, component: component)
+              create_list(:question, 3, component: component)
 
               expect(subject.size).to eq(3)
-              expect(subject).to match_array(official_proposals)
+              expect(subject).to match_array(official_questions)
             end
           end
 
-          context "when filtering citizen proposals" do
+          context "when filtering citizen questions" do
             let(:origin) { "citizens" }
             let(:another_user) { create(:user, organization: component.organization) }
 
-            it "returns only citizen proposals" do
-              create_list(:proposal, 3, :official, component: component)
-              citizen_proposals = create_list(:proposal, 2, component: component)
-              proposal.add_coauthor(another_user)
-              citizen_proposals << proposal
+            it "returns only citizen questions" do
+              create_list(:question, 3, :official, component: component)
+              citizen_questions = create_list(:question, 2, component: component)
+              question.add_coauthor(another_user)
+              citizen_questions << question
 
               expect(subject.size).to eq(3)
-              expect(subject).to match_array(citizen_proposals)
+              expect(subject).to match_array(citizen_questions)
             end
           end
 
-          context "when filtering user groups proposals" do
+          context "when filtering user groups questions" do
             let(:origin) { "user_group" }
             let(:user_group) { create :user_group, :verified, users: [user], organization: user.organization }
 
-            it "returns only user groups proposals" do
-              create(:proposal, :official, component: component)
-              user_group_proposal = create(:proposal, component: component)
-              user_group_proposal.coauthorships.clear
-              user_group_proposal.add_coauthor(user, user_group: user_group)
+            it "returns only user groups questions" do
+              create(:question, :official, component: component)
+              user_group_question = create(:question, component: component)
+              user_group_question.coauthorships.clear
+              user_group_question.add_coauthor(user, user_group: user_group)
 
               expect(subject.size).to eq(1)
-              expect(subject).to eq([user_group_proposal])
+              expect(subject).to eq([user_group_question])
             end
           end
 
-          context "when filtering meetings proposals" do
+          context "when filtering meetings questions" do
             let(:origin) { "meeting" }
             let(:meeting) { create :meeting }
 
-            it "returns only meeting proposals" do
-              create(:proposal, :official, component: component)
-              meeting_proposal = create(:proposal, :official_meeting, component: component)
+            it "returns only meeting questions" do
+              create(:question, :official, component: component)
+              meeting_question = create(:question, :official_meeting, component: component)
 
               expect(subject.size).to eq(1)
-              expect(subject).to eq([meeting_proposal])
+              expect(subject).to eq([meeting_question])
             end
           end
         end
 
         describe "state filter" do
           context "when filtering for default states" do
-            it "returns all except withdrawn proposals" do
-              create_list(:proposal, 3, :withdrawn, component: component)
-              other_proposals = create_list(:proposal, 3, component: component)
-              other_proposals << proposal
+            it "returns all except withdrawn questions" do
+              create_list(:question, 3, :withdrawn, component: component)
+              other_questions = create_list(:question, 3, component: component)
+              other_questions << question
 
               expect(subject.size).to eq(4)
-              expect(subject).to match_array(other_proposals)
+              expect(subject).to match_array(other_questions)
             end
           end
 
-          context "when filtering :except_rejected proposals" do
+          context "when filtering :except_rejected questions" do
             let(:state) { "except_rejected" }
 
-            it "hides withdrawn and rejected proposals" do
-              create(:proposal, :withdrawn, component: component)
-              create(:proposal, :rejected, component: component)
-              accepted_proposal = create(:proposal, :accepted, component: component)
+            it "hides withdrawn and rejected questions" do
+              create(:question, :withdrawn, component: component)
+              create(:question, :rejected, component: component)
+              accepted_question = create(:question, :accepted, component: component)
 
               expect(subject.size).to eq(2)
-              expect(subject).to match_array([accepted_proposal, proposal])
+              expect(subject).to match_array([accepted_question, question])
             end
           end
 
-          context "when filtering accepted proposals" do
+          context "when filtering accepted questions" do
             let(:state) { "accepted" }
 
-            it "returns only accepted proposals" do
-              accepted_proposals = create_list(:proposal, 3, :accepted, component: component)
-              create_list(:proposal, 3, component: component)
+            it "returns only accepted questions" do
+              accepted_questions = create_list(:question, 3, :accepted, component: component)
+              create_list(:question, 3, component: component)
 
               expect(subject.size).to eq(3)
-              expect(subject).to match_array(accepted_proposals)
+              expect(subject).to match_array(accepted_questions)
             end
           end
 
-          context "when filtering rejected proposals" do
+          context "when filtering rejected questions" do
             let(:state) { "rejected" }
 
-            it "returns only rejected proposals" do
-              create_list(:proposal, 3, component: component)
-              rejected_proposals = create_list(:proposal, 3, :rejected, component: component)
+            it "returns only rejected questions" do
+              create_list(:question, 3, component: component)
+              rejected_questions = create_list(:question, 3, :rejected, component: component)
 
               expect(subject.size).to eq(3)
-              expect(subject).to match_array(rejected_proposals)
+              expect(subject).to match_array(rejected_questions)
             end
           end
 
-          context "when filtering withdrawn proposals" do
+          context "when filtering withdrawn questions" do
             let(:state) { "withdrawn" }
 
-            it "returns only withdrawn proposals" do
-              create_list(:proposal, 3, component: component)
-              withdrawn_proposals = create_list(:proposal, 3, :withdrawn, component: component)
+            it "returns only withdrawn questions" do
+              create_list(:question, 3, component: component)
+              withdrawn_questions = create_list(:question, 3, :withdrawn, component: component)
 
               expect(subject.size).to eq(3)
-              expect(subject).to match_array(withdrawn_proposals)
+              expect(subject).to match_array(withdrawn_questions)
             end
           end
         end
 
         describe "scope_id filter" do
-          let!(:proposal2) { create(:proposal, component: component, scope: scope2) }
-          let!(:proposal3) { create(:proposal, component: component, scope: subscope1) }
+          let!(:question2) { create(:question, component: component, scope: scope2) }
+          let!(:question3) { create(:question, component: component, scope: subscope1) }
 
           context "when a parent scope id is being sent" do
             let(:scope_id) { scope1.id }
 
-            it "filters proposals by scope" do
-              expect(subject).to match_array [proposal, proposal3]
+            it "filters questions by scope" do
+              expect(subject).to match_array [question, question3]
             end
           end
 
           context "when a subscope id is being sent" do
             let(:scope_id) { subscope1.id }
 
-            it "filters proposals by scope" do
-              expect(subject).to eq [proposal3]
+            it "filters questions by scope" do
+              expect(subject).to eq [question3]
             end
           end
 
           context "when multiple ids are sent" do
             let(:scope_id) { [scope2.id, scope1.id] }
 
-            it "filters proposals by scope" do
-              expect(subject).to match_array [proposal, proposal2, proposal3]
+            it "filters questions by scope" do
+              expect(subject).to match_array [question, question2, question3]
             end
           end
 
           context "when `global` is being sent" do
-            let!(:resource_without_scope) { create(:proposal, component: component, scope: nil) }
+            let!(:resource_without_scope) { create(:question, component: component, scope: nil) }
             let(:scope_id) { ["global"] }
 
-            it "returns proposals without a scope" do
+            it "returns questions without a scope" do
               expect(subject).to eq [resource_without_scope]
             end
           end
 
           context "when `global` and some ids is being sent" do
-            let!(:resource_without_scope) { create(:proposal, component: component, scope: nil) }
+            let!(:resource_without_scope) { create(:question, component: component, scope: nil) }
             let(:scope_id) { ["global", scope2.id, scope1.id] }
 
-            it "returns proposals without a scope and with selected scopes" do
-              expect(subject).to match_array [resource_without_scope, proposal, proposal2, proposal3]
+            it "returns questions without a scope and with selected scopes" do
+              expect(subject).to match_array [resource_without_scope, question, question2, question3]
             end
           end
         end
@@ -236,14 +236,14 @@ module Decidim
             let(:meetings_component) { create(:component, manifest_name: "meetings", participatory_space: participatory_process) }
             let(:meeting) { create :meeting, component: meetings_component }
 
-            it "returns only proposals related to meetings" do
-              related_proposal = create(:proposal, :accepted, component: component)
-              related_proposal2 = create(:proposal, :accepted, component: component)
-              create_list(:proposal, 3, component: component)
-              meeting.link_resources([related_proposal], "proposals_from_meeting")
-              related_proposal2.link_resources([meeting], "proposals_from_meeting")
+            it "returns only questions related to meetings" do
+              related_question = create(:question, :accepted, component: component)
+              related_question2 = create(:question, :accepted, component: component)
+              create_list(:question, 3, component: component)
+              meeting.link_resources([related_question], "questions_from_meeting")
+              related_question2.link_resources([meeting], "questions_from_meeting")
 
-              expect(subject).to match_array([related_proposal, related_proposal2])
+              expect(subject).to match_array([related_question, related_question2])
             end
           end
 
@@ -252,14 +252,14 @@ module Decidim
             let(:dummy_component) { create(:component, manifest_name: "dummy", participatory_space: participatory_process) }
             let(:dummy_resource) { create :dummy_resource, component: dummy_component }
 
-            it "returns only proposals related to results" do
-              related_proposal = create(:proposal, :accepted, component: component)
-              related_proposal2 = create(:proposal, :accepted, component: component)
-              create_list(:proposal, 3, component: component)
-              dummy_resource.link_resources([related_proposal], "included_proposals")
-              related_proposal2.link_resources([dummy_resource], "included_proposals")
+            it "returns only questions related to results" do
+              related_question = create(:question, :accepted, component: component)
+              related_question2 = create(:question, :accepted, component: component)
+              create_list(:question, 3, component: component)
+              dummy_resource.link_resources([related_question], "included_questions")
+              related_question2.link_resources([dummy_resource], "included_questions")
 
-              expect(subject).to match_array([related_proposal, related_proposal2])
+              expect(subject).to match_array([related_question, related_question2])
             end
           end
         end

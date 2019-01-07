@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A command with all the business logic when a user creates a new proposal.
-    class CreateProposal < Rectify::Command
+  module Questions
+    # A command with all the business logic when a user creates a new question.
+    class CreateQuestion < Rectify::Command
       include AttachmentMethods
       include HashtagsMethods
 
@@ -11,7 +11,7 @@ module Decidim
       #
       # form         - A form object with the params.
       # current_user - The current user.
-      # coauthorships - The coauthorships of the proposal.
+      # coauthorships - The coauthorships of the question.
       def initialize(form, current_user, coauthorships = nil)
         @form = form
         @current_user = current_user
@@ -20,30 +20,30 @@ module Decidim
 
       # Executes the command. Broadcasts these events:
       #
-      # - :ok when everything is valid, together with the proposal.
+      # - :ok when everything is valid, together with the question.
       # - :invalid if the form wasn't valid and we couldn't proceed.
       #
       # Returns nothing.
       def call
         return broadcast(:invalid) if form.invalid?
 
-        if proposal_limit_reached?
-          form.errors.add(:base, I18n.t("decidim.proposals.new.limit_reached"))
+        if question_limit_reached?
+          form.errors.add(:base, I18n.t("decidim.questions.new.limit_reached"))
           return broadcast(:invalid)
         end
 
         transaction do
-          create_proposal
+          create_question
         end
 
-        broadcast(:ok, proposal)
+        broadcast(:ok, question)
       end
 
       private
 
-      attr_reader :form, :proposal, :attachment
+      attr_reader :form, :question, :attachment
 
-      def proposal_attributes
+      def question_attributes
         fields = {}
 
         fields[:title] = title_with_hashtags
@@ -55,31 +55,31 @@ module Decidim
 
       # This will be the PaperTrail version that is
       # shown in the version control feature (1 of 1)
-      def create_proposal
-        @proposal = Decidim.traceability.perform_action!(
+      def create_question
+        @question = Decidim.traceability.perform_action!(
           :create,
-          Decidim::Proposals::Proposal,
+          Decidim::Questions::Question,
           @current_user,
           visibility: "public-only"
         ) do
-          proposal = Proposal.new(proposal_attributes)
-          proposal.add_coauthor(@current_user, user_group: user_group)
-          proposal.save!
-          proposal
+          question = Question.new(question_attributes)
+          question.add_coauthor(@current_user, user_group: user_group)
+          question.save!
+          question
         end
       end
 
-      def proposal_limit_reached?
+      def question_limit_reached?
         return false if @coauthorships.present?
 
-        proposal_limit = form.current_component.settings.proposal_limit
+        question_limit = form.current_component.settings.question_limit
 
-        return false if proposal_limit.zero?
+        return false if question_limit.zero?
 
         if user_group
-          user_group_proposals.count >= proposal_limit
+          user_group_questions.count >= question_limit
         else
-          current_user_proposals.count >= proposal_limit
+          current_user_questions.count >= question_limit
         end
       end
 
@@ -91,12 +91,12 @@ module Decidim
         @organization ||= @current_user.organization
       end
 
-      def current_user_proposals
-        Proposal.from_author(@current_user).where(component: form.current_component).except_withdrawn
+      def current_user_questions
+        Question.from_author(@current_user).where(component: form.current_component).except_withdrawn
       end
 
-      def user_group_proposals
-        Proposal.from_user_group(@user_group).where(component: form.current_component).except_withdrawn
+      def user_group_questions
+        Question.from_user_group(@user_group).where(component: form.current_component).except_withdrawn
       end
     end
   end

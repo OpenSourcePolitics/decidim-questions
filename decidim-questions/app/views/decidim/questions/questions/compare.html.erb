@@ -4,16 +4,16 @@
   <div class="columns large-6">
     <%= render partial: "wizard_header", locals: { callout_step_help_text_class: "warning" } %>
 
-    <% if @similar_proposals.presence %>
+    <% if @similar_questions.presence %>
       <div class="row small-up-1 card-grid">
-        <% @similar_proposals.each do |proposal| %>
-          <%= render partial: "proposal_similar", locals: { proposal: proposal } %>
+        <% @similar_questions.each do |question| %>
+          <%= render partial: "question_similar", locals: { question: question } %>
         <% end %>
       </div>
     <% end %>
 
     <div class="row column text-center">
-      <%= link_to t(".mine_is_different"), complete_proposal_path(@proposal), class: "button small" %>
+      <%= link_to t(".mine_is_different"), complete_question_path(@question), class: "button small" %>
     </div>
   </div>
 

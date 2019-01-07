@@ -2,35 +2,35 @@
 
 require "spec_helper"
 
-describe "Endorse Proposal", type: :system do
+describe "Endorse Question", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
-  let!(:proposals) { create_list(:proposal, 3, component: component) }
-  let!(:proposal) { Decidim::Proposals::Proposal.find_by(component: component) }
+  let!(:questions) { create_list(:question, 3, component: component) }
+  let!(:question) { Decidim::Questions::Question.find_by(component: component) }
   let!(:user) { create :user, :confirmed, organization: organization }
 
   def expect_page_not_to_include_endorsements
     expect(page).to have_no_button("Endorse")
-    expect(page).to have_no_css("#proposal-#{proposal.id}-endorsements-count")
+    expect(page).to have_no_css("#question-#{question.id}-endorsements-count")
   end
 
-  def visit_proposal
+  def visit_question
     visit_component
-    click_link proposal.title
+    click_link question.title
   end
 
   context "when endorsements are not enabled" do
     let!(:component) do
-      create(:proposal_component,
+      create(:question_component,
              :with_votes_enabled, :with_endorsements_disabled,
              manifest: manifest,
              participatory_space: participatory_process)
     end
 
     context "when the user is not logged in" do
-      it "doesn't show the endorse proposal button and counts" do
-        visit_proposal
+      it "doesn't show the endorse question button and counts" do
+        visit_question
         expect_page_not_to_include_endorsements
       end
     end
@@ -40,8 +40,8 @@ describe "Endorse Proposal", type: :system do
         login_as user, scope: :user
       end
 
-      it "doesn't show the endorse proposal button and counts" do
-        visit_proposal
+      it "doesn't show the endorse question button and counts" do
+        visit_question
         expect_page_not_to_include_endorsements
       end
     end
@@ -49,14 +49,14 @@ describe "Endorse Proposal", type: :system do
 
   context "when endorsements are blocked" do
     let!(:component) do
-      create(:proposal_component,
+      create(:question_component,
              :with_votes_enabled, :with_endorsements_blocked,
              manifest: manifest,
              participatory_space: participatory_process)
     end
 
     it "shows the endorsements count and the endorse button is disabled" do
-      visit_proposal
+      visit_question
       expect(page).to have_css(".buttons__row span[disabled]")
     end
   end
@@ -65,11 +65,11 @@ describe "Endorse Proposal", type: :system do
     context "when the user is not logged in" do
       before do
         visit_component
-        click_link proposal.title
+        click_link question.title
       end
 
       it "is given the option to sign in" do
-        visit_proposal
+        visit_question
         within ".buttons__row", match: :first do
           click_button "Endorse"
         end
@@ -84,45 +84,45 @@ describe "Endorse Proposal", type: :system do
         login_as user, scope: :user
       end
 
-      context "when the proposal is not endorsed yet" do
+      context "when the question is not endorsed yet" do
         let(:endorsement) {}
 
-        it "is able to endorse the proposal" do
-          visit_proposal
+        it "is able to endorse the question" do
+          visit_question
           within ".buttons__row" do
             click_button "Endorse"
             expect(page).to have_button("Endorsed")
           end
 
-          within "#proposal-#{proposal.id}-endorsements-count" do
+          within "#question-#{question.id}-endorsements-count" do
             expect(page).to have_content("1")
           end
         end
       end
 
-      context "when the proposal is already endorsed" do
-        let(:endorsement) { create(:proposal_endorsement, proposal: proposal, author: user) }
+      context "when the question is already endorsed" do
+        let(:endorsement) { create(:question_endorsement, question: question, author: user) }
 
         it "is not able to endorse it again" do
-          visit_proposal
+          visit_question
           within ".buttons__row" do
             expect(page).to have_button("Endorsed")
             expect(page).to have_no_button("Endorse ")
           end
 
-          within "#proposal-#{proposal.id}-endorsements-count" do
+          within "#question-#{question.id}-endorsements-count" do
             expect(page).to have_content("1")
           end
         end
 
         it "is able to undo the endorsement" do
-          visit_proposal
+          visit_question
           within ".buttons__row" do
             click_button "Endorsed"
             expect(page).to have_button("Endorse")
           end
 
-          within "#proposal-#{proposal.id}-endorsements-count" do
+          within "#question-#{question.id}-endorsements-count" do
             expect(page).to have_content("0")
           end
         end
@@ -142,7 +142,7 @@ describe "Endorse Proposal", type: :system do
 
         context "when user is NOT verified" do
           it "is NOT able to endorse" do
-            visit_proposal
+            visit_question
             within ".buttons__row", match: :first do
               click_button "Endorse"
             end
@@ -160,7 +160,7 @@ describe "Endorse Proposal", type: :system do
           end
 
           it "IS able to endorse" do
-            visit_proposal
+            visit_question
             within ".buttons__row", match: :first do
               click_button "Endorse"
             end

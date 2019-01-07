@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-class FixNilThresholdPerProposal < ActiveRecord::Migration[5.1]
+class FixNilThresholdPerQuestion < ActiveRecord::Migration[5.1]
   class Component < ApplicationRecord
     self.table_name = :decidim_components
   end
 
   def change
-    proposal_components = Component.where(manifest_name: "proposals")
+    question_components = Component.where(manifest_name: "questions")
 
-    proposal_components.each do |component|
+    question_components.each do |component|
       settings = component.attributes["settings"]
-      settings["global"]["threshold_per_proposal"] ||= 0
+      settings["global"]["threshold_per_question"] ||= 0
       component.settings = settings
       component.save
     end

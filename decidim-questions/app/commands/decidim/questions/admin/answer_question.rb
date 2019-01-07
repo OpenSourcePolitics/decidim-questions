@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when an admin answers a proposal.
-      class AnswerProposal < Rectify::Command
+      # A command with all the business logic when an admin answers a question.
+      class AnswerQuestion < Rectify::Command
         # Public: Initializes the command.
         #
         # form - A form object with the params.
-        # proposal - The proposal to write the answer for.
-        def initialize(form, proposal)
+        # question - The question to write the answer for.
+        def initialize(form, question)
           @form = form
-          @proposal = proposal
+          @question = question
         end
 
         # Executes the command. Broadcasts these events:
@@ -23,7 +23,7 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
-          answer_proposal
+          answer_question
           notify_followers
           increment_score
 
@@ -32,15 +32,15 @@ module Decidim
 
         private
 
-        attr_reader :form, :proposal
+        attr_reader :form, :question
 
-        def answer_proposal
+        def answer_question
           Decidim.traceability.perform_action!(
             "answer",
-            proposal,
+            question,
             form.current_user
           ) do
-            proposal.update!(
+            question.update!(
               state: @form.state,
               answer: @form.answer,
               answered_at: Time.current
@@ -49,22 +49,22 @@ module Decidim
         end
 
         def notify_followers
-          return if (proposal.previous_changes.keys & %w(state)).empty?
+          return if (question.previous_changes.keys & %w(state)).empty?
 
-          if proposal.accepted?
+          if question.accepted?
             publish_event(
-              "decidim.events.proposals.proposal_accepted",
-              Decidim::Proposals::AcceptedProposalEvent
+              "decidim.events.questions.question_accepted",
+              Decidim::Questions::AcceptedQuestionEvent
             )
-          elsif proposal.rejected?
+          elsif question.rejected?
             publish_event(
-              "decidim.events.proposals.proposal_rejected",
-              Decidim::Proposals::RejectedProposalEvent
+              "decidim.events.questions.question_rejected",
+              Decidim::Questions::RejectedQuestionEvent
             )
-          elsif proposal.evaluating?
+          elsif question.evaluating?
             publish_event(
-              "decidim.events.proposals.proposal_evaluating",
-              Decidim::Proposals::EvaluatingProposalEvent
+              "decidim.events.questions.question_evaluating",
+              Decidim::Questions::EvaluatingQuestionEvent
             )
           end
         end
@@ -73,20 +73,20 @@ module Decidim
           Decidim::EventsManager.publish(
             event: event,
             event_class: event_class,
-            resource: proposal,
-            affected_users: proposal.notifiable_identities,
-            followers: proposal.followers - proposal.notifiable_identities
+            resource: question,
+            affected_users: question.notifiable_identities,
+            followers: question.followers - question.notifiable_identities
           )
         end
 
         def increment_score
-          return unless proposal.accepted?
+          return unless question.accepted?
 
-          proposal.coauthorships.find_each do |coauthorship|
+          question.coauthorships.find_each do |coauthorship|
             if coauthorship.user_group
-              Decidim::Gamification.increment_score(coauthorship.user_group, :accepted_proposals)
+              Decidim::Gamification.increment_score(coauthorship.user_group, :accepted_questions)
             else
-              Decidim::Gamification.increment_score(coauthorship.author, :accepted_proposals)
+              Decidim::Gamification.increment_score(coauthorship.author, :accepted_questions)
             end
           end
         end

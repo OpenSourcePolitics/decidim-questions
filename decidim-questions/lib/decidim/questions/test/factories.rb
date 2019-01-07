@@ -5,9 +5,9 @@ require "decidim/participatory_processes/test/factories"
 require "decidim/meetings/test/factories"
 
 FactoryBot.define do
-  factory :proposal_component, parent: :component do
-    name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :proposals).i18n_name }
-    manifest_name { :proposals }
+  factory :question_component, parent: :component do
+    name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :questions).i18n_name }
+    manifest_name { :questions }
     participatory_space { create(:participatory_process, :with_steps, organization: organization) }
 
     trait :with_endorsements_enabled do
@@ -62,26 +62,26 @@ FactoryBot.define do
       end
     end
 
-    trait :with_proposal_limit do
+    trait :with_question_limit do
       transient do
-        proposal_limit { 1 }
+        question_limit { 1 }
       end
 
       settings do
         {
-          proposal_limit: proposal_limit
+          question_limit: question_limit
         }
       end
     end
 
-    trait :with_proposal_length do
+    trait :with_question_length do
       transient do
-        proposal_length { 500 }
+        question_length { 500 }
       end
 
       settings do
         {
-          proposal_length: proposal_length
+          question_length: question_length
         }
       end
     end
@@ -132,14 +132,14 @@ FactoryBot.define do
       end
     end
 
-    trait :with_threshold_per_proposal do
+    trait :with_threshold_per_question do
       transient do
-        threshold_per_proposal { 1 }
+        threshold_per_question { 1 }
       end
 
       settings do
         {
-          threshold_per_proposal: threshold_per_proposal
+          threshold_per_question: threshold_per_question
         }
       end
     end
@@ -241,7 +241,7 @@ FactoryBot.define do
     end
   end
 
-  factory :proposal, class: "Decidim::Proposals::Proposal" do
+  factory :question, class: "Decidim::Questions::Question" do
     transient do
       users { nil }
       # user_groups correspondence to users is by sorting order
@@ -250,16 +250,16 @@ FactoryBot.define do
 
     title { generate(:title) }
     body { Faker::Lorem.sentences(3).join("\n") }
-    component { create(:proposal_component) }
+    component { create(:question_component) }
     published_at { Time.current }
     address { "#{Faker::Address.street_name}, #{Faker::Address.city}" }
 
-    after(:build) do |proposal, evaluator|
-      if proposal.component
-        users = evaluator.users || [create(:user, organization: proposal.component.participatory_space.organization)]
+    after(:build) do |question, evaluator|
+      if question.component
+        users = evaluator.users || [create(:user, organization: question.component.participatory_space.organization)]
         users.each_with_index do |user, idx|
           user_group = evaluator.user_groups[idx]
-          proposal.coauthorships.build(author: user, user_group: user_group)
+          question.coauthorships.build(author: user, user_group: user_group)
         end
       end
     end
@@ -273,17 +273,17 @@ FactoryBot.define do
     end
 
     trait :official do
-      after :build do |proposal|
-        proposal.coauthorships.clear
-        proposal.coauthorships.build(author: proposal.organization)
+      after :build do |question|
+        question.coauthorships.clear
+        question.coauthorships.build(author: question.organization)
       end
     end
 
     trait :official_meeting do
-      after :build do |proposal|
-        proposal.coauthorships.clear
-        component = create(:meeting_component, participatory_space: proposal.component.participatory_space)
-        proposal.coauthorships.build(author: build(:meeting, component: component))
+      after :build do |question|
+        question.coauthorships.clear
+        component = create(:meeting_component, participatory_space: question.component.participatory_space)
+        question.coauthorships.build(author: build(:meeting, component: component))
       end
     end
 
@@ -317,47 +317,47 @@ FactoryBot.define do
     end
 
     trait :hidden do
-      after :create do |proposal|
-        create(:moderation, hidden_at: Time.current, reportable: proposal)
+      after :create do |question|
+        create(:moderation, hidden_at: Time.current, reportable: question)
       end
     end
 
     trait :with_votes do
-      after :create do |proposal|
-        create_list(:proposal_vote, 5, proposal: proposal)
+      after :create do |question|
+        create_list(:question_vote, 5, question: question)
       end
     end
 
     trait :with_endorsements do
-      after :create do |proposal|
-        create_list(:proposal_endorsement, 5, proposal: proposal)
+      after :create do |question|
+        create_list(:question_endorsement, 5, question: question)
       end
     end
   end
 
-  factory :proposal_vote, class: "Decidim::Proposals::ProposalVote" do
-    proposal { build(:proposal) }
-    author { build(:user, organization: proposal.organization) }
+  factory :question_vote, class: "Decidim::Questions::QuestionVote" do
+    question { build(:question) }
+    author { build(:user, organization: question.organization) }
   end
 
-  factory :proposal_endorsement, class: "Decidim::Proposals::ProposalEndorsement" do
-    proposal { build(:proposal) }
-    author { build(:user, organization: proposal.organization) }
+  factory :question_endorsement, class: "Decidim::Questions::QuestionEndorsement" do
+    question { build(:question) }
+    author { build(:user, organization: question.organization) }
   end
 
-  factory :user_group_proposal_endorsement, class: "Decidim::Proposals::ProposalEndorsement" do
-    proposal { build(:proposal) }
-    author { build(:user, organization: proposal.organization) }
-    user_group { create(:user_group, verified_at: Time.current, organization: proposal.organization, users: [author]) }
+  factory :user_group_question_endorsement, class: "Decidim::Questions::QuestionEndorsement" do
+    question { build(:question) }
+    author { build(:user, organization: question.organization) }
+    user_group { create(:user_group, verified_at: Time.current, organization: question.organization, users: [author]) }
   end
 
-  factory :proposal_note, class: "Decidim::Proposals::ProposalNote" do
+  factory :question_note, class: "Decidim::Questions::QuestionNote" do
     body { Faker::Lorem.sentences(3).join("\n") }
-    proposal { build(:proposal) }
-    author { build(:user, organization: proposal.organization) }
+    question { build(:question) }
+    author { build(:user, organization: question.organization) }
   end
 
-  factory :collaborative_draft, class: "Decidim::Proposals::CollaborativeDraft" do
+  factory :collaborative_draft, class: "Decidim::Questions::CollaborativeDraft" do
     transient do
       users { nil }
       # user_groups correspondence to users is by sorting order
@@ -366,7 +366,7 @@ FactoryBot.define do
 
     title { generate(:title) }
     body { Faker::Lorem.sentences(3).join("\n") }
-    component { create(:proposal_component) }
+    component { create(:question_component) }
     address { "#{Faker::Address.street_name}, #{Faker::Address.city}" }
     state { "open" }
 
@@ -394,9 +394,9 @@ FactoryBot.define do
     end
   end
 
-  factory :participatory_text, class: "Decidim::Proposals::ParticipatoryText" do
+  factory :participatory_text, class: "Decidim::Questions::ParticipatoryText" do
     title { Faker::Hacker.say_something_smart }
     description { Faker::Lorem.sentences(3).join("\n") }
-    component { create(:proposal_component) }
+    component { create(:question_component) }
   end
 end

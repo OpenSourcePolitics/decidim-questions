@@ -3,20 +3,20 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe AnswerProposal do
+      describe AnswerQuestion do
         describe "call" do
-          let(:proposal) { create(:proposal) }
+          let(:question) { create(:question) }
           let(:current_user) { create(:user, :admin) }
-          let(:form) { ProposalAnswerForm.from_params(form_params).with_context(current_user: current_user) }
+          let(:form) { QuestionAnswerForm.from_params(form_params).with_context(current_user: current_user) }
           let(:form_params) do
             {
               state: "rejected", answer: { en: "Foo" }
             }
           end
 
-          let(:command) { described_class.new(form, proposal) }
+          let(:command) { described_class.new(form, question) }
 
           describe "when the form is not valid" do
             before do
@@ -27,8 +27,8 @@ module Decidim
               expect { command.call }.to broadcast(:invalid)
             end
 
-            it "doesn't update the proposal" do
-              expect(proposal).not_to receive(:update!)
+            it "doesn't update the question" do
+              expect(question).not_to receive(:update!)
               command.call
             end
           end
@@ -42,10 +42,10 @@ module Decidim
               expect { command.call }.to broadcast(:ok)
             end
 
-            it "updates the proposal" do
+            it "updates the question" do
               command.call
 
-              expect(proposal.reload).to be_answered
+              expect(question.reload).to be_answered
             end
 
             context "when accepted" do
@@ -55,7 +55,7 @@ module Decidim
 
               it "updates the gamification score for their authors" do
                 expect { command.call }.to change {
-                  Decidim::Gamification.status_for(proposal.authors.first, :accepted_proposals).score
+                  Decidim::Gamification.status_for(question.authors.first, :accepted_questions).score
                 }.by(1)
               end
             end
@@ -67,7 +67,7 @@ module Decidim
 
               it "doesn't update the gamification score for their authors" do
                 expect { command.call }.to change {
-                  Decidim::Gamification.status_for(proposal.authors.first, :accepted_proposals).score
+                  Decidim::Gamification.status_for(question.authors.first, :accepted_questions).score
                 }.by(0)
               end
             end
@@ -75,7 +75,7 @@ module Decidim
             it "traces the action", versioning: true do
               expect(Decidim.traceability)
                 .to receive(:perform_action!)
-                .with("answer", proposal, form.current_user)
+                .with("answer", question, form.current_user)
                 .and_call_original
 
               expect { command.call }.to change(Decidim::ActionLog, :count)
@@ -85,17 +85,17 @@ module Decidim
             end
 
             context "when the state changes" do
-              it "notifies the proposal followers" do
-                follower = create(:user, organization: proposal.organization)
-                create(:follow, followable: proposal, user: follower)
+              it "notifies the question followers" do
+                follower = create(:user, organization: question.organization)
+                create(:follow, followable: question, user: follower)
 
                 expect(Decidim::EventsManager)
                   .to receive(:publish)
                   .with(
-                    event: "decidim.events.proposals.proposal_rejected",
-                    event_class: Decidim::Proposals::RejectedProposalEvent,
-                    resource: proposal,
-                    affected_users: match_array([proposal.creator_author]),
+                    event: "decidim.events.questions.question_rejected",
+                    event_class: Decidim::Questions::RejectedQuestionEvent,
+                    resource: question,
+                    affected_users: match_array([question.creator_author]),
                     followers: match_array([follower])
                   )
 

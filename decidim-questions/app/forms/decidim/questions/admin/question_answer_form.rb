@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A form object to be used when admin users want to answer a proposal.
-      class ProposalAnswerForm < Decidim::Form
+      # A form object to be used when admin users want to answer a question.
+      class QuestionAnswerForm < Decidim::Form
         include TranslatableAttributes
-        mimic :proposal_answer
+        mimic :question_answer
 
         translatable_attribute :answer, String
         attribute :state, String

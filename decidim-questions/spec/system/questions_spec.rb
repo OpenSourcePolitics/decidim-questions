@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-describe "Proposals", type: :system do
+describe "Questions", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
   let!(:category) { create :category, participatory_space: participatory_process }
   let!(:scope) { create :scope, organization: organization }
@@ -29,78 +29,78 @@ describe "Proposals", type: :system do
     match_when_negated { |node| node.has_no_selector?(".author-data__extra", text: date) }
   end
 
-  context "when viewing a single proposal" do
+  context "when viewing a single question" do
     let!(:component) do
-      create(:proposal_component,
+      create(:question_component,
              manifest: manifest,
              participatory_space: participatory_process)
     end
 
-    let!(:proposals) { create_list(:proposal, 3, component: component) }
+    let!(:questions) { create_list(:question, 3, component: component) }
 
-    it "allows viewing a single proposal" do
-      proposal = proposals.first
+    it "allows viewing a single question" do
+      question = questions.first
 
       visit_component
 
-      click_link proposal.title
+      click_link question.title
 
-      expect(page).to have_content(proposal.title)
-      expect(page).to have_content(proposal.body)
-      expect(page).to have_author(proposal.creator_author.name)
-      expect(page).to have_content(proposal.reference)
-      expect(page).to have_creation_date(I18n.l(proposal.published_at, format: :decidim_short))
+      expect(page).to have_content(question.title)
+      expect(page).to have_content(question.body)
+      expect(page).to have_author(question.creator_author.name)
+      expect(page).to have_content(question.reference)
+      expect(page).to have_creation_date(I18n.l(question.published_at, format: :decidim_short))
     end
 
     context "when process is not related to any scope" do
-      let!(:proposal) { create(:proposal, component: component, scope: scope) }
+      let!(:question) { create(:question, component: component, scope: scope) }
 
       it "can be filtered by scope" do
         visit_component
-        click_link proposal.title
+        click_link question.title
         expect(page).to have_content(translated(scope.name))
       end
     end
 
     context "when process is related to a child scope" do
-      let!(:proposal) { create(:proposal, component: component, scope: scope) }
+      let!(:question) { create(:question, component: component, scope: scope) }
       let(:participatory_process) { scoped_participatory_process }
 
       it "does not show the scope name" do
         visit_component
-        click_link proposal.title
+        click_link question.title
         expect(page).to have_no_content(translated(scope.name))
       end
     end
 
-    context "when it is an official proposal" do
-      let!(:official_proposal) { create(:proposal, :official, component: component) }
+    context "when it is an official question" do
+      let!(:official_question) { create(:question, :official, component: component) }
 
       it "shows the author as official" do
         visit_component
-        click_link official_proposal.title
-        expect(page).to have_content("Official proposal")
+        click_link official_question.title
+        expect(page).to have_content("Official question")
       end
     end
 
-    context "when it is an official meeting proposal" do
-      let!(:official_meeting_proposal) { create(:proposal, :official_meeting, component: component) }
+    context "when it is an official meeting question" do
+      let!(:official_meeting_question) { create(:question, :official_meeting, component: component) }
 
       it "shows the author as meeting" do
         visit_component
-        click_link official_meeting_proposal.title
-        expect(page).to have_content(translated(official_meeting_proposal.authors.first.title))
+        click_link official_meeting_question.title
+        expect(page).to have_content(translated(official_meeting_question.authors.first.title))
       end
     end
 
-    context "when a proposal has comments" do
-      let(:proposal) { create(:proposal, component: component) }
+    context "when a question has comments" do
+      let(:question) { create(:question, component: component) }
       let(:author) { create(:user, :confirmed, organization: component.organization) }
-      let!(:comments) { create_list(:comment, 3, commentable: proposal) }
+      let!(:comments) { create_list(:comment, 3, commentable: question) }
 
       it "shows the comments" do
         visit_component
-        click_link proposal.title
+        click_link question.title
 
         comments.each do |comment|
           expect(page).to have_content(comment.body)
@@ -108,160 +108,160 @@ describe "Proposals", type: :system do
       end
     end
 
-    context "when a proposal has been linked in a meeting" do
-      let(:proposal) { create(:proposal, component: component) }
+    context "when a question has been linked in a meeting" do
+      let(:question) { create(:question, component: component) }
       let(:meeting_component) do
-        create(:component, manifest_name: :meetings, participatory_space: proposal.component.participatory_space)
+        create(:component, manifest_name: :meetings, participatory_space: question.component.participatory_space)
       end
       let(:meeting) { create(:meeting, component: meeting_component) }
 
       before do
-        meeting.link_resources([proposal], "proposals_from_meeting")
+        meeting.link_resources([question], "questions_from_meeting")
       end
 
       it "shows related meetings" do
         visit_component
-        click_link proposal.title
+        click_link question.title
 
         expect(page).to have_i18n_content(meeting.title)
       end
     end
 
-    context "when a proposal has been linked in a result" do
-      let(:proposal) { create(:proposal, component: component) }
+    context "when a question has been linked in a result" do
+      let(:question) { create(:question, component: component) }
       let(:accountability_component) do
-        create(:component, manifest_name: :accountability, participatory_space: proposal.component.participatory_space)
+        create(:component, manifest_name: :accountability, participatory_space: question.component.participatory_space)
       end
       let(:result) { create(:result, component: accountability_component) }
 
       before do
-        result.link_resources([proposal], "included_proposals")
+        result.link_resources([question], "included_questions")
       end
 
       it "shows related resources" do
         visit_component
-        click_link proposal.title
+        click_link question.title
 
         expect(page).to have_i18n_content(result.title)
       end
     end
 
-    context "when a proposal is in evaluation" do
-      let!(:proposal) { create(:proposal, :with_answer, :evaluating, component: component) }
+    context "when a question is in evaluation" do
+      let!(:question) { create(:question, :with_answer, :evaluating, component: component) }
 
       it "shows a badge and an answer" do
         visit_component
-        click_link proposal.title
+        click_link question.title
 
         expect(page).to have_content("Evaluating")
 
         within ".callout.secondary" do
-          expect(page).to have_content("This proposal is being evaluated")
-          expect(page).to have_i18n_content(proposal.answer)
+          expect(page).to have_content("This question is being evaluated")
+          expect(page).to have_i18n_content(question.answer)
         end
       end
     end
 
-    context "when a proposal has been rejected" do
-      let!(:proposal) { create(:proposal, :with_answer, :rejected, component: component) }
+    context "when a question has been rejected" do
+      let!(:question) { create(:question, :with_answer, :rejected, component: component) }
 
       it "shows the rejection reason" do
         visit_component
         choose "filter_state_rejected"
-        page.find_link(proposal.title, wait: 30)
-        click_link proposal.title
+        page.find_link(question.title, wait: 30)
+        click_link question.title
 
         expect(page).to have_content("Rejected")
 
         within ".callout.warning" do
-          expect(page).to have_content("This proposal has been rejected")
-          expect(page).to have_i18n_content(proposal.answer)
+          expect(page).to have_content("This question has been rejected")
+          expect(page).to have_i18n_content(question.answer)
         end
       end
     end
 
-    context "when a proposal has been accepted" do
-      let!(:proposal) { create(:proposal, :with_answer, :accepted, component: component) }
+    context "when a question has been accepted" do
+      let!(:question) { create(:question, :with_answer, :accepted, component: component) }
 
       it "shows the acceptance reason" do
         visit_component
-        click_link proposal.title
+        click_link question.title
 
         expect(page).to have_content("Accepted")
 
         within ".callout.success" do
-          expect(page).to have_content("This proposal has been accepted")
-          expect(page).to have_i18n_content(proposal.answer)
+          expect(page).to have_content("This question has been accepted")
+          expect(page).to have_i18n_content(question.answer)
         end
       end
     end
 
-    context "when the proposals'a author account has been deleted" do
-      let(:proposal) { proposals.first }
+    context "when the questions'a author account has been deleted" do
+      let(:question) { questions.first }
 
       before do
-        Decidim::DestroyAccount.call(proposal.creator_author, Decidim::DeleteAccountForm.from_params({}))
+        Decidim::DestroyAccount.call(question.creator_author, Decidim::DeleteAccountForm.from_params({}))
       end
 
       it "the user is displayed as a deleted user" do
         visit_component
 
-        click_link proposal.title
+        click_link question.title
 
         expect(page).to have_content("Deleted user")
       end
     end
   end
 
-  context "when a proposal has been linked in a project" do
+  context "when a question has been linked in a project" do
     let(:component) do
-      create(:proposal_component,
+      create(:question_component,
              manifest: manifest,
              participatory_space: participatory_process)
     end
-    let(:proposal) { create(:proposal, component: component) }
+    let(:question) { create(:question, component: component) }
     let(:budget_component) do
-      create(:component, manifest_name: :budgets, participatory_space: proposal.component.participatory_space)
+      create(:component, manifest_name: :budgets, participatory_space: question.component.participatory_space)
     end
     let(:project) { create(:project, component: budget_component) }
 
     before do
-      project.link_resources([proposal], "included_proposals")
+      project.link_resources([question], "included_questions")
     end
 
     it "shows related projects" do
       visit_component
-      click_link proposal.title
+      click_link question.title
 
       expect(page).to have_i18n_content(project.title)
     end
   end
 
-  context "when listing proposals in a participatory process" do
-    shared_examples_for "a random proposal ordering" do
-      let!(:lucky_proposal) { create(:proposal, component: component) }
-      let!(:unlucky_proposal) { create(:proposal, component: component) }
+  context "when listing questions in a participatory process" do
+    shared_examples_for "a random question ordering" do
+      let!(:lucky_question) { create(:question, component: component) }
+      let!(:unlucky_question) { create(:question, component: component) }
 
-      it "lists the proposals ordered randomly by default" do
+      it "lists the questions ordered randomly by default" do
         visit_component
 
         expect(page).to have_selector("a", text: "Random")
-        expect(page).to have_selector(".card--proposal", count: 2)
-        expect(page).to have_selector(".card--proposal", text: lucky_proposal.title)
-        expect(page).to have_selector(".card--proposal", text: unlucky_proposal.title)
-        expect(page).to have_author(lucky_proposal.creator_author.name)
+        expect(page).to have_selector(".card--question", count: 2)
+        expect(page).to have_selector(".card--question", text: lucky_question.title)
+        expect(page).to have_selector(".card--question", text: unlucky_question.title)
+        expect(page).to have_author(lucky_question.creator_author.name)
       end
     end
 
-    it "lists all the proposals" do
-      create(:proposal_component,
+    it "lists all the questions" do
+      create(:question_component,
              manifest: manifest,
              participatory_space: participatory_process)
 
-      create_list(:proposal, 3, component: component)
+      create_list(:question, 3, component: component)
 
       visit_component
-      expect(page).to have_css(".card--proposal", count: 3)
+      expect(page).to have_css(".card--question", count: 3)
     end
 
     describe "editable content" do
@@ -273,84 +273,84 @@ describe "Proposals", type: :system do
     end
 
     describe "default ordering" do
-      it_behaves_like "a random proposal ordering"
+      it_behaves_like "a random question ordering"
     end
 
     context "when voting phase is over" do
       let!(:component) do
-        create(:proposal_component,
+        create(:question_component,
                :with_votes_blocked,
                manifest: manifest,
                participatory_space: participatory_process)
       end
 
-      let!(:most_voted_proposal) do
-        proposal = create(:proposal, component: component)
-        create_list(:proposal_vote, 3, proposal: proposal)
-        proposal
+      let!(:most_voted_question) do
+        question = create(:question, component: component)
+        create_list(:question_vote, 3, question: question)
+        question
       end
 
-      let!(:less_voted_proposal) { create(:proposal, component: component) }
+      let!(:less_voted_question) { create(:question, component: component) }
 
       before { visit_component }
 
-      it "lists the proposals ordered by votes by default" do
+      it "lists the questions ordered by votes by default" do
         expect(page).to have_selector("a", text: "Most voted")
-        expect(page).to have_selector("#proposals .card-grid .column:first-child", text: most_voted_proposal.title)
-        expect(page).to have_selector("#proposals .card-grid .column:last-child", text: less_voted_proposal.title)
+        expect(page).to have_selector("#questions .card-grid .column:first-child", text: most_voted_question.title)
+        expect(page).to have_selector("#questions .card-grid .column:last-child", text: less_voted_question.title)
       end
 
-      it "shows a disabled vote button for each proposal, but no links to full proposals" do
+      it "shows a disabled vote button for each question, but no links to full questions" do
         expect(page).to have_button("Voting disabled", disabled: true, count: 2)
-        expect(page).to have_no_link("View proposal")
+        expect(page).to have_no_link("View question")
       end
     end
 
     context "when voting is disabled" do
       let!(:component) do
-        create(:proposal_component,
+        create(:question_component,
                :with_votes_disabled,
                manifest: manifest,
                participatory_space: participatory_process)
       end
 
       describe "order" do
-        it_behaves_like "a random proposal ordering"
+        it_behaves_like "a random question ordering"
       end
 
-      it "shows only links to full proposals" do
-        create_list(:proposal, 2, component: component)
+      it "shows only links to full questions" do
+        create_list(:question, 2, component: component)
 
         visit_component
 
         expect(page).to have_no_button("Voting disabled", disabled: true)
         expect(page).to have_no_button("Vote")
-        expect(page).to have_link("View proposal", count: 2)
+        expect(page).to have_link("View question", count: 2)
       end
     end
 
-    context "when there are a lot of proposals" do
+    context "when there are a lot of questions" do
       before do
-        create_list(:proposal, Decidim::Paginable::OPTIONS.first + 5, component: component)
+        create_list(:question, Decidim::Paginable::OPTIONS.first + 5, component: component)
       end
 
       it "paginates them" do
         visit_component
 
-        expect(page).to have_css(".card--proposal", count: Decidim::Paginable::OPTIONS.first)
+        expect(page).to have_css(".card--question", count: Decidim::Paginable::OPTIONS.first)
 
         click_link "Next"
 
         expect(page).to have_selector(".pagination .current", text: "2")
 
-        expect(page).to have_css(".card--proposal", count: 5)
+        expect(page).to have_css(".card--question", count: 5)
       end
     end
 
     context "when filtering" do
-      context "when official_proposals setting is enabled" do
+      context "when official_questions setting is enabled" do
         before do
-          component.update!(settings: { official_proposals_enabled: true })
+          component.update!(settings: { official_questions_enabled: true })
         end
 
         it "can be filtered by origin" do
@@ -362,39 +362,39 @@ describe "Proposals", type: :system do
         end
 
         context "with 'official' origin" do
-          it "lists the filtered proposals" do
-            create_list(:proposal, 2, :official, component: component, scope: scope)
-            create(:proposal, component: component, scope: scope)
+          it "lists the filtered questions" do
+            create_list(:question, 2, :official, component: component, scope: scope)
+            create(:question, component: component, scope: scope)
             visit_component
 
             within ".filters" do
               choose "Official"
             end
 
-            expect(page).to have_css(".card--proposal", count: 2)
+            expect(page).to have_css(".card--question", count: 2)
             expect(page).to have_content("2 PROPOSALS")
           end
         end
 
         context "with 'citizens' origin" do
-          it "lists the filtered proposals" do
-            create_list(:proposal, 2, component: component, scope: scope)
-            create(:proposal, :official, component: component, scope: scope)
+          it "lists the filtered questions" do
+            create_list(:question, 2, component: component, scope: scope)
+            create(:question, :official, component: component, scope: scope)
             visit_component
 
             within ".filters" do
               choose "Citizens"
             end
 
-            expect(page).to have_css(".card--proposal", count: 2)
+            expect(page).to have_css(".card--question", count: 2)
             expect(page).to have_content("2 PROPOSALS")
           end
         end
       end
 
-      context "when official_proposals setting is not enabled" do
+      context "when official_questions setting is not enabled" do
         before do
-          component.update!(settings: { official_proposals_enabled: false })
+          component.update!(settings: { official_questions_enabled: false })
         end
 
         it "cannot be filtered by origin" do
@@ -411,9 +411,9 @@ describe "Proposals", type: :system do
         let!(:scope2) { create :scope, organization: participatory_process.organization }
 
         before do
-          create_list(:proposal, 2, component: component, scope: scope)
-          create(:proposal, component: component, scope: scope2)
-          create(:proposal, component: component, scope: nil)
+          create_list(:question, 2, component: component, scope: scope)
+          create(:question, component: component, scope: scope2)
+          create(:question, component: component, scope: nil)
           visit_component
         end
 
@@ -424,61 +424,61 @@ describe "Proposals", type: :system do
         end
 
         context "when selecting the global scope" do
-          it "lists the filtered proposals", :slow do
+          it "lists the filtered questions", :slow do
             within ".filters" do
               scope_pick scopes_picker, nil
             end
 
-            expect(page).to have_css(".card--proposal", count: 1)
+            expect(page).to have_css(".card--question", count: 1)
             expect(page).to have_content("1 PROPOSAL")
           end
         end
 
         context "when selecting one scope" do
-          it "lists the filtered proposals", :slow do
+          it "lists the filtered questions", :slow do
             within ".filters" do
               scope_pick scopes_picker, scope
             end
 
-            expect(page).to have_css(".card--proposal", count: 2)
+            expect(page).to have_css(".card--question", count: 2)
             expect(page).to have_content("2 PROPOSALS")
           end
         end
 
         context "when selecting the global scope and another scope" do
-          it "lists the filtered proposals", :slow do
+          it "lists the filtered questions", :slow do
             within ".filters" do
               scope_pick scopes_picker, scope
               scope_pick scopes_picker, nil
             end
 
-            expect(page).to have_css(".card--proposal", count: 3)
+            expect(page).to have_css(".card--question", count: 3)
             expect(page).to have_content("3 PROPOSALS")
           end
         end
 
         context "when modifying the selected scope" do
-          it "lists the filtered proposals" do
+          it "lists the filtered questions" do
             within ".filters" do
               scope_pick scopes_picker, scope
               scope_pick scopes_picker, nil
               scope_repick scopes_picker, scope, scope2
             end
 
-            expect(page).to have_css(".card--proposal", count: 2)
+            expect(page).to have_css(".card--question", count: 2)
             expect(page).to have_content("2 PROPOSALS")
           end
         end
 
         context "when unselecting the selected scope" do
-          it "lists the filtered proposals" do
+          it "lists the filtered questions" do
             within ".filters" do
               scope_pick scopes_picker, scope
               scope_pick scopes_picker, nil
               scope_unpick scopes_picker, scope
             end
 
-            expect(page).to have_css(".card--proposal", count: 1)
+            expect(page).to have_css(".card--question", count: 1)
             expect(page).to have_content("1 PROPOSAL")
           end
         end
@@ -496,17 +496,17 @@ describe "Proposals", type: :system do
         end
       end
 
-      context "when proposal_answering component setting is enabled" do
+      context "when question_answering component setting is enabled" do
         before do
-          component.update!(settings: { proposal_answering_enabled: true })
+          component.update!(settings: { question_answering_enabled: true })
         end
 
-        context "when proposal_answering step setting is enabled" do
+        context "when question_answering step setting is enabled" do
           before do
             component.update!(
               step_settings: {
                 component.participatory_space.active_step.id => {
-                  proposal_answering_enabled: true
+                  question_answering_enabled: true
                 }
               }
             )
@@ -520,45 +520,45 @@ describe "Proposals", type: :system do
             end
           end
 
-          it "lists accepted proposals" do
-            create(:proposal, :accepted, component: component, scope: scope)
+          it "lists accepted questions" do
+            create(:question, :accepted, component: component, scope: scope)
             visit_component
 
             within ".filters" do
               choose "Accepted"
             end
 
-            expect(page).to have_css(".card--proposal", count: 1)
+            expect(page).to have_css(".card--question", count: 1)
             expect(page).to have_content("1 PROPOSAL")
 
-            within ".card--proposal" do
+            within ".card--question" do
               expect(page).to have_content("ACCEPTED")
             end
           end
 
-          it "lists the filtered proposals" do
-            create(:proposal, :rejected, component: component, scope: scope)
+          it "lists the filtered questions" do
+            create(:question, :rejected, component: component, scope: scope)
             visit_component
 
             within ".filters" do
               choose "Rejected"
             end
 
-            expect(page).to have_css(".card--proposal", count: 1)
+            expect(page).to have_css(".card--question", count: 1)
             expect(page).to have_content("1 PROPOSAL")
 
-            within ".card--proposal" do
+            within ".card--question" do
               expect(page).to have_content("REJECTED")
             end
           end
         end
 
-        context "when proposal_answering step setting is disabled" do
+        context "when question_answering step setting is disabled" do
           before do
             component.update!(
               step_settings: {
                 component.participatory_space.active_step.id => {
-                  proposal_answering_enabled: false
+                  question_answering_enabled: false
                 }
               }
             )
@@ -574,9 +574,9 @@ describe "Proposals", type: :system do
         end
       end
 
-      context "when proposal_answering component setting is not enabled" do
+      context "when question_answering component setting is not enabled" do
         before do
-          component.update!(settings: { proposal_answering_enabled: false })
+          component.update!(settings: { question_answering_enabled: false })
         end
 
         it "cannot be filtered by state" do
@@ -594,8 +594,8 @@ describe "Proposals", type: :system do
         end
 
         it "can be filtered by category" do
-          create_list(:proposal, 3, component: component)
-          create(:proposal, component: component, category: category)
+          create_list(:question, 3, component: component)
+          create(:question, component: component, category: category)
 
           visit_component
 
@@ -603,23 +603,23 @@ describe "Proposals", type: :system do
             select category.name[I18n.locale.to_s], from: :filter_category_id
           end
 
-          expect(page).to have_css(".card--proposal", count: 1)
+          expect(page).to have_css(".card--question", count: 1)
         end
       end
     end
 
     context "when ordering by 'most_voted'" do
       let!(:component) do
-        create(:proposal_component,
+        create(:question_component,
                :with_votes_enabled,
                manifest: manifest,
                participatory_space: participatory_process)
       end
 
-      it "lists the proposals ordered by votes" do
-        most_voted_proposal = create(:proposal, component: component)
-        create_list(:proposal_vote, 3, proposal: most_voted_proposal)
-        less_voted_proposal = create(:proposal, component: component)
+      it "lists the questions ordered by votes" do
+        most_voted_question = create(:question, component: component)
+        create_list(:question_vote, 3, question: most_voted_question)
+        less_voted_question = create(:question, component: component)
 
         visit_component
 
@@ -629,15 +629,15 @@ describe "Proposals", type: :system do
           click_link "Most voted"
         end
 
-        expect(page).to have_selector("#proposals .card-grid .column:first-child", text: most_voted_proposal.title)
-        expect(page).to have_selector("#proposals .card-grid .column:last-child", text: less_voted_proposal.title)
+        expect(page).to have_selector("#questions .card-grid .column:first-child", text: most_voted_question.title)
+        expect(page).to have_selector("#questions .card-grid .column:last-child", text: less_voted_question.title)
       end
     end
 
     context "when ordering by 'recent'" do
-      it "lists the proposals ordered by created at" do
-        older_proposal = create(:proposal, component: component, created_at: 1.month.ago)
-        recent_proposal = create(:proposal, component: component)
+      it "lists the questions ordered by created at" do
+        older_question = create(:question, component: component, created_at: 1.month.ago)
+        recent_question = create(:question, component: component)
 
         visit_component
 
@@ -647,22 +647,22 @@ describe "Proposals", type: :system do
           click_link "Recent"
         end
 
-        expect(page).to have_selector("#proposals .card-grid .column:first-child", text: recent_proposal.title)
-        expect(page).to have_selector("#proposals .card-grid .column:last-child", text: older_proposal.title)
+        expect(page).to have_selector("#questions .card-grid .column:first-child", text: recent_question.title)
+        expect(page).to have_selector("#questions .card-grid .column:last-child", text: older_question.title)
       end
     end
 
     context "when paginating" do
-      let!(:collection) { create_list :proposal, collection_size, component: component }
-      let!(:resource_selector) { ".card--proposal" }
+      let!(:collection) { create_list :question, collection_size, component: component }
+      let!(:resource_selector) { ".card--question" }
 
       it_behaves_like "a paginated resource"
     end
 
     context "when amendments_enabled setting is enabled" do
-      let!(:proposal) { create(:proposal, component: component, scope: scope) }
-      let!(:emendation) { create(:proposal, component: component, scope: scope) }
-      let!(:amendment) { create(:amendment, amendable: proposal, emendation: emendation) }
+      let!(:question) { create(:question, component: component, scope: scope) }
+      let!(:emendation) { create(:question, component: component, scope: scope) }
+      let!(:amendment) { create(:amendment, amendable: question, emendation: emendation) }
 
       before do
         component.update!(settings: { amendments_enabled: true })
@@ -670,34 +670,34 @@ describe "Proposals", type: :system do
       end
 
       context "with 'all' type" do
-        it "lists the filtered proposals" do
+        it "lists the filtered questions" do
           find('input[id="filter_type_all"]').click
 
-          expect(page).to have_css(".card.card--proposal", count: 2)
+          expect(page).to have_css(".card.card--question", count: 2)
           expect(page).to have_content("2 PROPOSALS")
           expect(page).to have_content("AMENDMENT", count: 1)
         end
       end
 
-      context "with 'proposals' type" do
-        it "lists the filtered proposals" do
+      context "with 'questions' type" do
+        it "lists the filtered questions" do
           within ".filters" do
-            choose "Proposals"
+            choose "Questions"
           end
 
-          expect(page).to have_css(".card.card--proposal", count: 1)
+          expect(page).to have_css(".card.card--question", count: 1)
           expect(page).to have_content("1 PROPOSAL")
           expect(page).to have_content("AMENDMENT", count: 0)
         end
       end
 
       context "with 'amendments' type" do
-        it "lists the filtered proposals" do
+        it "lists the filtered questions" do
           within ".filters" do
             choose "Amendments"
           end
 
-          expect(page).to have_css(".card.card--proposal", count: 1)
+          expect(page).to have_css(".card.card--question", count: 1)
           expect(page).to have_content("1 PROPOSAL")
           expect(page).to have_content("AMENDMENT", count: 1)
         end

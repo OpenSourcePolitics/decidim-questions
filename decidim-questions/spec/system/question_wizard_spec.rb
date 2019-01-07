@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-describe "Proposal", type: :system do
+describe "Question", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
   let(:organization) { create :organization }
 
   let!(:category) { create :category, participatory_space: participatory_process }
@@ -16,21 +16,21 @@ describe "Proposal", type: :system do
   let(:latitude) { 41.3825 }
   let(:longitude) { 2.1772 }
 
-  let(:proposal_title) { "More sidewalks and less roads" }
-  let(:proposal_body) { "Cities need more people, not more cars" }
+  let(:question_title) { "More sidewalks and less roads" }
+  let(:question_body) { "Cities need more people, not more cars" }
 
   let!(:component) do
-    create(:proposal_component,
+    create(:question_component,
            :with_creation_enabled,
            manifest: manifest,
            participatory_space: participatory_process)
   end
 
-  context "when creating a new proposal" do
+  context "when creating a new question" do
     before do
       login_as user, scope: :user
       visit_component
-      click_link "New proposal"
+      click_link "New question"
     end
 
     context "when in step_1: Start" do
@@ -44,8 +44,8 @@ describe "Proposal", type: :system do
 
       it "fill in title and body" do
         within ".card__content form" do
-          fill_in :proposal_title, with: proposal_title
-          fill_in :proposal_body, with: proposal_body
+          fill_in :question_title, with: question_title
+          fill_in :question_body, with: question_body
           find("*[type=submit]").click
         end
       end
@@ -54,13 +54,13 @@ describe "Proposal", type: :system do
     context "when in step_2: Compare" do
       context "with similar results" do
         before do
-          create(:proposal, title: "More sidewalks and less roads", body: "Cities need more people, not more cars", component: component)
-          create(:proposal, title: "More sidewalks and less roadways", body: "Green is always better", component: component)
+          create(:question, title: "More sidewalks and less roads", body: "Cities need more people, not more cars", component: component)
+          create(:question, title: "More sidewalks and less roadways", body: "Green is always better", component: component)
           visit_component
-          click_link "New proposal"
-          within ".new_proposal" do
-            fill_in :proposal_title, with: proposal_title
-            fill_in :proposal_body, with: proposal_body
+          click_link "New question"
+          within ".new_question" do
+            fill_in :question_title, with: question_title
+            fill_in :question_body, with: question_body
 
             find("*[type=submit]").click
           end
@@ -74,23 +74,23 @@ describe "Proposal", type: :system do
           end
         end
 
-        it "shows similar proposals" do
-          expect(page).to have_css(".card--proposal", text: "More sidewalks and less roads")
-          expect(page).to have_css(".card--proposal", count: 2)
+        it "shows similar questions" do
+          expect(page).to have_css(".card--question", text: "More sidewalks and less roads")
+          expect(page).to have_css(".card--question", count: 2)
         end
 
         it "show continue button" do
-          expect(page).to have_content("My proposal is different")
+          expect(page).to have_content("My question is different")
         end
       end
 
       context "without similar results" do
         before do
           visit_component
-          click_link "New proposal"
-          within ".new_proposal" do
-            fill_in :proposal_title, with: proposal_title
-            fill_in :proposal_body, with: proposal_body
+          click_link "New question"
+          within ".new_question" do
+            fill_in :question_title, with: question_title
+            fill_in :question_body, with: question_body
 
             find("*[type=submit]").click
           end
@@ -100,12 +100,12 @@ describe "Proposal", type: :system do
           within ".section-heading" do
             expect(page).to have_content("COMPLETE YOUR PROPOSAL")
           end
-          expect(page).to have_css(".edit_proposal")
+          expect(page).to have_css(".edit_question")
         end
 
-        it "shows no similar proposal found callout" do
+        it "shows no similar question found callout" do
           within ".flash.callout.success" do
-            expect(page).to have_content("Well done! No similar proposals found")
+            expect(page).to have_content("Well done! No similar questions found")
           end
         end
       end
@@ -114,10 +114,10 @@ describe "Proposal", type: :system do
     context "when in step_3: Complete" do
       before do
         visit_component
-        click_link "New proposal"
-        within ".new_proposal" do
-          fill_in :proposal_title, with: proposal_title
-          fill_in :proposal_body, with: proposal_body
+        click_link "New question"
+        within ".new_question" do
+          fill_in :question_title, with: question_title
+          fill_in :question_body, with: question_body
 
           find("*[type=submit]").click
         end
@@ -132,20 +132,20 @@ describe "Proposal", type: :system do
       end
 
       it "show form and submit button" do
-        expect(page).to have_field("Title", with: proposal_title)
-        expect(page).to have_field("Body", with: proposal_body)
+        expect(page).to have_field("Title", with: question_title)
+        expect(page).to have_field("Body", with: question_body)
         expect(page).to have_button("Send")
       end
     end
 
     context "when in step_4: Publish" do
-      let!(:proposal_draft) { create(:proposal, :draft, users: [user], component: component, title: proposal_title, body: proposal_body) }
-      let!(:preview_proposal_path) do
-        Decidim::EngineRouter.main_proxy(component).proposal_path(proposal_draft) + "/preview"
+      let!(:question_draft) { create(:question, :draft, users: [user], component: component, title: question_title, body: question_body) }
+      let!(:preview_question_path) do
+        Decidim::EngineRouter.main_proxy(component).question_path(question_draft) + "/preview"
       end
 
       before do
-        visit preview_proposal_path
+        visit preview_question_path
       end
 
       it "show current step_4 highlighted" do
@@ -157,27 +157,27 @@ describe "Proposal", type: :system do
       end
 
       it "shows a preview" do
-        expect(page).to have_css(".card.card--proposal", count: 1)
+        expect(page).to have_css(".card.card--question", count: 1)
       end
 
       it "shows a publish button" do
         expect(page).to have_selector("button", text: "Publish")
       end
 
-      it "shows a modify proposal link" do
-        expect(page).to have_selector("a", text: "Modify the proposal")
+      it "shows a modify question link" do
+        expect(page).to have_selector("a", text: "Modify the question")
       end
     end
 
-    context "when editing a proposal draft" do
-      context "when in step_4: edit proposal draft" do
-        let!(:proposal_draft) { create(:proposal, :draft, users: [user], component: component, title: proposal_title, body: proposal_body) }
-        let!(:edit_draft_proposal_path) do
-          Decidim::EngineRouter.main_proxy(component).proposal_path(proposal_draft) + "/edit_draft"
+    context "when editing a question draft" do
+      context "when in step_4: edit question draft" do
+        let!(:question_draft) { create(:question, :draft, users: [user], component: component, title: question_title, body: question_body) }
+        let!(:edit_draft_question_path) do
+          Decidim::EngineRouter.main_proxy(component).question_path(question_draft) + "/edit_draft"
         end
 
         before do
-          visit edit_draft_proposal_path
+          visit edit_draft_question_path
         end
 
         it "show current step_4 highlighted" do

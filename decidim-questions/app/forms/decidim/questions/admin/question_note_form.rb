@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A form object to be used when admin users want to create a proposal.
-      class ProposalNoteForm < Decidim::Form
-        mimic :proposal_note
+      # A form object to be used when admin users want to create a question.
+      class QuestionNoteForm < Decidim::Form
+        mimic :question_note
 
         attribute :body, String
 

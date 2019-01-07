@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # Exposes Collaborative Drafts resource so users can view and create them.
-    class CollaborativeDraftsController < Decidim::Proposals::ApplicationController
+    class CollaborativeDraftsController < Decidim::Questions::ApplicationController
       helper Decidim::WidgetUrlsHelper
-      helper ProposalWizardHelper
+      helper QuestionWizardHelper
       helper TooltipHelper
 
       include Decidim::ApplicationHelper
@@ -49,13 +49,13 @@ module Decidim
 
       def compare
         @step = :step_2
-        @similar_collaborative_drafts ||= Decidim::Proposals::SimilarCollaborativeDrafts
+        @similar_collaborative_drafts ||= Decidim::Questions::SimilarCollaborativeDrafts
                                           .for(current_component, params[:collaborative_draft])
                                           .all
         @form = form(CollaborativeDraftForm).from_params(params)
 
         if @similar_collaborative_drafts.blank?
-          flash[:notice] = I18n.t("proposals.collaborative_drafts.compare.no_similars_found", scope: "decidim")
+          flash[:notice] = I18n.t("questions.collaborative_drafts.compare.no_similars_found", scope: "decidim")
           redirect_to complete_collaborative_drafts_path(collaborative_draft: { title: @form.title, body: @form.body })
         end
       end
@@ -80,13 +80,13 @@ module Decidim
 
         CreateCollaborativeDraft.call(@form, current_user) do
           on(:ok) do |collaborative_draft|
-            flash[:notice] = I18n.t("proposals.collaborative_drafts.create.success", scope: "decidim")
+            flash[:notice] = I18n.t("questions.collaborative_drafts.create.success", scope: "decidim")
 
             redirect_to Decidim::ResourceLocatorPresenter.new(collaborative_draft).path
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.collaborative_drafts.create.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.collaborative_drafts.create.error", scope: "decidim")
             render :complete
           end
         end
@@ -104,12 +104,12 @@ module Decidim
         @form = form(CollaborativeDraftForm).from_params(params)
         UpdateCollaborativeDraft.call(@form, current_user, @collaborative_draft) do
           on(:ok) do |collaborative_draft|
-            flash[:notice] = I18n.t("proposals.collaborative_drafts.update.success", scope: "decidim")
+            flash[:notice] = I18n.t("questions.collaborative_drafts.update.success", scope: "decidim")
             redirect_to Decidim::ResourceLocatorPresenter.new(collaborative_draft).path
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.collaborative_drafts.update.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.collaborative_drafts.update.error", scope: "decidim")
             render :edit
           end
         end
@@ -118,11 +118,11 @@ module Decidim
       def withdraw
         WithdrawCollaborativeDraft.call(@collaborative_draft, current_user) do
           on(:ok) do
-            flash[:notice] = t("withdraw.success", scope: "decidim.proposals.collaborative_drafts.collaborative_draft")
+            flash[:notice] = t("withdraw.success", scope: "decidim.questions.collaborative_drafts.collaborative_draft")
           end
 
           on(:invalid) do
-            flash.now[:alert] = t("withdraw.error", scope: "decidim.proposals.collaborative_drafts.collaborative_draft")
+            flash.now[:alert] = t("withdraw.error", scope: "decidim.questions.collaborative_drafts.collaborative_draft")
           end
         end
         redirect_to Decidim::ResourceLocatorPresenter.new(@collaborative_draft).path
@@ -130,13 +130,13 @@ module Decidim
 
       def publish
         PublishCollaborativeDraft.call(@collaborative_draft, current_user) do
-          on(:ok) do |proposal|
-            flash[:notice] = I18n.t("publish.success", scope: "decidim.proposals.collaborative_drafts.collaborative_draft")
-            redirect_to Decidim::ResourceLocatorPresenter.new(proposal).path
+          on(:ok) do |question|
+            flash[:notice] = I18n.t("publish.success", scope: "decidim.questions.collaborative_drafts.collaborative_draft")
+            redirect_to Decidim::ResourceLocatorPresenter.new(question).path
           end
 
           on(:invalid) do
-            flash.now[:alert] = t("publish.error", scope: "decidim.proposals.collaborative_drafts.collaborative_draft")
+            flash.now[:alert] = t("publish.error", scope: "decidim.questions.collaborative_drafts.collaborative_draft")
             redirect_to Decidim::ResourceLocatorPresenter.new(@collaborative_draft).path
           end
         end
@@ -145,7 +145,7 @@ module Decidim
       private
 
       def form_presenter
-        @form_presenter ||= present(@form, presenter_class: Decidim::Proposals::CollaborativeDraftPresenter)
+        @form_presenter ||= present(@form, presenter_class: Decidim::Questions::CollaborativeDraftPresenter)
       end
 
       def collaborative_drafts_enabled?

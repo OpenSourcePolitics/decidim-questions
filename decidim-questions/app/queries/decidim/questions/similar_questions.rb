@@ -1,40 +1,40 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Class used to retrieve similar proposals.
-    class SimilarProposals < Rectify::Query
+  module Questions
+    # Class used to retrieve similar questions.
+    class SimilarQuestions < Rectify::Query
       include Decidim::TranslationsHelper
 
       # Syntactic sugar to initialize the class and return the queried objects.
       #
       # components - Decidim::CurrentComponent
-      # proposal - Decidim::Proposals::Proposal
-      def self.for(components, proposal)
-        new(components, proposal).query
+      # question - Decidim::Questions::Question
+      def self.for(components, question)
+        new(components, question).query
       end
 
       # Initializes the class.
       #
       # components - Decidim::CurrentComponent
-      # proposal - Decidim::Proposals::Proposal
-      def initialize(components, proposal)
+      # question - Decidim::Questions::Question
+      def initialize(components, question)
         @components = components
-        @proposal = proposal
+        @question = question
       end
 
-      # Retrieves similar proposals
+      # Retrieves similar questions
       def query
-        Decidim::Proposals::Proposal
+        Decidim::Questions::Question
           .where(component: @components)
           .published
           .where(
             "GREATEST(#{title_similarity}, #{body_similarity}) >= ?",
-            @proposal.title,
-            @proposal.body,
-            Decidim::Proposals.similarity_threshold
+            @question.title,
+            @question.body,
+            Decidim::Questions.similarity_threshold
           )
-          .limit(Decidim::Proposals.similarity_limit)
+          .limit(Decidim::Questions.similarity_limit)
       end
 
       private

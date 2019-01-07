@@ -1,7 +1,7 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     class CollaborativeDraftAccessRejectedEvent < CollaborativeDraftAccessRequestEvent
     end
   end

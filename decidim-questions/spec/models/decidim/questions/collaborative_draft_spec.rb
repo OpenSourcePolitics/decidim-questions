@@ -3,12 +3,12 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe CollaborativeDraft do
       subject { collaborative_draft }
 
       let(:organization) { component.participatory_space.organization }
-      let(:component) { create :proposal_component }
+      let(:component) { create :question_component }
       let(:collaborative_draft) { create(:collaborative_draft, component: component) }
       let(:coauthorable) { collaborative_draft }
 

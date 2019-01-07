@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe ProposalForm do
-        it_behaves_like "a proposal form"
-        it_behaves_like "a proposal form with meeting as author"
+      describe QuestionForm do
+        it_behaves_like "a question form"
+        it_behaves_like "a question form with meeting as author"
       end
     end
   end

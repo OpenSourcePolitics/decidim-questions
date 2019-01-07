@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # This controller is the abstract class from which all other controllers of
     # this engine inherit.
     #
@@ -9,21 +9,21 @@ module Decidim
     # override its layout and provide all kinds of useful methods.
     class ApplicationController < Decidim::Components::BaseController
       helper Decidim::Messaging::ConversationHelper
-      helper_method :proposal_limit_reached?
+      helper_method :question_limit_reached?
 
-      def proposal_limit
-        return nil if component_settings.proposal_limit.zero?
-        component_settings.proposal_limit
+      def question_limit
+        return nil if component_settings.question_limit.zero?
+        component_settings.question_limit
       end
 
-      def proposal_limit_reached?
-        return false unless proposal_limit
+      def question_limit_reached?
+        return false unless question_limit
 
-        proposals.where(author: current_user).count >= proposal_limit
+        questions.where(author: current_user).count >= question_limit
       end
 
-      def proposals
-        Proposal.where(component: current_component)
+      def questions
+        Question.where(component: current_component)
       end
     end
   end

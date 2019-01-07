@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Metrics
-      class AcceptedProposalsMetricManage < Decidim::Proposals::Metrics::ProposalsMetricManage
+      class AcceptedQuestionsMetricManage < Decidim::Questions::Metrics::QuestionsMetricManage
         def metric_name
-          "accepted_proposals"
+          "accepted_questions"
         end
 
         private
@@ -17,9 +17,9 @@ module Decidim
             manifest.participatory_spaces.call(@organization).public_spaces
           end
           components = Decidim::Component.where(participatory_space: spaces).published
-          @query = Decidim::Proposals::Proposal.where(component: components).joins(:component)
+          @query = Decidim::Questions::Question.where(component: components).joins(:component)
                                                .left_outer_joins(:category)
-          @query = @query.where("decidim_proposals_proposals.published_at <= ?", end_time).accepted
+          @query = @query.where("decidim_questions_questions.published_at <= ?", end_time).accepted
           @query = @query.group("decidim_categorizations.id", :participatory_space_type, :participatory_space_id)
           @query
         end

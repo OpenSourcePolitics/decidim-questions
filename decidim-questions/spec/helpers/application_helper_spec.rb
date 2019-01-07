@@ -3,16 +3,16 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe ApplicationHelper do
       let(:helper) do
         Class.new.tap do |v|
-          v.extend(Decidim::Proposals::ApplicationHelper)
+          v.extend(Decidim::Questions::ApplicationHelper)
         end
       end
 
-      describe "humanize_proposal_state" do
-        subject { helper.humanize_proposal_state(state) }
+      describe "humanize_question_state" do
+        subject { helper.humanize_question_state(state) }
 
         context "when it is accepted" do
           let(:state) { "accepted" }

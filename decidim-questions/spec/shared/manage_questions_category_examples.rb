@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-shared_examples "when managing proposals category as an admin" do
+shared_examples "when managing questions category as an admin" do
   let(:parent_category) { create :category, participatory_space: participatory_process }
   let(:category) { create :category, participatory_space: participatory_process, parent_id: parent_category.id }
   let!(:my_category) { create :category, participatory_space: participatory_process, parent_id: parent_category.id }
-  let!(:proposal_first) { reportables.first }
-  let!(:proposal_last) { reportables.last }
+  let!(:question_first) { reportables.first }
+  let!(:question_last) { reportables.last }
 
-  context "when in the Proposals list page" do
-    it "shows a checkbox to select each proposal" do
-      expect(page).to have_css(".table-list tbody .js-proposal-list-check", count: 4)
+  context "when in the Questions list page" do
+    it "shows a checkbox to select each question" do
+      expect(page).to have_css(".table-list tbody .js-question-list-check", count: 4)
     end
 
-    it "shows a checkbox to (des)select all proposal" do
+    it "shows a checkbox to (des)select all question" do
       expect(page).to have_css(".table-list thead .js-check-all", count: 1)
     end
 
-    context "when selecting proposals" do
+    context "when selecting questions" do
       before do
-        page.find("#proposals_bulk.js-check-all").set(true)
+        page.find("#questions_bulk.js-check-all").set(true)
       end
 
-      it "shows the number of selected proposals" do
-        expect(page).to have_css("span#js-selected-proposals-count", count: 1)
+      it "shows the number of selected questions" do
+        expect(page).to have_css("span#js-selected-questions-count", count: 1)
       end
 
       it "shows the bulk actions button" do
@@ -62,7 +62,7 @@ shared_examples "when managing proposals category as an admin" do
         before do
           click_button "Actions"
           click_button "Change category"
-          within "#js-form-recategorize-proposals" do
+          within "#js-form-recategorize-questions" do
             select translated(category.name), from: :category_id
             page.find("button#js-submit-edit-category").click
           end

@@ -13,12 +13,12 @@
         data-accordion
         data-multi-expand="true"
         data-allow-all-closed="true">
-        <%= form.fields_for(:proposals) do |prop_form| %>
-        <% proposal= @drafts[prop_form.index] %>
+        <%= form.fields_for(:questions) do |prop_form| %>
+        <% question= @drafts[prop_form.index] %>
           <li class="accordion-item" data-accordion-item>
-            <a href="#" class="accordion-title flex--sbc"><%= preview_participatory_text_section_title(proposal) %><span class="mr-m"><%= icon "menu", class: "icon--small" %></span></a>
+            <a href="#" class="accordion-title flex--sbc"><%= preview_participatory_text_section_title(question) %><span class="mr-m"><%= icon "menu", class: "icon--small" %></span></a>
             <div class="accordion-content" data-tab-content>
-              <%= render "article-preview", { form: prop_form, proposal: proposal } %>
+              <%= render "article-preview", { form: prop_form, question: question } %>
             </div>
           </li>
         <% end %>

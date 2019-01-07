@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module AdminLog
       module ValueTypes
-        class ProposalTitleBodyPresenter < Decidim::Log::ValueTypes::DefaultPresenter
+        class QuestionTitleBodyPresenter < Decidim::Log::ValueTypes::DefaultPresenter
           def present
             return unless value
 

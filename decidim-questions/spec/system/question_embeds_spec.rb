@@ -2,20 +2,20 @@
 
 require "spec_helper"
 
-describe "Proposal embeds", type: :system do
+describe "Question embeds", type: :system do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
-  let!(:proposal) { create(:proposal, component: component) }
+  let!(:question) { create(:question, component: component) }
 
-  context "when visiting the embed page for a proposal" do
+  context "when visiting the embed page for a question" do
     before do
-      visit resource_locator(proposal).path
+      visit resource_locator(question).path
       visit "#{current_path}/embed"
     end
 
     it "renders the page correctly" do
-      expect(page).to have_content(proposal.title)
+      expect(page).to have_content(question.title)
       expect(page).to have_content(organization.name)
     end
 

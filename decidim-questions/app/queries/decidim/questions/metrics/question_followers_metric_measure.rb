@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Metrics
       # Searches for unique Users following the next objects
-      #  - Proposals
+      #  - Questions
       #  - CollaborativeDrafts
-      class ProposalFollowersMetricMeasure < Decidim::MetricMeasure
+      class QuestionFollowersMetricMeasure < Decidim::MetricMeasure
         def valid?
           super && @resource.is_a?(Decidim::Component)
         end
 
         def calculate
           cumulative_users = []
-          cumulative_users |= retrieve_proposals_followers.pluck(:decidim_user_id)
+          cumulative_users |= retrieve_questions_followers.pluck(:decidim_user_id)
           cumulative_users |= retrieve_drafts_followers.pluck(:decidim_user_id)
 
           quantity_users = []
-          quantity_users |= retrieve_proposals_followers(true).pluck(:decidim_user_id)
+          quantity_users |= retrieve_questions_followers(true).pluck(:decidim_user_id)
           quantity_users |= retrieve_drafts_followers(true).pluck(:decidim_user_id)
 
           {
@@ -28,12 +28,12 @@ module Decidim
 
         private
 
-        def retrieve_proposals_followers(from_start = false)
-          @proposals_followers ||= Decidim::Follow.where(followable: retrieve_proposals).joins(:user)
+        def retrieve_questions_followers(from_start = false)
+          @questions_followers ||= Decidim::Follow.where(followable: retrieve_questions).joins(:user)
                                                   .where("decidim_follows.created_at <= ?", end_time)
 
-          return @proposals_followers.where("decidim_follows.created_at >= ?", start_time) if from_start
-          @proposals_followers
+          return @questions_followers.where("decidim_follows.created_at >= ?", start_time) if from_start
+          @questions_followers
         end
 
         def retrieve_drafts_followers(from_start = false)
@@ -43,12 +43,12 @@ module Decidim
           @drafts_followers
         end
 
-        def retrieve_proposals
-          Decidim::Proposals::Proposal.where(component: @resource).except_withdrawn
+        def retrieve_questions
+          Decidim::Questions::Question.where(component: @resource).except_withdrawn
         end
 
         def retrieve_collaborative_drafts
-          Decidim::Proposals::CollaborativeDraft.where(component: @resource).except_withdrawn
+          Decidim::Questions::CollaborativeDraft.where(component: @resource).except_withdrawn
         end
       end
     end

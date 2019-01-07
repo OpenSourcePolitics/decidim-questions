@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A command with all the business logic when a user publishes a collaborative_draft.
     class PublishCollaborativeDraft < Rectify::Command
       # Public: Initializes the command.
       #
       # collaborative_draft - The collaborative_draft to publish.
       # current_user - The current user.
-      # proposal_form - the form object of the new proposal
+      # question_form - the form object of the new question
       def initialize(collaborative_draft, current_user)
         @collaborative_draft = collaborative_draft
         @current_user = current_user
@@ -27,14 +27,14 @@ module Decidim
         transaction do
           reject_access_to_collaborative_draft
           publish_collaborative_draft
-          create_proposal!
-          link_collaborative_draft_and_proposal
+          create_question!
+          link_collaborative_draft_and_question
         end
 
-        broadcast(:ok, @new_proposal)
+        broadcast(:ok, @new_question)
       end
 
-      attr_accessor :new_proposal
+      attr_accessor :new_question
 
       private
 
@@ -53,7 +53,7 @@ module Decidim
         )
       end
 
-      def proposal_attributes
+      def question_attributes
         fields = {}
 
         parsed_title = Decidim::ContentProcessor.parse_with_processor(:hashtag, @collaborative_draft.title, current_organization: @collaborative_draft.organization).rewrite
@@ -69,23 +69,23 @@ module Decidim
         fields
       end
 
-      def create_proposal!
-        @new_proposal = Decidim.traceability.perform_action!(
+      def create_question!
+        @new_question = Decidim.traceability.perform_action!(
           :create,
-          Decidim::Proposals::Proposal,
+          Decidim::Questions::Question,
           @current_user,
           visibility: "public-only"
         ) do
-          new_proposal = Proposal.new(proposal_attributes)
-          new_proposal.coauthorships = @collaborative_draft.coauthorships
-          new_proposal.category = @collaborative_draft.category
-          new_proposal.save!
-          new_proposal
+          new_question = Question.new(question_attributes)
+          new_question.coauthorships = @collaborative_draft.coauthorships
+          new_question.category = @collaborative_draft.category
+          new_question.save!
+          new_question
         end
       end
 
-      def link_collaborative_draft_and_proposal
-        @collaborative_draft.link_resources(@new_proposal, "created_from_collaborative_draft")
+      def link_collaborative_draft_and_question
+        @collaborative_draft.link_resources(@new_question, "created_from_collaborative_draft")
       end
     end
   end

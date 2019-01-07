@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A command with all the business logic when a user updates a collaborative_draft.
     class UpdateCollaborativeDraft < Rectify::Command
       include HashtagsMethods

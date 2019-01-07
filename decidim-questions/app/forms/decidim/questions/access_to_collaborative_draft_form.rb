@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A form object common to accept and reject actions requesters of Collaborative Drafts.
     class AccessToCollaborativeDraftForm < Decidim::Form
       mimic :collaborative_draft
@@ -16,7 +16,7 @@ module Decidim
       validate :existence_of_requester_in_requesters
 
       def collaborative_draft
-        @collaborative_draft ||= Decidim::Proposals::CollaborativeDraft.find id if id
+        @collaborative_draft ||= Decidim::Questions::CollaborativeDraft.find id if id
       end
 
       def requester_user

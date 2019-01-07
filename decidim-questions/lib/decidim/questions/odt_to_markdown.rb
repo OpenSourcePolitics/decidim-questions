@@ -4,16 +4,16 @@ require "doc2text"
 require "tempfile"
 
 module Decidim
-  module Proposals
+  module Questions
     # This class parses a participatory text document in markdown and
-    # produces Proposals in the form of sections and articles.
+    # produces Questions in the form of sections and articles.
     #
     # This implementation uses Redcarpet Base renderer.
-    # Redcarpet::Render::Base performs a callback for every block it finds, what MarkdownToProposals
+    # Redcarpet::Render::Base performs a callback for every block it finds, what MarkdownToQuestions
     # does is to implement callbacks for the blocks which it is interested in performing some actions.
     #
     class OdtToMarkdown
-      # Public: Initializes the serializer with a proposal.
+      # Public: Initializes the serializer with a question.
       def initialize(doc)
         @doc = doc
       end

@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A form object to be used when admin users want to review a collection of proposals
+      # A form object to be used when admin users want to review a collection of questions
       # from a participatory text.
       class PreviewParticipatoryTextForm < Decidim::Form
-        attribute :proposals, Array[ProposalForm]
+        attribute :questions, Array[QuestionForm]
 
-        def from_models(proposals)
-          self.proposals = proposals.collect do |proposal|
-            ProposalForm.from_model(proposal)
+        def from_models(questions)
+          self.questions = questions.collect do |question|
+            QuestionForm.from_model(question)
           end
         end
 
-        def proposals_attributes=(attributes); end
+        def questions_attributes=(attributes); end
       end
     end
   end

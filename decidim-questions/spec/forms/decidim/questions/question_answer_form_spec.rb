@@ -3,9 +3,9 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe ProposalAnswerForm do
+      describe QuestionAnswerForm do
         subject { form }
 
         let(:organization) { create(:organization) }
@@ -39,7 +39,7 @@ module Decidim
           it { is_expected.to be_invalid }
         end
 
-        context "when rejecting a proposal" do
+        context "when rejecting a question" do
           let(:state) { "rejected" }
 
           context "and there's no answer" do

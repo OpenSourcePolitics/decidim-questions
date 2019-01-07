@@ -1,7 +1,7 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     class CollaborativeDraftAccessRequestEvent < Decidim::Events::SimpleEvent
       i18n_attributes :requester_name, :requester_path, :requester_nickname
 

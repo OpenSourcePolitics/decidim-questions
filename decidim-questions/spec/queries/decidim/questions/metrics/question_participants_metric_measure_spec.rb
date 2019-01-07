@@ -2,21 +2,21 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::Metrics::ProposalParticipantsMetricMeasure do
+describe Decidim::Questions::Metrics::QuestionParticipantsMetricMeasure do
   let(:day) { Time.zone.yesterday }
   let(:organization) { create(:organization) }
   let(:not_valid_resource) { create(:dummy_resource) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
 
-  let(:proposals_component) { create(:proposal_component, :published, participatory_space: participatory_space) }
-  let!(:proposal) { create(:proposal, :with_endorsements, published_at: day, component: proposals_component) }
-  let!(:old_proposal) { create(:proposal, :with_endorsements, published_at: day - 1.week, component: proposals_component) }
-  let!(:proposal_votes) { create_list(:proposal_vote, 10, created_at: day, proposal: proposal) }
-  let!(:old_proposal_votes) { create_list(:proposal_vote, 5, created_at: day - 1.week, proposal: old_proposal) }
-  let!(:proposal_endorsements) { create_list(:proposal_endorsement, 5, created_at: day, proposal: proposal) }
-  # TOTAL Participants for Proposals:
-  #  Cumulative: 22 ( 2 proposal, 15 votes, 5 endorsements )
-  #  Quantity: 16 ( 1 proposal, 10 votes, 5 endorsements )
+  let(:questions_component) { create(:question_component, :published, participatory_space: participatory_space) }
+  let!(:question) { create(:question, :with_endorsements, published_at: day, component: questions_component) }
+  let!(:old_question) { create(:question, :with_endorsements, published_at: day - 1.week, component: questions_component) }
+  let!(:question_votes) { create_list(:question_vote, 10, created_at: day, question: question) }
+  let!(:old_question_votes) { create_list(:question_vote, 5, created_at: day - 1.week, question: old_question) }
+  let!(:question_endorsements) { create_list(:question_endorsement, 5, created_at: day, question: question) }
+  # TOTAL Participants for Questions:
+  #  Cumulative: 22 ( 2 question, 15 votes, 5 endorsements )
+  #  Quantity: 16 ( 1 question, 10 votes, 5 endorsements )
 
   context "when executing class" do
     it "fails to create object with an invalid resource" do
@@ -26,14 +26,14 @@ describe Decidim::Proposals::Metrics::ProposalParticipantsMetricMeasure do
     end
 
     it "calculates" do
-      result = described_class.new(day, proposals_component).calculate
+      result = described_class.new(day, questions_component).calculate
 
       expect(result[:cumulative_users].count).to eq(22)
       expect(result[:quantity_users].count).to eq(16)
     end
 
     it "does not found any result for past days" do
-      result = described_class.new(day - 1.month, proposals_component).calculate
+      result = described_class.new(day - 1.month, questions_component).calculate
 
       expect(result[:cumulative_users].count).to eq(0)
       expect(result[:quantity_users].count).to eq(0)

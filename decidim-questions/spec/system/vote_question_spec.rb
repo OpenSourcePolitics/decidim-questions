@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-describe "Vote Proposal", type: :system, slow: true do
+describe "Vote Question", type: :system, slow: true do
   include_context "with a component"
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
 
-  let!(:proposals) { create_list(:proposal, 3, component: component) }
-  let!(:proposal) { Decidim::Proposals::Proposal.find_by(component: component) }
+  let!(:questions) { create_list(:question, 3, component: component) }
+  let!(:question) { Decidim::Questions::Question.find_by(component: component) }
   let!(:user) { create :user, :confirmed, organization: organization }
 
   def expect_page_not_to_include_votes
@@ -17,11 +17,11 @@ describe "Vote Proposal", type: :system, slow: true do
 
   context "when votes are not enabled" do
     context "when the user is not logged in" do
-      it "doesn't show the vote proposal button and counts" do
+      it "doesn't show the vote question button and counts" do
         visit_component
         expect_page_not_to_include_votes
 
-        click_link proposal.title
+        click_link question.title
         expect_page_not_to_include_votes
       end
     end
@@ -31,11 +31,11 @@ describe "Vote Proposal", type: :system, slow: true do
         login_as user, scope: :user
       end
 
-      it "doesn't show the vote proposal button and counts" do
+      it "doesn't show the vote question button and counts" do
         visit_component
         expect_page_not_to_include_votes
 
-        click_link proposal.title
+        click_link question.title
         expect_page_not_to_include_votes
       end
     end
@@ -43,7 +43,7 @@ describe "Vote Proposal", type: :system, slow: true do
 
   context "when votes are blocked" do
     let!(:component) do
-      create(:proposal_component,
+      create(:question_component,
              :with_votes_blocked,
              manifest: manifest,
              participatory_space: participatory_process)
@@ -57,7 +57,7 @@ describe "Vote Proposal", type: :system, slow: true do
 
   context "when votes are enabled" do
     let!(:component) do
-      create(:proposal_component,
+      create(:question_component,
              :with_votes_enabled,
              manifest: manifest,
              participatory_space: participatory_process)
@@ -80,47 +80,47 @@ describe "Vote Proposal", type: :system, slow: true do
         login_as user, scope: :user
       end
 
-      context "when the proposal is not voted yet" do
+      context "when the question is not voted yet" do
         before do
           visit_component
         end
 
-        it "is able to vote the proposal" do
-          within "#proposal-#{proposal.id}-vote-button" do
+        it "is able to vote the question" do
+          within "#question-#{question.id}-vote-button" do
             click_button "Vote"
             expect(page).to have_button("Already voted")
           end
 
-          within "#proposal-#{proposal.id}-votes-count" do
+          within "#question-#{question.id}-votes-count" do
             expect(page).to have_content("1 VOTE")
           end
         end
       end
 
-      context "when the proposal is already voted" do
+      context "when the question is already voted" do
         before do
-          create(:proposal_vote, proposal: proposal, author: user)
+          create(:question_vote, question: question, author: user)
           visit_component
         end
 
         it "is not able to vote it again" do
-          within "#proposal-#{proposal.id}-vote-button" do
+          within "#question-#{question.id}-vote-button" do
             expect(page).to have_button("Already voted")
             expect(page).to have_no_button("Vote")
           end
 
-          within "#proposal-#{proposal.id}-votes-count" do
+          within "#question-#{question.id}-votes-count" do
             expect(page).to have_content("1 VOTE")
           end
         end
 
         it "is able to undo the vote" do
-          within "#proposal-#{proposal.id}-vote-button" do
+          within "#question-#{question.id}-vote-button" do
             click_button "Already voted"
             expect(page).to have_button("Vote")
           end
 
-          within "#proposal-#{proposal.id}-votes-count" do
+          within "#question-#{question.id}-votes-count" do
             expect(page).to have_content("0 VOTES")
           end
         end
@@ -130,7 +130,7 @@ describe "Vote Proposal", type: :system, slow: true do
         let(:vote_limit) { 10 }
 
         let!(:component) do
-          create(:proposal_component,
+          create(:question_component,
                  :with_votes_enabled,
                  :with_vote_limit,
                  vote_limit: vote_limit,
@@ -141,7 +141,7 @@ describe "Vote Proposal", type: :system, slow: true do
         describe "vote counter" do
           context "when votes are blocked" do
             let!(:component) do
-              create(:proposal_component,
+              create(:question_component,
                      :with_votes_blocked,
                      :with_vote_limit,
                      vote_limit: vote_limit,
@@ -159,7 +159,7 @@ describe "Vote Proposal", type: :system, slow: true do
 
           context "when votes are enabled" do
             let!(:component) do
-              create(:proposal_component,
+              create(:question_component,
                      :with_votes_enabled,
                      :with_vote_limit,
                      vote_limit: vote_limit,
@@ -176,13 +176,13 @@ describe "Vote Proposal", type: :system, slow: true do
           end
         end
 
-        context "when the proposal is not voted yet" do
+        context "when the question is not voted yet" do
           before do
             visit_component
           end
 
           it "updates the remaining votes counter" do
-            within "#proposal-#{proposal.id}-vote-button" do
+            within "#question-#{question.id}-vote-button" do
               click_button "Vote"
               expect(page).to have_button("Already voted")
             end
@@ -191,7 +191,7 @@ describe "Vote Proposal", type: :system, slow: true do
           end
         end
 
-        context "when the proposal is not voted yet but the user isn't authorized" do
+        context "when the question is not voted yet but the user isn't authorized" do
           before do
             permissions = {
               vote: {
@@ -204,7 +204,7 @@ describe "Vote Proposal", type: :system, slow: true do
           end
 
           it "shows a modal dialog" do
-            within "#proposal-#{proposal.id}-vote-button" do
+            within "#question-#{question.id}-vote-button" do
               click_button "Vote"
             end
 
@@ -212,26 +212,26 @@ describe "Vote Proposal", type: :system, slow: true do
           end
         end
 
-        context "when the proposal is already voted" do
+        context "when the question is already voted" do
           before do
-            create(:proposal_vote, proposal: proposal, author: user)
+            create(:question_vote, question: question, author: user)
             visit_component
           end
 
           it "is not able to vote it again" do
-            within "#proposal-#{proposal.id}-vote-button" do
+            within "#question-#{question.id}-vote-button" do
               expect(page).to have_button("Already voted")
               expect(page).to have_no_button("Vote")
             end
           end
 
           it "is able to undo the vote" do
-            within "#proposal-#{proposal.id}-vote-button" do
+            within "#question-#{question.id}-vote-button" do
               click_button "Already voted"
               expect(page).to have_button("Vote")
             end
 
-            within "#proposal-#{proposal.id}-votes-count" do
+            within "#question-#{question.id}-votes-count" do
               expect(page).to have_content("0 VOTES")
             end
 
@@ -243,24 +243,24 @@ describe "Vote Proposal", type: :system, slow: true do
           let(:vote_limit) { 1 }
 
           before do
-            create(:proposal_vote, proposal: proposal, author: user)
+            create(:question_vote, question: question, author: user)
             visit_component
           end
 
-          it "is not able to vote other proposals" do
+          it "is not able to vote other questions" do
             expect(page).to have_css(".button[disabled]", count: 2)
           end
 
           context "when votes are blocked" do
             let!(:component) do
-              create(:proposal_component,
+              create(:question_component,
                      :with_votes_blocked,
                      manifest: manifest,
                      participatory_space: participatory_process)
             end
 
             it "shows the vote count but not the vote button" do
-              within "#proposal_#{proposal.id} .card__support" do
+              within "#question_#{question.id} .card__support" do
                 expect(page).to have_content("1 VOTE")
               end
 
@@ -271,30 +271,30 @@ describe "Vote Proposal", type: :system, slow: true do
       end
     end
 
-    context "when the proposal is rejected" do
-      let!(:rejected_proposal) { create(:proposal, :rejected, component: component) }
+    context "when the question is rejected" do
+      let!(:rejected_question) { create(:question, :rejected, component: component) }
 
       before do
-        component.update!(settings: { proposal_answering_enabled: true })
+        component.update!(settings: { question_answering_enabled: true })
       end
 
       it "cannot be voted" do
         visit_component
 
         choose "filter_state_rejected"
-        page.find_link(rejected_proposal.title, wait: 30)
-        expect(page).to have_no_selector("#proposal-#{rejected_proposal.id}-vote-button")
+        page.find_link(rejected_question.title, wait: 30)
+        expect(page).to have_no_selector("#question-#{rejected_question.id}-vote-button")
 
-        click_link rejected_proposal.title
-        expect(page).to have_no_selector("#proposal-#{rejected_proposal.id}-vote-button")
+        click_link rejected_question.title
+        expect(page).to have_no_selector("#question-#{rejected_question.id}-vote-button")
       end
     end
 
-    context "when proposals have a voting limit" do
+    context "when questions have a voting limit" do
       let!(:component) do
-        create(:proposal_component,
+        create(:question_component,
                :with_votes_enabled,
-               :with_threshold_per_proposal,
+               :with_threshold_per_question,
                manifest: manifest,
                participatory_space: participatory_process)
       end
@@ -303,25 +303,25 @@ describe "Vote Proposal", type: :system, slow: true do
         login_as user, scope: :user
       end
 
-      it "doesn't allow users to vote to a proposal that's reached the limit" do
-        create(:proposal_vote, proposal: proposal)
+      it "doesn't allow users to vote to a question that's reached the limit" do
+        create(:question_vote, question: question)
         visit_component
 
-        proposal_element = page.find("article", text: proposal.title)
+        question_element = page.find("article", text: question.title)
 
-        within proposal_element do
+        within question_element do
           within ".card__support", match: :first do
             expect(page).to have_content("VOTE LIMIT REACHED")
           end
         end
       end
 
-      it "allows users to vote on proposals under the limit" do
+      it "allows users to vote on questions under the limit" do
         visit_component
 
-        proposal_element = page.find("article", text: proposal.title)
+        question_element = page.find("article", text: question.title)
 
-        within proposal_element do
+        within question_element do
           within ".card__support", match: :first do
             click_button "Vote"
             expect(page).to have_content("ALREADY VOTED")
@@ -330,11 +330,11 @@ describe "Vote Proposal", type: :system, slow: true do
       end
     end
 
-    context "when proposals have vote limit but can accumulate more votes" do
+    context "when questions have vote limit but can accumulate more votes" do
       let!(:component) do
-        create(:proposal_component,
+        create(:question_component,
                :with_votes_enabled,
-               :with_threshold_per_proposal,
+               :with_threshold_per_question,
                :with_can_accumulate_supports_beyond_threshold,
                manifest: manifest,
                participatory_space: participatory_process)
@@ -344,13 +344,13 @@ describe "Vote Proposal", type: :system, slow: true do
         login_as user, scope: :user
       end
 
-      it "allows users to vote on proposals over the limit" do
-        create(:proposal_vote, proposal: proposal)
+      it "allows users to vote on questions over the limit" do
+        create(:question_vote, question: question)
         visit_component
 
-        proposal_element = page.find("article", text: proposal.title)
+        question_element = page.find("article", text: question.title)
 
-        within proposal_element do
+        within question_element do
           within ".card__support", match: :first do
             expect(page).to have_content("1 VOTE")
           end
@@ -358,9 +358,9 @@ describe "Vote Proposal", type: :system, slow: true do
       end
     end
 
-    context "when proposals have a minimum amount of votes" do
+    context "when questions have a minimum amount of votes" do
       let!(:component) do
-        create(:proposal_component,
+        create(:question_component,
                :with_votes_enabled,
                :with_minimum_votes_per_user,
                minimum_votes_per_user: 3,
@@ -375,33 +375,33 @@ describe "Vote Proposal", type: :system, slow: true do
       it "doesn't count votes unless the minimum is achieved" do
         visit_component
 
-        proposal_elements = proposals.map do |proposal|
-          page.find("article", text: proposal.title)
+        question_elements = questions.map do |question|
+          page.find("article", text: question.title)
         end
 
-        within proposal_elements[0] do
+        within question_elements[0] do
           click_button "Vote"
           expect(page).to have_content("ALREADY VOTED")
           expect(page).to have_content("0 VOTES")
         end
 
-        within proposal_elements[1] do
+        within question_elements[1] do
           click_button "Vote"
           expect(page).to have_content("ALREADY VOTED")
           expect(page).to have_content("0 VOTES")
         end
 
-        within proposal_elements[2] do
+        within question_elements[2] do
           click_button "Vote"
           expect(page).to have_content("ALREADY VOTED")
           expect(page).to have_content("1 VOTE")
         end
 
-        within proposal_elements[0] do
+        within question_elements[0] do
           expect(page).to have_content("1 VOTE")
         end
 
-        within proposal_elements[1] do
+        within question_elements[1] do
           expect(page).to have_content("1 VOTE")
         end
       end
@@ -415,16 +415,16 @@ describe "Vote Proposal", type: :system, slow: true do
       it "gives a point after voting" do
         visit_component
 
-        proposal_element = page.find("article", text: proposal.title)
+        question_element = page.find("article", text: question.title)
 
         expect do
-          within proposal_element do
+          within question_element do
             within ".card__support", match: :first do
               click_button "Vote"
               expect(page).to have_content("1 VOTE")
             end
           end
-        end.to change { Decidim::Gamification.status_for(user, :proposal_votes).score }.by(1)
+        end.to change { Decidim::Gamification.status_for(user, :question_votes).score }.by(1)
       end
     end
   end

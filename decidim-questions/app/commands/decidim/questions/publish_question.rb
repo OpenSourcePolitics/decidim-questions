@@ -1,64 +1,64 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A command with all the business logic when a user publishes a draft proposal.
-    class PublishProposal < Rectify::Command
+  module Questions
+    # A command with all the business logic when a user publishes a draft question.
+    class PublishQuestion < Rectify::Command
       # Public: Initializes the command.
       #
-      # proposal     - The proposal to publish.
+      # question     - The question to publish.
       # current_user - The current user.
-      def initialize(proposal, current_user)
-        @proposal = proposal
+      def initialize(question, current_user)
+        @question = question
         @current_user = current_user
       end
 
       # Executes the command. Broadcasts these events:
       #
-      # - :ok when everything is valid and the proposal is published.
-      # - :invalid if the proposal's author is not the current user.
+      # - :ok when everything is valid and the question is published.
+      # - :invalid if the question's author is not the current user.
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) unless @proposal.authored_by?(@current_user)
+        return broadcast(:invalid) unless @question.authored_by?(@current_user)
 
         transaction do
-          publish_proposal
+          publish_question
           increment_scores
           send_notification
           send_notification_to_participatory_space
         end
 
-        broadcast(:ok, @proposal)
+        broadcast(:ok, @question)
       end
 
       private
 
       # Prevent PaperTrail from creating an additional version
-      # in the proposal multi-step creation process (step 4: publish)
-      def publish_proposal
+      # in the question multi-step creation process (step 4: publish)
+      def publish_question
         PaperTrail.request(enabled: false) do
-          @proposal.update published_at: Time.current
+          @question.update published_at: Time.current
         end
       end
 
       def send_notification
-        return if @proposal.coauthorships.empty?
+        return if @question.coauthorships.empty?
 
         Decidim::EventsManager.publish(
-          event: "decidim.events.proposals.proposal_published",
-          event_class: Decidim::Proposals::PublishProposalEvent,
-          resource: @proposal,
+          event: "decidim.events.questions.question_published",
+          event_class: Decidim::Questions::PublishQuestionEvent,
+          resource: @question,
           followers: coauthors_followers
         )
       end
 
       def send_notification_to_participatory_space
         Decidim::EventsManager.publish(
-          event: "decidim.events.proposals.proposal_published",
-          event_class: Decidim::Proposals::PublishProposalEvent,
-          resource: @proposal,
-          followers: @proposal.participatory_space.followers - coauthors_followers,
+          event: "decidim.events.questions.question_published",
+          event_class: Decidim::Questions::PublishQuestionEvent,
+          resource: @question,
+          followers: @question.participatory_space.followers - coauthors_followers,
           extra: {
             participatory_space: true
           }
@@ -66,15 +66,15 @@ module Decidim
       end
 
       def coauthors_followers
-        @coauthors_followers ||= @proposal.authors.flat_map(&:followers)
+        @coauthors_followers ||= @question.authors.flat_map(&:followers)
       end
 
       def increment_scores
-        @proposal.coauthorships.find_each do |coauthorship|
+        @question.coauthorships.find_each do |coauthorship|
           if coauthorship.user_group
-            Decidim::Gamification.increment_score(coauthorship.user_group, :proposals)
+            Decidim::Gamification.increment_score(coauthorship.user_group, :questions)
           else
-            Decidim::Gamification.increment_score(coauthorship.author, :proposals)
+            Decidim::Gamification.increment_score(coauthorship.author, :questions)
           end
         end
       end

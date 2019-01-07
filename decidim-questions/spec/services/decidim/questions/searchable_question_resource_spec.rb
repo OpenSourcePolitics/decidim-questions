@@ -6,13 +6,13 @@ module Decidim
   describe Search do
     subject { described_class.new(params) }
 
-    let(:current_component) { create :proposal_component, manifest_name: "proposals" }
+    let(:current_component) { create :question_component, manifest_name: "questions" }
     let(:organization) { current_component.organization }
     let(:scope1) { create :scope, organization: organization }
     let(:author) { create(:user, organization: organization) }
-    let!(:proposal) do
+    let!(:question) do
       create(
-        :proposal,
+        :question,
         :draft,
         component: current_component,
         scope: scope1,
@@ -22,31 +22,31 @@ module Decidim
       )
     end
 
-    describe "Indexing of proposals" do
+    describe "Indexing of questions" do
       context "when implementing Searchable" do
         context "when on create" do
-          context "when proposals are NOT official" do
-            let(:proposal2) do
-              create(:proposal, component: current_component)
+          context "when questions are NOT official" do
+            let(:question2) do
+              create(:question, component: current_component)
             end
 
-            it "does not index a SearchableResource after Proposal creation when it is not official" do
-              searchables = SearchableResource.where(resource_type: proposal.class.name, resource_id: [proposal.id, proposal2.id])
+            it "does not index a SearchableResource after Question creation when it is not official" do
+              searchables = SearchableResource.where(resource_type: question.class.name, resource_id: [question.id, question2.id])
               expect(searchables).to be_empty
             end
           end
 
-          context "when proposals ARE official" do
+          context "when questions ARE official" do
             let(:author) { organization }
 
             before do
-              proposal.update(published_at: Time.current)
+              question.update(published_at: Time.current)
             end
 
-            it "does indexes a SearchableResource after Proposal creation when it is official" do
+            it "does indexes a SearchableResource after Question creation when it is official" do
               organization.available_locales.each do |locale|
-                searchable = SearchableResource.find_by(resource_type: proposal.class.name, resource_id: proposal.id, locale: locale)
-                expect_searchable_resource_to_correspond_to_proposal(searchable, proposal, locale)
+                searchable = SearchableResource.find_by(resource_type: question.class.name, resource_id: question.id, locale: locale)
+                expect_searchable_resource_to_correspond_to_question(searchable, question, locale)
               end
             end
           end
@@ -54,54 +54,54 @@ module Decidim
 
         context "when on update" do
           context "when it is NOT published" do
-            it "does not index a SearchableResource when Proposal changes but is not published" do
-              searchables = SearchableResource.where(resource_type: proposal.class.name, resource_id: proposal.id)
+            it "does not index a SearchableResource when Question changes but is not published" do
+              searchables = SearchableResource.where(resource_type: question.class.name, resource_id: question.id)
               expect(searchables).to be_empty
             end
           end
 
           context "when it IS published" do
             before do
-              proposal.update published_at: Time.current
+              question.update published_at: Time.current
             end
 
-            it "inserts a SearchableResource after Proposal is published" do
+            it "inserts a SearchableResource after Question is published" do
               organization.available_locales.each do |locale|
-                searchable = SearchableResource.find_by(resource_type: proposal.class.name, resource_id: proposal.id, locale: locale)
-                expect_searchable_resource_to_correspond_to_proposal(searchable, proposal, locale)
+                searchable = SearchableResource.find_by(resource_type: question.class.name, resource_id: question.id, locale: locale)
+                expect_searchable_resource_to_correspond_to_question(searchable, question, locale)
               end
             end
 
-            it "updates the associated SearchableResource after published Proposal update" do
-              searchable = SearchableResource.find_by(resource_type: proposal.class.name, resource_id: proposal.id)
+            it "updates the associated SearchableResource after published Question update" do
+              searchable = SearchableResource.find_by(resource_type: question.class.name, resource_id: question.id)
               created_at = searchable.created_at
               updated_title = "Brand new title"
-              proposal.update(title: updated_title)
+              question.update(title: updated_title)
 
-              proposal.save!
+              question.save!
               searchable.reload
 
               organization.available_locales.each do |locale|
-                searchable = SearchableResource.find_by(resource_type: proposal.class.name, resource_id: proposal.id, locale: locale)
+                searchable = SearchableResource.find_by(resource_type: question.class.name, resource_id: question.id, locale: locale)
                 expect(searchable.content_a).to eq updated_title
                 expect(searchable.updated_at).to be > created_at
               end
             end
 
-            it "removes tha associated SearchableResource after unpublishing a published Proposal on update" do
-              proposal.update(published_at: nil)
+            it "removes tha associated SearchableResource after unpublishing a published Question on update" do
+              question.update(published_at: nil)
 
-              searchables = SearchableResource.where(resource_type: proposal.class.name, resource_id: proposal.id)
+              searchables = SearchableResource.where(resource_type: question.class.name, resource_id: question.id)
               expect(searchables).to be_empty
             end
           end
         end
 
         context "when on destroy" do
-          it "destroys the associated SearchableResource after Proposal destroy" do
-            proposal.destroy
+          it "destroys the associated SearchableResource after Question destroy" do
+            question.destroy
 
-            searchables = SearchableResource.where(resource_type: proposal.class.name, resource_id: proposal.id)
+            searchables = SearchableResource.where(resource_type: question.class.name, resource_id: question.id)
 
             expect(searchables.any?).to be false
           end
@@ -110,10 +110,10 @@ module Decidim
     end
 
     describe "Search" do
-      context "when searching by Proposal resource_type" do
-        let!(:proposal2) do
+      context "when searching by Question resource_type" do
+        let!(:question2) do
           create(
-            :proposal,
+            :question,
             component: current_component,
             scope: scope1,
             title: Decidim::Faker.name,
@@ -122,27 +122,27 @@ module Decidim
         end
 
         before do
-          proposal.update(published_at: Time.current)
-          proposal2.update(published_at: Time.current)
+          question.update(published_at: Time.current)
+          question2.update(published_at: Time.current)
         end
 
-        it "returns Proposal results" do
-          Decidim::Search.call("Ow", organization, resource_type: proposal.class.name) do
+        it "returns Question results" do
+          Decidim::Search.call("Ow", organization, resource_type: question.class.name) do
             on(:ok) do |results_by_type|
-              results = results_by_type[proposal.class.name]
+              results = results_by_type[question.class.name]
               expect(results[:count]).to eq 2
-              expect(results[:results]).to match_array [proposal, proposal2]
+              expect(results[:results]).to match_array [question, question2]
             end
             on(:invalid) { raise("Should not happen") }
           end
         end
 
         it "allows searching by prefix characters" do
-          Decidim::Search.call("wait", organization, resource_type: proposal.class.name) do
+          Decidim::Search.call("wait", organization, resource_type: question.class.name) do
             on(:ok) do |results_by_type|
-              results = results_by_type[proposal.class.name]
+              results = results_by_type[question.class.name]
               expect(results[:count]).to eq 1
-              expect(results[:results]).to eq [proposal2]
+              expect(results[:results]).to eq [question2]
             end
             on(:invalid) { raise("Should not happen") }
           end
@@ -152,29 +152,29 @@ module Decidim
 
     private
 
-    def expect_searchable_resource_to_correspond_to_proposal(searchable, proposal, locale)
+    def expect_searchable_resource_to_correspond_to_question(searchable, question, locale)
       attrs = searchable.attributes.clone
       attrs.delete("id")
       attrs.delete("created_at")
       attrs.delete("updated_at")
-      expect(attrs.delete("datetime").to_s(:short)).to eq(proposal.published_at.to_s(:short))
-      expect(attrs).to eq(expected_searchable_resource_attrs(proposal, locale))
+      expect(attrs.delete("datetime").to_s(:short)).to eq(question.published_at.to_s(:short))
+      expect(attrs).to eq(expected_searchable_resource_attrs(question, locale))
     end
 
-    def expected_searchable_resource_attrs(proposal, locale)
+    def expected_searchable_resource_attrs(question, locale)
       {
-        "content_a" => proposal.title,
+        "content_a" => question.title,
         "content_b" => "",
         "content_c" => "",
-        "content_d" => proposal.body,
+        "content_d" => question.body,
         "locale" => locale,
 
-        "decidim_organization_id" => proposal.component.organization.id,
+        "decidim_organization_id" => question.component.organization.id,
         "decidim_participatory_space_id" => current_component.participatory_space_id,
         "decidim_participatory_space_type" => current_component.participatory_space_type,
-        "decidim_scope_id" => proposal.decidim_scope_id,
-        "resource_id" => proposal.id,
-        "resource_type" => "Decidim::Proposals::Proposal"
+        "decidim_scope_id" => question.decidim_scope_id,
+        "resource_id" => question.id,
+        "resource_type" => "Decidim::Questions::Question"
       }
     end
   end

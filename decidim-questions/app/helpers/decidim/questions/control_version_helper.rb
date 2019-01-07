@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Custom helpers, scoped to the proposals engine.
+  module Questions
+    # Custom helpers, scoped to the questions engine.
     #
     module ControlVersionHelper
       def versions_controller?
-        return true if params[:controller] == "decidim/proposals/versions"
+        return true if params[:controller] == "decidim/questions/versions"
 
         false
       end
 
-      def proposal?
-        return true if item.class == Decidim::Proposals::Proposal
+      def question?
+        return true if item.class == Decidim::Questions::Question
 
         false
       end
@@ -20,18 +20,18 @@ module Decidim
       def back_to_resource_path_text
         return unless versions_controller?
 
-        if proposal?
-          t("versions.stats.back_to_proposal", scope: "decidim.proposals")
+        if question?
+          t("versions.stats.back_to_question", scope: "decidim.questions")
         else
-          t("versions.stats.back_to_collaborative_draft", scope: "decidim.proposals")
+          t("versions.stats.back_to_collaborative_draft", scope: "decidim.questions")
         end
       end
 
       def back_to_resource_path
         return unless versions_controller?
 
-        if proposal?
-          proposal_path(item)
+        if question?
+          question_path(item)
         else
           collaborative_draft_path(item)
         end
@@ -40,8 +40,8 @@ module Decidim
       def resource_version_path(index)
         return unless versions_controller?
 
-        if proposal?
-          proposal_version_path(item, index + 1)
+        if question?
+          question_version_path(item, index + 1)
         else
           collaborative_draft_version_path(item, index + 1)
         end
@@ -50,8 +50,8 @@ module Decidim
       def resource_all_versions_path
         return unless versions_controller?
 
-        if proposal?
-          proposal_versions_path(item)
+        if question?
+          question_versions_path(item)
         else
           collaborative_draft_versions_path(item)
         end

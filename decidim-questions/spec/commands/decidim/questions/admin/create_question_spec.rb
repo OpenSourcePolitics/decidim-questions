@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe CreateProposal do
-        let(:form_klass) { ProposalForm }
-        let(:component) { create(:proposal_component) }
+      describe CreateQuestion do
+        let(:form_klass) { QuestionForm }
+        let(:component) { create(:question_component) }
         let(:organization) { component.organization }
         let(:meeting_component) { create(:meeting_component, participatory_space: component.participatory_space) }
         let(:meetings) { create_list(:meeting, 3, component: meeting_component) }
@@ -33,8 +33,8 @@ module Decidim
         describe "call" do
           let(:form_params) do
             {
-              title: "A reasonable proposal title",
-              body: "A reasonable proposal body",
+              title: "A reasonable question title",
+              body: "A reasonable question body",
               address: address,
               has_address: has_address,
               attachment: attachment_params,
@@ -57,10 +57,10 @@ module Decidim
               expect { command.call }.to broadcast(:invalid)
             end
 
-            it "doesn't create a proposal" do
+            it "doesn't create a question" do
               expect do
                 command.call
-              end.not_to change(Decidim::Proposals::Proposal, :count)
+              end.not_to change(Decidim::Questions::Question, :count)
             end
           end
 
@@ -69,13 +69,13 @@ module Decidim
               expect { command.call }.to broadcast(:ok)
             end
 
-            it "creates a new proposal" do
+            it "creates a new question" do
               expect do
                 command.call
-              end.to change(Decidim::Proposals::Proposal, :count).by(1)
+              end.to change(Decidim::Questions::Question, :count).by(1)
             end
 
-            context "when proposal comes from a meeting" do
+            context "when question comes from a meeting" do
               let(:created_in_meeting) { true }
               let(:meeting_id) { meetings.first.id }
               let(:meeting_as_author) { meetings.first }
@@ -83,22 +83,22 @@ module Decidim
               it "sets the meeting as author" do
                 command.call
 
-                expect(Decidim::Proposals::Proposal.last.authors).to include(meetings.first)
+                expect(Decidim::Questions::Question.last.authors).to include(meetings.first)
               end
             end
 
-            context "when proposal is official" do
+            context "when question is official" do
               it "sets the organization as author" do
                 command.call
 
-                expect(Decidim::Proposals::Proposal.last.authors).to include(organization)
+                expect(Decidim::Questions::Question.last.authors).to include(organization)
               end
             end
 
             it "traces the action", versioning: true do
               expect(Decidim.traceability)
                 .to receive(:perform_action!)
-                .with(:create, Decidim::Proposals::Proposal, kind_of(Decidim::User), visibility: "all")
+                .with(:create, Decidim::Questions::Question, kind_of(Decidim::User), visibility: "all")
                 .and_call_original
 
               expect { command.call }.to change(Decidim::ActionLog, :count)
@@ -113,9 +113,9 @@ module Decidim
               expect(Decidim::EventsManager)
                 .to receive(:publish)
                 .with(
-                  event: "decidim.events.proposals.proposal_published",
-                  event_class: Decidim::Proposals::PublishProposalEvent,
-                  resource: kind_of(Decidim::Proposals::Proposal),
+                  event: "decidim.events.questions.question_published",
+                  event_class: Decidim::Questions::PublishQuestionEvent,
+                  resource: kind_of(Decidim::Questions::Question),
                   followers: [follower],
                   extra: {
                     participatory_space: true
@@ -126,7 +126,7 @@ module Decidim
             end
 
             context "when geocoding is enabled" do
-              let(:component) { create(:proposal_component, :with_geocoding_enabled) }
+              let(:component) { create(:question_component, :with_geocoding_enabled) }
 
               context "when the has address checkbox is checked" do
                 let(:has_address) { true }
@@ -140,17 +140,17 @@ module Decidim
 
                   it "sets the latitude and longitude" do
                     command.call
-                    proposal = Decidim::Proposals::Proposal.last
+                    question = Decidim::Questions::Question.last
 
-                    expect(proposal.latitude).to eq(latitude)
-                    expect(proposal.longitude).to eq(longitude)
+                    expect(question.latitude).to eq(latitude)
+                    expect(question.longitude).to eq(longitude)
                   end
                 end
               end
             end
 
             context "when attachments are allowed", processing_uploads_for: Decidim::AttachmentUploader do
-              let(:component) { create(:proposal_component, :with_attachments_allowed) }
+              let(:component) { create(:question_component, :with_attachments_allowed) }
               let(:attachment_params) do
                 {
                   title: "My attachment",
@@ -158,11 +158,11 @@ module Decidim
                 }
               end
 
-              it "creates an atachment for the proposal" do
+              it "creates an atachment for the question" do
                 expect { command.call }.to change(Decidim::Attachment, :count).by(1)
-                last_proposal = Decidim::Proposals::Proposal.last
+                last_question = Decidim::Questions::Question.last
                 last_attachment = Decidim::Attachment.last
-                expect(last_attachment.attached_to).to eq(last_proposal)
+                expect(last_attachment.attached_to).to eq(last_question)
               end
 
               context "when attachment is left blank" do

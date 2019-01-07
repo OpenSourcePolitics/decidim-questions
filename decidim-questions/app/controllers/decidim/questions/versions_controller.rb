@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # Exposes CollaborativeDraft versions so users can see how a CollaborativeDraft
     # has been updated through time.
-    class VersionsController < Decidim::Proposals::ApplicationController
+    class VersionsController < Decidim::Questions::ApplicationController
       helper Decidim::TraceabilityHelper
       helper_method :current_version, :item
 
       private
 
       def item
-        @item ||= if params[:proposal_id]
-                    Proposal.where(component: current_component).find(params[:proposal_id])
+        @item ||= if params[:question_id]
+                    Question.where(component: current_component).find(params[:question_id])
                   else
                     CollaborativeDraft.where(component: current_component).find(params[:collaborative_draft_id])
                   end

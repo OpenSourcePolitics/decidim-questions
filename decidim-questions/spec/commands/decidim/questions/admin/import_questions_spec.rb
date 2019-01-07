@@ -3,21 +3,21 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe ImportProposals do
+      describe ImportQuestions do
         describe "call" do
-          let!(:proposal) { create(:proposal, :accepted) }
+          let!(:question) { create(:question, :accepted) }
           let(:current_component) do
             create(
-              :proposal_component,
-              participatory_space: proposal.component.participatory_space
+              :question_component,
+              participatory_space: question.component.participatory_space
             )
           end
           let(:form) do
             instance_double(
-              ProposalsImportForm,
-              origin_component: proposal.component,
+              QuestionsImportForm,
+              origin_component: question.component,
               current_component: current_component,
               current_organization: current_component.organization,
               states: states,
@@ -35,10 +35,10 @@ module Decidim
               expect { command.call }.to broadcast(:invalid)
             end
 
-            it "doesn't create the proposal" do
+            it "doesn't create the question" do
               expect do
                 command.call
-              end.to change(Proposal, :count).by(0)
+              end.to change(Question, :count).by(0)
             end
           end
 
@@ -49,68 +49,68 @@ module Decidim
               expect { command.call }.to broadcast(:ok)
             end
 
-            it "creates the proposals" do
+            it "creates the questions" do
               expect do
                 command.call
-              end.to change { Proposal.where(component: current_component).count }.by(1)
+              end.to change { Question.where(component: current_component).count }.by(1)
             end
 
-            context "when a proposal was already imported" do
-              let(:second_proposal) { create(:proposal, :accepted, component: proposal.component) }
+            context "when a question was already imported" do
+              let(:second_question) { create(:question, :accepted, component: question.component) }
 
               before do
                 command.call
-                second_proposal
+                second_question
               end
 
               it "doesn't import it again" do
                 expect do
                   command.call
-                end.to change { Proposal.where(component: current_component).count }.by(1)
+                end.to change { Question.where(component: current_component).count }.by(1)
 
-                titles = Proposal.where(component: current_component).map(&:title)
-                expect(titles).to match_array([proposal.title, second_proposal.title])
+                titles = Question.where(component: current_component).map(&:title)
+                expect(titles).to match_array([question.title, second_question.title])
               end
             end
 
-            it "links the proposals" do
+            it "links the questions" do
               command.call
 
-              linked = proposal.linked_resources(:proposals, "copied_from_component")
-              new_proposal = Proposal.where(component: current_component).last
+              linked = question.linked_resources(:questions, "copied_from_component")
+              new_question = Question.where(component: current_component).last
 
-              expect(linked).to include(new_proposal)
+              expect(linked).to include(new_question)
             end
 
             it "only imports wanted attributes" do
               command.call
 
-              new_proposal = Proposal.where(component: current_component).last
-              expect(new_proposal.title).to eq(proposal.title)
-              expect(new_proposal.body).to eq(proposal.body)
-              expect(new_proposal.creator_author).to eq(current_component.organization)
-              expect(new_proposal.category).to eq(proposal.category)
+              new_question = Question.where(component: current_component).last
+              expect(new_question.title).to eq(question.title)
+              expect(new_question.body).to eq(question.body)
+              expect(new_question.creator_author).to eq(current_component.organization)
+              expect(new_question.category).to eq(question.category)
 
-              expect(new_proposal.state).to be_nil
-              expect(new_proposal.answer).to be_nil
-              expect(new_proposal.answered_at).to be_nil
-              expect(new_proposal.reference).not_to eq(proposal.reference)
+              expect(new_question.state).to be_nil
+              expect(new_question.answer).to be_nil
+              expect(new_question.answered_at).to be_nil
+              expect(new_question.reference).not_to eq(question.reference)
             end
 
-            describe "proposal states" do
+            describe "question states" do
               let(:states) { %w(not_answered rejected) }
 
               before do
-                create(:proposal, :rejected, component: proposal.component)
-                create(:proposal, component: proposal.component)
+                create(:question, :rejected, component: question.component)
+                create(:question, component: question.component)
               end
 
-              it "only imports proposals from the selected states" do
+              it "only imports questions from the selected states" do
                 expect do
                   command.call
-                end.to change { Proposal.where(component: current_component).count }.by(2)
+                end.to change { Question.where(component: current_component).count }.by(2)
 
-                expect(Proposal.where(component: current_component).pluck(:title)).not_to include(proposal.title)
+                expect(Question.where(component: current_component).pluck(:title)).not_to include(question.title)
               end
             end
           end

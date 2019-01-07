@@ -5,11 +5,11 @@
     <h2 class="heading2"><%= render_participatory_text_title(@participatory_text) %></h2>
   </div>
   <div class="column medium-3 pull-right">
-    <%= render partial: "decidim/proposals/proposals/participatory_texts/view_index" %>
+    <%= render partial: "decidim/questions/questions/participatory_texts/view_index" %>
   </div>
 </div>
-<div class="row columns" id="proposals">
-  <% @proposals.each do |proposal| %>
-    <%= cell("decidim/proposals/participatory_text_proposal", proposal, context: { current_user: current_user }) %>
+<div class="row columns" id="questions">
+  <% @questions.each do |question| %>
+    <%= cell("decidim/questions/participatory_text_question", question, context: { current_user: current_user }) %>
   <% end %>
 </div>

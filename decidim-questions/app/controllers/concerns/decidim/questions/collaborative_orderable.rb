@@ -3,7 +3,7 @@
 require "active_support/concern"
 
 module Decidim
-  module Proposals
+  module Questions
     # Common logic to ordering resources
     module CollaborativeOrderable
       extend ActiveSupport::Concern
@@ -13,7 +13,7 @@ module Decidim
 
         private
 
-        # Gets how the proposals should be ordered based on the choice made by the user.
+        # Gets how the questions should be ordered based on the choice made by the user.
         def order
           @order ||= detect_order(params[:order]) || default_order
         end

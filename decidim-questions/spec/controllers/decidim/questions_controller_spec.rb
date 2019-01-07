@@ -3,9 +3,9 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalsController, type: :controller do
-      routes { Decidim::Proposals::Engine.routes }
+  module Questions
+    describe QuestionsController, type: :controller do
+      routes { Decidim::Questions::Engine.routes }
 
       let(:user) { create(:user, :confirmed, organization: component.organization) }
 
@@ -24,32 +24,32 @@ module Decidim
 
       describe "GET index" do
         context "when participatory texts are disabled" do
-          let(:component) { create(:proposal_component) }
+          let(:component) { create(:question_component) }
 
-          it "sorts proposals by search defaults" do
+          it "sorts questions by search defaults" do
             get :index
             expect(response).to have_http_status(:ok)
             expect(subject).to render_template(:index)
-            expect(assigns(:proposals).order_values).to eq(["RANDOM()"])
+            expect(assigns(:questions).order_values).to eq(["RANDOM()"])
           end
         end
 
         context "when participatory texts are enabled" do
-          let(:component) { create(:proposal_component, :with_participatory_texts_enabled) }
+          let(:component) { create(:question_component, :with_participatory_texts_enabled) }
 
-          it "sorts proposals by position" do
+          it "sorts questions by position" do
             get :index
             expect(response).to have_http_status(:ok)
             expect(subject).to render_template(:participatory_text)
-            expect(assigns(:proposals).order_values.first.expr.name).to eq(:position)
+            expect(assigns(:questions).order_values.first.expr.name).to eq(:position)
           end
         end
       end
 
       describe "GET new" do
-        let(:component) { create(:proposal_component, :with_creation_enabled) }
+        let(:component) { create(:question_component, :with_creation_enabled) }
 
-        context "when NO draft proposals exist" do
+        context "when NO draft questions exist" do
           it "renders the empty form" do
             get :new, params: params
             expect(response).to have_http_status(:ok)
@@ -57,8 +57,8 @@ module Decidim
           end
         end
 
-        context "when draft proposals exist from other users" do
-          let!(:others_draft) { create(:proposal, :draft, component: component) }
+        context "when draft questions exist from other users" do
+          let!(:others_draft) { create(:question, :draft, component: component) }
 
           it "renders the empty form" do
             get :new, params: params
@@ -70,7 +70,7 @@ module Decidim
 
       describe "POST create" do
         context "when creation is not enabled" do
-          let(:component) { create(:proposal_component) }
+          let(:component) { create(:question_component) }
 
           it "raises an error" do
             post :create, params: params
@@ -80,9 +80,9 @@ module Decidim
         end
 
         context "when creation is enabled" do
-          let(:component) { create(:proposal_component, :with_creation_enabled) }
+          let(:component) { create(:question_component, :with_creation_enabled) }
 
-          it "creates a proposal" do
+          it "creates a question" do
             post :create, params: params.merge(
               title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
               body: "Ut sed dolor vitae purus volutpat venenatis. Donec sit amet sagittis sapien. Curabitur rhoncus ullamcorper feugiat. Aliquam et magna metus."
@@ -94,29 +94,29 @@ module Decidim
         end
       end
 
-      describe "withdraw a proposal" do
-        let(:component) { create(:proposal_component, :with_creation_enabled) }
+      describe "withdraw a question" do
+        let(:component) { create(:question_component, :with_creation_enabled) }
 
-        context "when an authorized user is withdrawing a proposal" do
-          let(:proposal) { create(:proposal, component: component, users: [user]) }
+        context "when an authorized user is withdrawing a question" do
+          let(:question) { create(:question, component: component, users: [user]) }
 
-          it "withdraws the proposal" do
-            put :withdraw, params: params.merge(id: proposal.id)
+          it "withdraws the question" do
+            put :withdraw, params: params.merge(id: question.id)
 
             expect(flash[:notice]).not_to be_empty
             expect(response).to have_http_status(:found)
           end
         end
 
-        describe "when current user is NOT the author of the proposal" do
+        describe "when current user is NOT the author of the question" do
           let(:current_user) { create(:user, organization: component.organization) }
-          let(:proposal) { create(:proposal, component: component, users: [current_user]) }
+          let(:question) { create(:question, component: component, users: [current_user]) }
 
-          context "and the proposal has no supports" do
-            it "is not able to withdraw the proposal" do
-              expect(WithdrawProposal).not_to receive(:call)
+          context "and the question has no supports" do
+            it "is not able to withdraw the question" do
+              expect(WithdrawQuestion).not_to receive(:call)
 
-              put :withdraw, params: params.merge(id: proposal.id)
+              put :withdraw, params: params.merge(id: question.id)
 
               expect(flash[:alert]).not_to be_empty
               expect(response).to have_http_status(:found)

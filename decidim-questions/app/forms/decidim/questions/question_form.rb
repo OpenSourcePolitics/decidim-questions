@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A form object to be used when public users want to create a proposal.
-    class ProposalForm < Decidim::Proposals::ProposalWizardCreateStepForm
-      mimic :proposal
+  module Questions
+    # A form object to be used when public users want to create a question.
+    class QuestionForm < Decidim::Questions::QuestionWizardCreateStepForm
+      mimic :question
 
       attribute :address, String
       attribute :latitude, Float
@@ -48,7 +48,7 @@ module Decidim
 
       # Scope identifier
       #
-      # Returns the scope identifier related to the proposal
+      # Returns the scope identifier related to the question
       def scope_id
         @scope_id || scope&.id
       end

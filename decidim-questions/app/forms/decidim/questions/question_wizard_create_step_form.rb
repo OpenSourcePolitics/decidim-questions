@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A form object to be used when public users want to create a proposal.
-    class ProposalWizardCreateStepForm < Decidim::Form
-      mimic :proposal
+  module Questions
+    # A form object to be used when public users want to create a question.
+    class QuestionWizardCreateStepForm < Decidim::Form
+      mimic :question
 
       attribute :title, String
       attribute :body, String
@@ -13,7 +13,7 @@ module Decidim
       validates :title, :body, presence: true, etiquette: true
       validates :title, length: { maximum: 150 }
 
-      validate :proposal_length
+      validate :question_length
 
       alias component current_component
 
@@ -26,9 +26,9 @@ module Decidim
 
       private
 
-      def proposal_length
+      def question_length
         return unless body.presence
-        length = current_component.settings.proposal_length
+        length = current_component.settings.question_length
         errors.add(:body, :too_long, count: length) if body.length > length
       end
     end

@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe CollaborativeDraftsController, type: :controller do
-      routes { Decidim::Proposals::Engine.routes }
+      routes { Decidim::Questions::Engine.routes }
 
-      let(:component) { create(:proposal_component, :with_creation_enabled, :with_collaborative_drafts_enabled) }
+      let(:component) { create(:question_component, :with_creation_enabled, :with_collaborative_drafts_enabled) }
       let(:params) { { component_id: component.id } }
       let(:user) { create(:user, :confirmed, organization: component.organization) }
       let(:author) { create(:user, :confirmed, organization: component.organization) }
@@ -27,7 +27,7 @@ module Decidim
 
             expect(response).to have_http_status(:ok)
             expect(assigns[:collaborative_drafts]).not_to be_empty
-            expect(subject).to render_template("decidim/proposals/collaborative_drafts/index")
+            expect(subject).to render_template("decidim/questions/collaborative_drafts/index")
           end
         end
       end
@@ -37,8 +37,8 @@ module Decidim
           get :show, params: { id: collaborative_draft.id }
 
           expect(response).to have_http_status(:ok)
-          expect(assigns(:collaborative_draft)).to be_kind_of(Decidim::Proposals::CollaborativeDraft)
-          expect(subject).to render_template("decidim/proposals/collaborative_drafts/show")
+          expect(assigns(:collaborative_draft)).to be_kind_of(Decidim::Questions::CollaborativeDraft)
+          expect(subject).to render_template("decidim/questions/collaborative_drafts/show")
         end
       end
 
@@ -47,7 +47,7 @@ module Decidim
           sign_in user, scope: :user
         end
 
-        let(:component) { create(:proposal_component, :with_creation_enabled, :with_collaborative_drafts_enabled) }
+        let(:component) { create(:question_component, :with_creation_enabled, :with_collaborative_drafts_enabled) }
 
         describe "GET new" do
           it "renders the empty form" do
@@ -108,7 +108,7 @@ module Decidim
         end
 
         context "when creation is not enabled" do
-          let(:component) { create(:proposal_component, :with_collaborative_drafts_enabled) }
+          let(:component) { create(:question_component, :with_collaborative_drafts_enabled) }
 
           it "redirects" do
             post :create, params: params
@@ -132,7 +132,7 @@ module Decidim
         it "renders the edit form" do
           get :edit, params: { id: collaborative_draft.id }
           expect(response).to have_http_status(:ok)
-          expect(assigns(:collaborative_draft)).to be_kind_of(Decidim::Proposals::CollaborativeDraft)
+          expect(assigns(:collaborative_draft)).to be_kind_of(Decidim::Questions::CollaborativeDraft)
           expect(subject).to render_template(:edit)
         end
       end
@@ -151,13 +151,13 @@ module Decidim
 
         it "updates the collaborative draft" do
           put :update, params: params
-          expect(assigns(:collaborative_draft)).to be_kind_of(Decidim::Proposals::CollaborativeDraft)
+          expect(assigns(:collaborative_draft)).to be_kind_of(Decidim::Questions::CollaborativeDraft)
           expect(response).to have_http_status(:found)
         end
       end
 
       context "with collaborative drafts disabled" do
-        let(:component) { create(:proposal_component) }
+        let(:component) { create(:question_component) }
 
         describe "GET index" do
           it "renders not found page" do

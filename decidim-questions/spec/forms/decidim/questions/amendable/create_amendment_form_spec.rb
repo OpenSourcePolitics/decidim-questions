@@ -7,7 +7,7 @@ module Decidim
     describe CreateForm do
       subject { form }
 
-      let(:amendable) { create(:proposal) }
+      let(:amendable) { create(:question) }
       let(:amender) { create :user, :confirmed, organization: amendable.organization }
 
       let(:form) do

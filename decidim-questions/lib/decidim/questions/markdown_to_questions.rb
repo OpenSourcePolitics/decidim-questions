@@ -3,16 +3,16 @@
 require "redcarpet"
 
 module Decidim
-  module Proposals
+  module Questions
     # This class parses a participatory text document in markdown and
-    # produces Proposals in the form of sections and articles.
+    # produces Questions in the form of sections and articles.
     #
     # This implementation uses Redcarpet Base renderer.
-    # Redcarpet::Render::Base performs a callback for every block it finds, what MarkdownToProposals
+    # Redcarpet::Render::Base performs a callback for every block it finds, what MarkdownToQuestions
     # does is to implement callbacks for the blocks which it is interested in performing some actions.
     #
-    class MarkdownToProposals < ::Redcarpet::Render::Base
-      # Public: Initializes the serializer with a proposal.
+    class MarkdownToQuestions < ::Redcarpet::Render::Base
+      # Public: Initializes the serializer with a question.
       def initialize(component, current_user)
         super()
         @component = component
@@ -32,29 +32,29 @@ module Decidim
       ##########################################
 
       # Recarpet callback to process headers.
-      # Creates Paricipatory Text Proposals at Section and Subsection levels.
+      # Creates Paricipatory Text Questions at Section and Subsection levels.
       def header(title, level)
         participatory_text_level = if level > 1
-                                     Decidim::Proposals::ParticipatoryTextSection::LEVELS[:sub_section]
+                                     Decidim::Questions::ParticipatoryTextSection::LEVELS[:sub_section]
                                    else
-                                     Decidim::Proposals::ParticipatoryTextSection::LEVELS[:section]
+                                     Decidim::Questions::ParticipatoryTextSection::LEVELS[:section]
                                    end
 
-        create_proposal(title, title, participatory_text_level)
+        create_question(title, title, participatory_text_level)
 
         @num_sections += 1
         title
       end
 
       # Recarpet callback to process paragraphs.
-      # Creates Paricipatory Text Proposals at Article level.
+      # Creates Paricipatory Text Questions at Article level.
       def paragraph(text)
         return if text.blank?
 
-        create_proposal(
+        create_question(
           (@last_position + 1 - @num_sections).to_s,
           text,
-          Decidim::Proposals::ParticipatoryTextSection::LEVELS[:article]
+          Decidim::Questions::ParticipatoryTextSection::LEVELS[:article]
         )
 
         text
@@ -67,7 +67,7 @@ module Decidim
 
       private
 
-      def create_proposal(title, body, participatory_text_level)
+      def create_question(title, body, participatory_text_level)
         attributes = {
           component: @component,
           title: title,
@@ -75,15 +75,15 @@ module Decidim
           participatory_text_level: participatory_text_level
         }
 
-        proposal = Decidim::Proposals::ProposalBuilder.create(
+        question = Decidim::Questions::QuestionBuilder.create(
           attributes: attributes,
           author: @component.organization,
           action_user: @current_user
         )
 
-        @last_position = proposal.position
+        @last_position = question.position
 
-        proposal
+        question
       end
     end
   end

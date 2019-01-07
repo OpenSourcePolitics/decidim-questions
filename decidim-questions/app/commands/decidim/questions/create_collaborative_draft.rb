@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A command with all the business logic when a user creates a new collaborative draft.
     class CreateCollaborativeDraft < Rectify::Command
       include AttachmentMethods

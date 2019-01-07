@@ -3,13 +3,13 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
       describe ParticipatoryTextsController, type: :controller do
-        routes { Decidim::Proposals::AdminEngine.routes }
+        routes { Decidim::Questions::AdminEngine.routes }
 
         let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }
-        let(:component) { create :proposal_component, :with_participatory_texts_enabled }
+        let(:component) { create :question_component, :with_participatory_texts_enabled }
         let(:document_file) { nil }
         let(:title) { { en: ::Faker::Book.title } }
         let(:params) do

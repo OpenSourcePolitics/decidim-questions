@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A module with all the hash tags common methods for proposals
+  module Questions
+    # A module with all the hash tags common methods for questions
     # and collaborative draft commands.
     module HashtagsMethods
       private

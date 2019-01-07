@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::CollaborativeDraftWithdrawnEvent do
+describe Decidim::Questions::CollaborativeDraftWithdrawnEvent do
   include_context "when a simple event"
 
-  let(:event_name) { "decidim.events.proposals.collaborative_draft_withdrawn" }
+  let(:event_name) { "decidim.events.questions.collaborative_draft_withdrawn" }
   let(:resource) { create :collaborative_draft }
   let(:resource_path) { Decidim::ResourceLocatorPresenter.new(resource).path }
   let(:resource_title) { resource.title }

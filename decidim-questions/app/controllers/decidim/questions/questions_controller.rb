@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Exposes the proposal resource so users can view and create them.
-    class ProposalsController < Decidim::Proposals::ApplicationController
+  module Questions
+    # Exposes the question resource so users can view and create them.
+    class QuestionsController < Decidim::Questions::ApplicationController
       helper Decidim::WidgetUrlsHelper
-      helper ProposalWizardHelper
+      helper QuestionWizardHelper
       helper ParticipatoryTextsHelper
       include Decidim::ApplicationHelper
       include FormFactory
@@ -17,38 +17,38 @@ module Decidim
 
       before_action :authenticate_user!, only: [:new, :create, :complete]
       before_action :ensure_is_draft, only: [:compare, :complete, :preview, :publish, :edit_draft, :update_draft, :destroy_draft]
-      before_action :set_proposal, only: [:show, :edit, :update, :withdraw]
+      before_action :set_question, only: [:show, :edit, :update, :withdraw]
       before_action :edit_form, only: [:edit_draft, :edit]
 
       before_action :set_participatory_text
 
       def index
         if component_settings.participatory_texts_enabled?
-          @proposals = Decidim::Proposals::Proposal
+          @questions = Decidim::Questions::Question
                        .where(component: current_component)
                        .published
                        .not_hidden
                        .includes(:category, :scope)
                        .order(position: :asc)
-          render "decidim/proposals/proposals/participatory_texts/participatory_text"
+          render "decidim/questions/questions/participatory_texts/participatory_text"
         else
-          @proposals = search
+          @questions = search
                        .results
                        .published
                        .not_hidden
                        .includes(:category)
                        .includes(:scope)
 
-          @voted_proposals = if current_user
-                               ProposalVote.where(
+          @voted_questions = if current_user
+                               QuestionVote.where(
                                  author: current_user,
-                                 proposal: @proposals.pluck(:id)
-                               ).pluck(:decidim_proposal_id)
+                                 question: @questions.pluck(:id)
+                               ).pluck(:decidim_question_id)
                              else
                                []
                              end
-          @proposals = paginate(@proposals)
-          @proposals = reorder(@proposals)
+          @questions = paginate(@questions)
+          @questions = reorder(@questions)
         end
       end
 
@@ -57,29 +57,29 @@ module Decidim
       end
 
       def new
-        enforce_permission_to :create, :proposal
+        enforce_permission_to :create, :question
         @step = :step_1
-        if proposal_draft.present?
-          redirect_to edit_draft_proposal_path(proposal_draft, component_id: proposal_draft.component.id, question_slug: proposal_draft.component.participatory_space.slug)
+        if question_draft.present?
+          redirect_to edit_draft_question_path(question_draft, component_id: question_draft.component.id, question_slug: question_draft.component.participatory_space.slug)
         else
-          @form = form(ProposalWizardCreateStepForm).from_params({})
+          @form = form(QuestionWizardCreateStepForm).from_params({})
         end
       end
 
       def create
-        enforce_permission_to :create, :proposal
+        enforce_permission_to :create, :question
         @step = :step_1
-        @form = form(ProposalWizardCreateStepForm).from_params(params)
+        @form = form(QuestionWizardCreateStepForm).from_params(params)
 
-        CreateProposal.call(@form, current_user) do
-          on(:ok) do |proposal|
-            flash[:notice] = I18n.t("proposals.create.success", scope: "decidim")
+        CreateQuestion.call(@form, current_user) do
+          on(:ok) do |question|
+            flash[:notice] = I18n.t("questions.create.success", scope: "decidim")
 
-            redirect_to Decidim::ResourceLocatorPresenter.new(proposal).path + "/compare"
+            redirect_to Decidim::ResourceLocatorPresenter.new(question).path + "/compare"
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.create.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.create.error", scope: "decidim")
             render :new
           end
         end
@@ -87,21 +87,21 @@ module Decidim
 
       def compare
         @step = :step_2
-        @similar_proposals ||= Decidim::Proposals::SimilarProposals
-                               .for(current_component, @proposal)
+        @similar_questions ||= Decidim::Questions::SimilarQuestions
+                               .for(current_component, @question)
                                .all
 
-        if @similar_proposals.blank?
-          flash[:notice] = I18n.t("proposals.proposals.compare.no_similars_found", scope: "decidim")
-          redirect_to Decidim::ResourceLocatorPresenter.new(@proposal).path + "/complete"
+        if @similar_questions.blank?
+          flash[:notice] = I18n.t("questions.questions.compare.no_similars_found", scope: "decidim")
+          redirect_to Decidim::ResourceLocatorPresenter.new(@question).path + "/complete"
         end
       end
 
       def complete
-        enforce_permission_to :create, :proposal
+        enforce_permission_to :create, :question
         @step = :step_3
 
-        @form = form_proposal_model
+        @form = form_question_model
 
         @form.attachment = form_attachment_new
       end
@@ -112,14 +112,14 @@ module Decidim
 
       def publish
         @step = :step_4
-        PublishProposal.call(@proposal, current_user) do
+        PublishQuestion.call(@question, current_user) do
           on(:ok) do
-            flash[:notice] = I18n.t("proposals.publish.success", scope: "decidim")
-            redirect_to proposal_path(@proposal)
+            flash[:notice] = I18n.t("questions.publish.success", scope: "decidim")
+            redirect_to question_path(@question)
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.publish.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.publish.error", scope: "decidim")
             render :edit_draft
           end
         end
@@ -127,86 +127,86 @@ module Decidim
 
       def edit_draft
         @step = :step_3
-        enforce_permission_to :edit, :proposal, proposal: @proposal
+        enforce_permission_to :edit, :question, question: @question
       end
 
       def update_draft
         @step = :step_1
-        enforce_permission_to :edit, :proposal, proposal: @proposal
+        enforce_permission_to :edit, :question, question: @question
 
-        @form = form_proposal_params
-        UpdateProposal.call(@form, current_user, @proposal) do
-          on(:ok) do |proposal|
-            flash[:notice] = I18n.t("proposals.update_draft.success", scope: "decidim")
-            redirect_to Decidim::ResourceLocatorPresenter.new(proposal).path + "/preview"
+        @form = form_question_params
+        UpdateQuestion.call(@form, current_user, @question) do
+          on(:ok) do |question|
+            flash[:notice] = I18n.t("questions.update_draft.success", scope: "decidim")
+            redirect_to Decidim::ResourceLocatorPresenter.new(question).path + "/preview"
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.update_draft.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.update_draft.error", scope: "decidim")
             render :edit_draft
           end
         end
       end
 
       def destroy_draft
-        enforce_permission_to :edit, :proposal, proposal: @proposal
+        enforce_permission_to :edit, :question, question: @question
 
-        DestroyProposal.call(@proposal, current_user) do
+        DestroyQuestion.call(@question, current_user) do
           on(:ok) do
-            flash[:notice] = I18n.t("proposals.destroy_draft.success", scope: "decidim")
-            redirect_to new_proposal_path
+            flash[:notice] = I18n.t("questions.destroy_draft.success", scope: "decidim")
+            redirect_to new_question_path
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.destroy_draft.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.destroy_draft.error", scope: "decidim")
             render :edit_draft
           end
         end
       end
 
       def edit
-        enforce_permission_to :edit, :proposal, proposal: @proposal
+        enforce_permission_to :edit, :question, question: @question
       end
 
       def update
-        enforce_permission_to :edit, :proposal, proposal: @proposal
+        enforce_permission_to :edit, :question, question: @question
 
-        @form = form_proposal_params
-        UpdateProposal.call(@form, current_user, @proposal) do
-          on(:ok) do |proposal|
-            flash[:notice] = I18n.t("proposals.update.success", scope: "decidim")
-            redirect_to Decidim::ResourceLocatorPresenter.new(proposal).path
+        @form = form_question_params
+        UpdateQuestion.call(@form, current_user, @question) do
+          on(:ok) do |question|
+            flash[:notice] = I18n.t("questions.update.success", scope: "decidim")
+            redirect_to Decidim::ResourceLocatorPresenter.new(question).path
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("proposals.update.error", scope: "decidim")
+            flash.now[:alert] = I18n.t("questions.update.error", scope: "decidim")
             render :edit
           end
         end
       end
 
       def withdraw
-        enforce_permission_to :withdraw, :proposal, proposal: @proposal
-        if @proposal.emendation?
-          Decidim::Amendable::Withdraw.call(@proposal, current_user) do
-            on(:ok) do |_proposal|
-              flash[:notice] = I18n.t("proposals.update.success", scope: "decidim")
+        enforce_permission_to :withdraw, :question, question: @question
+        if @question.emendation?
+          Decidim::Amendable::Withdraw.call(@question, current_user) do
+            on(:ok) do |_question|
+              flash[:notice] = I18n.t("questions.update.success", scope: "decidim")
               redirect_to Decidim::ResourceLocatorPresenter.new(@emendation).path
             end
             on(:invalid) do
-              flash[:alert] = I18n.t("proposals.update.error", scope: "decidim")
+              flash[:alert] = I18n.t("questions.update.error", scope: "decidim")
               redirect_to Decidim::ResourceLocatorPresenter.new(@emendation).path
             end
           end
         else
-          WithdrawProposal.call(@proposal, current_user) do
-            on(:ok) do |_proposal|
-              flash[:notice] = I18n.t("proposals.update.success", scope: "decidim")
-              redirect_to Decidim::ResourceLocatorPresenter.new(@proposal).path
+          WithdrawQuestion.call(@question, current_user) do
+            on(:ok) do |_question|
+              flash[:notice] = I18n.t("questions.update.success", scope: "decidim")
+              redirect_to Decidim::ResourceLocatorPresenter.new(@question).path
             end
             on(:invalid) do
-              flash[:alert] = I18n.t("proposals.update.error", scope: "decidim")
-              redirect_to Decidim::ResourceLocatorPresenter.new(@proposal).path
+              flash[:alert] = I18n.t("questions.update.error", scope: "decidim")
+              redirect_to Decidim::ResourceLocatorPresenter.new(@question).path
             end
           end
         end
@@ -215,7 +215,7 @@ module Decidim
       private
 
       def search_klass
-        ProposalSearch
+        QuestionSearch
       end
 
       def default_filter_params
@@ -231,29 +231,29 @@ module Decidim
         }
       end
 
-      def proposal_draft
-        Proposal.from_all_author_identities(current_user).not_hidden.where(component: current_component).find_by(published_at: nil)
+      def question_draft
+        Question.from_all_author_identities(current_user).not_hidden.where(component: current_component).find_by(published_at: nil)
       end
 
       def ensure_is_draft
-        @proposal = Proposal.not_hidden.where(component: current_component).find(params[:id])
-        redirect_to Decidim::ResourceLocatorPresenter.new(@proposal).path unless @proposal.draft?
+        @question = Question.not_hidden.where(component: current_component).find(params[:id])
+        redirect_to Decidim::ResourceLocatorPresenter.new(@question).path unless @question.draft?
       end
 
-      def set_proposal
-        @proposal = Proposal.published.not_hidden.where(component: current_component).find(params[:id])
+      def set_question
+        @question = Question.published.not_hidden.where(component: current_component).find(params[:id])
       end
 
-      def form_proposal_params
-        form(ProposalForm).from_params(params)
+      def form_question_params
+        form(QuestionForm).from_params(params)
       end
 
-      def form_proposal_model
-        form(ProposalForm).from_model(@proposal)
+      def form_question_model
+        form(QuestionForm).from_model(@question)
       end
 
       def form_presenter
-        @form_presenter ||= present(@form, presenter_class: Decidim::Proposals::ProposalPresenter)
+        @form_presenter ||= present(@form, presenter_class: Decidim::Questions::QuestionPresenter)
       end
 
       def form_attachment_new
@@ -261,14 +261,14 @@ module Decidim
       end
 
       def edit_form
-        form_attachment_model = form(AttachmentForm).from_model(@proposal.attachments.first)
-        @form = form_proposal_model
+        form_attachment_model = form(AttachmentForm).from_model(@question.attachments.first)
+        @form = form_question_model
         @form.attachment = form_attachment_model
         @form
       end
 
       def set_participatory_text
-        @participatory_text = Decidim::Proposals::ParticipatoryText.find_by(component: current_component)
+        @participatory_text = Decidim::Questions::ParticipatoryText.find_by(component: current_component)
       end
     end
   end

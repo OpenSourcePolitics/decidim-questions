@@ -1,22 +1,22 @@
 $(() => {
-  const $form = $(".proposal_form_admin");
+  const $form = $(".question_form_admin");
 
   if ($form.length > 0) {
-    const $proposalCreatedInMeeting = $form.find("#proposal_created_in_meeting");
-    const $proposalMeeting = $form.find("#proposal_meeting");
+    const $questionCreatedInMeeting = $form.find("#question_created_in_meeting");
+    const $questionMeeting = $form.find("#question_meeting");
 
     const toggleDisabledHiddenFields = () => {
-      const enabledMeeting = $proposalCreatedInMeeting.prop("checked");
-      $proposalMeeting.find("select").attr("disabled", "disabled");
-      $proposalMeeting.hide();
+      const enabledMeeting = $questionCreatedInMeeting.prop("checked");
+      $questionMeeting.find("select").attr("disabled", "disabled");
+      $questionMeeting.hide();
 
       if (enabledMeeting) {
-        $proposalMeeting.find("select").attr("disabled", !enabledMeeting);
-        $proposalMeeting.show();
+        $questionMeeting.find("select").attr("disabled", !enabledMeeting);
+        $questionMeeting.show();
       }
     };
 
-    $proposalCreatedInMeeting.on("change", toggleDisabledHiddenFields);
+    $questionCreatedInMeeting.on("change", toggleDisabledHiddenFields);
     toggleDisabledHiddenFields();
 
   }

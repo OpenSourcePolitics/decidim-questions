@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class AddReferenceToProposals < ActiveRecord::Migration[5.0]
-  class Proposal < ApplicationRecord
-    self.table_name = :decidim_proposals_proposals
+class AddReferenceToQuestions < ActiveRecord::Migration[5.0]
+  class Question < ApplicationRecord
+    self.table_name = :decidim_questions_questions
   end
 
   def change
-    add_column :decidim_proposals_proposals, :reference, :string
-    Proposal.find_each(&:save)
-    change_column_null :decidim_proposals_proposals, :reference, false
+    add_column :decidim_questions_questions, :reference, :string
+    Question.find_each(&:save)
+    change_column_null :decidim_questions_questions, :reference, false
   end
 end

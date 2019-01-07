@@ -3,16 +3,16 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalVotesController, type: :controller do
-      routes { Decidim::Proposals::Engine.routes }
+  module Questions
+    describe QuestionVotesController, type: :controller do
+      routes { Decidim::Questions::Engine.routes }
 
-      let(:proposal) { create(:proposal, component: component) }
+      let(:question) { create(:question, component: component) }
       let(:user) { create(:user, :confirmed, organization: component.organization) }
 
       let(:params) do
         {
-          proposal_id: proposal.id,
+          question_id: question.id,
           component_id: component.id
         }
       end
@@ -27,28 +27,28 @@ module Decidim
       describe "POST create" do
         context "with votes enabled" do
           let(:component) do
-            create(:proposal_component, :with_votes_enabled)
+            create(:question_component, :with_votes_enabled)
           end
 
           it "allows voting" do
             expect do
               post :create, format: :js, params: params
-            end.to change(ProposalVote, :count).by(1)
+            end.to change(QuestionVote, :count).by(1)
 
-            expect(ProposalVote.last.author).to eq(user)
-            expect(ProposalVote.last.proposal).to eq(proposal)
+            expect(QuestionVote.last.author).to eq(user)
+            expect(QuestionVote.last.question).to eq(question)
           end
         end
 
         context "with votes disabled" do
           let(:component) do
-            create(:proposal_component)
+            create(:question_component)
           end
 
           it "doesn't allow voting" do
             expect do
               post :create, format: :js, params: params
-            end.not_to change(ProposalVote, :count)
+            end.not_to change(QuestionVote, :count)
 
             expect(flash[:alert]).not_to be_empty
             expect(response).to have_http_status(:found)
@@ -57,13 +57,13 @@ module Decidim
 
         context "with votes enabled but votes blocked" do
           let(:component) do
-            create(:proposal_component, :with_votes_blocked)
+            create(:question_component, :with_votes_blocked)
           end
 
           it "doesn't allow voting" do
             expect do
               post :create, format: :js, params: params
-            end.not_to change(ProposalVote, :count)
+            end.not_to change(QuestionVote, :count)
 
             expect(flash[:alert]).not_to be_empty
             expect(response).to have_http_status(:found)
@@ -73,34 +73,34 @@ module Decidim
 
       describe "destroy" do
         before do
-          create(:proposal_vote, proposal: proposal, author: user)
+          create(:question_vote, question: question, author: user)
         end
 
         context "with vote limit enabled" do
           let(:component) do
-            create(:proposal_component, :with_votes_enabled, :with_vote_limit)
+            create(:question_component, :with_votes_enabled, :with_vote_limit)
           end
 
           it "deletes the vote" do
             expect do
               delete :destroy, format: :js, params: params
-            end.to change(ProposalVote, :count).by(-1)
+            end.to change(QuestionVote, :count).by(-1)
 
-            expect(ProposalVote.count).to eq(0)
+            expect(QuestionVote.count).to eq(0)
           end
         end
 
         context "with vote limit disabled" do
           let(:component) do
-            create(:proposal_component, :with_votes_enabled)
+            create(:question_component, :with_votes_enabled)
           end
 
           it "deletes the vote" do
             expect do
               delete :destroy, format: :js, params: params
-            end.to change(ProposalVote, :count).by(-1)
+            end.to change(QuestionVote, :count).by(-1)
 
-            expect(ProposalVote.count).to eq(0)
+            expect(QuestionVote.count).to eq(0)
           end
         end
       end

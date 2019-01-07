@@ -3,26 +3,26 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe ProposalNote do
-      subject { proposal_note }
+  module Questions
+    describe QuestionNote do
+      subject { question_note }
 
       let!(:organization) { create(:organization) }
-      let!(:component) { create(:component, organization: organization, manifest_name: "proposals") }
+      let!(:component) { create(:component, organization: organization, manifest_name: "questions") }
       let!(:participatory_process) { create(:participatory_process, organization: organization) }
       let!(:author) { create(:user, :admin, organization: organization) }
-      let!(:proposal) { create(:proposal, component: component, users: [author]) }
-      let!(:proposal_note) { build(:proposal_note, proposal: proposal, author: author) }
+      let!(:question) { create(:question, component: component, users: [author]) }
+      let!(:question_note) { build(:question_note, question: question, author: author) }
 
       it { is_expected.to be_valid }
       it { is_expected.to be_versioned }
 
       it "has an associated author" do
-        expect(proposal_note.author).to be_a(Decidim::User)
+        expect(question_note.author).to be_a(Decidim::User)
       end
 
-      it "has an associated proposal" do
-        expect(proposal_note.proposal).to be_a(Decidim::Proposals::Proposal)
+      it "has an associated question" do
+        expect(question_note.question).to be_a(Decidim::Questions::Question)
       end
     end
   end

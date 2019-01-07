@@ -1,4 +1,4 @@
-<%= javascript_include_tag "decidim/proposals/identity_selector_dialog" %>
+<%= javascript_include_tag "decidim/questions/identity_selector_dialog" %>
 <% if current_user && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
   <button id="select-identity-button" type="button" name="button" class="button small compact light button--sc <%= fully_endorsed ? "success": "secondary" %>">
     <%= t(".endorse") %>
@@ -6,8 +6,8 @@
 
   <div class="reveal collapse"
        id="user-identities"
-       data-reveal data-refresh-url="<%= identities_proposal_proposal_endorsement_path(proposal) %>">
+       data-reveal data-refresh-url="<%= identities_question_question_endorsement_path(question) %>">
   </div>
 <% else %>
-    <%= endorsement_button(proposal, false) %>
+    <%= endorsement_button(question, false) %>
 <% end %>

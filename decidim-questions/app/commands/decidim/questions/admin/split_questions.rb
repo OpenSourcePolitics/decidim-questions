@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when an admin splits proposals from
+      # A command with all the business logic when an admin splits questions from
       # one component to another.
-      class SplitProposals < Rectify::Command
+      class SplitQuestions < Rectify::Command
         # Public: Initializes the command.
         #
         # form - A form object with the params.
@@ -22,28 +22,28 @@ module Decidim
         def call
           return broadcast(:invalid) unless form.valid?
 
-          broadcast(:ok, split_proposals)
+          broadcast(:ok, split_questions)
         end
 
         private
 
         attr_reader :form
 
-        def split_proposals
+        def split_questions
           transaction do
-            form.proposals.flat_map do |original_proposal|
+            form.questions.flat_map do |original_question|
               # If copying to the same component we only need one copy
-              # but linking to the original proposal links, not the
-              # original proposal.
-              create_proposal(original_proposal)
-              create_proposal(original_proposal) unless form.same_component?
+              # but linking to the original question links, not the
+              # original question.
+              create_question(original_question)
+              create_question(original_question) unless form.same_component?
             end
           end
         end
 
-        def create_proposal(original_proposal)
-          split_proposal = Decidim::Proposals::ProposalBuilder.copy(
-            original_proposal,
+        def create_question(original_question)
+          split_question = Decidim::Questions::QuestionBuilder.copy(
+            original_question,
             author: form.current_organization,
             action_user: form.current_user,
             extra_attributes: {
@@ -52,14 +52,14 @@ module Decidim
             skip_link: true
           )
 
-          proposals_to_link = links_for(original_proposal)
-          split_proposal.link_resources(proposals_to_link, "copied_from_component")
+          questions_to_link = links_for(original_question)
+          split_question.link_resources(questions_to_link, "copied_from_component")
         end
 
-        def links_for(proposal)
-          return proposal unless form.same_component?
+        def links_for(question)
+          return question unless form.same_component?
 
-          proposal.linked_resources(:proposals, "copied_from_component")
+          question.linked_resources(:questions, "copied_from_component")
         end
       end
     end

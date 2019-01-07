@@ -1,20 +1,20 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
-    class ProposalMentionedEvent < Decidim::Events::SimpleEvent
+  module Questions
+    class QuestionMentionedEvent < Decidim::Events::SimpleEvent
       include Decidim::ApplicationHelper
 
-      i18n_attributes :mentioned_proposal_title
+      i18n_attributes :mentioned_question_title
 
       private
 
-      def mentioned_proposal_title
-        present(mentioned_proposal).title
+      def mentioned_question_title
+        present(mentioned_question).title
       end
 
-      def mentioned_proposal
-        @mentioned_proposal ||= Decidim::Proposals::Proposal.find(extra[:mentioned_proposal_id])
+      def mentioned_question
+        @mentioned_question ||= Decidim::Questions::Question.find(extra[:mentioned_question_id])
       end
     end
   end

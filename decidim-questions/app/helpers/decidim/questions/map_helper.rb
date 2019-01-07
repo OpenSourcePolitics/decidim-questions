@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # This helper include some methods for rendering proposals dynamic maps.
+  module Questions
+    # This helper include some methods for rendering questions dynamic maps.
     module MapHelper
       include Decidim::ApplicationHelper
-      # Serialize a collection of geocoded proposals to be used by the dynamic map component
+      # Serialize a collection of geocoded questions to be used by the dynamic map component
       #
-      # geocoded_proposals - A collection of geocoded proposals
-      def proposals_data_for_map(geocoded_proposals)
-        geocoded_proposals.map do |proposal|
-          proposal.slice(:latitude, :longitude, :address).merge(title:  present(proposal).title,
-                                                                body: truncate(present(proposal).body, length: 100),
-                                                                icon: icon("proposals", width: 40, height: 70, remove_icon_class: true),
-                                                                link: proposal_path(proposal))
+      # geocoded_questions - A collection of geocoded questions
+      def questions_data_for_map(geocoded_questions)
+        geocoded_questions.map do |question|
+          question.slice(:latitude, :longitude, :address).merge(title:  present(question).title,
+                                                                body: truncate(present(question).body, length: 100),
+                                                                icon: icon("questions", width: 40, height: 70, remove_icon_class: true),
+                                                                link: question_path(question))
         end
       end
     end

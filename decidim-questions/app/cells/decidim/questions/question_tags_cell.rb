@@ -3,10 +3,10 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders the tags for a proposal.
-    class ProposalTagsCell < Decidim::ViewModel
-      include ProposalCellsHelper
+  module Questions
+    # This cell renders the tags for a question.
+    class QuestionTagsCell < Decidim::ViewModel
+      include QuestionCellsHelper
 
       property :category
       property :previous_category

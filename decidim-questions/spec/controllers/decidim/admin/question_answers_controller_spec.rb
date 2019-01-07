@@ -3,19 +3,19 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe ProposalAnswersController, type: :controller do
-        routes { Decidim::Proposals::AdminEngine.routes }
+      describe QuestionAnswersController, type: :controller do
+        routes { Decidim::Questions::AdminEngine.routes }
 
-        let(:component) { proposal.component }
-        let(:proposal) { create(:proposal) }
+        let(:component) { question.component }
+        let(:question) { create(:question) }
         let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }
 
         let(:params) do
           {
-            id: proposal.id,
-            proposal_id: proposal.id,
+            id: question.id,
+            question_id: question.id,
             component_id: component.id,
             participatory_process_slug: component.participatory_space.slug,
             state: "rejected"

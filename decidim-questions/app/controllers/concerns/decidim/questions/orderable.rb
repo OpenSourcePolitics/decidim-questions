@@ -3,7 +3,7 @@
 require "active_support/concern"
 
 module Decidim
-  module Proposals
+  module Questions
     # Common logic to ordering resources
     module Orderable
       extend ActiveSupport::Concern
@@ -13,7 +13,7 @@ module Decidim
 
         private
 
-        # Gets how the proposals should be ordered based on the choice made by the user.
+        # Gets how the questions should be ordered based on the choice made by the user.
         def order
           @order ||= detect_order(params[:order]) || default_order
         end
@@ -52,14 +52,14 @@ module Decidim
           available_orders.detect { |order| order == candidate }
         end
 
-        def reorder(proposals)
+        def reorder(questions)
           case order
           when "random"
-            proposals.order_randomly(random_seed)
+            questions.order_randomly(random_seed)
           when "most_voted"
-            proposals.order(proposal_votes_count: :desc)
+            questions.order(question_votes_count: :desc)
           when "recent"
-            proposals.order(created_at: :desc)
+            questions.order(created_at: :desc)
           end
         end
       end

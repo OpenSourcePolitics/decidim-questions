@@ -3,28 +3,28 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe UnvoteProposal do
+  module Questions
+    describe UnvoteQuestion do
       describe "call" do
-        let(:proposal) { create(:proposal) }
-        let(:current_user) { create(:user, organization: proposal.component.organization) }
-        let!(:proposal_vote) { create(:proposal_vote, author: current_user, proposal: proposal) }
-        let(:command) { described_class.new(proposal, current_user) }
+        let(:question) { create(:question) }
+        let(:current_user) { create(:user, organization: question.component.organization) }
+        let!(:question_vote) { create(:question_vote, author: current_user, question: question) }
+        let(:command) { described_class.new(question, current_user) }
 
         it "broadcasts ok" do
           expect { command.call }.to broadcast(:ok)
         end
 
-        it "deletes the proposal vote for that user" do
+        it "deletes the question vote for that user" do
           expect do
             command.call
-          end.to change(ProposalVote, :count).by(-1)
+          end.to change(QuestionVote, :count).by(-1)
         end
 
         it "decrements the right score for that user" do
-          Decidim::Gamification.set_score(current_user, :proposal_votes, 10)
+          Decidim::Gamification.set_score(current_user, :question_votes, 10)
           command.call
-          expect(Decidim::Gamification.status_for(current_user, :proposal_votes).score).to eq(9)
+          expect(Decidim::Gamification.status_for(current_user, :question_votes).score).to eq(9)
         end
       end
     end

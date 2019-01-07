@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::Admin::UpdateProposal do
-  let(:form_klass) { Decidim::Proposals::Admin::ProposalForm }
+describe Decidim::Questions::Admin::UpdateQuestion do
+  let(:form_klass) { Decidim::Questions::Admin::QuestionForm }
 
-  let(:component) { create(:proposal_component) }
+  let(:component) { create(:question_component) }
   let(:organization) { component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
@@ -19,7 +19,7 @@ describe Decidim::Proposals::Admin::UpdateProposal do
     )
   end
 
-  let!(:proposal) { create :proposal, :official, component: component }
+  let!(:question) { create :question, :official, component: component }
 
   let(:has_address) { false }
   let(:address) { nil }
@@ -29,15 +29,15 @@ describe Decidim::Proposals::Admin::UpdateProposal do
   describe "call" do
     let(:form_params) do
       {
-        title: "A reasonable proposal title",
-        body: "A reasonable proposal body",
+        title: "A reasonable question title",
+        body: "A reasonable question body",
         address: address,
         has_address: has_address
       }
     end
 
     let(:command) do
-      described_class.new(form, proposal)
+      described_class.new(form, question)
     end
 
     describe "when the form is not valid" do
@@ -49,10 +49,10 @@ describe Decidim::Proposals::Admin::UpdateProposal do
         expect { command.call }.to broadcast(:invalid)
       end
 
-      it "doesn't update the proposal" do
+      it "doesn't update the question" do
         expect do
           command.call
-        end.not_to change(proposal, :title)
+        end.not_to change(question, :title)
       end
     end
 
@@ -61,16 +61,16 @@ describe Decidim::Proposals::Admin::UpdateProposal do
         expect { command.call }.to broadcast(:ok)
       end
 
-      it "updates the proposal" do
+      it "updates the question" do
         expect do
           command.call
-        end.to change(proposal, :title)
+        end.to change(question, :title)
       end
 
       it "traces the update", versioning: true do
         expect(Decidim.traceability)
           .to receive(:update!)
-          .with(proposal, user, a_kind_of(Hash))
+          .with(question, user, a_kind_of(Hash))
           .and_call_original
 
         expect { command.call }.to change(Decidim::ActionLog, :count)
@@ -81,7 +81,7 @@ describe Decidim::Proposals::Admin::UpdateProposal do
       end
 
       context "when geocoding is enabled" do
-        let(:component) { create(:proposal_component, :with_geocoding_enabled) }
+        let(:component) { create(:question_component, :with_geocoding_enabled) }
 
         context "when the has address checkbox is checked" do
           let(:has_address) { true }
@@ -95,10 +95,10 @@ describe Decidim::Proposals::Admin::UpdateProposal do
 
             it "sets the latitude and longitude" do
               command.call
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
-              expect(proposal.latitude).to eq(latitude)
-              expect(proposal.longitude).to eq(longitude)
+              expect(question.latitude).to eq(latitude)
+              expect(question.longitude).to eq(longitude)
             end
           end
         end

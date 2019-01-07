@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe SettingsChangeJob do
       subject { described_class }
 
-      let(:component) { create(:proposal_component) }
+      let(:component) { create(:question_component) }
       let(:user) { create :user, organization: component.organization }
       let!(:follow) { create :follow, followable: component.participatory_space, user: user }
 
@@ -27,8 +27,8 @@ module Decidim
             expect(Decidim::EventsManager)
               .to receive(:publish)
               .with(
-                event: "decidim.events.proposals.creation_enabled",
-                event_class: Decidim::Proposals::CreationEnabledEvent,
+                event: "decidim.events.questions.creation_enabled",
+                event_class: Decidim::Questions::CreationEnabledEvent,
                 resource: component,
                 followers: [user]
               )
@@ -74,8 +74,8 @@ module Decidim
             expect(Decidim::EventsManager)
               .to receive(:publish)
               .with(
-                event: "decidim.events.proposals.voting_enabled",
-                event_class: Decidim::Proposals::VotingEnabledEvent,
+                event: "decidim.events.questions.voting_enabled",
+                event_class: Decidim::Questions::VotingEnabledEvent,
                 resource: component,
                 followers: [user]
               )
@@ -137,8 +137,8 @@ module Decidim
             expect(Decidim::EventsManager)
               .to receive(:publish)
               .with(
-                event: "decidim.events.proposals.endorsing_enabled",
-                event_class: Decidim::Proposals::EndorsingEnabledEvent,
+                event: "decidim.events.questions.endorsing_enabled",
+                event_class: Decidim::Questions::EndorsingEnabledEvent,
                 resource: component,
                 followers: [user]
               )

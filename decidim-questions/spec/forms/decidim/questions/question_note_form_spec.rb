@@ -3,9 +3,9 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe ProposalNoteForm do
+      describe QuestionNoteForm do
         subject { form }
 
         let(:organization) { create(:organization) }

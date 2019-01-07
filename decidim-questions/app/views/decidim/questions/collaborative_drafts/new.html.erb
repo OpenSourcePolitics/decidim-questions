@@ -1,8 +1,8 @@
 <div class="row">
-  <%= render partial: "decidim/proposals/proposals/wizard_aside" %>
+  <%= render partial: "decidim/questions/questions/wizard_aside" %>
 
   <div class="columns large-6">
-    <%= render partial: "decidim/proposals/proposals/wizard_header" %>
+    <%= render partial: "decidim/questions/questions/wizard_header" %>
 
     <div class="card">
       <div class="card__content">
@@ -16,7 +16,7 @@
           </div>
 
           <div class="actions">
-            <%= form.submit t("decidim.proposals.collaborative_drafts.new.send"), class: "button expanded mt-s mb-none", data: { disable: true } %>
+            <%= form.submit t("decidim.questions.collaborative_drafts.new.send"), class: "button expanded mt-s mb-none", data: { disable: true } %>
           </div>
         <% end %>
       </div>
@@ -25,4 +25,4 @@
   <div class="columns large-3"></div>
 </div>
 
-<%= javascript_include_tag "decidim/proposals/add_proposal" %>
+<%= javascript_include_tag "decidim/questions/add_question" %>

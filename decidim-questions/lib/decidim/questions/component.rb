@@ -2,33 +2,33 @@
 
 require "decidim/components/namer"
 
-Decidim.register_component(:proposals) do |component|
-  component.engine = Decidim::Proposals::Engine
-  component.admin_engine = Decidim::Proposals::AdminEngine
-  component.icon = "decidim/proposals/icon.svg"
+Decidim.register_component(:questions) do |component|
+  component.engine = Decidim::Questions::Engine
+  component.admin_engine = Decidim::Questions::AdminEngine
+  component.icon = "decidim/questions/icon.svg"
 
   component.on(:before_destroy) do |instance|
-    raise "Can't destroy this component when there are proposals" if Decidim::Proposals::Proposal.where(component: instance).any?
+    raise "Can't destroy this component when there are questions" if Decidim::Questions::Question.where(component: instance).any?
   end
 
-  component.data_portable_entities = ["Decidim::Proposals::Proposal"]
+  component.data_portable_entities = ["Decidim::Questions::Question"]
 
   component.actions = %w(endorse vote create withdraw)
 
-  component.query_type = "Decidim::Proposals::ProposalsType"
+  component.query_type = "Decidim::Questions::QuestionsType"
 
-  component.permissions_class_name = "Decidim::Proposals::Permissions"
+  component.permissions_class_name = "Decidim::Questions::Permissions"
 
   component.settings(:global) do |settings|
     settings.attribute :vote_limit, type: :integer, default: 0
     settings.attribute :minimum_votes_per_user, type: :integer, default: 0
-    settings.attribute :proposal_limit, type: :integer, default: 0
-    settings.attribute :proposal_length, type: :integer, default: 500
-    settings.attribute :proposal_edit_before_minutes, type: :integer, default: 5
-    settings.attribute :threshold_per_proposal, type: :integer, default: 0
+    settings.attribute :question_limit, type: :integer, default: 0
+    settings.attribute :question_length, type: :integer, default: 500
+    settings.attribute :question_edit_before_minutes, type: :integer, default: 5
+    settings.attribute :threshold_per_question, type: :integer, default: 0
     settings.attribute :can_accumulate_supports_beyond_threshold, type: :boolean, default: false
-    settings.attribute :proposal_answering_enabled, type: :boolean, default: true
-    settings.attribute :official_proposals_enabled, type: :boolean, default: true
+    settings.attribute :question_answering_enabled, type: :boolean, default: true
+    settings.attribute :official_questions_enabled, type: :boolean, default: true
     settings.attribute :comments_enabled, type: :boolean, default: true
     settings.attribute :geocoding_enabled, type: :boolean, default: false
     settings.attribute :attachments_allowed, type: :boolean, default: false
@@ -37,11 +37,11 @@ Decidim.register_component(:proposals) do |component|
     settings.attribute :participatory_texts_enabled, type: :boolean, default: false
     settings.attribute :amendments_enabled, type: :boolean, default: false
     settings.attribute :announcement, type: :text, translated: true, editor: true
-    settings.attribute :new_proposal_help_text, type: :text, translated: true, editor: true
-    settings.attribute :proposal_wizard_step_1_help_text, type: :text, translated: true, editor: true
-    settings.attribute :proposal_wizard_step_2_help_text, type: :text, translated: true, editor: true
-    settings.attribute :proposal_wizard_step_3_help_text, type: :text, translated: true, editor: true
-    settings.attribute :proposal_wizard_step_4_help_text, type: :text, translated: true, editor: true
+    settings.attribute :new_question_help_text, type: :text, translated: true, editor: true
+    settings.attribute :question_wizard_step_1_help_text, type: :text, translated: true, editor: true
+    settings.attribute :question_wizard_step_2_help_text, type: :text, translated: true, editor: true
+    settings.attribute :question_wizard_step_3_help_text, type: :text, translated: true, editor: true
+    settings.attribute :question_wizard_step_4_help_text, type: :text, translated: true, editor: true
   end
 
   component.settings(:step) do |settings|
@@ -52,51 +52,51 @@ Decidim.register_component(:proposals) do |component|
     settings.attribute :votes_hidden, type: :boolean, default: false
     settings.attribute :comments_blocked, type: :boolean, default: false
     settings.attribute :creation_enabled, type: :boolean
-    settings.attribute :proposal_answering_enabled, type: :boolean, default: true
+    settings.attribute :question_answering_enabled, type: :boolean, default: true
     settings.attribute :announcement, type: :text, translated: true, editor: true
     settings.attribute :automatic_hashtags, type: :text, editor: false, required: false
     settings.attribute :suggested_hashtags, type: :text, editor: false, required: false
   end
 
-  component.register_resource(:proposal) do |resource|
-    resource.model_class_name = "Decidim::Proposals::Proposal"
-    resource.template = "decidim/proposals/proposals/linked_proposals"
-    resource.card = "decidim/proposals/proposal"
+  component.register_resource(:question) do |resource|
+    resource.model_class_name = "Decidim::Questions::Question"
+    resource.template = "decidim/questions/questions/linked_questions"
+    resource.card = "decidim/questions/question"
     resource.actions = %w(endorse vote)
     resource.searchable = true
   end
 
   component.register_resource(:collaborative_draft) do |resource|
-    resource.model_class_name = "Decidim::Proposals::CollaborativeDraft"
-    resource.card = "decidim/proposals/collaborative_draft"
+    resource.model_class_name = "Decidim::Questions::CollaborativeDraft"
+    resource.card = "decidim/questions/collaborative_draft"
   end
 
-  component.register_stat :proposals_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    Decidim::Proposals::FilteredProposals.for(components, start_at, end_at).published.except_withdrawn.not_hidden.count
+  component.register_stat :questions_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
+    Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.except_withdrawn.not_hidden.count
   end
 
-  component.register_stat :proposals_accepted, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    Decidim::Proposals::FilteredProposals.for(components, start_at, end_at).accepted.count
+  component.register_stat :questions_accepted, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
+    Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).accepted.count
   end
 
   component.register_stat :votes_count, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    proposals = Decidim::Proposals::FilteredProposals.for(components, start_at, end_at).published.not_hidden
-    Decidim::Proposals::ProposalVote.where(proposal: proposals).count
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden
+    Decidim::Questions::QuestionVote.where(question: questions).count
   end
 
   component.register_stat :endorsements_count, priority: Decidim::StatsRegistry::MEDIUM_PRIORITY do |components, start_at, end_at|
-    proposals = Decidim::Proposals::FilteredProposals.for(components, start_at, end_at).not_hidden
-    Decidim::Proposals::ProposalEndorsement.where(proposal: proposals).count
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).not_hidden
+    Decidim::Questions::QuestionEndorsement.where(question: questions).count
   end
 
   component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    proposals = Decidim::Proposals::FilteredProposals.for(components, start_at, end_at).published.not_hidden
-    Decidim::Comments::Comment.where(root_commentable: proposals).count
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden
+    Decidim::Comments::Comment.where(root_commentable: questions).count
   end
 
-  component.exports :proposals do |exports|
+  component.exports :questions do |exports|
     exports.collection do |component_instance|
-      Decidim::Proposals::Proposal
+      Decidim::Questions::Question
         .published
         .where(component: component_instance)
         .includes(:category, component: { participatory_space: :organization })
@@ -104,13 +104,13 @@ Decidim.register_component(:proposals) do |component|
 
     exports.include_in_open_data = true
 
-    exports.serializer Decidim::Proposals::ProposalSerializer
+    exports.serializer Decidim::Questions::QuestionSerializer
   end
 
   component.exports :comments do |exports|
     exports.collection do |component_instance|
       Decidim::Comments::Export.comments_for_resource(
-        Decidim::Proposals::Proposal, component_instance
+        Decidim::Questions::Question, component_instance
       )
     end
 
@@ -130,8 +130,8 @@ Decidim.register_component(:proposals) do |component|
                     end
 
     params = {
-      name: Decidim::Components::Namer.new(participatory_space.organization.available_locales, :proposals).i18n_name,
-      manifest_name: :proposals,
+      name: Decidim::Components::Namer.new(participatory_space.organization.available_locales, :questions).i18n_name,
+      manifest_name: :questions,
       published_at: Time.current,
       participatory_space: participatory_space,
       settings: {
@@ -181,26 +181,26 @@ Decidim.register_component(:proposals) do |component|
         published_at: Time.current
       }
 
-      proposal = Decidim.traceability.perform_action!(
+      question = Decidim.traceability.perform_action!(
         "publish",
-        Decidim::Proposals::Proposal,
+        Decidim::Questions::Question,
         admin_user,
         visibility: "all"
       ) do
-        proposal = Decidim::Proposals::Proposal.new(params)
-        proposal.add_coauthor(participatory_space.organization)
-        proposal.save!
-        proposal
+        question = Decidim::Questions::Question.new(params)
+        question.add_coauthor(participatory_space.organization)
+        question.save!
+        question
       end
 
       if n.positive?
         Decidim::User.where(decidim_organization_id: participatory_space.decidim_organization_id).all.sample(n).each do |author|
           user_group = [true, false].sample ? Decidim::UserGroups::ManageableUserGroups.for(author).verified.sample : nil
-          proposal.add_coauthor(author, user_group: user_group)
+          question.add_coauthor(author, user_group: user_group)
         end
       end
 
-      if proposal.state.nil?
+      if question.state.nil?
         email = "amendment-author-#{participatory_space.underscored_name}-#{participatory_space.id}-#{n}-amend#{n}@example.org"
         name = "#{Faker::Name.name} #{participatory_space.id} #{n} amend#{n}"
 
@@ -237,8 +237,8 @@ Decidim.register_component(:proposals) do |component|
           component: component,
           category: participatory_space.categories.sample,
           scope: Faker::Boolean.boolean(0.5) ? global : scopes.sample,
-          title: "#{proposal.title} #{Faker::Lorem.sentence(1)}",
-          body: "#{proposal.body} #{Faker::Lorem.sentence(3)}",
+          title: "#{question.title} #{Faker::Lorem.sentence(1)}",
+          body: "#{question.body} #{Faker::Lorem.sentence(3)}",
           state: nil,
           answer: nil,
           answered_at: Time.current,
@@ -247,11 +247,11 @@ Decidim.register_component(:proposals) do |component|
 
         emendation = Decidim.traceability.perform_action!(
           "create",
-          Decidim::Proposals::Proposal,
+          Decidim::Questions::Question,
           author,
           visibility: "public-only"
         ) do
-          emendation = Decidim::Proposals::Proposal.new(params)
+          emendation = Decidim::Questions::Question.new(params)
           emendation.add_coauthor(author, user_group: author.user_groups.first)
           emendation.save!
           emendation
@@ -259,7 +259,7 @@ Decidim.register_component(:proposals) do |component|
 
         Decidim::Amendment.create!(
           amender: author,
-          amendable: proposal,
+          amendable: question,
           emendation: emendation,
           state: "evaluating"
         )
@@ -282,11 +282,11 @@ Decidim.register_component(:proposals) do |component|
           about: Faker::Lorem.paragraph(2)
         )
 
-        Decidim::Proposals::ProposalVote.create!(proposal: proposal, author: author) unless proposal.answered? && proposal.rejected?
-        Decidim::Proposals::ProposalVote.create!(proposal: emendation, author: author) if emendation
+        Decidim::Questions::QuestionVote.create!(question: question, author: author) unless question.answered? && question.rejected?
+        Decidim::Questions::QuestionVote.create!(question: emendation, author: author) if emendation
       end
 
-      unless proposal.answered? && proposal.rejected?
+      unless question.answered? && question.rejected?
         (n * 2).times do |index|
           email = "endorsement-author-#{participatory_space.underscored_name}-#{participatory_space.id}-#{n}-endr#{index}@example.org"
           name = "#{Faker::Name.name} #{participatory_space.id} #{n} endr#{index}"
@@ -320,21 +320,21 @@ Decidim.register_component(:proposals) do |component|
               user_group: group
             )
           end
-          Decidim::Proposals::ProposalEndorsement.create!(proposal: proposal, author: author, user_group: author.user_groups.first)
+          Decidim::Questions::QuestionEndorsement.create!(question: question, author: author, user_group: author.user_groups.first)
         end
       end
 
       (n % 3).times do
         author_admin = Decidim::User.where(organization: component.organization, admin: true).all.sample
 
-        Decidim::Proposals::ProposalNote.create!(
-          proposal: proposal,
+        Decidim::Questions::QuestionNote.create!(
+          question: question,
           author: author_admin,
           body: Faker::Lorem.paragraphs(2).join("\n")
         )
       end
 
-      Decidim::Comments::Seed.comments_for(proposal)
+      Decidim::Comments::Seed.comments_for(question)
 
       #
       # Collaborative drafts
@@ -348,8 +348,8 @@ Decidim.register_component(:proposals) do |component|
               end
       author = Decidim::User.where(organization: component.organization).all.sample
 
-      draft = Decidim.traceability.perform_action!("create", Decidim::Proposals::CollaborativeDraft, author) do
-        draft = Decidim::Proposals::CollaborativeDraft.new(
+      draft = Decidim.traceability.perform_action!("create", Decidim::Questions::CollaborativeDraft, author) do
+        draft = Decidim::Questions::CollaborativeDraft.new(
           component: component,
           category: participatory_space.categories.sample,
           scope: Faker::Boolean.boolean(0.5) ? global : scopes.sample,
@@ -383,7 +383,7 @@ Decidim.register_component(:proposals) do |component|
     end
 
     Decidim.traceability.update!(
-      Decidim::Proposals::CollaborativeDraft.all.sample,
+      Decidim::Questions::CollaborativeDraft.all.sample,
       Decidim::User.where(organization: component.organization).all.sample,
       component: component,
       category: participatory_space.categories.sample,

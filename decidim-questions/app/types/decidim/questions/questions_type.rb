@@ -1,31 +1,31 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    ProposalsType = GraphQL::ObjectType.define do
+  module Questions
+    QuestionsType = GraphQL::ObjectType.define do
       interfaces [-> { Decidim::Core::ComponentInterface }]
 
-      name "Proposals"
-      description "A proposals component of a participatory space."
+      name "Questions"
+      description "A questions component of a participatory space."
 
-      connection :proposals, ProposalType.connection_type do
+      connection :questions, QuestionType.connection_type do
         resolve ->(component, _args, _ctx) {
-                  ProposalsTypeHelper.base_scope(component).includes(:component)
+                  QuestionsTypeHelper.base_scope(component).includes(:component)
                 }
       end
 
-      field(:proposal, ProposalType) do
+      field(:question, QuestionType) do
         argument :id, !types.ID
 
         resolve ->(component, args, _ctx) {
-          ProposalsTypeHelper.base_scope(component).find_by(id: args[:id])
+          QuestionsTypeHelper.base_scope(component).find_by(id: args[:id])
         }
       end
     end
 
-    module ProposalsTypeHelper
+    module QuestionsTypeHelper
       def self.base_scope(component)
-        Proposal
+        Question
           .where(component: component)
           .published
       end

@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # A command with all the business logic when a user destroys a draft proposal.
-    class DestroyProposal < Rectify::Command
+  module Questions
+    # A command with all the business logic when a user destroys a draft question.
+    class DestroyQuestion < Rectify::Command
       # Public: Initializes the command.
       #
-      # proposal     - The proposal to destroy.
+      # question     - The question to destroy.
       # current_user - The current user.
-      def initialize(proposal, current_user)
-        @proposal = proposal
+      def initialize(question, current_user)
+        @question = question
         @current_user = current_user
       end
 
       # Executes the command. Broadcasts these events:
       #
-      # - :ok when everything is valid and the proposal is deleted.
-      # - :invalid if the proposal is not a draft.
-      # - :invalid if the proposal's author is not the current user.
+      # - :ok when everything is valid and the question is deleted.
+      # - :invalid if the question is not a draft.
+      # - :invalid if the question's author is not the current user.
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) unless @proposal.draft?
-        return broadcast(:invalid) unless @proposal.authored_by?(@current_user)
+        return broadcast(:invalid) unless @question.draft?
+        return broadcast(:invalid) unless @question.authored_by?(@current_user)
 
-        @proposal.destroy!
+        @question.destroy!
 
-        broadcast(:ok, @proposal)
+        broadcast(:ok, @question)
       end
     end
   end

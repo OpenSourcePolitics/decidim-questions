@@ -3,10 +3,10 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe WithdrawCollaborativeDraft do
       describe "call" do
-        let(:component) { create(:proposal_component) }
+        let(:component) { create(:question_component) }
         let(:organization) { component.organization }
         let!(:current_user) { create(:user, organization: organization) }
         let(:follower) { create(:user, organization: organization) }
@@ -14,8 +14,8 @@ module Decidim
         let(:state) { :open }
         let(:collaborative_draft) { create(:collaborative_draft, component: component, state: state, users: [current_user, other_author]) }
         let!(:follow) { create :follow, followable: current_user, user: follower }
-        let(:event) { "decidim.events.proposals.collaborative_draft_withdrawn" }
-        let(:event_class) { Decidim::Proposals::CollaborativeDraftWithdrawnEvent }
+        let(:event) { "decidim.events.questions.collaborative_draft_withdrawn" }
+        let(:event_class) { Decidim::Questions::CollaborativeDraftWithdrawnEvent }
 
         it "broadcasts ok" do
           expect { described_class.call(collaborative_draft, current_user) }.to broadcast(:ok)

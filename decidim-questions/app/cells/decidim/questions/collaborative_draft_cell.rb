@@ -3,7 +3,7 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
+  module Questions
     # This cell renders the collaborative_draft card for an instance of a CollaborativeDraft
     # the default size is the Medium Card (:m)
     class CollaborativeDraftCell < Decidim::ViewModel
@@ -22,7 +22,7 @@ module Decidim
       end
 
       def card_size
-        "decidim/proposals/collaborative_draft_m"
+        "decidim/questions/collaborative_draft_m"
       end
 
       def resource_path

@@ -1,15 +1,15 @@
-<div id="js-recategorize-proposals-actions" class="hide js-bulk-action-form">
-  <%= form_tag(update_category_proposals_path, method: :post, remote: true, id: "js-form-recategorize-proposals", class: "flex--cc flex-gap--1") do %>
+<div id="js-recategorize-questions-actions" class="hide js-bulk-action-form">
+  <%= form_tag(update_category_questions_path, method: :post, remote: true, id: "js-form-recategorize-questions", class: "flex--cc flex-gap--1") do %>
     <div class="checkboxes hide">
-      <% proposals.each do |proposal| %>
-        <%= check_box_tag "proposal_ids[]", proposal.id, false, class: "js-check-all-proposal js-proposal-id-#{proposal.id}" %>
+      <% questions.each do |question| %>
+        <%= check_box_tag "question_ids[]", question.id, false, class: "js-check-all-question js-question-id-#{question.id}" %>
       <% end %>
     </div>
 
     <%= bulk_categories_select current_component.categories %>
 
-    <%= submit_tag(t("decidim.proposals.admin.proposals.index.update"), id: "js-submit-edit-category", class: "button small button--simple float-left") %>
+    <%= submit_tag(t("decidim.questions.admin.questions.index.update"), id: "js-submit-edit-category", class: "button small button--simple float-left") %>
 
-    <button id="js-cancel-edit-category" class="button tiny clear compact js-cancel-bulk-action" type="button"><%= t("decidim.proposals.admin.proposals.index.cancel") %></button>
+    <button id="js-cancel-edit-category" class="button tiny clear compact js-cancel-bulk-action" type="button"><%= t("decidim.questions.admin.questions.index.cancel") %></button>
   <% end %>
 </div>

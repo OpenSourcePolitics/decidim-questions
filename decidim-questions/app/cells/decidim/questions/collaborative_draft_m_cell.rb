@@ -3,8 +3,8 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders a proposal with its M-size card.
+  module Questions
+    # This cell renders a question with its M-size card.
     class CollaborativeDraftMCell < Decidim::CardMCell
       include CollaborativeDraftCellsHelper
 

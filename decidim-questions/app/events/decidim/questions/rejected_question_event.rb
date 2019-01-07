@@ -1,8 +1,8 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
-    class RejectedProposalEvent < Decidim::Events::SimpleEvent
+  module Questions
+    class RejectedQuestionEvent < Decidim::Events::SimpleEvent
       include Decidim::Events::AuthorEvent
 
       def resource_text

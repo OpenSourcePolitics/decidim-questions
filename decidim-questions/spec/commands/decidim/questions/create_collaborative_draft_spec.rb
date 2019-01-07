@@ -3,10 +3,10 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe CreateCollaborativeDraft do
       let(:form_klass) { CollaborativeDraftForm }
-      let(:component) { create(:proposal_component, :with_collaborative_drafts_enabled, :with_extra_hashtags, suggested_hashtags: suggested_hashtags.join(" ")) }
+      let(:component) { create(:question_component, :with_collaborative_drafts_enabled, :with_extra_hashtags, suggested_hashtags: suggested_hashtags.join(" ")) }
       let(:organization) { component.organization }
       let(:user) { create :user, :confirmed, organization: organization }
       let(:form) do
@@ -64,7 +64,7 @@ module Decidim
           it "doesn't create a collaborative draft" do
             expect do
               command.call
-            end.not_to change(Decidim::Proposals::CollaborativeDraft, :count)
+            end.not_to change(Decidim::Questions::CollaborativeDraft, :count)
           end
         end
 
@@ -76,7 +76,7 @@ module Decidim
           it "creates a new collaborative draft" do
             expect do
               command.call
-            end.to change(Decidim::Proposals::CollaborativeDraft, :count).by(1)
+            end.to change(Decidim::Questions::CollaborativeDraft, :count).by(1)
           end
 
           context "with an author" do
@@ -84,7 +84,7 @@ module Decidim
 
             it "sets the author" do
               command.call
-              collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+              collaborative_draft = Decidim::Questions::CollaborativeDraft.last
 
               expect(collaborative_draft.coauthorships.count).to eq(1)
               expect(collaborative_draft.authors.count).to eq(1)
@@ -97,7 +97,7 @@ module Decidim
 
             it "saves the extra hashtags" do
               command.call
-              collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+              collaborative_draft = Decidim::Questions::CollaborativeDraft.last
               expect(collaborative_draft.body).to include("_Hashtag1")
               expect(collaborative_draft.body).to include("_Hashtag2")
             end
@@ -106,7 +106,7 @@ module Decidim
           context "with a user group" do
             it "sets the user group" do
               command.call
-              collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+              collaborative_draft = Decidim::Questions::CollaborativeDraft.last
 
               expect(collaborative_draft.coauthorships.count).to eq(1)
               expect(collaborative_draft.user_groups.count).to eq(1)
@@ -119,7 +119,7 @@ module Decidim
               .to receive(:perform_action!)
               .with(
                 :create,
-                Decidim::Proposals::CollaborativeDraft,
+                Decidim::Questions::CollaborativeDraft,
                 user,
                 visibility: "public-only"
               ).and_call_original
@@ -144,7 +144,7 @@ module Decidim
 
               it "sets the latitude and longitude" do
                 command.call
-                collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+                collaborative_draft = Decidim::Questions::CollaborativeDraft.last
 
                 expect(collaborative_draft.latitude).to eq(latitude)
                 expect(collaborative_draft.longitude).to eq(longitude)
@@ -153,7 +153,7 @@ module Decidim
           end
 
           context "when attachments are allowed", processing_uploads_for: Decidim::AttachmentUploader do
-            let(:component) { create(:proposal_component, :with_attachments_allowed) }
+            let(:component) { create(:question_component, :with_attachments_allowed) }
             let(:attachment_params) do
               {
                 title: "My attachment",
@@ -161,9 +161,9 @@ module Decidim
               }
             end
 
-            it "creates an atachment for the proposal" do
+            it "creates an atachment for the question" do
               expect { command.call }.to change(Decidim::Attachment, :count).by(1)
-              last_collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+              last_collaborative_draft = Decidim::Questions::CollaborativeDraft.last
               last_attachment = Decidim::Attachment.last
               expect(last_attachment.attached_to).to eq(last_collaborative_draft)
             end

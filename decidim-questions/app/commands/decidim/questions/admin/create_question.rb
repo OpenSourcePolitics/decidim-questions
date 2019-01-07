@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when a user creates a new proposal.
-      class CreateProposal < Rectify::Command
+      # A command with all the business logic when a user creates a new question.
+      class CreateQuestion < Rectify::Command
         include HashtagsMethods
 
         # Public: Initializes the command.
@@ -16,7 +16,7 @@ module Decidim
 
         # Executes the command. Broadcasts these events:
         #
-        # - :ok when everything is valid, together with the proposal.
+        # - :ok when everything is valid, together with the question.
         # - :invalid if the form wasn't valid and we couldn't proceed.
         #
         # Returns nothing.
@@ -29,20 +29,20 @@ module Decidim
           end
 
           transaction do
-            create_proposal
+            create_question
             create_attachment if process_attachments?
             send_notification
           end
 
-          broadcast(:ok, proposal)
+          broadcast(:ok, question)
         end
 
         private
 
-        attr_reader :form, :proposal, :attachment
+        attr_reader :form, :question, :attachment
 
-        def create_proposal
-          @proposal = Decidim::Proposals::ProposalBuilder.create(
+        def create_question
+          @question = Decidim::Questions::QuestionBuilder.create(
             attributes: attributes,
             author: form.author,
             action_user: form.current_user
@@ -68,7 +68,7 @@ module Decidim
           @attachment = Attachment.new(
             title: form.attachment.title,
             file: form.attachment.file,
-            attached_to: @proposal
+            attached_to: @question
           )
         end
 
@@ -84,7 +84,7 @@ module Decidim
         end
 
         def create_attachment
-          attachment.attached_to = proposal
+          attachment.attached_to = question
           attachment.save!
         end
 
@@ -98,10 +98,10 @@ module Decidim
 
         def send_notification
           Decidim::EventsManager.publish(
-            event: "decidim.events.proposals.proposal_published",
-            event_class: Decidim::Proposals::PublishProposalEvent,
-            resource: proposal,
-            followers: @proposal.participatory_space.followers,
+            event: "decidim.events.questions.question_published",
+            event_class: Decidim::Questions::PublishQuestionEvent,
+            resource: question,
+            followers: @question.participatory_space.followers,
             extra: {
               participatory_space: true
             }

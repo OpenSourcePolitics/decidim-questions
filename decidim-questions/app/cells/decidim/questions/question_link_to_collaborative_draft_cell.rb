@@ -3,9 +3,9 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders the link to the source collaborative draft of a proposal.
-    class ProposalLinkToCollaborativeDraftCell < Decidim::ViewModel
+  module Questions
+    # This cell renders the link to the source collaborative draft of a question.
+    class QuestionLinkToCollaborativeDraftCell < Decidim::ViewModel
       def show
         render if collaborative_draft
       end
@@ -18,12 +18,12 @@ module Decidim
 
       def link_to_resource
         link_to resource_locator(collaborative_draft).path, class: "link" do
-          t("link_to_collaborative_draft_text", scope: "decidim.proposals.proposals.show")
+          t("link_to_collaborative_draft_text", scope: "decidim.questions.questions.show")
         end
       end
 
       def link_help_text
-        t("link_to_collaborative_draft_help_text", scope: "decidim.proposals.proposals.show")
+        t("link_to_collaborative_draft_help_text", scope: "decidim.questions.questions.show")
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-shared_examples "manage proposals" do
+shared_examples "manage questions" do
   let(:address) { "Carrer Pare Llaurador 113, baixos, 08224 Terrassa" }
   let(:latitude) { 40.1234 }
   let(:longitude) { 2.1234 }
@@ -11,11 +11,11 @@ shared_examples "manage proposals" do
     stub_geocoding(address, [latitude, longitude])
   end
 
-  context "when previewing proposals" do
-    it "allows the user to preview the proposal" do
-      within find("tr", text: proposal.title) do
+  context "when previewing questions" do
+    it "allows the user to preview the question" do
+      within find("tr", text: question.title) do
         klass = "action-icon--preview"
-        href = resource_locator(proposal).path
+        href = resource_locator(question).path
         target = "blank"
 
         expect(page).to have_selector(
@@ -27,9 +27,9 @@ shared_examples "manage proposals" do
   end
 
   describe "creation" do
-    context "when official_proposals setting is enabled" do
+    context "when official_questions setting is enabled" do
       before do
-        current_component.update!(settings: { official_proposals_enabled: true })
+        current_component.update!(settings: { official_questions_enabled: true })
       end
 
       context "when creation is enabled" do
@@ -47,33 +47,33 @@ shared_examples "manage proposals" do
 
         context "when process is not related to any scope" do
           it "can be related to a scope" do
-            click_link "New proposal"
+            click_link "New question"
 
             within "form" do
               expect(page).to have_content(/Scope/i)
             end
           end
 
-          it "creates a new proposal", :slow do
-            click_link "New proposal"
+          it "creates a new question", :slow do
+            click_link "New question"
 
-            within ".new_proposal" do
-              fill_in :proposal_title, with: "Make decidim great again"
-              fill_in :proposal_body, with: "Decidim is great but it can be better"
-              select translated(category.name), from: :proposal_category_id
-              scope_pick select_data_picker(:proposal_scope_id), scope
+            within ".new_question" do
+              fill_in :question_title, with: "Make decidim great again"
+              fill_in :question_body, with: "Decidim is great but it can be better"
+              select translated(category.name), from: :question_category_id
+              scope_pick select_data_picker(:question_scope_id), scope
               find("*[type=submit]").click
             end
 
             expect(page).to have_admin_callout("successfully")
 
             within "table" do
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
               expect(page).to have_content("Make decidim great again")
-              expect(proposal.body).to eq("Decidim is great but it can be better")
-              expect(proposal.category).to eq(category)
-              expect(proposal.scope).to eq(scope)
+              expect(question.body).to eq("Decidim is great but it can be better")
+              expect(question.category).to eq(category)
+              expect(question.scope).to eq(scope)
             end
           end
         end
@@ -82,32 +82,32 @@ shared_examples "manage proposals" do
           let(:participatory_process_scope) { scope }
 
           it "cannot be related to a scope, because it has no children" do
-            click_link "New proposal"
+            click_link "New question"
 
             within "form" do
               expect(page).to have_no_content(/Scope/i)
             end
           end
 
-          it "creates a new proposal related to the process scope" do
-            click_link "New proposal"
+          it "creates a new question related to the process scope" do
+            click_link "New question"
 
-            within ".new_proposal" do
-              fill_in :proposal_title, with: "Make decidim great again"
-              fill_in :proposal_body, with: "Decidim is great but it can be better"
-              select category.name["en"], from: :proposal_category_id
+            within ".new_question" do
+              fill_in :question_title, with: "Make decidim great again"
+              fill_in :question_body, with: "Decidim is great but it can be better"
+              select category.name["en"], from: :question_category_id
               find("*[type=submit]").click
             end
 
             expect(page).to have_admin_callout("successfully")
 
             within "table" do
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
               expect(page).to have_content("Make decidim great again")
-              expect(proposal.body).to eq("Decidim is great but it can be better")
-              expect(proposal.category).to eq(category)
-              expect(proposal.scope).to eq(scope)
+              expect(question.body).to eq("Decidim is great but it can be better")
+              expect(question.category).to eq(category)
+              expect(question.scope).to eq(scope)
             end
           end
 
@@ -115,33 +115,33 @@ shared_examples "manage proposals" do
             let!(:child_scope) { create :scope, parent: scope }
 
             it "can be related to a scope" do
-              click_link "New proposal"
+              click_link "New question"
 
               within "form" do
                 expect(page).to have_content(/Scope/i)
               end
             end
 
-            it "creates a new proposal related to a process scope child" do
-              click_link "New proposal"
+            it "creates a new question related to a process scope child" do
+              click_link "New question"
 
-              within ".new_proposal" do
-                fill_in :proposal_title, with: "Make decidim great again"
-                fill_in :proposal_body, with: "Decidim is great but it can be better"
-                select category.name["en"], from: :proposal_category_id
-                scope_repick select_data_picker(:proposal_scope_id), scope, child_scope
+              within ".new_question" do
+                fill_in :question_title, with: "Make decidim great again"
+                fill_in :question_body, with: "Decidim is great but it can be better"
+                select category.name["en"], from: :question_category_id
+                scope_repick select_data_picker(:question_scope_id), scope, child_scope
                 find("*[type=submit]").click
               end
 
               expect(page).to have_admin_callout("successfully")
 
               within "table" do
-                proposal = Decidim::Proposals::Proposal.last
+                question = Decidim::Questions::Question.last
 
                 expect(page).to have_content("Make decidim great again")
-                expect(proposal.body).to eq("Decidim is great but it can be better")
-                expect(proposal.category).to eq(category)
-                expect(proposal.scope).to eq(child_scope)
+                expect(question.body).to eq("Decidim is great but it can be better")
+                expect(question.category).to eq(category)
+                expect(question.scope).to eq(child_scope)
               end
             end
           end
@@ -151,26 +151,26 @@ shared_examples "manage proposals" do
               current_component.update!(settings: { geocoding_enabled: true })
             end
 
-            it "creates a new proposal related to the process scope" do
-              click_link "New proposal"
+            it "creates a new question related to the process scope" do
+              click_link "New question"
 
-              within ".new_proposal" do
-                fill_in :proposal_title, with: "Make decidim great again"
-                fill_in :proposal_body, with: "Decidim is great but it can be better"
-                fill_in :proposal_address, with: address
-                select category.name["en"], from: :proposal_category_id
+              within ".new_question" do
+                fill_in :question_title, with: "Make decidim great again"
+                fill_in :question_body, with: "Decidim is great but it can be better"
+                fill_in :question_address, with: address
+                select category.name["en"], from: :question_category_id
                 find("*[type=submit]").click
               end
 
               expect(page).to have_admin_callout("successfully")
 
               within "table" do
-                proposal = Decidim::Proposals::Proposal.last
+                question = Decidim::Questions::Question.last
 
                 expect(page).to have_content("Make decidim great again")
-                expect(proposal.body).to eq("Decidim is great but it can be better")
-                expect(proposal.category).to eq(category)
-                expect(proposal.scope).to eq(scope)
+                expect(question.body).to eq("Decidim is great but it can be better")
+                expect(question.category).to eq(category)
+                expect(question.scope).to eq(scope)
               end
             end
           end
@@ -181,49 +181,49 @@ shared_examples "manage proposals" do
             current_component.update!(settings: { attachments_allowed: true })
           end
 
-          it "creates a new proposal with attachments" do
-            click_link "New proposal"
+          it "creates a new question with attachments" do
+            click_link "New question"
 
-            within ".new_proposal" do
-              fill_in :proposal_title, with: "Proposal with attachments"
-              fill_in :proposal_body, with: "This is my proposal and I want to upload attachments."
-              fill_in :proposal_attachment_title, with: "My attachment"
-              attach_file :proposal_attachment_file, Decidim::Dev.asset("city.jpeg")
+            within ".new_question" do
+              fill_in :question_title, with: "Question with attachments"
+              fill_in :question_body, with: "This is my question and I want to upload attachments."
+              fill_in :question_attachment_title, with: "My attachment"
+              attach_file :question_attachment_file, Decidim::Dev.asset("city.jpeg")
               find("*[type=submit]").click
             end
 
             expect(page).to have_admin_callout("successfully")
 
-            visit resource_locator(Decidim::Proposals::Proposal.last).path
+            visit resource_locator(Decidim::Questions::Question.last).path
             expect(page).to have_selector("img[src*=\"city.jpeg\"]", count: 1)
           end
         end
 
-        context "when proposals comes from a meeting" do
+        context "when questions comes from a meeting" do
           let!(:meeting_component) { create(:meeting_component, participatory_space: participatory_process) }
           let!(:meetings) { create_list(:meeting, 3, component: meeting_component) }
 
-          it "creates a new proposal with meeting as author" do
-            click_link "New proposal"
+          it "creates a new question with meeting as author" do
+            click_link "New question"
 
-            within ".new_proposal" do
-              fill_in :proposal_title, with: "Proposal with meeting as author"
-              fill_in :proposal_body, with: "Proposal body of meeting as author"
-              execute_script("$('#proposal_created_in_meeting').change()")
-              find(:css, "#proposal_created_in_meeting").set(true)
-              select translated(meetings.first.title), from: :proposal_meeting_id
-              select category.name["en"], from: :proposal_category_id
+            within ".new_question" do
+              fill_in :question_title, with: "Question with meeting as author"
+              fill_in :question_body, with: "Question body of meeting as author"
+              execute_script("$('#question_created_in_meeting').change()")
+              find(:css, "#question_created_in_meeting").set(true)
+              select translated(meetings.first.title), from: :question_meeting_id
+              select category.name["en"], from: :question_category_id
               find("*[type=submit]").click
             end
 
             expect(page).to have_admin_callout("successfully")
 
             within "table" do
-              proposal = Decidim::Proposals::Proposal.last
+              question = Decidim::Questions::Question.last
 
-              expect(page).to have_content("Proposal with meeting as author")
-              expect(proposal.body).to eq("Proposal body of meeting as author")
-              expect(proposal.category).to eq(category)
+              expect(page).to have_content("Question with meeting as author")
+              expect(question.body).to eq("Question body of meeting as author")
+              expect(question.category).to eq(category)
             end
           end
         end
@@ -240,59 +240,59 @@ shared_examples "manage proposals" do
           )
         end
 
-        it "cannot create a new proposal from the main site" do
+        it "cannot create a new question from the main site" do
           visit_component
-          expect(page).to have_no_button("New Proposal")
+          expect(page).to have_no_button("New Question")
         end
 
-        it "cannot create a new proposal from the admin site" do
+        it "cannot create a new question from the admin site" do
           visit_component_admin
           expect(page).to have_no_link(/New/)
         end
       end
     end
 
-    context "when official_proposals setting is disabled" do
+    context "when official_questions setting is disabled" do
       before do
-        current_component.update!(settings: { official_proposals_enabled: false })
+        current_component.update!(settings: { official_questions_enabled: false })
       end
 
-      it "cannot create a new proposal from the main site" do
+      it "cannot create a new question from the main site" do
         visit_component
-        expect(page).to have_no_button("New Proposal")
+        expect(page).to have_no_button("New Question")
       end
 
-      it "cannot create a new proposal from the admin site" do
+      it "cannot create a new question from the admin site" do
         visit_component_admin
         expect(page).to have_no_link(/New/)
       end
     end
   end
 
-  context "when the proposal_answering component setting is enabled" do
+  context "when the question_answering component setting is enabled" do
     before do
-      current_component.update!(settings: { proposal_answering_enabled: true })
+      current_component.update!(settings: { question_answering_enabled: true })
     end
 
-    context "when the proposal_answering step setting is enabled" do
+    context "when the question_answering step setting is enabled" do
       before do
         current_component.update!(
           step_settings: {
             current_component.participatory_space.active_step.id => {
-              proposal_answering_enabled: true
+              question_answering_enabled: true
             }
           }
         )
       end
 
-      it "can reject a proposal" do
-        go_to_edit_answer(proposal)
+      it "can reject a question" do
+        go_to_edit_answer(question)
 
-        within ".edit_proposal_answer" do
+        within ".edit_question_answer" do
           fill_in_i18n_editor(
-            :proposal_answer_answer,
-            "#proposal_answer-answer-tabs",
-            en: "The proposal doesn't make any sense",
+            :question_answer_answer,
+            "#question_answer-answer-tabs",
+            en: "The question doesn't make any sense",
             es: "La propuesta no tiene sentido",
             ca: "La proposta no te sentit"
           )
@@ -300,45 +300,45 @@ shared_examples "manage proposals" do
           click_button "Answer"
         end
 
-        expect(page).to have_admin_callout("Proposal successfully answered")
+        expect(page).to have_admin_callout("Question successfully answered")
 
-        within find("tr", text: proposal.title) do
+        within find("tr", text: question.title) do
           expect(page).to have_content("Rejected")
         end
       end
 
-      it "can accept a proposal" do
-        go_to_edit_answer(proposal)
+      it "can accept a question" do
+        go_to_edit_answer(question)
 
-        within ".edit_proposal_answer" do
+        within ".edit_question_answer" do
           choose "Accepted"
           click_button "Answer"
         end
 
-        expect(page).to have_admin_callout("Proposal successfully answered")
+        expect(page).to have_admin_callout("Question successfully answered")
 
-        within find("tr", text: proposal.title) do
+        within find("tr", text: question.title) do
           expect(page).to have_content("Accepted")
         end
       end
 
-      it "can mark a proposal as evaluating" do
-        go_to_edit_answer(proposal)
+      it "can mark a question as evaluating" do
+        go_to_edit_answer(question)
 
-        within ".edit_proposal_answer" do
+        within ".edit_question_answer" do
           choose "Evaluating"
           click_button "Answer"
         end
 
-        expect(page).to have_admin_callout("Proposal successfully answered")
+        expect(page).to have_admin_callout("Question successfully answered")
 
-        within find("tr", text: proposal.title) do
+        within find("tr", text: question.title) do
           expect(page).to have_content("Evaluating")
         end
       end
 
-      it "can edit a proposal answer" do
-        proposal.update!(
+      it "can edit a question answer" do
+        question.update!(
           state: "rejected",
           answer: {
             "en" => "I don't like it"
@@ -348,51 +348,51 @@ shared_examples "manage proposals" do
 
         visit_component_admin
 
-        within find("tr", text: proposal.title) do
+        within find("tr", text: question.title) do
           expect(page).to have_content("Rejected")
         end
 
-        go_to_edit_answer(proposal)
+        go_to_edit_answer(question)
 
-        within ".edit_proposal_answer" do
+        within ".edit_question_answer" do
           choose "Accepted"
           click_button "Answer"
         end
 
-        expect(page).to have_admin_callout("Proposal successfully answered")
+        expect(page).to have_admin_callout("Question successfully answered")
 
-        within find("tr", text: proposal.title) do
+        within find("tr", text: question.title) do
           expect(page).to have_content("Accepted")
         end
       end
     end
 
-    context "when the proposal_answering step setting is disabled" do
+    context "when the question_answering step setting is disabled" do
       before do
         current_component.update!(
           step_settings: {
             current_component.participatory_space.active_step.id => {
-              proposal_answering_enabled: false
+              question_answering_enabled: false
             }
           }
         )
       end
 
-      it "cannot answer a proposal" do
+      it "cannot answer a question" do
         visit current_path
 
-        within find("tr", text: proposal.title) do
+        within find("tr", text: question.title) do
           expect(page).to have_no_link("Answer")
         end
       end
     end
 
-    context "when the proposal is an emendation" do
-      let!(:amendable) { create(:proposal, component: current_component) }
-      let!(:emendation) { create(:proposal, component: current_component) }
+    context "when the question is an emendation" do
+      let!(:amendable) { create(:question, component: current_component) }
+      let!(:emendation) { create(:question, component: current_component) }
       let!(:amendment) { create :amendment, amender: emendation.creator_author, amendable: amendable, emendation: emendation, state: "evaluating" }
 
-      it "cannot answer a proposal" do
+      it "cannot answer a question" do
         visit_component_admin
         within find("tr", text: I18n.t("decidim/amendment", scope: "activerecord.models", count: 1)) do
           expect(page).to have_no_link("Answer")
@@ -401,15 +401,15 @@ shared_examples "manage proposals" do
     end
   end
 
-  context "when the proposal_answering component setting is disabled" do
+  context "when the question_answering component setting is disabled" do
     before do
-      current_component.update!(settings: { proposal_answering_enabled: false })
+      current_component.update!(settings: { question_answering_enabled: false })
     end
 
-    it "cannot answer a proposal" do
+    it "cannot answer a question" do
       visit current_path
 
-      within find("tr", text: proposal.title) do
+      within find("tr", text: question.title) do
         expect(page).to have_no_link("Answer")
       end
     end
@@ -455,11 +455,11 @@ shared_examples "manage proposals" do
     end
   end
 
-  def go_to_edit_answer(proposal)
-    within find("tr", text: proposal.title) do
+  def go_to_edit_answer(question)
+    within find("tr", text: question.title) do
       click_link "Answer"
     end
 
-    expect(page).to have_selector(".edit_proposal_answer")
+    expect(page).to have_selector(".edit_question_answer")
   end
 end

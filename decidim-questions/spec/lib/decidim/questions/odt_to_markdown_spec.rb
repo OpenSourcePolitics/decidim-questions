@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe OdtToMarkdown do
       context "when libreoffice odt file" do
         it "transforms into markdown" do

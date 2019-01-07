@@ -1,7 +1,7 @@
 $(() => {
-  window.DecidimProposals = window.DecidimProposals || {};
+  window.DecidimQuestions = window.DecidimQuestions || {};
 
-  window.DecidimProposals.bindProposalAddress = () => {
+  window.DecidimQuestions.bindQuestionAddress = () => {
     const $checkbox = $("input:checkbox[name$='[has_address]']");
     const $addressInput = $("#address_input");
 
@@ -18,5 +18,5 @@ $(() => {
     }
   };
 
-  window.DecidimProposals.bindProposalAddress();
+  window.DecidimQuestions.bindQuestionAddress();
 });

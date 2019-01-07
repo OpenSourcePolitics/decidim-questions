@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A form object to be used when admin users want to create a proposal.
-      class ProposalForm < Decidim::Form
+      # A form object to be used when admin users want to create a question.
+      class QuestionForm < Decidim::Form
         include Decidim::ApplicationHelper
-        mimic :proposal
+        mimic :question
 
         attribute :title, String
         attribute :body, String
@@ -61,7 +61,7 @@ module Decidim
 
         # Scope identifier
         #
-        # Returns the scope identifier related to the proposal
+        # Returns the scope identifier related to the question
         def scope_id
           @scope_id || scope&.id
         end

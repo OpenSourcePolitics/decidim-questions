@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Custom helpers, scoped to the proposals engine.
+  module Questions
+    # Custom helpers, scoped to the questions engine.
     #
     module CollaborativeDraftCellsHelper
-      include Decidim::Proposals::ApplicationHelper
-      include Decidim::Proposals::Engine.routes.url_helpers
+      include Decidim::Questions::ApplicationHelper
+      include Decidim::Questions::Engine.routes.url_helpers
       include Decidim::LayoutHelper
       include Decidim::ApplicationHelper
       include Decidim::TranslationsHelper

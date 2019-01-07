@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when an admin imports proposals from
+      # A command with all the business logic when an admin imports questions from
       # a participatory text.
       class ImportParticipatoryText < Rectify::Command
         # Public: Initializes the command.
@@ -40,7 +40,7 @@ module Decidim
 
         def parse_participatory_text_doc(form)
           markdown = DocToMarkdown.new(form.document_text, form.document_type).to_md
-          parser = MarkdownToProposals.new(form.current_component, form.current_user)
+          parser = MarkdownToQuestions.new(form.current_component, form.current_user)
           parser.parse(markdown)
         end
       end

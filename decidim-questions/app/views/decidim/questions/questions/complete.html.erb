@@ -6,7 +6,7 @@
 
     <div class="card">
       <div class="card__content">
-        <%= decidim_form_for(@form, url: update_draft_proposal_path(@proposal), method: :patch) do |form| %>
+        <%= decidim_form_for(@form, url: update_draft_question_path(@question), method: :patch) do |form| %>
           <%= render partial: "edit_form_fields", locals: { form: form } %>
 
           <div class="actions">
@@ -19,4 +19,4 @@
   <div class="columns large-3"></div>
 </div>
 
-<%= javascript_include_tag "decidim/proposals/add_proposal" %>
+<%= javascript_include_tag "decidim/questions/add_question" %>

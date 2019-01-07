@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-shared_examples "manage proposal wizard steps help texts" do
+shared_examples "manage question wizard steps help texts" do
   before do
     current_component.update!(
       step_settings: {
@@ -11,65 +11,65 @@ shared_examples "manage proposal wizard steps help texts" do
     )
   end
 
-  let!(:proposal) { create(:proposal, component: current_component) }
-  let!(:proposal_similar) { create(:proposal, component: current_component, title: "This proposal is to ensure a similar exists") }
-  let!(:proposal_draft) { create(:proposal, :draft, component: current_component, title: "This proposal has a similar") }
+  let!(:question) { create(:question, component: current_component) }
+  let!(:question_similar) { create(:question, component: current_component, title: "This question is to ensure a similar exists") }
+  let!(:question_draft) { create(:question, :draft, component: current_component, title: "This question has a similar") }
 
-  it "customize the help text for step 1 of the proposal wizard" do
+  it "customize the help text for step 1 of the question wizard" do
     visit edit_component_path(current_component)
 
     fill_in_i18n_editor(
-      :component_settings_proposal_wizard_step_1_help_text,
-      "#global-settings-proposal_wizard_step_1_help_text-tabs",
-      en: "This is the first step of the Proposal creation wizard.",
+      :component_settings_question_wizard_step_1_help_text,
+      "#global-settings-question_wizard_step_1_help_text-tabs",
+      en: "This is the first step of the Question creation wizard.",
       es: "Este es el primer paso del asistente de creación de propuestas.",
       ca: "Aquest és el primer pas de l'assistent de creació de la proposta."
     )
 
     click_button "Update"
 
-    visit new_proposal_path(current_component)
-    within ".proposal_wizard_help_text" do
-      expect(page).to have_content("This is the first step of the Proposal creation wizard.")
+    visit new_question_path(current_component)
+    within ".question_wizard_help_text" do
+      expect(page).to have_content("This is the first step of the Question creation wizard.")
     end
   end
 
-  it "customize the help text for step 2 of the proposal wizard" do
+  it "customize the help text for step 2 of the question wizard" do
     visit edit_component_path(current_component)
 
     fill_in_i18n_editor(
-      :component_settings_proposal_wizard_step_2_help_text,
-      "#global-settings-proposal_wizard_step_2_help_text-tabs",
-      en: "This is the second step of the Proposal creation wizard.",
+      :component_settings_question_wizard_step_2_help_text,
+      "#global-settings-question_wizard_step_2_help_text-tabs",
+      en: "This is the second step of the Question creation wizard.",
       es: "Este es el segundo paso del asistente de creación de propuestas.",
       ca: "Aquest és el segon pas de l'assistent de creació de la proposta."
     )
 
     click_button "Update"
 
-    create(:proposal, title: "More sidewalks and less roads", body: "Cities need more people, not more cars", component: component)
-    create(:proposal, title: "More trees and parks", body: "Green is always better", component: component)
+    create(:question, title: "More sidewalks and less roads", body: "Cities need more people, not more cars", component: component)
+    create(:question, title: "More trees and parks", body: "Green is always better", component: component)
     visit_component
-    click_link "New proposal"
-    within ".new_proposal" do
-      fill_in :proposal_title, with: "More sidewalks and less roads"
-      fill_in :proposal_body, with: "Cities need more people, not more cars"
+    click_link "New question"
+    within ".new_question" do
+      fill_in :question_title, with: "More sidewalks and less roads"
+      fill_in :question_body, with: "Cities need more people, not more cars"
 
       find("*[type=submit]").click
     end
 
-    within ".proposal_wizard_help_text" do
-      expect(page).to have_content("This is the second step of the Proposal creation wizard.")
+    within ".question_wizard_help_text" do
+      expect(page).to have_content("This is the second step of the Question creation wizard.")
     end
   end
 
-  it "customize the help text for step 3 of the proposal wizard" do
+  it "customize the help text for step 3 of the question wizard" do
     visit edit_component_path(current_component)
 
     fill_in_i18n_editor(
-      :component_settings_proposal_wizard_step_3_help_text,
-      "#global-settings-proposal_wizard_step_3_help_text-tabs",
-      en: "This is the third step of the Proposal creation wizard.",
+      :component_settings_question_wizard_step_3_help_text,
+      "#global-settings-question_wizard_step_3_help_text-tabs",
+      en: "This is the third step of the Question creation wizard.",
       es: "Este es el tercer paso del asistente de creación de propuestas.",
       ca: "Aquest és el tercer pas de l'assistent de creació de la proposta."
     )
@@ -77,49 +77,49 @@ shared_examples "manage proposal wizard steps help texts" do
     click_button "Update"
 
     visit_component
-    click_link "New proposal"
-    within ".new_proposal" do
-      fill_in :proposal_title, with: "More sidewalks and less roads"
-      fill_in :proposal_body, with: "Cities need more people, not more cars"
+    click_link "New question"
+    within ".new_question" do
+      fill_in :question_title, with: "More sidewalks and less roads"
+      fill_in :question_body, with: "Cities need more people, not more cars"
 
       find("*[type=submit]").click
     end
 
-    within ".proposal_wizard_help_text" do
-      expect(page).to have_content("This is the third step of the Proposal creation wizard.")
+    within ".question_wizard_help_text" do
+      expect(page).to have_content("This is the third step of the Question creation wizard.")
     end
   end
 
-  it "customize the help text for step 4 of the proposal wizard" do
+  it "customize the help text for step 4 of the question wizard" do
     visit edit_component_path(current_component)
 
     fill_in_i18n_editor(
-      :component_settings_proposal_wizard_step_4_help_text,
-      "#global-settings-proposal_wizard_step_4_help_text-tabs",
-      en: "This is the fourth step of the Proposal creation wizard.",
+      :component_settings_question_wizard_step_4_help_text,
+      "#global-settings-question_wizard_step_4_help_text-tabs",
+      en: "This is the fourth step of the Question creation wizard.",
       es: "Este es el cuarto paso del asistente de creación de propuestas.",
       ca: "Aquest és el quart pas de l'assistent de creació de la proposta."
     )
 
     click_button "Update"
 
-    visit preview_proposal_path(current_component, proposal_draft)
-    within ".proposal_wizard_help_text" do
-      expect(page).to have_content("This is the fourth step of the Proposal creation wizard.")
+    visit preview_question_path(current_component, question_draft)
+    within ".question_wizard_help_text" do
+      expect(page).to have_content("This is the fourth step of the Question creation wizard.")
     end
   end
 
   private
 
-  def new_proposal_path(current_component)
-    Decidim::EngineRouter.main_proxy(current_component).new_proposal_path(current_component.id)
+  def new_question_path(current_component)
+    Decidim::EngineRouter.main_proxy(current_component).new_question_path(current_component.id)
   end
 
-  def complete_proposal_path(current_component, proposal)
-    Decidim::EngineRouter.main_proxy(current_component).complete_proposal_path(proposal)
+  def complete_question_path(current_component, question)
+    Decidim::EngineRouter.main_proxy(current_component).complete_question_path(question)
   end
 
-  def preview_proposal_path(current_component, proposal)
-    Decidim::EngineRouter.main_proxy(current_component).proposal_path(proposal) + "/preview"
+  def preview_question_path(current_component, question)
+    Decidim::EngineRouter.main_proxy(current_component).question_path(question) + "/preview"
   end
 end

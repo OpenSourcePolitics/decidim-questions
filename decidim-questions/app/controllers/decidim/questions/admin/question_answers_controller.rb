@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # This controller allows admins to answer proposals in a participatory process.
-      class ProposalAnswersController < Admin::ApplicationController
-        helper_method :proposal
+      # This controller allows admins to answer questions in a participatory process.
+      class QuestionAnswersController < Admin::ApplicationController
+        helper_method :question
 
         def edit
-          enforce_permission_to :create, :proposal_answer
-          @form = form(Admin::ProposalAnswerForm).from_model(proposal)
+          enforce_permission_to :create, :question_answer
+          @form = form(Admin::QuestionAnswerForm).from_model(question)
         end
 
         def update
-          enforce_permission_to :create, :proposal_answer
-          @form = form(Admin::ProposalAnswerForm).from_params(params)
+          enforce_permission_to :create, :question_answer
+          @form = form(Admin::QuestionAnswerForm).from_params(params)
 
-          Admin::AnswerProposal.call(@form, proposal) do
+          Admin::AnswerQuestion.call(@form, question) do
             on(:ok) do
-              flash[:notice] = I18n.t("proposals.answer.success", scope: "decidim.proposals.admin")
-              redirect_to proposals_path
+              flash[:notice] = I18n.t("questions.answer.success", scope: "decidim.questions.admin")
+              redirect_to questions_path
             end
 
             on(:invalid) do
-              flash.now[:alert] = I18n.t("proposals.answer.invalid", scope: "decidim.proposals.admin")
+              flash.now[:alert] = I18n.t("questions.answer.invalid", scope: "decidim.questions.admin")
               render action: "edit"
             end
           end
@@ -31,8 +31,8 @@ module Decidim
 
         private
 
-        def proposal
-          @proposal ||= Proposal.where(component: current_component).find(params[:id])
+        def question
+          @question ||= Question.where(component: current_component).find(params[:id])
         end
       end
     end

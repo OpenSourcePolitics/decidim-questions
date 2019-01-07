@@ -8,16 +8,16 @@ require "cells-erb"
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This is the engine that runs on the public interface of `decidim-proposals`.
+  module Questions
+    # This is the engine that runs on the public interface of `decidim-questions`.
     # It mostly handles rendering the created page associated to a participatory
     # process.
     class Engine < ::Rails::Engine
-      isolate_namespace Decidim::Proposals
+      isolate_namespace Decidim::Questions
 
       routes do
-        resources :proposals, except: [:destroy] do
-          resource :proposal_endorsement, only: [:create, :destroy] do
+        resources :questions, except: [:destroy] do
+          resource :question_endorsement, only: [:create, :destroy] do
             get :identities, on: :collection
           end
           member do
@@ -30,8 +30,8 @@ module Decidim
             delete :destroy_draft
             put :withdraw
           end
-          resource :proposal_vote, only: [:create, :destroy]
-          resource :proposal_widget, only: :show, path: "embed"
+          resource :question_vote, only: [:create, :destroy]
+          resource :question_widget, only: :show, path: "embed"
           resources :versions, only: [:show, :index]
         end
         resources :collaborative_drafts, except: [:destroy] do
@@ -46,42 +46,42 @@ module Decidim
           end
           resources :versions, only: [:show, :index]
         end
-        root to: "proposals#index"
+        root to: "questions#index"
       end
 
-      initializer "decidim_proposals.assets" do |app|
-        app.config.assets.precompile += %w(decidim_proposals_manifest.js
-                                           decidim_proposals_manifest.css
-                                           decidim/proposals/identity_selector_dialog.js)
+      initializer "decidim_questions.assets" do |app|
+        app.config.assets.precompile += %w(decidim_questions_manifest.js
+                                           decidim_questions_manifest.css
+                                           decidim/questions/identity_selector_dialog.js)
       end
 
       initializer "decidim.content_processors" do |_app|
         Decidim.configure do |config|
-          config.content_processors += [:proposal]
+          config.content_processors += [:question]
         end
       end
 
-      initializer "decidim_proposals.view_hooks" do
+      initializer "decidim_questions.view_hooks" do
         Decidim.view_hooks.register(:participatory_space_highlighted_elements, priority: Decidim::ViewHooks::MEDIUM_PRIORITY) do |view_context|
-          view_context.cell("decidim/proposals/highlighted_proposals", view_context.current_participatory_space)
+          view_context.cell("decidim/questions/highlighted_questions", view_context.current_participatory_space)
         end
 
         if defined? Decidim::ParticipatoryProcesses
           Decidim::ParticipatoryProcesses.view_hooks.register(:process_group_highlighted_elements, priority: Decidim::ViewHooks::MEDIUM_PRIORITY) do |view_context|
             published_components = Decidim::Component.where(participatory_space: view_context.participatory_processes).published
-            proposals = Decidim::Proposals::Proposal.published.not_hidden.except_withdrawn
+            questions = Decidim::Questions::Question.published.not_hidden.except_withdrawn
                                                     .where(component: published_components)
                                                     .order_randomly(rand * 2 - 1)
-                                                    .limit(Decidim::Proposals.config.process_group_highlighted_proposals_limit)
+                                                    .limit(Decidim::Questions.config.process_group_highlighted_questions_limit)
 
-            next unless proposals.any?
+            next unless questions.any?
 
             view_context.extend Decidim::ResourceReferenceHelper
-            view_context.extend Decidim::Proposals::ApplicationHelper
+            view_context.extend Decidim::Questions::ApplicationHelper
             view_context.render(
-              partial: "decidim/participatory_processes/participatory_process_groups/highlighted_proposals",
+              partial: "decidim/participatory_processes/participatory_process_groups/highlighted_questions",
               locals: {
-                proposals: proposals
+                questions: questions
               }
             )
           end
@@ -90,7 +90,7 @@ module Decidim
 
       initializer "decidim_changes" do
         Decidim::SettingsChange.subscribe "surveys" do |changes|
-          Decidim::Proposals::SettingsChangeJob.perform_later(
+          Decidim::Questions::SettingsChangeJob.perform_later(
             changes[:component_id],
             changes[:previous_settings],
             changes[:current_settings]
@@ -98,33 +98,33 @@ module Decidim
         end
       end
 
-      initializer "decidim_proposals.mentions_listener" do
+      initializer "decidim_questions.mentions_listener" do
         Decidim::Comments::CommentCreation.subscribe do |data|
-          proposals = data.dig(:metadatas, :proposal).try(:linked_proposals)
-          Decidim::Proposals::NotifyProposalsMentionedJob.perform_later(data[:comment_id], proposals) if proposals
+          questions = data.dig(:metadatas, :question).try(:linked_questions)
+          Decidim::Questions::NotifyQuestionsMentionedJob.perform_later(data[:comment_id], questions) if questions
         end
       end
 
-      # Subscribes to ActiveSupport::Notifications that may affect a Proposal.
-      initializer "decidim_proposals.subscribe_to_events" do
-        # when a proposal is linked from a result
-        event_name = "decidim.resourceable.included_proposals.created"
+      # Subscribes to ActiveSupport::Notifications that may affect a Question.
+      initializer "decidim_questions.subscribe_to_events" do
+        # when a question is linked from a result
+        event_name = "decidim.resourceable.included_questions.created"
         ActiveSupport::Notifications.subscribe event_name do |_name, _started, _finished, _unique_id, data|
           payload = data[:this]
-          if payload[:from_type] == Decidim::Accountability::Result.name && payload[:to_type] == Proposal.name
-            proposal = Proposal.find(payload[:to_id])
-            proposal.update(state: "accepted")
+          if payload[:from_type] == Decidim::Accountability::Result.name && payload[:to_type] == Question.name
+            question = Question.find(payload[:to_id])
+            question.update(state: "accepted")
           end
         end
       end
 
-      initializer "decidim_proposals.add_cells_view_paths" do
-        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Proposals::Engine.root}/app/cells")
-        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Proposals::Engine.root}/app/views") # for proposal partials
+      initializer "decidim_questions.add_cells_view_paths" do
+        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Questions::Engine.root}/app/cells")
+        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Questions::Engine.root}/app/views") # for question partials
       end
 
-      initializer "decidim_proposals.add_badges" do
-        Decidim::Gamification.register_badge(:proposals) do |badge|
+      initializer "decidim_questions.add_badges" do
+        Decidim::Gamification.register_badge(:questions) do |badge|
           badge.levels = [1, 5, 10, 30, 60]
 
           badge.valid_for = [:user, :user_group]
@@ -132,54 +132,54 @@ module Decidim
           badge.reset = lambda { |model|
             if model.is_a?(User)
               Decidim::Coauthorship.where(
-                coauthorable_type: "Decidim::Proposals::Proposal",
+                coauthorable_type: "Decidim::Questions::Question",
                 author: model,
                 user_group: nil
               ).count
             elsif model.is_a?(UserGroup)
               Decidim::Coauthorship.where(
-                coauthorable_type: "Decidim::Proposals::Proposal",
+                coauthorable_type: "Decidim::Questions::Question",
                 user_group: model
               ).count
             end
           }
         end
 
-        Decidim::Gamification.register_badge(:accepted_proposals) do |badge|
+        Decidim::Gamification.register_badge(:accepted_questions) do |badge|
           badge.levels = [1, 5, 15, 30, 50]
 
           badge.valid_for = [:user, :user_group]
 
           badge.reset = lambda { |model|
-            proposal_ids = if model.is_a?(User)
+            question_ids = if model.is_a?(User)
                              Decidim::Coauthorship.where(
-                               coauthorable_type: "Decidim::Proposals::Proposal",
+                               coauthorable_type: "Decidim::Questions::Question",
                                author: model,
                                user_group: nil
                              ).select(:coauthorable_id)
                            elsif model.is_a?(UserGroup)
                              Decidim::Coauthorship.where(
-                               coauthorable_type: "Decidim::Proposals::Proposal",
+                               coauthorable_type: "Decidim::Questions::Question",
                                user_group: model
                              ).select(:coauthorable_id)
                            end
 
-            Decidim::Proposals::Proposal.where(id: proposal_ids).accepted.count
+            Decidim::Questions::Question.where(id: question_ids).accepted.count
           }
         end
 
-        Decidim::Gamification.register_badge(:proposal_votes) do |badge|
+        Decidim::Gamification.register_badge(:question_votes) do |badge|
           badge.levels = [5, 15, 50, 100, 500]
 
           badge.reset = lambda { |user|
-            Decidim::Proposals::ProposalVote.where(author: user).select(:decidim_proposal_id).distinct.count
+            Decidim::Questions::QuestionVote.where(author: user).select(:decidim_question_id).distinct.count
           }
         end
       end
 
-      initializer "decidim_proposals.register_metrics" do
-        Decidim.metrics_registry.register(:proposals) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Proposals::Metrics::ProposalsMetricManage"
+      initializer "decidim_questions.register_metrics" do
+        Decidim.metrics_registry.register(:questions) do |metric_registry|
+          metric_registry.manager_class = "Decidim::Questions::Metrics::QuestionsMetricManage"
 
           metric_registry.settings do |settings|
             settings.attribute :highlighted, type: :boolean, default: true
@@ -189,8 +189,8 @@ module Decidim
           end
         end
 
-        Decidim.metrics_registry.register(:accepted_proposals) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Proposals::Metrics::AcceptedProposalsMetricManage"
+        Decidim.metrics_registry.register(:accepted_questions) do |metric_registry|
+          metric_registry.manager_class = "Decidim::Questions::Metrics::AcceptedQuestionsMetricManage"
 
           metric_registry.settings do |settings|
             settings.attribute :highlighted, type: :boolean, default: false
@@ -201,7 +201,7 @@ module Decidim
         end
 
         Decidim.metrics_registry.register(:votes) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Proposals::Metrics::VotesMetricManage"
+          metric_registry.manager_class = "Decidim::Questions::Metrics::VotesMetricManage"
 
           metric_registry.settings do |settings|
             settings.attribute :highlighted, type: :boolean, default: true
@@ -212,7 +212,7 @@ module Decidim
         end
 
         Decidim.metrics_registry.register(:endorsements) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Proposals::Metrics::EndorsementsMetricManage"
+          metric_registry.manager_class = "Decidim::Questions::Metrics::EndorsementsMetricManage"
 
           metric_registry.settings do |settings|
             settings.attribute :highlighted, type: :boolean, default: false
@@ -222,11 +222,11 @@ module Decidim
           end
         end
 
-        Decidim.metrics_operation.register(:participants, :proposals) do |metric_operation|
-          metric_operation.manager_class = "Decidim::Proposals::Metrics::ProposalParticipantsMetricMeasure"
+        Decidim.metrics_operation.register(:participants, :questions) do |metric_operation|
+          metric_operation.manager_class = "Decidim::Questions::Metrics::QuestionParticipantsMetricMeasure"
         end
-        Decidim.metrics_operation.register(:followers, :proposals) do |metric_operation|
-          metric_operation.manager_class = "Decidim::Proposals::Metrics::ProposalFollowersMetricMeasure"
+        Decidim.metrics_operation.register(:followers, :questions) do |metric_operation|
+          metric_operation.manager_class = "Decidim::Questions::Metrics::QuestionFollowersMetricMeasure"
         end
       end
     end

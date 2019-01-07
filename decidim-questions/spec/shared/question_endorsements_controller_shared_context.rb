@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-RSpec.shared_context "when in a proposal" do
-  routes { Decidim::Proposals::Engine.routes }
+RSpec.shared_context "when in a question" do
+  routes { Decidim::Questions::Engine.routes }
 
-  let(:proposal) { create(:proposal, component: component) }
+  let(:question) { create(:question, component: component) }
   let(:user) { create(:user, :confirmed, organization: component.organization) }
   let(:params) do
     {
-      proposal_id: proposal.id,
+      question_id: question.id,
       component_id: component.id,
       participatory_process_slug: component.participatory_space.slug
     }

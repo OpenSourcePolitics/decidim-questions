@@ -3,11 +3,11 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders the proposal card for an instance of a Proposal
+  module Questions
+    # This cell renders the question card for an instance of a Question
     # the default size is the Medium Card (:m)
-    class ProposalCell < Decidim::ViewModel
-      include ProposalCellsHelper
+    class QuestionCell < Decidim::ViewModel
+      include QuestionCellsHelper
       include Cell::ViewModel::Partial
       include Messaging::ConversationHelper
 
@@ -22,7 +22,7 @@ module Decidim
       end
 
       def card_size
-        "decidim/proposals/proposal_m"
+        "decidim/questions/question_m"
       end
 
       def resource_path

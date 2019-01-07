@@ -3,12 +3,12 @@
 require "cell/partial"
 
 module Decidim
-  module Proposals
-    # This cell renders the highlighted proposals for a given participatory
+  module Questions
+    # This cell renders the highlighted questions for a given participatory
     # space. It is intended to be used in the `participatory_space_highlighted_elements`
     # view hook.
-    class HighlightedProposalsCell < Decidim::ViewModel
-      include ProposalCellsHelper
+    class HighlightedQuestionsCell < Decidim::ViewModel
+      include QuestionCellsHelper
 
       private
 
@@ -16,7 +16,7 @@ module Decidim
         Decidim::Component
           .where(
             participatory_space: model,
-            manifest_name: :proposals
+            manifest_name: :questions
           )
           .published
       end

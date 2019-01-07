@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
       class Permissions < Decidim::DefaultPermissions
         def permissions
@@ -9,39 +9,39 @@ module Decidim
           return permission_action if permission_action.scope != :admin
 
           if create_permission_action?
-            # There's no special condition to create proposal notes, only
+            # There's no special condition to create question notes, only
             # users with access to the admin section can do it.
-            allow! if permission_action.subject == :proposal_note
+            allow! if permission_action.subject == :question_note
 
-            # Proposals can only be created from the admin when the
+            # Questions can only be created from the admin when the
             # corresponding setting is enabled.
-            toggle_allow(admin_creation_is_enabled?) if permission_action.subject == :proposal
+            toggle_allow(admin_creation_is_enabled?) if permission_action.subject == :question
 
-            # Proposals can only be answered from the admin when the
+            # Questions can only be answered from the admin when the
             # corresponding setting is enabled.
-            toggle_allow(admin_proposal_answering_is_enabled?) if permission_action.subject == :proposal_answer
+            toggle_allow(admin_question_answering_is_enabled?) if permission_action.subject == :question_answer
           end
 
-          # Admins can only edit official proposals if they are within the
+          # Admins can only edit official questions if they are within the
           # time limit.
-          allow! if permission_action.subject == :proposal && permission_action.action == :edit && admin_edition_is_available?
+          allow! if permission_action.subject == :question && permission_action.action == :edit && admin_edition_is_available?
 
-          # Every user allowed by the space can update the category of the proposal
-          allow! if permission_action.subject == :proposal_category && permission_action.action == :update
+          # Every user allowed by the space can update the category of the question
+          allow! if permission_action.subject == :question_category && permission_action.action == :update
 
-          # Every user allowed by the space can import proposals from another_component
-          allow! if permission_action.subject == :proposals && permission_action.action == :import
+          # Every user allowed by the space can import questions from another_component
+          allow! if permission_action.subject == :questions && permission_action.action == :import
 
-          # Every user allowed by the space can merge proposals to another component
-          allow! if permission_action.subject == :proposals && permission_action.action == :merge
+          # Every user allowed by the space can merge questions to another component
+          allow! if permission_action.subject == :questions && permission_action.action == :merge
 
-          # Every user allowed by the space can split proposals to another component
-          allow! if permission_action.subject == :proposals && permission_action.action == :split
+          # Every user allowed by the space can split questions to another component
+          allow! if permission_action.subject == :questions && permission_action.action == :split
 
           if permission_action.subject == :participatory_texts && participatory_texts_are_enabled?
-            # Every user allowed by the space can import participatory texts to proposals
+            # Every user allowed by the space can import participatory texts to questions
             allow! if permission_action.action == :import
-            # Every user allowed by the space can publish participatory texts to proposals
+            # Every user allowed by the space can publish participatory texts to questions
             allow! if permission_action.action == :publish
           end
 
@@ -50,23 +50,23 @@ module Decidim
 
         private
 
-        def proposal
-          @proposal ||= context.fetch(:proposal, nil)
+        def question
+          @question ||= context.fetch(:question, nil)
         end
 
         def admin_creation_is_enabled?
           current_settings.try(:creation_enabled?) &&
-            component_settings.try(:official_proposals_enabled)
+            component_settings.try(:official_questions_enabled)
         end
 
         def admin_edition_is_available?
-          return unless proposal
-          (proposal.official? || proposal.official_meeting?) && proposal.votes.empty?
+          return unless question
+          (question.official? || question.official_meeting?) && question.votes.empty?
         end
 
-        def admin_proposal_answering_is_enabled?
-          current_settings.try(:proposal_answering_enabled) &&
-            component_settings.try(:proposal_answering_enabled)
+        def admin_question_answering_is_enabled?
+          current_settings.try(:question_answering_enabled) &&
+            component_settings.try(:question_answering_enabled)
         end
 
         def create_permission_action?

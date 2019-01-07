@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A form object to be used when public users want to create a Collaborative Draft.
-    class CollaborativeDraftForm < Decidim::Proposals::ProposalForm
+    class CollaborativeDraftForm < Decidim::Questions::QuestionForm
       def map_model(model)
         super
 

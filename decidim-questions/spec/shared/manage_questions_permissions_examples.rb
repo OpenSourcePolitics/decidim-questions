@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-shared_examples "manage proposals permissions" do
+shared_examples "manage questions permissions" do
   context "when authorization handler is Everyone" do
     before do
-      component = proposal.component
+      component = question.component
       visit ::Decidim::EngineRouter.admin_proxy(component.participatory_space).edit_component_permissions_path(component.id)
     end
 

@@ -1,53 +1,53 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Exposes the proposal vote resource so users can vote proposals.
-    class ProposalVotesController < Decidim::Proposals::ApplicationController
-      include ProposalVotesHelper
+  module Questions
+    # Exposes the question vote resource so users can vote questions.
+    class QuestionVotesController < Decidim::Questions::ApplicationController
+      include QuestionVotesHelper
       include Rectify::ControllerHelpers
 
-      helper_method :proposal
+      helper_method :question
 
       before_action :authenticate_user!
 
       def create
-        enforce_permission_to :vote, :proposal, proposal: proposal
-        @from_proposals_list = params[:from_proposals_list] == "true"
+        enforce_permission_to :vote, :question, question: question
+        @from_questions_list = params[:from_questions_list] == "true"
 
-        VoteProposal.call(proposal, current_user) do
+        VoteQuestion.call(question, current_user) do
           on(:ok) do
-            proposal.reload
+            question.reload
 
-            proposals = ProposalVote.where(
+            questions = QuestionVote.where(
               author: current_user,
-              proposal: Proposal.where(component: current_component)
-            ).map(&:proposal)
+              question: Question.where(component: current_component)
+            ).map(&:question)
 
-            expose(proposals: proposals)
+            expose(questions: questions)
             render :update_buttons_and_counters
           end
 
           on(:invalid) do
-            render json: { error: I18n.t("proposal_votes.create.error", scope: "decidim.proposals") }, status: 422
+            render json: { error: I18n.t("question_votes.create.error", scope: "decidim.questions") }, status: 422
           end
         end
       end
 
       def destroy
-        enforce_permission_to :unvote, :proposal, proposal: proposal
-        @from_proposals_list = params[:from_proposals_list] == "true"
+        enforce_permission_to :unvote, :question, question: question
+        @from_questions_list = params[:from_questions_list] == "true"
 
-        UnvoteProposal.call(proposal, current_user) do
+        UnvoteQuestion.call(question, current_user) do
           on(:ok) do
-            proposal.reload
+            question.reload
 
-            proposals = ProposalVote.where(
+            questions = QuestionVote.where(
               author: current_user,
-              proposal: Proposal.where(component: current_component)
-            ).map(&:proposal)
+              question: Question.where(component: current_component)
+            ).map(&:question)
 
-            expose(proposals: proposals + [proposal])
+            expose(questions: questions + [question])
             render :update_buttons_and_counters
           end
         end
@@ -55,8 +55,8 @@ module Decidim
 
       private
 
-      def proposal
-        @proposal ||= Proposal.where(component: current_component).find(params[:proposal_id])
+      def question
+        @question ||= Question.where(component: current_component).find(params[:question_id])
       end
     end
   end

@@ -1,7 +1,7 @@
 <figure>
   <figcaption class="text-uppercase">
     <strong>
-      <%= t("filed_as", scope: "decidim.proposals.proposals.tags") %>
+      <%= t("filed_as", scope: "decidim.questions.questions.tags") %>
     </strong>
   </figcaption>
 
@@ -12,7 +12,7 @@
         <% if previous_category.present? && show_previous_category? %>
           &nbsp;
           <small class="text-small">
-            <%= t("changed_from", scope: "decidim.proposals.proposals.tags", previous_category: "#{previous_category.translated_name}").html_safe %>
+            <%= t("changed_from", scope: "decidim.questions.questions.tags", previous_category: "#{previous_category.translated_name}").html_safe %>
           </small>
         <% end %>
       </li>

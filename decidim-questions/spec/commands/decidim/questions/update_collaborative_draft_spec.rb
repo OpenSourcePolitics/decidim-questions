@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     describe UpdateCollaborativeDraft do
       let(:form_klass) { CollaborativeDraftForm }
 
-      let(:component) { create(:proposal_component, :with_extra_hashtags, suggested_hashtags: suggested_hashtags.join(" ")) }
+      let(:component) { create(:question_component, :with_extra_hashtags, suggested_hashtags: suggested_hashtags.join(" ")) }
       let(:organization) { component.organization }
       let(:form) do
         form_klass.from_params(
@@ -57,7 +57,7 @@ module Decidim
             expect { command.call }.to broadcast(:invalid)
           end
 
-          it "doesn't update the proposal" do
+          it "doesn't update the question" do
             expect do
               command.call
             end.not_to change(collaborative_draft, :title)
@@ -103,7 +103,7 @@ module Decidim
 
             it "sets the author" do
               command.call
-              collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+              collaborative_draft = Decidim::Questions::CollaborativeDraft.last
 
               expect(collaborative_draft.coauthorships.count).to eq(1)
               expect(collaborative_draft.authors.count).to eq(1)
@@ -116,14 +116,14 @@ module Decidim
 
             it "saves the extra hashtags" do
               command.call
-              collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+              collaborative_draft = Decidim::Questions::CollaborativeDraft.last
               expect(collaborative_draft.body).to include("_Hashtag1")
               expect(collaborative_draft.body).to include("_Hashtag2")
             end
           end
 
           context "when geocoding is enabled" do
-            let(:component) { create(:proposal_component, :with_geocoding_enabled) }
+            let(:component) { create(:question_component, :with_geocoding_enabled) }
 
             context "when the has address checkbox is checked" do
               let(:has_address) { true }
@@ -137,7 +137,7 @@ module Decidim
 
                 it "sets the latitude and longitude" do
                   command.call
-                  collaborative_draft = Decidim::Proposals::CollaborativeDraft.last
+                  collaborative_draft = Decidim::Questions::CollaborativeDraft.last
 
                   expect(collaborative_draft.latitude).to eq(latitude)
                   expect(collaborative_draft.longitude).to eq(longitude)

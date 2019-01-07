@@ -3,20 +3,20 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe SplitProposals do
+      describe SplitQuestions do
         describe "call" do
-          let!(:proposals) { Array(create(:proposal, component: current_component)) }
-          let!(:current_component) { create(:proposal_component) }
-          let!(:target_component) { create(:proposal_component, participatory_space: current_component.participatory_space) }
+          let!(:questions) { Array(create(:question, component: current_component)) }
+          let!(:current_component) { create(:question_component) }
+          let!(:target_component) { create(:question_component, participatory_space: current_component.participatory_space) }
           let(:form) do
             instance_double(
-              ProposalsSplitForm,
+              QuestionsSplitForm,
               current_component: current_component,
               current_organization: current_component.organization,
               target_component: target_component,
-              proposals: proposals,
+              questions: questions,
               valid?: valid,
               same_component?: same_component,
               current_user: create(:user, :admin, organization: current_component.organization)
@@ -32,10 +32,10 @@ module Decidim
               expect { command.call }.to broadcast(:invalid)
             end
 
-            it "doesn't create the proposal" do
+            it "doesn't create the question" do
               expect do
                 command.call
-              end.to change(Proposal, :count).by(0)
+              end.to change(Question, :count).by(0)
             end
           end
 
@@ -46,64 +46,64 @@ module Decidim
               expect { command.call }.to broadcast(:ok)
             end
 
-            it "creates two proposals for each original in the new component" do
+            it "creates two questions for each original in the new component" do
               expect do
                 command.call
-              end.to change { Proposal.where(component: target_component).count }.by(2)
+              end.to change { Question.where(component: target_component).count }.by(2)
             end
 
-            it "links the proposals" do
+            it "links the questions" do
               command.call
-              new_proposals = Proposal.where(component: target_component)
+              new_questions = Question.where(component: target_component)
 
-              linked = proposals.first.linked_resources(:proposals, "copied_from_component")
+              linked = questions.first.linked_resources(:questions, "copied_from_component")
 
-              expect(linked).to match_array(new_proposals)
+              expect(linked).to match_array(new_questions)
             end
 
             it "only copies wanted attributes" do
               command.call
-              proposal = proposals.first
-              new_proposal = Proposal.where(component: target_component).last
+              question = questions.first
+              new_question = Question.where(component: target_component).last
 
-              expect(new_proposal.title).to eq(proposal.title)
-              expect(new_proposal.body).to eq(proposal.body)
-              expect(new_proposal.creator_author).to eq(current_component.organization)
-              expect(new_proposal.category).to eq(proposal.category)
+              expect(new_question.title).to eq(question.title)
+              expect(new_question.body).to eq(question.body)
+              expect(new_question.creator_author).to eq(current_component.organization)
+              expect(new_question.category).to eq(question.category)
 
-              expect(new_proposal.state).to be_nil
-              expect(new_proposal.answer).to be_nil
-              expect(new_proposal.answered_at).to be_nil
-              expect(new_proposal.reference).not_to eq(proposal.reference)
+              expect(new_question.state).to be_nil
+              expect(new_question.answer).to be_nil
+              expect(new_question.answered_at).to be_nil
+              expect(new_question.reference).not_to eq(question.reference)
             end
 
             context "when spliting to the same component" do
               let(:same_component) { true }
               let!(:target_component) { current_component }
-              let!(:proposals) { create_list(:proposal, 2, component: current_component) }
+              let!(:questions) { create_list(:question, 2, component: current_component) }
 
-              it "only creates one copy for each proposal" do
+              it "only creates one copy for each question" do
                 expect do
                   command.call
-                end.to change { Proposal.where(component: current_component).count }.by(2)
+                end.to change { Question.where(component: current_component).count }.by(2)
               end
 
-              context "when the original proposal has links to other proposals" do
-                let(:previous_component) { create(:proposal_component, participatory_space: current_component.participatory_space) }
-                let(:previous_proposals) { create(:proposal, component: previous_component) }
+              context "when the original question has links to other questions" do
+                let(:previous_component) { create(:question_component, participatory_space: current_component.participatory_space) }
+                let(:previous_questions) { create(:question, component: previous_component) }
 
                 before do
-                  proposals.each do |proposal|
-                    proposal.link_resources(previous_proposals, "copied_from_component")
+                  questions.each do |question|
+                    question.link_resources(previous_questions, "copied_from_component")
                   end
                 end
 
-                it "links the copy to the same links the proposal has" do
-                  new_proposals = Proposal.where(component: target_component).last(2)
+                it "links the copy to the same links the question has" do
+                  new_questions = Question.where(component: target_component).last(2)
 
-                  new_proposals.each do |proposal|
-                    linked = proposal.linked_resources(:proposals, "copied_from_component")
-                    expect(linked).to eq([previous_proposals])
+                  new_questions.each do |question|
+                    linked = question.linked_resources(:questions, "copied_from_component")
+                    expect(linked).to eq([previous_questions])
                   end
                 end
               end

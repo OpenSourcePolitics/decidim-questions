@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    class ProposalWidgetsController < Decidim::WidgetsController
-      helper Proposals::ApplicationHelper
+  module Questions
+    class QuestionWidgetsController < Decidim::WidgetsController
+      helper Questions::ApplicationHelper
 
       private
 
       def model
-        @model ||= Proposal.where(component: params[:component_id]).find(params[:proposal_id])
+        @model ||= Question.where(component: params[:component_id]).find(params[:question_id])
       end
 
       def iframe_url
-        @iframe_url ||= proposal_proposal_widget_url(model)
+        @iframe_url ||= question_question_widget_url(model)
       end
     end
   end

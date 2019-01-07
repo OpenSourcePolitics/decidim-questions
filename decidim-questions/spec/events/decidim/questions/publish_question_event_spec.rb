@@ -3,30 +3,30 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe PublishProposalEvent do
-      let(:resource) { create :proposal, title: "A nice proposal" }
-      let(:event_name) { "decidim.events.proposals.proposal_published" }
+  module Questions
+    describe PublishQuestionEvent do
+      let(:resource) { create :question, title: "A nice question" }
+      let(:event_name) { "decidim.events.questions.question_published" }
 
       include_context "when a simple event"
       it_behaves_like "a simple event"
 
       describe "resource_text" do
-        it "returns the proposal body" do
+        it "returns the question body" do
           expect(subject.resource_text).to eq(resource.body)
         end
       end
 
       describe "email_subject" do
         it "is generated correctly" do
-          expect(subject.email_subject).to eq("New proposal \"#{resource.title}\" by @#{author.nickname}")
+          expect(subject.email_subject).to eq("New question \"#{resource.title}\" by @#{author.nickname}")
         end
       end
 
       describe "email_intro" do
         it "is generated correctly" do
           expect(subject.email_intro)
-            .to eq("#{author.name} @#{author.nickname}, who you are following, has published a new proposal called \"#{resource.title}\". Check it out and contribute:")
+            .to eq("#{author.name} @#{author.nickname}, who you are following, has published a new question called \"#{resource.title}\". Check it out and contribute:")
         end
       end
 
@@ -40,7 +40,7 @@ module Decidim
       describe "notification_title" do
         it "is generated correctly" do
           expect(subject.notification_title)
-            .to include("The <a href=\"#{resource_path}\">#{resource.title}</a> proposal was published by ")
+            .to include("The <a href=\"#{resource_path}\">#{resource.title}</a> question was published by ")
 
           expect(subject.notification_title)
             .to include("<a href=\"/profiles/#{author.nickname}\">#{author.name} @#{author.nickname}</a>.")
@@ -48,7 +48,7 @@ module Decidim
       end
 
       context "when the target are the participatory space followers" do
-        let(:event_name) { "decidim.events.proposals.proposal_published_for_space" }
+        let(:event_name) { "decidim.events.questions.question_published_for_space" }
         let(:extra) { { participatory_space: true } }
 
         include_context "when a simple event"
@@ -56,13 +56,13 @@ module Decidim
 
         describe "email_subject" do
           it "is generated correctly" do
-            expect(subject.email_subject).to eq("New proposal \"#{resource.title}\" added to #{participatory_space_title}")
+            expect(subject.email_subject).to eq("New question \"#{resource.title}\" added to #{participatory_space_title}")
           end
         end
 
         describe "email_intro" do
           it "is generated correctly" do
-            expect(subject.email_intro).to eq("The proposal \"A nice proposal\" has been added to \"#{participatory_space_title}\" that you are following.")
+            expect(subject.email_intro).to eq("The question \"A nice question\" has been added to \"#{participatory_space_title}\" that you are following.")
           end
         end
 
@@ -76,7 +76,7 @@ module Decidim
         describe "notification_title" do
           it "is generated correctly" do
             expect(subject.notification_title)
-              .to eq("The proposal <a href=\"#{resource_path}\">A nice proposal</a> has been added to #{participatory_space_title}")
+              .to eq("The question <a href=\"#{resource_path}\">A nice question</a> has been added to #{participatory_space_title}")
           end
         end
       end

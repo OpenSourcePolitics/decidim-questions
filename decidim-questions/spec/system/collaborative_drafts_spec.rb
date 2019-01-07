@@ -5,13 +5,13 @@ require "spec_helper"
 describe "Explore Collaborative Drafts", versioning: true, type: :system do
   include_context "with a component"
 
-  let(:manifest_name) { "proposals" }
+  let(:manifest_name) { "questions" }
   let!(:scope) { create :scope, organization: organization }
   let!(:author) { create :user, :confirmed, organization: organization }
   let!(:user) { create :user, :confirmed, organization: organization }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
   let!(:component) do
-    create(:proposal_component,
+    create(:question_component,
            :with_creation_enabled,
            :with_collaborative_drafts_enabled,
            manifest: manifest,
@@ -45,7 +45,7 @@ describe "Explore Collaborative Drafts", versioning: true, type: :system do
       end
 
       it "renders links to each collaborative draft details" do
-        collaborative_drafts_count = Decidim::Proposals::CollaborativeDraft.open.where(component: component).count
+        collaborative_drafts_count = Decidim::Questions::CollaborativeDraft.open.where(component: component).count
         expect(page).to have_css(".card.card--collaborative_draft.success", count: collaborative_drafts_count)
         expect(page).to have_css(".card__button.button", count: collaborative_drafts_count)
         first ".card__support" do
@@ -90,7 +90,7 @@ describe "Explore Collaborative Drafts", versioning: true, type: :system do
 
       context "when geocoding is enabled" do
         let!(:component) do
-          create(:proposal_component,
+          create(:question_component,
                  :with_creation_enabled,
                  :with_geocoding_and_collaborative_drafts_enabled,
                  manifest: manifest,
@@ -166,7 +166,7 @@ describe "Explore Collaborative Drafts", versioning: true, type: :system do
         end
       end
 
-      context "when publishing as a proposal" do
+      context "when publishing as a question" do
         before do
           login_as author, scope: :user
           visit current_path
@@ -185,13 +185,13 @@ describe "Explore Collaborative Drafts", versioning: true, type: :system do
           end
 
           after do
-            click_button "Publish as a Proposal"
+            click_button "Publish as a Question"
           end
 
           it "shows the a modal" do
             within "#publish-irreversible-action-modal" do
               expect(page).to have_css("h3", text: "The following action is irreversible")
-              expect(page).to have_css("button", text: "Publish as a Proposal")
+              expect(page).to have_css("button", text: "Publish as a Question")
             end
           end
         end
@@ -294,7 +294,7 @@ describe "Explore Collaborative Drafts", versioning: true, type: :system do
   end
 
   context "with collaborative drafts disabled" do
-    let(:component) { create(:proposal_component, manifest: manifest, participatory_space: participatory_process) }
+    let(:component) { create(:question_component, manifest: manifest, participatory_space: participatory_process) }
 
     before do
       visit main_component_path(component)

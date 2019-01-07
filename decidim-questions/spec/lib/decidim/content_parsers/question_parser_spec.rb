@@ -4,22 +4,22 @@ require "spec_helper"
 
 module Decidim
   module ContentParsers
-    describe ProposalParser do
+    describe QuestionParser do
       let(:organization) { create(:organization) }
-      let(:component) { create(:proposal_component, organization: organization) }
+      let(:component) { create(:question_component, organization: organization) }
       let(:context) { { current_organization: organization } }
-      let!(:parser) { Decidim::ContentParsers::ProposalParser.new(content, context) }
+      let!(:parser) { Decidim::ContentParsers::QuestionParser.new(content, context) }
 
       describe "ContentParser#parse is invoked" do
         let(:content) { "" }
 
-        it "must call ProposalParser.parse" do
+        it "must call QuestionParser.parse" do
           expect(described_class).to receive(:new).with(content, context).and_return(parser)
 
           result = Decidim::ContentProcessor.parse(content, context)
 
           expect(result.rewrite).to eq ""
-          expect(result.metadata[:proposal].class).to eq Decidim::ContentParsers::ProposalParser::Metadata
+          expect(result.metadata[:question].class).to eq Decidim::ContentParsers::QuestionParser::Metadata
         end
       end
 
@@ -32,8 +32,8 @@ module Decidim
           it { is_expected.to eq("") }
           it "has empty metadata" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([])
           end
         end
 
@@ -43,8 +43,8 @@ module Decidim
           it { is_expected.to eq("") }
           it "has empty metadata" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([])
           end
         end
 
@@ -54,37 +54,37 @@ module Decidim
           it { is_expected.to eq(content) }
           it "has empty metadata" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([])
           end
         end
 
         context "when content links to an organization different from current" do
-          let(:proposal) { create(:proposal, component: component) }
-          let(:external_proposal) { create(:proposal, component: create(:proposal_component, organization: create(:organization))) }
+          let(:question) { create(:question, component: component) }
+          let(:external_question) { create(:question, component: create(:question_component, organization: create(:organization))) }
           let(:content) do
-            url = proposal_url(external_proposal)
-            "This content references proposal #{url}."
+            url = question_url(external_question)
+            "This content references question #{url}."
           end
 
-          it "does not recognize the proposal" do
+          it "does not recognize the question" do
             subject
-            expect(parser.metadata.linked_proposals).to eq([])
+            expect(parser.metadata.linked_questions).to eq([])
           end
         end
 
         context "when content has one link" do
-          let(:proposal) { create(:proposal, component: component) }
+          let(:question) { create(:question, component: component) }
           let(:content) do
-            url = proposal_url(proposal)
-            "This content references proposal #{url}."
+            url = question_url(question)
+            "This content references question #{url}."
           end
 
-          it { is_expected.to eq("This content references proposal #{proposal.to_global_id}.") }
-          it "has metadata with the proposal" do
+          it { is_expected.to eq("This content references question #{question.to_global_id}.") }
+          it "has metadata with the question" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([proposal.id])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([question.id])
           end
         end
 
@@ -95,29 +95,29 @@ module Decidim
           end
 
           it { is_expected.to eq(content) }
-          it "has metadata with the proposal" do
+          it "has metadata with the question" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to be_empty
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to be_empty
           end
         end
 
         context "when content has many links" do
-          let(:proposal1) { create(:proposal, component: component) }
-          let(:proposal2) { create(:proposal, component: component) }
-          let(:proposal3) { create(:proposal, component: component) }
+          let(:question1) { create(:question, component: component) }
+          let(:question2) { create(:question, component: component) }
+          let(:question3) { create(:question, component: component) }
           let(:content) do
-            url1 = proposal_url(proposal1)
-            url2 = proposal_url(proposal2)
-            url3 = proposal_url(proposal3)
-            "This content references the following proposals: #{url1}, #{url2} and #{url3}. Great?I like them!"
+            url1 = question_url(question1)
+            url2 = question_url(question2)
+            url3 = question_url(question3)
+            "This content references the following questions: #{url1}, #{url2} and #{url3}. Great?I like them!"
           end
 
-          it { is_expected.to eq("This content references the following proposals: #{proposal1.to_global_id}, #{proposal2.to_global_id} and #{proposal3.to_global_id}. Great?I like them!") }
-          it "has metadata with all linked proposals" do
+          it { is_expected.to eq("This content references the following questions: #{question1.to_global_id}, #{question2.to_global_id} and #{question3.to_global_id}. Great?I like them!") }
+          it "has metadata with all linked questions" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([proposal1.id, proposal2.id, proposal3.id])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([question1.id, question2.id, question3.id])
           end
         end
 
@@ -132,42 +132,42 @@ module Decidim
           it { is_expected.to eq(content) }
           it "has empty metadata" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to be_empty
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to be_empty
           end
         end
 
-        context "when proposal in content does not exist" do
-          let(:proposal) { create(:proposal, component: component) }
-          let(:url) { proposal_url(proposal) }
+        context "when question in content does not exist" do
+          let(:question) { create(:question, component: component) }
+          let(:url) { question_url(question) }
           let(:content) do
-            proposal.destroy
-            "This content references proposal #{url}."
+            question.destroy
+            "This content references question #{url}."
           end
 
-          it { is_expected.to eq("This content references proposal #{url}.") }
+          it { is_expected.to eq("This content references question #{url}.") }
           it "has empty metadata" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([])
           end
         end
 
-        context "when proposal is linked via ID" do
-          let(:proposal) { create(:proposal, component: component) }
-          let(:content) { "This content references proposal ~#{proposal.id}." }
+        context "when question is linked via ID" do
+          let(:question) { create(:question, component: component) }
+          let(:content) { "This content references question ~#{question.id}." }
 
-          it { is_expected.to eq("This content references proposal #{proposal.to_global_id}.") }
-          it "has metadata with the proposal" do
+          it { is_expected.to eq("This content references question #{question.to_global_id}.") }
+          it "has metadata with the question" do
             subject
-            expect(parser.metadata).to be_a(Decidim::ContentParsers::ProposalParser::Metadata)
-            expect(parser.metadata.linked_proposals).to eq([proposal.id])
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to eq([question.id])
           end
         end
       end
 
-      def proposal_url(proposal)
-        Decidim::ResourceLocatorPresenter.new(proposal).url
+      def question_url(question)
+        Decidim::ResourceLocatorPresenter.new(question).url
       end
     end
   end

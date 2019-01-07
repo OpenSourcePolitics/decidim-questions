@@ -1,5 +1,5 @@
 <% if amendments_enabled? %>
-  <%= card_for proposal, from: proposal %>
+  <%= card_for question, from: question %>
 <% else %>
-  <%= card_for proposal, from: proposal if !proposal.emendation? %>
+  <%= card_for question, from: question if !question.emendation? %>
 <% end %>

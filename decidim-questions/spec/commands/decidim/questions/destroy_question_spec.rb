@@ -3,28 +3,28 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe DestroyProposal do
+  module Questions
+    describe DestroyQuestion do
       describe "call" do
-        let(:component) { create(:proposal_component) }
+        let(:component) { create(:question_component) }
         let(:organization) { component.organization }
         let(:current_user) { create(:user, organization: organization) }
         let(:other_user) { create(:user, organization: organization) }
-        let!(:proposal) { create :proposal, component: component, users: [current_user] }
-        let(:proposal_draft) { create(:proposal, :draft, component: component, users: [current_user]) }
-        let!(:proposal_draft_other) { create :proposal, component: component, users: [other_user] }
+        let!(:question) { create :question, component: component, users: [current_user] }
+        let(:question_draft) { create(:question, :draft, component: component, users: [current_user]) }
+        let!(:question_draft_other) { create :question, component: component, users: [other_user] }
 
         it "broadcasts ok" do
-          expect { described_class.call(proposal_draft, current_user) }.to broadcast(:ok)
-          expect { proposal_draft.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { described_class.call(question_draft, current_user) }.to broadcast(:ok)
+          expect { question_draft.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
 
-        it "broadcasts invalid when the proposal is not a draft" do
-          expect { described_class.call(proposal, current_user) }.to broadcast(:invalid)
+        it "broadcasts invalid when the question is not a draft" do
+          expect { described_class.call(question, current_user) }.to broadcast(:invalid)
         end
 
-        it "broadcasts invalid when the proposal_draft is from another author" do
-          expect { described_class.call(proposal_draft_other, current_user) }.to broadcast(:invalid)
+        it "broadcasts invalid when the question_draft is from another author" do
+          expect { described_class.call(question_draft_other, current_user) }.to broadcast(:invalid)
         end
       end
     end

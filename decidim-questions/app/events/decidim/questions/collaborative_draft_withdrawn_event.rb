@@ -1,7 +1,7 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     class CollaborativeDraftWithdrawnEvent < Decidim::Events::SimpleEvent
       i18n_attributes :author_nickname, :author_name, :author_path
 

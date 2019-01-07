@@ -1,31 +1,31 @@
 // = require_self
 $(document).ready(function () {
-  let selectedProposalsCount = function() {
-    return $('.table-list .js-check-all-proposal:checked').length
+  let selectedQuestionsCount = function() {
+    return $('.table-list .js-check-all-question:checked').length
   }
 
-  window.selectedProposalsCountUpdate = function() {
-    if(selectedProposalsCount() == 0){
-      $("#js-selected-proposals-count").text("")
+  window.selectedQuestionsCountUpdate = function() {
+    if(selectedQuestionsCount() == 0){
+      $("#js-selected-questions-count").text("")
     } else {
-      $("#js-selected-proposals-count").text(selectedProposalsCount());
+      $("#js-selected-questions-count").text(selectedQuestionsCount());
     }
 
-    if(selectedProposalsCount() >= 2) {
-      $('button[data-action="merge-proposals"]').parent().show();
+    if(selectedQuestionsCount() >= 2) {
+      $('button[data-action="merge-questions"]').parent().show();
     } else {
-      $('button[data-action="merge-proposals"]').parent().hide();
+      $('button[data-action="merge-questions"]').parent().hide();
     }
   }
 
   let showBulkActionsButton = function() {
-    if(selectedProposalsCount() > 0){
+    if(selectedQuestionsCount() > 0){
       $("#js-bulk-actions-button").removeClass('hide');
     }
   }
 
   let hideBulkActionsButton = function(force = false) {
-    if(selectedProposalsCount() == 0 || force == true){
+    if(selectedQuestionsCount() == 0 || force == true){
       $("#js-bulk-actions-button").addClass('hide');
       $("#js-bulk-actions-dropdown").removeClass('is-open');
     }
@@ -64,30 +64,30 @@ $(document).ready(function () {
 
     // select all checkboxes
     $(".js-check-all").change(function() {
-      $(".js-check-all-proposal").prop('checked', $(this).prop("checked"));
+      $(".js-check-all-question").prop('checked', $(this).prop("checked"));
 
       if ($(this).prop("checked")) {
-        $(".js-check-all-proposal").closest('tr').addClass('selected');
+        $(".js-check-all-question").closest('tr').addClass('selected');
         showBulkActionsButton();
       } else {
-        $(".js-check-all-proposal").closest('tr').removeClass('selected');
+        $(".js-check-all-question").closest('tr').removeClass('selected');
         hideBulkActionsButton();
       }
 
-      selectedProposalsCountUpdate();
+      selectedQuestionsCountUpdate();
     });
 
-    // proposal checkbox change
-    $('.table-list').on('change', '.js-check-all-proposal', function (e) {
-      let proposal_id = $(this).val()
+    // question checkbox change
+    $('.table-list').on('change', '.js-check-all-question', function (e) {
+      let question_id = $(this).val()
       let checked = $(this).prop("checked")
 
       // uncheck "select all", if one of the listed checkbox item is unchecked
       if ($(this).prop("checked") === false) {
         $(".js-check-all").prop('checked', false);
       }
-      // check "select all" if all checkbox proposals are checked
-      if ($('.js-check-all-proposal:checked').length === $('.js-check-all-proposal').length) {
+      // check "select all" if all checkbox questions are checked
+      if ($('.js-check-all-question:checked').length === $('.js-check-all-question').length) {
         $(".js-check-all").prop('checked', true);
         showBulkActionsButton();
       }
@@ -100,12 +100,12 @@ $(document).ready(function () {
         $(this).closest('tr').removeClass('selected');
       }
 
-      if ($('.js-check-all-proposal:checked').length === 0) {
+      if ($('.js-check-all-question:checked').length === 0) {
         hideBulkActionsButton();
       }
 
-      $('.js-bulk-action-form').find(".js-proposal-id-"+proposal_id).prop('checked', checked);
-      selectedProposalsCountUpdate();
+      $('.js-bulk-action-form').find(".js-question-id-"+question_id).prop('checked', checked);
+      selectedQuestionsCountUpdate();
     });
 
     $('.js-cancel-bulk-action').on('click', function (e) {

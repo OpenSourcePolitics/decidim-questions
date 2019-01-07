@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     class SettingsChangeJob < ApplicationJob
       def perform(component_id, previous_settings, current_settings)
         component = Decidim::Component.find(component_id)
 
         if creation_enabled?(previous_settings, current_settings)
-          event = "decidim.events.proposals.creation_enabled"
-          event_class = Decidim::Proposals::CreationEnabledEvent
+          event = "decidim.events.questions.creation_enabled"
+          event_class = Decidim::Questions::CreationEnabledEvent
         elsif voting_enabled?(previous_settings, current_settings)
-          event = "decidim.events.proposals.voting_enabled"
-          event_class = Decidim::Proposals::VotingEnabledEvent
+          event = "decidim.events.questions.voting_enabled"
+          event_class = Decidim::Questions::VotingEnabledEvent
         elsif endorsing_enabled?(previous_settings, current_settings)
-          event = "decidim.events.proposals.endorsing_enabled"
-          event_class = Decidim::Proposals::EndorsingEnabledEvent
+          event = "decidim.events.questions.endorsing_enabled"
+          event_class = Decidim::Questions::EndorsingEnabledEvent
         end
 
         return unless event && event_class

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     # A command with all the business logic when a user withdraws a collaborative_draft.
     class WithdrawCollaborativeDraft < Rectify::Command
       # Public: Initializes the command.
@@ -51,8 +51,8 @@ module Decidim
         return if recipients.blank?
 
         Decidim::EventsManager.publish(
-          event: "decidim.events.proposals.collaborative_draft_withdrawn",
-          event_class: Decidim::Proposals::CollaborativeDraftWithdrawnEvent,
+          event: "decidim.events.questions.collaborative_draft_withdrawn",
+          event_class: Decidim::Questions::CollaborativeDraftWithdrawnEvent,
           resource: @collaborative_draft,
           affected_users: recipients.uniq,
           extra: {

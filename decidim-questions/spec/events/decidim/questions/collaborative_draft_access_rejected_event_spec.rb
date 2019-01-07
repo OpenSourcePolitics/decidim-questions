@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::CollaborativeDraftAccessRejectedEvent do
+describe Decidim::Questions::CollaborativeDraftAccessRejectedEvent do
   include_context "when a simple event"
 
-  let(:event_name) { "decidim.events.proposals.collaborative_draft_access_rejected" }
+  let(:event_name) { "decidim.events.questions.collaborative_draft_access_rejected" }
   let(:resource) { create :collaborative_draft }
   let(:resource_path) { Decidim::ResourceLocatorPresenter.new(resource).path }
   let(:resource_title) { resource.title }
@@ -55,7 +55,7 @@ describe Decidim::Proposals::CollaborativeDraftAccessRejectedEvent do
   end
 
   context "when the notification is for the requester" do
-    let(:event_name) { "decidim.events.proposals.collaborative_draft_access_requester_rejected" }
+    let(:event_name) { "decidim.events.questions.collaborative_draft_access_requester_rejected" }
 
     it_behaves_like "a simple event"
 

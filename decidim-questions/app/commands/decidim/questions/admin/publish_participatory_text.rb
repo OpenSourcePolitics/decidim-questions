@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      # A command with all the business logic when an admin imports proposals from
+      # A command with all the business logic when an admin imports questions from
       # a participatory text.
       class PublishParticipatoryText < Rectify::Command
         # Public: Initializes the command.
@@ -22,7 +22,7 @@ module Decidim
         def call
           transaction do
             @publish_failures = {}
-            update_contents_and_resort_proposals(form)
+            update_contents_and_resort_questions(form)
             publish_drafts
           end
 
@@ -37,27 +37,27 @@ module Decidim
 
         attr_reader :form
 
-        def update_contents_and_resort_proposals(form)
-          form.proposals.each do |prop_form|
-            proposal = Decidim::Proposals::Proposal.where(component: form.current_component).find(prop_form.id)
-            proposal.set_list_position(prop_form.position) if proposal.position != prop_form.position
-            proposal.title = prop_form.title
-            proposal.body = prop_form.body if proposal.participatory_text_level == Decidim::Proposals::ParticipatoryTextSection::LEVELS[:article]
+        def update_contents_and_resort_questions(form)
+          form.questions.each do |prop_form|
+            question = Decidim::Questions::Question.where(component: form.current_component).find(prop_form.id)
+            question.set_list_position(prop_form.position) if question.position != prop_form.position
+            question.title = prop_form.title
+            question.body = prop_form.body if question.participatory_text_level == Decidim::Questions::ParticipatoryTextSection::LEVELS[:article]
 
-            add_failure(proposal) unless proposal.save
+            add_failure(question) unless question.save
           end
           raise ActiveRecord::Rollback if @publish_failures.any?
         end
 
         def publish_drafts
-          Decidim::Proposals::Proposal.where(component: form.current_component).drafts.find_each do |proposal|
-            add_failure(proposal) unless proposal.update(published_at: Time.current)
+          Decidim::Questions::Question.where(component: form.current_component).drafts.find_each do |question|
+            add_failure(question) unless question.update(published_at: Time.current)
           end
           raise ActiveRecord::Rollback if @publish_failures.any?
         end
 
-        def add_failure(proposal)
-          @publish_failures[proposal.id] = proposal.errors.full_messages
+        def add_failure(question)
+          @publish_failures[question.id] = question.errors.full_messages
         end
       end
     end

@@ -1,15 +1,15 @@
-<% @proposals.each do |proposal| %>
+<% @questions.each do |question| %>
   (function() {
-    var $proposalVotesCount = $('#proposal-<%= proposal.id %>-votes-count');
+    var $questionVotesCount = $('#question-<%= question.id %>-votes-count');
 
-    if($proposalVotesCount[0]) {
-      morphdom($proposalVotesCount[0], '<%= j(render partial: "decidim/proposals/proposals/votes_count", locals: { proposal: proposal, from_proposals_list: @from_proposals_list }).strip.html_safe %>');
+    if($questionVotesCount[0]) {
+      morphdom($questionVotesCount[0], '<%= j(render partial: "decidim/questions/questions/votes_count", locals: { question: question, from_questions_list: @from_questions_list }).strip.html_safe %>');
     }
 
-    var $proposalVoteButton = $('#proposal-<%= proposal.id %>-vote-button');
+    var $questionVoteButton = $('#question-<%= question.id %>-vote-button');
 
-    if($proposalVoteButton[0]) {
-      morphdom($proposalVoteButton[0], '<%= j(render partial: "decidim/proposals/proposals/vote_button", locals: { proposal: proposal, from_proposals_list: @from_proposals_list }).strip.html_safe %>');
+    if($questionVoteButton[0]) {
+      morphdom($questionVoteButton[0], '<%= j(render partial: "decidim/questions/questions/vote_button", locals: { question: question, from_questions_list: @from_questions_list }).strip.html_safe %>');
     }
   })();
 <% end %>
@@ -21,14 +21,14 @@
 
     if(!$remainingVotesCount[0]) { return; }
 
-    morphdom($remainingVotesCount[0], '<%= j(render partial: "decidim/proposals/proposals/remaining_votes_count").strip.html_safe %>');
+    morphdom($remainingVotesCount[0], '<%= j(render partial: "decidim/questions/questions/remaining_votes_count").strip.html_safe %>');
 
     <% if remaining_votes_count_for(current_user) == 0 %>
       $notVotedButtons.attr('disabled', true);
-      $notVotedButtons.val('<%= t("decidim.proposals.proposals.vote_button.no_votes_remaining") %>');
+      $notVotedButtons.val('<%= t("decidim.questions.questions.vote_button.no_votes_remaining") %>');
     <% else %>
       $notVotedButtons.attr('disabled', false);
-      $notVotedButtons.val('<%= t("decidim.proposals.proposals.vote_button.vote") %>');
+      $notVotedButtons.val('<%= t("decidim.questions.questions.vote_button.vote") %>');
     <% end %>
   }());
 <% end %>
@@ -37,6 +37,6 @@
   (function() {
     var $votingRules = $('.voting-rules');
     if(!$votingRules[0]) { return; }
-    morphdom($votingRules[0], '<%= j(render partial: "decidim/proposals/proposals/voting_rules").strip.html_safe %>');
+    morphdom($votingRules[0], '<%= j(render partial: "decidim/questions/questions/voting_rules").strip.html_safe %>');
   }());
 <% end %>

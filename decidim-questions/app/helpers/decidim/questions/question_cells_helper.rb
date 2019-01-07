@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
-    # Custom helpers, scoped to the proposals engine.
+  module Questions
+    # Custom helpers, scoped to the questions engine.
     #
-    module ProposalCellsHelper
-      include Decidim::Proposals::ApplicationHelper
-      include Decidim::Proposals::Engine.routes.url_helpers
+    module QuestionCellsHelper
+      include Decidim::Questions::ApplicationHelper
+      include Decidim::Questions::Engine.routes.url_helpers
       include Decidim::LayoutHelper
       include Decidim::ApplicationHelper
       include Decidim::TranslationsHelper
@@ -18,16 +18,16 @@ module Decidim
 
       def has_actions?
         return context[:has_actions] if context[:has_actions].present?
-        proposals_controller? && index_action? && current_settings.votes_enabled? && !model.draft?
+        questions_controller? && index_action? && current_settings.votes_enabled? && !model.draft?
       end
 
       def has_footer?
         return context[:has_footer] if context[:has_footer].present?
-        proposals_controller? && index_action? && current_settings.votes_enabled? && !model.draft?
+        questions_controller? && index_action? && current_settings.votes_enabled? && !model.draft?
       end
 
-      def proposals_controller?
-        context[:controller].class.to_s == "Decidim::Proposals::ProposalsController"
+      def questions_controller?
+        context[:controller].class.to_s == "Decidim::Questions::QuestionsController"
       end
 
       def index_action?
@@ -51,7 +51,7 @@ module Decidim
       end
 
       def badge_name
-        humanize_proposal_state state
+        humanize_question_state state
       end
 
       def state_classes

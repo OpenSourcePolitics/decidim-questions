@@ -1,9 +1,9 @@
 # frozen-string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      class UpdateProposalCategoryEvent < Decidim::Events::SimpleEvent
+      class UpdateQuestionCategoryEvent < Decidim::Events::SimpleEvent
         include Decidim::Events::AuthorEvent
       end
     end

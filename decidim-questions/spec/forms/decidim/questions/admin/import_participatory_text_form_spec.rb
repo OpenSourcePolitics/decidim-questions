@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
       describe ImportParticipatoryTextForm do
         subject { form }

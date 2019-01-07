@@ -2,20 +2,20 @@
 
 require "spec_helper"
 
-describe Decidim::Proposals::Permissions do
+describe Decidim::Questions::Permissions do
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
-  let(:user) { proposal.creator_author }
+  let(:user) { question.creator_author }
   let(:context) do
     {
-      current_component: proposal_component,
+      current_component: question_component,
       current_settings: current_settings,
-      proposal: proposal,
+      question: question,
       component_settings: component_settings
     }
   end
-  let(:proposal_component) { create :proposal_component }
-  let(:proposal) { create :proposal, component: proposal_component }
+  let(:question_component) { create :question_component }
+  let(:question) { create :question, component: question_component }
   let(:component_settings) do
     double(vote_limit: 2)
   end
@@ -32,21 +32,21 @@ describe Decidim::Proposals::Permissions do
 
   context "when scope is admin" do
     let(:action) do
-      { scope: :admin, action: :vote, subject: :proposal }
+      { scope: :admin, action: :vote, subject: :question }
     end
 
-    it_behaves_like "delegates permissions to", Decidim::Proposals::Admin::Permissions
+    it_behaves_like "delegates permissions to", Decidim::Questions::Admin::Permissions
   end
 
   context "when scope is not public" do
     let(:action) do
-      { scope: :foo, action: :vote, subject: :proposal }
+      { scope: :foo, action: :vote, subject: :question }
     end
 
     it_behaves_like "permission is not set"
   end
 
-  context "when subject is not a proposal" do
+  context "when subject is not a question" do
     let(:action) do
       { scope: :public, action: :vote, subject: :foo }
     end
@@ -54,9 +54,9 @@ describe Decidim::Proposals::Permissions do
     it_behaves_like "permission is not set"
   end
 
-  context "when creating a proposal" do
+  context "when creating a question" do
     let(:action) do
-      { scope: :public, action: :create, subject: :proposal }
+      { scope: :public, action: :create, subject: :question }
     end
 
     context "when creation is disabled" do
@@ -72,34 +72,34 @@ describe Decidim::Proposals::Permissions do
     end
   end
 
-  context "when editing a proposal" do
+  context "when editing a question" do
     let(:action) do
-      { scope: :public, action: :edit, subject: :proposal }
+      { scope: :public, action: :edit, subject: :question }
     end
 
     before do
-      allow(proposal).to receive(:editable_by?).with(user).and_return(editable)
+      allow(question).to receive(:editable_by?).with(user).and_return(editable)
     end
 
-    context "when proposal is editable" do
+    context "when question is editable" do
       let(:editable) { true }
 
       it { is_expected.to eq true }
     end
 
-    context "when proposal is not editable" do
+    context "when question is not editable" do
       let(:editable) { false }
 
       it { is_expected.to eq false }
     end
   end
 
-  context "when withdrawing a proposal" do
+  context "when withdrawing a question" do
     let(:action) do
-      { scope: :public, action: :withdraw, subject: :proposal }
+      { scope: :public, action: :withdraw, subject: :question }
     end
 
-    context "when proposal author is the user trying to withdraw" do
+    context "when question author is the user trying to withdraw" do
       it { is_expected.to eq true }
     end
 
@@ -112,7 +112,7 @@ describe Decidim::Proposals::Permissions do
 
   describe "endorsing" do
     let(:action) do
-      { scope: :public, action: :endorse, subject: :proposal }
+      { scope: :public, action: :endorse, subject: :question }
     end
 
     context "when endorsements are disabled" do
@@ -151,7 +151,7 @@ describe Decidim::Proposals::Permissions do
 
   describe "endorsing" do
     let(:action) do
-      { scope: :public, action: :unendorse, subject: :proposal }
+      { scope: :public, action: :unendorse, subject: :question }
     end
 
     context "when endorsements are disabled" do
@@ -177,7 +177,7 @@ describe Decidim::Proposals::Permissions do
 
   describe "voting" do
     let(:action) do
-      { scope: :public, action: :vote, subject: :proposal }
+      { scope: :public, action: :vote, subject: :question }
     end
 
     context "when voting is disabled" do
@@ -211,9 +211,9 @@ describe Decidim::Proposals::Permissions do
       end
 
       before do
-        proposals = create_list :proposal, 2, component: proposal_component
-        create :proposal_vote, author: user, proposal: proposals[0]
-        create :proposal_vote, author: user, proposal: proposals[1]
+        questions = create_list :question, 2, component: question_component
+        create :question_vote, author: user, question: questions[0]
+        create :question_vote, author: user, question: questions[1]
       end
 
       it { is_expected.to eq false }
@@ -233,7 +233,7 @@ describe Decidim::Proposals::Permissions do
 
   describe "unvoting" do
     let(:action) do
-      { scope: :public, action: :unvote, subject: :proposal }
+      { scope: :public, action: :unvote, subject: :question }
     end
 
     context "when voting is disabled" do

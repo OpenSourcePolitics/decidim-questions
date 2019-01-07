@@ -3,21 +3,21 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
+  module Questions
     module Admin
-      describe ProposalsImportForm do
+      describe QuestionsImportForm do
         subject { form }
 
-        let(:proposal) { create(:proposal) }
-        let(:component) { proposal.component }
-        let(:origin_component) { create(:proposal_component, participatory_space: component.participatory_space) }
+        let(:question) { create(:question) }
+        let(:component) { question.component }
+        let(:origin_component) { create(:question_component, participatory_space: component.participatory_space) }
         let(:states) { %w(accepted) }
-        let(:import_proposals) { true }
+        let(:import_questions) { true }
         let(:params) do
           {
             states: states,
             origin_component_id: origin_component.try(:id),
-            import_proposals: import_proposals
+            import_questions: import_questions
           }
         end
 
@@ -50,8 +50,8 @@ module Decidim
           it { is_expected.to be_invalid }
         end
 
-        context "when the import proposals is not accepted" do
-          let(:import_proposals) { false }
+        context "when the import questions is not accepted" do
+          let(:import_questions) { false }
 
           it { is_expected.to be_invalid }
         end
@@ -65,7 +65,7 @@ module Decidim
         end
 
         describe "origin_component" do
-          let(:origin_component) { create(:proposal_component) }
+          let(:origin_component) { create(:question_component) }
 
           it "ignores components from other participatory spaces" do
             expect(form.origin_component).to be_nil

@@ -3,14 +3,14 @@
 require "spec_helper"
 
 module Decidim
-  module Proposals
-    describe Proposal do
-      subject { proposal }
+  module Questions
+    describe Question do
+      subject { question }
 
-      let(:component) { build :proposal_component }
+      let(:component) { build :question_component }
       let(:organization) { component.participatory_space.organization }
-      let(:proposal) { create(:proposal, component: component) }
-      let(:coauthorable) { proposal }
+      let(:question) { create(:question, component: component) }
+      let(:coauthorable) { question }
 
       include_examples "coauthorable"
       include_examples "has component"
@@ -23,19 +23,19 @@ module Decidim
       it { is_expected.to be_valid }
       it { is_expected.to be_versioned }
 
-      it "has a votes association returning proposal votes" do
+      it "has a votes association returning question votes" do
         expect(subject.votes.count).to eq(0)
       end
 
       describe "#voted_by?" do
         let(:user) { create(:user, organization: subject.organization) }
 
-        it "returns false if the proposal is not voted by the given user" do
+        it "returns false if the question is not voted by the given user" do
           expect(subject).not_to be_voted_by(user)
         end
 
-        it "returns true if the proposal is not voted by the given user" do
-          create(:proposal_vote, proposal: subject, author: user)
+        it "returns true if the question is not voted by the given user" do
+          create(:question_vote, question: subject, author: user)
           expect(subject).to be_voted_by(user)
         end
       end
@@ -44,12 +44,12 @@ module Decidim
         let(:user) { create(:user, organization: subject.organization) }
 
         context "with User endorsement" do
-          it "returns false if the proposal is not endorsed by the given user" do
+          it "returns false if the question is not endorsed by the given user" do
             expect(subject).not_to be_endorsed_by(user)
           end
 
-          it "returns true if the proposal is not endorsed by the given user" do
-            create(:proposal_endorsement, proposal: subject, author: user)
+          it "returns true if the question is not endorsed by the given user" do
+            create(:question_endorsement, question: subject, author: user)
             expect(subject).to be_endorsed_by(user)
           end
         end
@@ -60,26 +60,26 @@ module Decidim
 
           before { user_group.reload }
 
-          it "returns false if the proposal is not endorsed by the given organization" do
+          it "returns false if the question is not endorsed by the given organization" do
             expect(subject).not_to be_endorsed_by(user, user_group)
           end
 
-          it "returns true if the proposal is not endorsed by the given organization" do
-            create(:proposal_endorsement, proposal: subject, author: user, user_group: user_group)
+          it "returns true if the question is not endorsed by the given organization" do
+            create(:question_endorsement, question: subject, author: user, user_group: user_group)
             expect(subject).to be_endorsed_by(user, user_group)
           end
         end
       end
 
       context "when it has been accepted" do
-        let(:proposal) { build(:proposal, :accepted) }
+        let(:question) { build(:question, :accepted) }
 
         it { is_expected.to be_answered }
         it { is_expected.to be_accepted }
       end
 
       context "when it has been rejected" do
-        let(:proposal) { build(:proposal, :rejected) }
+        let(:question) { build(:question, :rejected) }
 
         it { is_expected.to be_answered }
         it { is_expected.to be_rejected }
@@ -94,17 +94,17 @@ module Decidim
           create(:process_admin, participatory_process: participatory_space)
         end
 
-        context "when the proposal is official" do
-          let(:proposal) { build(:proposal, :official) }
+        context "when the question is official" do
+          let(:question) { build(:question, :official) }
 
           it "returns the followers and the component's participatory space admins" do
             expect(subject.users_to_notify_on_comment_created).to match_array(followers.concat([participatory_process_admin]))
           end
         end
 
-        context "when the proposal is not official" do
+        context "when the question is not official" do
           it "returns the followers and the author" do
-            expect(subject.users_to_notify_on_comment_created).to match_array(followers.concat([proposal.creator.author]))
+            expect(subject.users_to_notify_on_comment_created).to match_array(followers.concat([question.creator.author]))
           end
         end
       end
@@ -114,23 +114,23 @@ module Decidim
 
         context "when the component's settings are set to an integer bigger than 0" do
           before do
-            component[:settings]["global"] = { threshold_per_proposal: 10 }
+            component[:settings]["global"] = { threshold_per_question: 10 }
             component.save!
           end
 
-          it "returns the maximum amount of votes for this proposal" do
-            expect(proposal.maximum_votes).to eq(10)
+          it "returns the maximum amount of votes for this question" do
+            expect(question.maximum_votes).to eq(10)
           end
         end
 
         context "when the component's settings are set to 0" do
           before do
-            component[:settings]["global"] = { threshold_per_proposal: 0 }
+            component[:settings]["global"] = { threshold_per_question: 0 }
             component.save!
           end
 
           it "returns nil" do
-            expect(proposal.maximum_votes).to be_nil
+            expect(question.maximum_votes).to be_nil
           end
         end
       end
@@ -139,60 +139,60 @@ module Decidim
         let(:author) { create(:user, organization: organization) }
 
         context "when user is author" do
-          let(:proposal) { create :proposal, component: component, users: [author], updated_at: Time.current }
+          let(:question) { create :question, component: component, users: [author], updated_at: Time.current }
 
           it { is_expected.to be_editable_by(author) }
 
-          context "when the proposal has been linked to another one" do
-            let(:proposal) { create :proposal, component: component, users: [author], updated_at: Time.current }
-            let(:original_proposal) do
-              original_component = create(:proposal_component, organization: organization, participatory_space: component.participatory_space)
-              create(:proposal, component: original_component)
+          context "when the question has been linked to another one" do
+            let(:question) { create :question, component: component, users: [author], updated_at: Time.current }
+            let(:original_question) do
+              original_component = create(:question_component, organization: organization, participatory_space: component.participatory_space)
+              create(:question, component: original_component)
             end
 
             before do
-              proposal.link_resources([original_proposal], "copied_from_component")
+              question.link_resources([original_question], "copied_from_component")
             end
 
             it { is_expected.not_to be_editable_by(author) }
           end
         end
 
-        context "when proposal is from user group and user is admin" do
+        context "when question is from user group and user is admin" do
           let(:user_group) { create :user_group, :verified, users: [author], organization: author.organization }
-          let(:proposal) { create :proposal, component: component, updated_at: Time.current, users: [author], user_groups: [user_group] }
+          let(:question) { create :question, component: component, updated_at: Time.current, users: [author], user_groups: [user_group] }
 
           it { is_expected.to be_editable_by(author) }
         end
 
         context "when user is not the author" do
-          let(:proposal) { create :proposal, component: component, updated_at: Time.current }
+          let(:question) { create :question, component: component, updated_at: Time.current }
 
           it { is_expected.not_to be_editable_by(author) }
         end
 
-        context "when proposal is answered" do
-          let(:proposal) { build :proposal, :with_answer, component: component, updated_at: Time.current, users: [author] }
+        context "when question is answered" do
+          let(:question) { build :question, :with_answer, component: component, updated_at: Time.current, users: [author] }
 
           it { is_expected.not_to be_editable_by(author) }
         end
 
-        context "when proposal editing time has run out" do
-          let(:proposal) { build :proposal, updated_at: 10.minutes.ago, component: component, users: [author] }
+        context "when question editing time has run out" do
+          let(:question) { build :question, updated_at: 10.minutes.ago, component: component, users: [author] }
 
           it { is_expected.not_to be_editable_by(author) }
         end
       end
 
       describe "#withdrawn?" do
-        context "when proposal is withdrawn" do
-          let(:proposal) { build :proposal, :withdrawn }
+        context "when question is withdrawn" do
+          let(:question) { build :question, :withdrawn }
 
           it { is_expected.to be_withdrawn }
         end
 
-        context "when proposal is not withdrawn" do
-          let(:proposal) { build :proposal }
+        context "when question is not withdrawn" do
+          let(:question) { build :question }
 
           it { is_expected.not_to be_withdrawn }
         end
@@ -202,40 +202,40 @@ module Decidim
         let(:author) { create(:user, organization: organization) }
 
         context "when user is author" do
-          let(:proposal) { create :proposal, component: component, users: [author], created_at: Time.current }
+          let(:question) { create :question, component: component, users: [author], created_at: Time.current }
 
           it { is_expected.to be_withdrawable_by(author) }
         end
 
         context "when user is admin" do
           let(:admin) { build(:user, :admin, organization: organization) }
-          let(:proposal) { build :proposal, component: component, users: [author], created_at: Time.current }
+          let(:question) { build :question, component: component, users: [author], created_at: Time.current }
 
           it { is_expected.not_to be_withdrawable_by(admin) }
         end
 
         context "when user is not the author" do
           let(:someone_else) { build(:user, organization: organization) }
-          let(:proposal) { build :proposal, component: component, users: [author], created_at: Time.current }
+          let(:question) { build :question, component: component, users: [author], created_at: Time.current }
 
           it { is_expected.not_to be_withdrawable_by(someone_else) }
         end
 
-        context "when proposal is already withdrawn" do
-          let(:proposal) { build :proposal, :withdrawn, component: component, users: [author], created_at: Time.current }
+        context "when question is already withdrawn" do
+          let(:question) { build :question, :withdrawn, component: component, users: [author], created_at: Time.current }
 
           it { is_expected.not_to be_withdrawable_by(author) }
         end
 
-        context "when the proposal has been linked to another one" do
-          let(:proposal) { create :proposal, component: component, users: [author], created_at: Time.current }
-          let(:original_proposal) do
-            original_component = create(:proposal_component, organization: organization, participatory_space: component.participatory_space)
-            create(:proposal, component: original_component)
+        context "when the question has been linked to another one" do
+          let(:question) { create :question, component: component, users: [author], created_at: Time.current }
+          let(:original_question) do
+            original_component = create(:question_component, organization: organization, participatory_space: component.participatory_space)
+            create(:question, component: original_component)
           end
 
           before do
-            proposal.link_resources([original_proposal], "copied_from_component")
+            question.link_resources([original_question], "copied_from_component")
           end
 
           it { is_expected.not_to be_withdrawable_by(author) }

@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-describe "Proposals component" do # rubocop:disable RSpec/DescribeClass
-  let!(:component) { create(:proposal_component) }
+describe "Questions component" do # rubocop:disable RSpec/DescribeClass
+  let!(:component) { create(:question_component) }
   let!(:current_user) { create(:user, organization: component.participatory_space.organization) }
 
   describe "on destroy" do
-    context "when there are no proposals for the component" do
+    context "when there are no questions for the component" do
       it "destroys the component" do
         expect do
           Decidim::Admin::DestroyComponent.call(component, current_user)
@@ -17,9 +17,9 @@ describe "Proposals component" do # rubocop:disable RSpec/DescribeClass
       end
     end
 
-    context "when there are proposals for the component" do
+    context "when there are questions for the component" do
       before do
-        create(:proposal, component: component)
+        create(:question, component: component)
       end
 
       it "raises an error" do
@@ -42,23 +42,23 @@ describe "Proposals component" do # rubocop:disable RSpec/DescribeClass
     end
 
     let(:stats) do
-      raw_stats.select { |stat| stat[0] == :proposals }
+      raw_stats.select { |stat| stat[0] == :questions }
     end
 
-    let!(:proposal) { create :proposal }
-    let(:component) { proposal.component }
-    let!(:hidden_proposal) { create :proposal, component: component }
-    let!(:draft_proposal) { create :proposal, :draft, component: component }
-    let!(:withdrawn_proposal) { create :proposal, :withdrawn, component: component }
-    let!(:moderation) { create :moderation, reportable: hidden_proposal, hidden_at: 1.day.ago }
+    let!(:question) { create :question }
+    let(:component) { question.component }
+    let!(:hidden_question) { create :question, component: component }
+    let!(:draft_question) { create :question, :draft, component: component }
+    let!(:withdrawn_question) { create :question, :withdrawn, component: component }
+    let!(:moderation) { create :moderation, reportable: hidden_question, hidden_at: 1.day.ago }
 
     let(:current_stat) { stats.find { |stat| stat[1] == stats_name } }
 
-    describe "proposals_count" do
-      let(:stats_name) { :proposals_count }
+    describe "questions_count" do
+      let(:stats_name) { :questions_count }
 
-      it "only counts published (except withdrawn) and not hidden proposals" do
-        expect(Decidim::Proposals::Proposal.where(component: component).count).to eq 4
+      it "only counts published (except withdrawn) and not hidden questions" do
+        expect(Decidim::Questions::Question.where(component: component).count).to eq 4
         expect(subject).to eq 1
       end
     end
@@ -67,12 +67,12 @@ describe "Proposals component" do # rubocop:disable RSpec/DescribeClass
       let(:stats_name) { :votes_count }
 
       before do
-        create_list :proposal_vote, 2, proposal: proposal
-        create_list :proposal_vote, 3, proposal: hidden_proposal
+        create_list :question_vote, 2, question: question
+        create_list :question_vote, 3, question: hidden_question
       end
 
-      it "counts the votes from visible proposals" do
-        expect(Decidim::Proposals::ProposalVote.count).to eq 5
+      it "counts the votes from visible questions" do
+        expect(Decidim::Questions::QuestionVote.count).to eq 5
         expect(subject).to eq 2
       end
     end
@@ -81,12 +81,12 @@ describe "Proposals component" do # rubocop:disable RSpec/DescribeClass
       let(:stats_name) { :endorsements_count }
 
       before do
-        create_list :proposal_endorsement, 2, proposal: proposal
-        create_list :proposal_endorsement, 3, proposal: hidden_proposal
+        create_list :question_endorsement, 2, question: question
+        create_list :question_endorsement, 3, question: hidden_question
       end
 
-      it "counts the endorsements from visible proposals" do
-        expect(Decidim::Proposals::ProposalEndorsement.count).to eq 5
+      it "counts the endorsements from visible questions" do
+        expect(Decidim::Questions::QuestionEndorsement.count).to eq 5
         expect(subject).to eq 2
       end
     end
@@ -95,11 +95,11 @@ describe "Proposals component" do # rubocop:disable RSpec/DescribeClass
       let(:stats_name) { :comments_count }
 
       before do
-        create_list :comment, 2, commentable: proposal
-        create_list :comment, 3, commentable: hidden_proposal
+        create_list :comment, 2, commentable: question
+        create_list :comment, 3, commentable: hidden_question
       end
 
-      it "counts the comments from visible proposals" do
+      it "counts the comments from visible questions" do
         expect(Decidim::Comments::Comment.count).to eq 5
         expect(subject).to eq 2
       end

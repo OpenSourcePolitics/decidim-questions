@@ -1,7 +1,7 @@
 <%= render partial: "decidim/shared/component_announcement" %>
 
 <% if component_settings.geocoding_enabled? %>
-  <%= dynamic_map_for proposals_data_for_map(@proposals.select(&:geocoded?)) do %>
+  <%= dynamic_map_for questions_data_for_map(@questions.select(&:geocoded?)) do %>
     <template id="marker-popup">
       <div class="map-info__content">
         <h3>${title}</h3>
@@ -17,7 +17,7 @@
           </div>
           <div class="map-info__button">
             <a href="${link}" class="button button--sc">
-              <%= t(".view_proposal") %>
+              <%= t(".view_question") %>
             </a>
           </div>
         </div>
@@ -30,17 +30,17 @@
 <%= render partial: "voting_rules" %>
 <div class="row columns">
   <div class="title-action">
-    <h2 id="proposals-count" class="title-action__title section-heading">
+    <h2 id="questions-count" class="title-action__title section-heading">
       <%= render partial: "count" %>
     </h2>
     <% if current_settings.creation_enabled && current_component.participatory_space.can_participate?(current_user) %>
-      <%= action_authorized_link_to :create, new_proposal_path, class: "title-action__action button small hollow", data: { "redirect_url" => new_proposal_path } do %>
-        <%= t(".new_proposal") %>
+      <%= action_authorized_link_to :create, new_question_path, class: "title-action__action button small hollow", data: { "redirect_url" => new_question_path } do %>
+        <%= t(".new_question") %>
         <%= icon "plus" %>
       <% end %>
     <% else %>
       <span class="title-action__action button small hollow disabled">
-        <%= t(".new_proposal") %>
+        <%= t(".new_question") %>
         <%= icon "plus" %>
       </span>
     <% end %>
@@ -57,13 +57,13 @@
       <%= render partial: "filters" %>
     </div>
   </div>
-  <div id="proposals" class="columns mediumlarge-8 large-9">
-    <%= render partial: "proposals" %>
+  <div id="questions" class="columns mediumlarge-8 large-9">
+    <%= render partial: "questions" %>
   </div>
 </div>
 <div class="row">
 <div class="text-right">
-  <%= link_to t(".see_all_withdrawn"), proposals_path("filter[state]" => "withdrawn") %>
+  <%= link_to t(".see_all_withdrawn"), questions_path("filter[state]" => "withdrawn") %>
 </div>
 </div>
 <%= javascript_include_tag("decidim/filters") %>

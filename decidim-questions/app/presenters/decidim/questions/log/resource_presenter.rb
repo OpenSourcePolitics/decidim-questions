@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Proposals
+  module Questions
     module Log
       class ResourcePresenter < Decidim::Log::ResourcePresenter
         private
@@ -10,7 +10,7 @@ module Decidim
         #
         # Returns an HTML-safe String.
         def present_resource_name
-          Decidim::Proposals::ProposalPresenter.new(resource).title
+          Decidim::Questions::QuestionPresenter.new(resource).title
         end
       end
     end

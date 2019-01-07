@@ -2,29 +2,29 @@
 
 module Decidim
   module ContentRenderers
-    # A renderer that searches Global IDs representing proposals in content
+    # A renderer that searches Global IDs representing questions in content
     # and replaces it with a link to their show page.
     #
-    # e.g. gid://<APP_NAME>/Decidim::Proposals::Proposal/1
+    # e.g. gid://<APP_NAME>/Decidim::questions::question/1
     #
     # @see BaseRenderer Examples of how to use a content renderer
-    class ProposalRenderer < BaseRenderer
+    class questionRenderer < BaseRenderer
       # Matches a global id representing a Decidim::User
-      GLOBAL_ID_REGEX = %r{gid:\/\/([\w-]*\/Decidim::Proposals::Proposal\/(\d+))}i
+      GLOBAL_ID_REGEX = %r{gid:\/\/([\w-]*\/Decidim::questions::question\/(\d+))}i
 
-      # Replaces found Global IDs matching an existing proposal with
+      # Replaces found Global IDs matching an existing question with
       # a link to its show page. The Global IDs representing an
-      # invalid Decidim::Proposals::Proposal are replaced with '???' string.
+      # invalid Decidim::questions::question are replaced with '???' string.
       #
       # @return [String] the content ready to display (contains HTML)
       def render
-        content.gsub(GLOBAL_ID_REGEX) do |proposal_gid|
+        content.gsub(GLOBAL_ID_REGEX) do |question_gid|
           begin
-            proposal = GlobalID::Locator.locate(proposal_gid)
-            Decidim::Proposals::ProposalPresenter.new(proposal).display_mention
+            question = GlobalID::Locator.locate(question_gid)
+            Decidim::questions::questionPresenter.new(question).display_mention
           rescue ActiveRecord::RecordNotFound
-            proposal_id = proposal_gid.split("/").last
-            "~#{proposal_id}"
+            question_id = question_gid.split("/").last
+            "~#{question_id}"
           end
         end
       end
