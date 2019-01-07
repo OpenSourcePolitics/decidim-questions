@@ -12,6 +12,9 @@ gem "uglifier", "~> 4.1"
 
 gem "rubyzip", "~> 1.2.2"
 
+gem "loofah", ">= 2.2.3"
+gem "loofah", ">= 2.2.3"
+
 group :development, :test do
   gem "byebug", "~> 10.0", platform: :mri
 
