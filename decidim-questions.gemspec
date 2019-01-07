@@ -8,15 +8,15 @@ require "decidim/questions/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.version = Decidim::questions.version
-  s.authors = ["Josep Jaume Rey Peroy", "Marc Riera Casals", "Oriol Gual Oliva"]
-  s.email = ["josepjaume@gmail.com", "mrc2407@gmail.com", "oriolgual@gmail.com"]
+  s.authors = ["moustachu","mako"]
+  s.email = ["git@moustachu.net","mako@osp.cat"]
   s.license = "AGPL-3.0"
-  s.homepage = "https://github.com/decidim/decidim"
+  s.homepage = "https://github.com/OpenSourcePolitics/decidim-questions"
   s.required_ruby_version = ">= 2.3"
 
   s.name = "decidim-questions"
   s.summary = "Decidim questions module"
-  s.description = "A questions component for decidim's participatory spaces."
+  s.description = "Questions module derived from decidim-proposals."
 
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
 

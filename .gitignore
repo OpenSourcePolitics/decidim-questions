@@ -1,24 +1,22 @@
-spec/decidim_dummy_app/
-.byebug_history
-pkg/
-.DS_Store
-node_modules/
-.vscode
-development_app/
-.projectile
-npm-debug.log
-karma-*
-coverage
-webpack.report.html
-.bundle
-.cache
-.bash_history
-.local
-.pki
-.graphqlconfig
-schema.json
-.yardoc
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
+# rspec failure tracking
 .rspec-failures
+
+# default test application
+spec/decidim_dummy_app
+
+# default development application
+development_app
+
 .rbenv-vars
+
 # Sublime Text 3 indexing file: .tags
 .tags

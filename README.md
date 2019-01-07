@@ -1,5 +1,7 @@
 # Decidim::Questions
 
+> Questions module derived from decidim-proposals.
+
 The Questions module adds one of the main components of Decidim: allows users to contribute to a participatory process by creating questions.
 
 ## Usage
