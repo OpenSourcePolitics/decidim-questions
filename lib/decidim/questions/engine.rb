@@ -200,7 +200,7 @@ module Decidim
           end
         end
 
-        Decidim.metrics_registry.register(:votes) do |metric_registry|
+        Decidim.metrics_registry.register(:question_votes) do |metric_registry|
           metric_registry.manager_class = "Decidim::Questions::Metrics::VotesMetricManage"
 
           metric_registry.settings do |settings|
@@ -211,7 +211,7 @@ module Decidim
           end
         end
 
-        Decidim.metrics_registry.register(:endorsements) do |metric_registry|
+        Decidim.metrics_registry.register(:question_endorsements) do |metric_registry|
           metric_registry.manager_class = "Decidim::Questions::Metrics::EndorsementsMetricManage"
 
           metric_registry.settings do |settings|
