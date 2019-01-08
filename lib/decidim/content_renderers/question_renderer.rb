@@ -8,7 +8,7 @@ module Decidim
     # e.g. gid://<APP_NAME>/Decidim::Questions::Question/1
     #
     # @see BaseRenderer Examples of how to use a content renderer
-    class questionRenderer < BaseRenderer
+    class QuestionRenderer < BaseRenderer
       # Matches a global id representing a Decidim::User
       GLOBAL_ID_REGEX = %r{gid:\/\/([\w-]*\/Decidim::Questions::Question\/(\d+))}i
 
