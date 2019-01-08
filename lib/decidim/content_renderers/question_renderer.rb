@@ -5,23 +5,23 @@ module Decidim
     # A renderer that searches Global IDs representing questions in content
     # and replaces it with a link to their show page.
     #
-    # e.g. gid://<APP_NAME>/Decidim::questions::question/1
+    # e.g. gid://<APP_NAME>/Decidim::Questions::Question/1
     #
     # @see BaseRenderer Examples of how to use a content renderer
     class questionRenderer < BaseRenderer
       # Matches a global id representing a Decidim::User
-      GLOBAL_ID_REGEX = %r{gid:\/\/([\w-]*\/Decidim::questions::question\/(\d+))}i
+      GLOBAL_ID_REGEX = %r{gid:\/\/([\w-]*\/Decidim::Questions::Question\/(\d+))}i
 
       # Replaces found Global IDs matching an existing question with
       # a link to its show page. The Global IDs representing an
-      # invalid Decidim::questions::question are replaced with '???' string.
+      # invalid Decidim::Questions::Question are replaced with '???' string.
       #
       # @return [String] the content ready to display (contains HTML)
       def render
         content.gsub(GLOBAL_ID_REGEX) do |question_gid|
           begin
             question = GlobalID::Locator.locate(question_gid)
-            Decidim::questions::questionPresenter.new(question).display_mention
+            Decidim::Questions::QuestionPresenter.new(question).display_mention
           rescue ActiveRecord::RecordNotFound
             question_id = question_gid.split("/").last
             "~#{question_id}"

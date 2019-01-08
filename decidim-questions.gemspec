@@ -7,7 +7,7 @@ require "decidim/questions/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.version = Decidim::questions.version
+  s.version = Decidim::Questions.version
   s.authors = ["moustachu","mako"]
   s.email = ["git@moustachu.net","mako@osp.cat"]
   s.license = "AGPL-3.0"
@@ -23,18 +23,18 @@ Gem::Specification.new do |s|
   s.add_dependency "acts_as_list", ">= 0.9"
   s.add_dependency "cells-erb", "~> 0.1.0"
   s.add_dependency "cells-rails", "~> 0.0.9"
-  s.add_dependency "decidim-comments", Decidim::questions.version
-  s.add_dependency "decidim-core", Decidim::questions.version
+  s.add_dependency "decidim-comments", Decidim::Questions.version
+  s.add_dependency "decidim-core", Decidim::Questions.version
   s.add_dependency "doc2text", ">= 0.3.3"
   s.add_dependency "kaminari", "~> 1.0"
   s.add_dependency "ransack", "~> 2.0"
   s.add_dependency "redcarpet", ">= 3.4"
   s.add_dependency "social-share-button", "~> 1.0"
 
-  s.add_development_dependency "decidim-admin", Decidim::questions.version
-  s.add_development_dependency "decidim-assemblies", Decidim::questions.version
-  s.add_development_dependency "decidim-budgets", Decidim::questions.version
-  s.add_development_dependency "decidim-dev", Decidim::questions.version
-  s.add_development_dependency "decidim-meetings", Decidim::questions.version
-  s.add_development_dependency "decidim-participatory_processes", Decidim::questions.version
+  s.add_development_dependency "decidim-admin", Decidim::Questions.version
+  s.add_development_dependency "decidim-assemblies", Decidim::Questions.version
+  s.add_development_dependency "decidim-budgets", Decidim::Questions.version
+  s.add_development_dependency "decidim-dev", Decidim::Questions.version
+  s.add_development_dependency "decidim-meetings", Decidim::Questions.version
+  s.add_development_dependency "decidim-participatory_processes", Decidim::Questions.version
 end
