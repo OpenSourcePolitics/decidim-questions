@@ -6,7 +6,7 @@ module Decidim
       # This controller manages the participatory texts area.
       class ParticipatoryTextsController < Admin::ApplicationController
         helper_method :question
-        helper ParticipatoryTextsHelper
+        helper Decidim::Questions::ParticipatoryTextsHelper
 
         def index
           @drafts = Question.where(component: current_component).drafts.order(:position)
@@ -27,7 +27,7 @@ module Decidim
           Admin::ImportParticipatoryText.call(@import) do
             on(:ok) do
               flash[:notice] = I18n.t("participatory_texts.import.success", scope: "decidim.questions.admin")
-              redirect_to participatory_texts_path(component_id: current_component.id, initiative_slug: "asdf")
+              redirect_to participatory_texts_path(component_id: current_component.id, assembly_slug: "asdf")
             end
 
             on(:invalid) do

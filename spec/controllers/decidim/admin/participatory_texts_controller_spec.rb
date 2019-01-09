@@ -42,7 +42,7 @@ module Decidim
 
             it "parses the document" do
               post :import, params: params
-              expect(response).to redirect_to participatory_texts_path(component_id: component.id, initiative_slug: "asdf")
+              expect(response).to redirect_to participatory_texts_path(component_id: component.id, assembly_slug: "asdf")
               expect(flash[:notice].starts_with?("Congratulations")).to be true
             end
           end
