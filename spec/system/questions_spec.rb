@@ -372,7 +372,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 2)
-            expect(page).to have_content("2 PROPOSALS")
+            expect(page).to have_content("2 QUESTIONS")
           end
         end
 
@@ -387,7 +387,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 2)
-            expect(page).to have_content("2 PROPOSALS")
+            expect(page).to have_content("2 QUESTIONS")
           end
         end
       end
@@ -430,7 +430,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 1)
-            expect(page).to have_content("1 PROPOSAL")
+            expect(page).to have_content("1 QUESTION")
           end
         end
 
@@ -441,7 +441,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 2)
-            expect(page).to have_content("2 PROPOSALS")
+            expect(page).to have_content("2 QUESTIONS")
           end
         end
 
@@ -453,7 +453,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 3)
-            expect(page).to have_content("3 PROPOSALS")
+            expect(page).to have_content("3 QUESTIONS")
           end
         end
 
@@ -466,7 +466,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 2)
-            expect(page).to have_content("2 PROPOSALS")
+            expect(page).to have_content("2 QUESTIONS")
           end
         end
 
@@ -479,7 +479,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 1)
-            expect(page).to have_content("1 PROPOSAL")
+            expect(page).to have_content("1 QUESTION")
           end
         end
       end
@@ -529,7 +529,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 1)
-            expect(page).to have_content("1 PROPOSAL")
+            expect(page).to have_content("1 QUESTION")
 
             within ".card--question" do
               expect(page).to have_content("ACCEPTED")
@@ -545,7 +545,7 @@ describe "Questions", type: :system do
             end
 
             expect(page).to have_css(".card--question", count: 1)
-            expect(page).to have_content("1 PROPOSAL")
+            expect(page).to have_content("1 QUESTION")
 
             within ".card--question" do
               expect(page).to have_content("REJECTED")
@@ -674,7 +674,7 @@ describe "Questions", type: :system do
           find('input[id="filter_type_all"]').click
 
           expect(page).to have_css(".card.card--question", count: 2)
-          expect(page).to have_content("2 PROPOSALS")
+          expect(page).to have_content("2 QUESTIONS")
           expect(page).to have_content("AMENDMENT", count: 1)
         end
       end
@@ -686,7 +686,7 @@ describe "Questions", type: :system do
           end
 
           expect(page).to have_css(".card.card--question", count: 1)
-          expect(page).to have_content("1 PROPOSAL")
+          expect(page).to have_content("1 QUESTION")
           expect(page).to have_content("AMENDMENT", count: 0)
         end
       end
@@ -698,7 +698,7 @@ describe "Questions", type: :system do
           end
 
           expect(page).to have_css(".card.card--question", count: 1)
-          expect(page).to have_content("1 PROPOSAL")
+          expect(page).to have_content("1 QUESTION")
           expect(page).to have_content("AMENDMENT", count: 1)
         end
       end
