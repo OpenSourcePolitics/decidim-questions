@@ -1,0 +1,50 @@
+---
+
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      # This is the sha of the latest `decidim/decidim:latest-test` docker image. You can retrieve the
+      # latest digest by doing `$ docker pull decidim/decidim:latest-test`.
+      - image: decidim/decidim@sha256:dd56d61390f588f6d3abf192049e63ef15d43a895d06a55979da4541a649b98e
+        environment:
+          SIMPLECOV: true
+          DATABASE_USERNAME: postgres
+          FAIL_FAST: true
+      - image: postgres
+        environment:
+          POSTGRES_USER: postgres
+
+    working_directory: /app
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - bundler-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Install dependencies
+          command: bundle install
+
+      - save_cache:
+          key: bundler-dependencies-{{ checksum "Gemfile.lock" }}
+          paths:
+            - /usr/local/bundle
+
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Generate test app
+          command: bundle exec rake decidim:generate_external_test_app
+
+      - run:
+          name: Run RSpec tests
+          command: bundle exec rspec
+
+      - store_artifacts:
+          path: /app/spec/decidim_dummy_app/tmp/screenshots
