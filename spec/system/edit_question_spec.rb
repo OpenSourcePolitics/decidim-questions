@@ -28,7 +28,7 @@ describe "Edit questions", type: :system do
       click_link question.title
       click_link "Edit question"
 
-      expect(page).to have_content "EDIT PROPOSAL"
+      expect(page).to have_content "EDIT QUESTION"
 
       within "form.edit_question" do
         fill_in :question_title, with: new_title
@@ -49,7 +49,7 @@ describe "Edit questions", type: :system do
         click_link question.title
         click_link "Edit question"
 
-        expect(page).to have_content "EDIT PROPOSAL"
+        expect(page).to have_content "EDIT QUESTION"
 
         within "form.edit_question" do
           fill_in :question_body, with: "A"
@@ -65,7 +65,7 @@ describe "Edit questions", type: :system do
         click_link question.title
         click_link "Edit question"
 
-        expect(page).to have_content "EDIT PROPOSAL"
+        expect(page).to have_content "EDIT QUESTION"
 
         within "form.edit_question" do
           fill_in :question_title, with: "A title with a #hashtag"

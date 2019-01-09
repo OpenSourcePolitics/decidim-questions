@@ -193,7 +193,7 @@ describe "Amend Question", type: :system do
         end
 
         it "is shown the promote button" do
-          expect(page).to have_content("PROMOTE TO PROPOSAL")
+          expect(page).to have_content("PROMOTE TO QUESTION")
         end
 
         context "when the user clicks on the promote button" do
@@ -211,7 +211,7 @@ describe "Amend Question", type: :system do
             end
 
             it "is NOT shown the promote button" do
-              expect(page).not_to have_content("PROMOTE TO PROPOSAL")
+              expect(page).not_to have_content("PROMOTE TO QUESTION")
             end
           end
         end

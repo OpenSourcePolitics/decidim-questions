@@ -29,7 +29,7 @@ describe "Admin edits questions", type: :system do
       visit_component_admin
 
       find("a.action-icon--edit-question").click
-      expect(page).to have_content "UPDATE PROPOSAL"
+      expect(page).to have_content "UPDATE QUESTION"
 
       fill_in "Title", with: new_title
       fill_in "Body", with: new_body
@@ -66,7 +66,7 @@ describe "Admin edits questions", type: :system do
         visit_component_admin
 
         find("a.action-icon--edit-question").click
-        expect(page).to have_content "UPDATE PROPOSAL"
+        expect(page).to have_content "UPDATE QUESTION"
 
         fill_in "Body", with: "A"
         click_button "Update"

@@ -98,7 +98,7 @@ describe "Question", type: :system do
 
         it "redirects to the complete step" do
           within ".section-heading" do
-            expect(page).to have_content("COMPLETE YOUR PROPOSAL")
+            expect(page).to have_content("COMPLETE YOUR QUESTION")
           end
           expect(page).to have_css(".edit_question")
         end
