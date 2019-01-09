@@ -5,7 +5,7 @@ module Decidim
     # Exposes CollaborativeDraft versions so users can see how a CollaborativeDraft
     # has been updated through time.
     class VersionsController < Decidim::Questions::ApplicationController
-      helper Decidim::TraceabilityHelper
+      helper Decidim::Questions::TraceabilityHelper
       helper_method :current_version, :item
 
       private
