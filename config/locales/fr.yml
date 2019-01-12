@@ -61,6 +61,12 @@ fr:
         one: Vote
         other: Votes
   decidim:
+    admin:
+      models:
+        participatory_process_user_role:
+          roles:
+            committee: Comité de pilotage
+            service: Service
     components:
       questions:
         actions:

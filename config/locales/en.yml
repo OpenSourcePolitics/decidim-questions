@@ -61,6 +61,12 @@ en:
         one: Vote
         other: Votes
   decidim:
+    admin:
+      models:
+        participatory_process_user_role:
+          roles:
+            committee: Committee
+            service: Service
     components:
       questions:
         actions:
