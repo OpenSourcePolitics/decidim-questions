@@ -89,6 +89,7 @@ fr:
             official_questions_enabled: Autoriser la création de propositions officielles
             participatory_texts_enabled: Textes participatifs activés
             question_answering_enabled: Autoriser la réponse officielle aux propositions
+            question_answering_roles_enabled: Activer les rôles de \"Comité de pilotage\" et de \"Service\" de reponses officielles
             question_edit_before_minutes: Délai (en minutes) après lequel les auteurs ne peuvent plus modifier leurs propositions
             question_length: Nombre maximum de caractères du corps de la proposition
             question_limit: Limite de proposition par utilisateur
