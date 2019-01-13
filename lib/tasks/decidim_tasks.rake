@@ -7,26 +7,26 @@ namespace :decidim do
   desc "Setup environment so that only decidim migrations are installed."
   task :choose_target_plugins do
     ENV["FROM"] = %w(
-      decidim_participatory_processes
       decidim
-      decidim_system
-      decidim_assemblies
-      decidim_conferences
-      decidim_consultations
-      decidim_admin
       decidim_accountability
+      decidim_admin
+      decidim_assemblies
       decidim_blogs
       decidim_budgets
       decidim_comments
+      decidim_conferences
+      decidim_consultations
       decidim_debates
       decidim_forms
       decidim_initiatives
       decidim_meetings
       decidim_pages
+      decidim_participatory_processes
       decidim_proposals
       decidim_questions
       decidim_sortitions
       decidim_surveys
+      decidim_system
       decidim_verifications
     ).join(",")
   end
