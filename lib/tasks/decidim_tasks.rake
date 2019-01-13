@@ -7,8 +7,8 @@ namespace :decidim do
   desc "Setup environment so that only decidim migrations are installed."
   task :choose_target_plugins do
     ENV["FROM"] = %w(
-      decidim
       decidim_participatory_processes
+      decidim
       decidim_system
       decidim_assemblies
       decidim_conferences
