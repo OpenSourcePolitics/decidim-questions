@@ -1,5 +1,8 @@
 require 'extends/decidim-core/core_extend.rb'
+require 'extends/decidim-core/helpers/decidim/application_helper_extend.rb'
+require 'extends/decidim-admin/helpers/decidim/admin/application_helper_extend.rb'
 require 'extends/decidim-participatory_processes/models/decidim/participatory_process_extend.rb'
+require 'extends/decidim-participatory_processes/controllers/decidim/participatory_processes/admin/participatory_processes_controller_extend.rb'
 require 'extends/decidim-core/commands/decidim/amendable/create_extend.rb'
 require 'extends/decidim-core/commands/decidim/amendable/promote_extend.rb'
 require 'extends/decidim-core/helpers/decidim/cells_helper_extend.rb'
