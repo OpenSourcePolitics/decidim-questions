@@ -1,4 +1,5 @@
 require 'extends/decidim-core/core_extend.rb'
+require 'extends/decidim-participatory_processes/models/decidim/participatory_process_extend.rb'
 require 'extends/decidim-core/commands/decidim/amendable/create_extend.rb'
 require 'extends/decidim-core/commands/decidim/amendable/promote_extend.rb'
 require 'extends/decidim-core/helpers/decidim/cells_helper_extend.rb'
