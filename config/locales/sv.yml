@@ -357,6 +357,7 @@ sv:
         import: Importera från en annan komponent
         new: Nytt förslag
         participatory_texts: Deltagande texter
+        private_discussions: Private discussions
         private_notes: Privata anteckningar
         title: Åtgärder
       admin:
@@ -649,6 +650,7 @@ sv:
             id: ID
             notes: Anteckningar
             official_question: Officiellt förslag
+            private_discussions: Private discussions
             published_at: Publicerad vid
             scope: Omfattning
             state: Status

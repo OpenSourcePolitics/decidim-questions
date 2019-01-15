@@ -362,6 +362,7 @@ hu:
         import: Importálás egy másik elemből
         new: Új javaslat
         participatory_texts: Részvételi szövegek
+        private_discussions: Private discussions
         private_notes: Privát jegyzet
         title: Műveletek
       admin:
@@ -653,6 +654,7 @@ hu:
             id: ID
             notes: Jegyzetek
             official_question: Hivatalos javaslat
+            private_discussions: Private discussions
             published_at: 'Közzétéve:'
             scope: Hatáskör
             state: Állapot

@@ -375,6 +375,7 @@ en:
         import: Import from another component
         new: New question
         participatory_texts: Participatory texts
+        private_discussions: Private discussions
         private_notes: Private notes
         title: Actions
       admin:
@@ -666,6 +667,7 @@ en:
             id: ID
             notes: Notes
             official_question: Official question
+            private_discussions: Private discussions
             published_at: Published at
             scope: Scope
             state: State

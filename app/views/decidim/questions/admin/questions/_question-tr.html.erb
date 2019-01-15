@@ -59,7 +59,7 @@
     <% end %>
 
     <% if allowed_to? :create, :question_note %>
-      <%= icon_link_to "chat", question_question_notes_path(question_id: question.id), t("actions.private_notes", scope: "decidim.questions"), class: "action-icon--index-notes" %>
+      <%= icon_link_to "chat", question_question_notes_path(question_id: question.id), t("actions.private_discussions", scope: "decidim.questions"), class: "action-icon--index-notes" %>
     <% end %>
 
     <% if allowed_to? :create, :question_answer and !question.emendation? %>

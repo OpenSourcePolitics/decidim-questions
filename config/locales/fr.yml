@@ -383,6 +383,7 @@ fr:
         import: Importer depuis une autre fonctionnalité
         new: Nouvelle proposition
         participatory_texts: Textes participatifs
+        private_discussions: Private discussions
         private_notes: Notes privées
         title: Actions
       admin:
@@ -682,6 +683,7 @@ fr:
             id: ID
             notes: Remarques
             official_question: Proposition officielle
+            private_discussions: Private discussions
             published_at: Publiée à
             scope: Périmètre d'application
             state: État

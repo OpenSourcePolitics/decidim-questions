@@ -358,6 +358,7 @@ ca:
         import: Importa des d'un altre component
         new: Nova proposta
         participatory_texts: Textos participatius
+        private_discussions: Private discussions
         private_notes: Notes privades
         title: Accions
       admin:
@@ -654,6 +655,7 @@ ca:
             id: ID
             notes: Notes
             official_question: Proposta oficial
+            private_discussions: Private discussions
             published_at: Publicat a
             scope: Àmbit
             state: Estat

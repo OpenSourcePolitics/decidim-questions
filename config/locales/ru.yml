@@ -372,6 +372,7 @@ ru:
         import: Позаимствовать из другой составляющей
         new: Внести новое предложение
         participatory_texts: Participatory texts
+        private_discussions: Private discussions
         private_notes: Частные примечания
         title: Действия
       admin:
@@ -662,6 +663,7 @@ ru:
             id: Псевдоним
             notes: Примечания
             official_question: Служебное предложение
+            private_discussions: Private discussions
             published_at: 'Обнародовано:'
             scope: Охват
             state: Cостояние

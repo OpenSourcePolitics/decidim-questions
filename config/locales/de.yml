@@ -370,6 +370,7 @@ de:
         import: Importieren von einer anderen Komponente
         new: Neuer Vorschlag
         participatory_texts: Partizipative Texte
+        private_discussions: Private discussions
         private_notes: Private Notizen
         title: Aktionen
       admin:
@@ -671,6 +672,7 @@ de:
             id: ICH WÜRDE
             notes: Anmerkungen
             official_question: Offizieller Vorschlag
+            private_discussions: Private discussions
             published_at: Veröffentlicht unter
             scope: Umfang
             state: Zustand

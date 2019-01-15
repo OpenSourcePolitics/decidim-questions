@@ -367,6 +367,7 @@ eu:
         import: Inportatu beste osagai batetik
         new: Proposamen berria
         participatory_texts: Testu partehartzaileak
+        private_discussions: Private discussions
         private_notes: Ohar pribatuak
         title: Ekintzak
       admin:
@@ -660,6 +661,7 @@ eu:
             id: NORTASUN AGIRIA
             notes: Oharrak
             official_question: Proposamen ofiziala
+            private_discussions: Private discussions
             published_at: Argitaratu at
             scope: Esparrua
             state: Egoera

@@ -357,6 +357,7 @@ gl:
         import: Importar dende outro compoñente
         new: Nova proposta
         participatory_texts: Textos participativos
+        private_discussions: Private discussions
         private_notes: Notas privadas
         title: Accións
       admin:
@@ -648,6 +649,7 @@ gl:
             id: ID
             notes: Notas
             official_question: Proposta oficial
+            private_discussions: Private discussions
             published_at: Publicado en
             scope: Alcance
             state: Estado

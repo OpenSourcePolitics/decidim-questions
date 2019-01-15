@@ -364,6 +364,7 @@ es:
         import: Importar desde otro componente
         new: Nueva propuesta
         participatory_texts: Textos participativos
+        private_discussions: Private discussions
         private_notes: Notas privadas
         title: Acciones
       admin:
@@ -657,6 +658,7 @@ es:
             id: Identificador
             notes: Notas
             official_question: Propuesta oficial
+            private_discussions: Private discussions
             published_at: Publicado el
             scope: Ámbito
             state: Estado

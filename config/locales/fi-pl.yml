@@ -363,6 +363,7 @@ fi-pl:
         import: Tuo toisesta komponentista
         new: Uusi ehdotus
         participatory_texts: Ehdotusaineistot
+        private_discussions: Private discussions
         private_notes: Omat muistiinpanot
         title: Toiminnot
       admin:
@@ -653,6 +654,7 @@ fi-pl:
             id: ID
             notes: Huomautuksia
             official_question: Virallinen ehdotus
+            private_discussions: Private discussions
             published_at: Julkaistu
             scope: Teema
             state: Tila

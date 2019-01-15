@@ -379,6 +379,7 @@ uk:
         import: Запозичити з іншої складової
         new: Додати нову пропозицію
         participatory_texts: Participatory texts
+        private_discussions: Private discussions
         private_notes: Приватні примітки
         title: Дії
       admin:
@@ -669,6 +670,7 @@ uk:
             id: Псевдонім
             notes: Примітки
             official_question: Службова пропозиція
+            private_discussions: Private discussions
             published_at: 'Оприлюднено:'
             scope: Обсяг
             state: Стан
