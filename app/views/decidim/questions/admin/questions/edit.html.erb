@@ -1,7 +1,15 @@
-<%= decidim_form_for(@form, html: { class: "form edit_question question_form_admin" })  do |f| %>
-  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+<%= decidim_form_for(@form, html: { class: "form edit_question question_form_admin" }) do |f| %>
+  <%= render partial: "form",
+             object: f,
+             locals: {
+                 title: t(".title"),
+                 content: t(".content"),
+                 status: t(".status")
+             }
+  %>
 
-    <div class="button--double form-general-submit">
-      <%= f.submit t(".update") %>
-    </div>
+  <div class="button--double form-general-submit">
+    <%= f.submit t(".update") %>
+    <%= link_to t(".cancel"), questions_path %>
+  </div>
 <% end %>

@@ -418,6 +418,7 @@ en:
           edit:
             accepted: Accepted
             answer_question: Answer
+            cancel: Cancel
             evaluating: Evaluating
             rejected: Rejected
             title: Answer for question %{title}
@@ -438,11 +439,22 @@ en:
             invalid: There's been a problem creating this question
             success: Question successfully created
           edit:
+            cancel: Cancel
+            content: Content
+            publish: Publish
+            status: Status
             title: Update question
             update: Update
           form:
+            accepted: Accepted
             attachment_legend: "(Optional) Add an attachment"
+            back: Back
             created_in_meeting: This question comes from a meeting
+            evaluating: Evaluating
+            middleman: Middleman
+            project_management: Project management
+            recipient: Recipient
+            rejected: Rejected
             select_a_category: Select a category
             select_a_meeting: Select a meeting
           index:
@@ -458,7 +470,13 @@ en:
             title: Questions
             update: Update
           new:
+            attachment_legend: Attachment legend
+            content: Content
             create: Create
+            created_in_meeting: Created in meeting
+            select_a_category: Select a category
+            select_a_meeting: Select a meeting
+            status: Status
             title: Create question
           update_category:
             invalid: 'These questions already had the %{category} category: %{questions}.'
@@ -488,6 +506,17 @@ en:
           info_question:
             body: Body
             created_at: Creation date
+            info_question_bottom:
+              body: Body
+              created_at: Created at
+              question_votes_count: Question votes count
+            info_question_bottom_full:
+              author: Author
+              body: Body
+              created_at: Created at
+              question_votes_count: Question votes count
+            info_question_top:
+              questions: Questions
             question_votes_count: Votes count
             questions: Questions
       admin_log:
@@ -665,7 +694,6 @@ en:
             comments: Comments
             endorsements: Endorsements
             id: ID
-            notes: Notes
             official_question: Official question
             private_discussions: Private discussions
             published_at: Published at

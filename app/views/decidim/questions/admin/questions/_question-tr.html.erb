@@ -54,7 +54,7 @@
   </td>
 
   <td class="table-list__actions">
-    <% if allowed_to? :edit, :question, question: question %>
+    <% if allowed_to? :edit, :question %>
       <%= icon_link_to "pencil", edit_question_path(question), t("actions.edit_question", scope: "decidim.questions"), class: "action-icon--edit-question" %>
     <% end %>
 

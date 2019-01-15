@@ -432,6 +432,7 @@ es:
             update: Actualizar
           form:
             attachment_legend: "(Opcional) Añadir un archivo adjunto"
+            back: Back
             created_in_meeting: Esta propuesta procede de un encuentro
             select_a_category: Selecciona una categoría
             select_a_meeting: Selecciona un encuentro

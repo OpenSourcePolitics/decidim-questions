@@ -446,6 +446,7 @@ uk:
             update: Update
           form:
             attachment_legend: "(Необов'язково) Додати вкладений файл"
+            back: Back
             created_in_meeting: This question comes from a meeting
             select_a_category: Оберіть категорію
             select_a_meeting: Select a meeting

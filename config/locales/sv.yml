@@ -425,6 +425,7 @@ sv:
             update: Uppdatera
           form:
             attachment_legend: "(Valfritt) Lägg till en bilaga"
+            back: Back
             created_in_meeting: Detta förslag kommer från ett möte
             select_a_category: Välj en kategori
             select_a_meeting: Välj ett möte

@@ -426,6 +426,7 @@ ca:
             update: Actualització
           form:
             attachment_legend: "(Opcional) Afegiu un fitxer adjunt"
+            back: Back
             created_in_meeting: Aquesta proposta prové d'una trobada
             select_a_category: Selecciona una categoria
             select_a_meeting: Selecciona una trobada

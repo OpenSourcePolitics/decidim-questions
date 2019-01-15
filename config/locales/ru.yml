@@ -439,6 +439,7 @@ ru:
             update: Update
           form:
             attachment_legend: "(Необязательно) Прикрепить файл"
+            back: Back
             created_in_meeting: This question comes from a meeting
             select_a_category: Выберите категорию
             select_a_meeting: Select a meeting

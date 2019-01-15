@@ -437,6 +437,7 @@ id-ID:
             update: Update
           form:
             attachment_legend: "(Optional) Add an attachment"
+            back: Back
             created_in_meeting: This question comes from a meeting
             select_a_category: Select a category
             select_a_meeting: Select a meeting

@@ -425,6 +425,7 @@ gl:
             update: Actualización
           form:
             attachment_legend: "(Opcional) Engada un anexo"
+            back: Back
             created_in_meeting: Esta proposta provén dunha reunión
             select_a_category: Selecciona unha categoría
             select_a_meeting: Seleccione unha reunión
