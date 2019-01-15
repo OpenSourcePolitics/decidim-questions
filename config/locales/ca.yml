@@ -116,7 +116,7 @@ ca:
             votes_hidden: Suports ocults (si els suports estan habilitats, marcant
               aquesta opció amagarà el nombre de suports)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

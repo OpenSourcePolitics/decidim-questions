@@ -115,7 +115,7 @@ hu:
             votes_hidden: Szavazatok elrejtése (ha a szavazás engedélyezett, ez elrejti
               a szavazatok számát)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

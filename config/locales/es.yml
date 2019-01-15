@@ -119,7 +119,7 @@ es:
             votes_hidden: Votos ocultos (si los votos están habilitados, marcando
               esta opción ocultará el número de votos)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

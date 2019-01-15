@@ -123,7 +123,7 @@ ru:
             votes_hidden: Голоса скрыты (если голосование включено, то при поставленной
               здесь птичке будет скрыто количество голосов)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

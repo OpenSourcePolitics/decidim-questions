@@ -126,7 +126,7 @@ uk:
             votes_hidden: Голоси приховані (якщо голосування увімкнене, то буде сховано
               кількість голосів)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

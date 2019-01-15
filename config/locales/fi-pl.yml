@@ -115,7 +115,7 @@ fi-pl:
             votes_hidden: Piilotetut äänet (jos äänet ovat käytössä, tämä valitseminen
               piilottaa äänimäärän)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

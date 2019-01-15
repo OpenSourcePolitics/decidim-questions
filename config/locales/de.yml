@@ -115,7 +115,7 @@ de:
             votes_hidden: Abstimmungen ausgeblendet (wenn Abstimmungen aktiviert sind,
               wird dies die Anzahl der Abstimmungen verbergen)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

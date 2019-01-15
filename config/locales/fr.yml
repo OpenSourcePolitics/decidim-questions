@@ -120,7 +120,7 @@ fr:
             votes_hidden: Cacher les votes (si le module de votes est activé, le décompte
               des votes sera caché)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

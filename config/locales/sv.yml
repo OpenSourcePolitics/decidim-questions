@@ -112,7 +112,7 @@ sv:
             votes_hidden: Röster dolda (om röster är aktiverade, kommer detta att
               gömma antalet röster)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

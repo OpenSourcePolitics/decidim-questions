@@ -115,7 +115,7 @@ en:
             votes_hidden: Votes hidden (if votes are enabled, checking this will hide
               the number of votes)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

@@ -117,7 +117,7 @@ gl:
             votes_hidden: Votos ocultos (se os votos están habilitados, a comprobación
               ocultará o número de votos)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:

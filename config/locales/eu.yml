@@ -118,7 +118,7 @@ eu:
             votes_hidden: Botoiak ezkutatuta (botoak gaituta badago, hau egiaztatuz
               boto kopurua ezkutatuko da)
     datetime:
-      timeago: Timeago
+      timeago: "%{time} ago"
     events:
       questions:
         collaborative_draft_access_accepted:
