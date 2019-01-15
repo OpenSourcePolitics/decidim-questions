@@ -1,3 +1,4 @@
+---
 gl:
   activemodel:
     attributes:
@@ -24,7 +25,8 @@ gl:
       question_answer:
         answer: Resposta
       questions_copy:
-        copy_questions: Comprendo que isto importará todas as propostas do compoñente seleccionado ao actual e que esta acción non se pode revertir.
+        copy_questions: Comprendo que isto importará todas as propostas do compoñente
+          seleccionado ao actual e que esta acción non se pode revertir.
         origin_component_id: Componente para copiar as propostas de
     errors:
       models:
@@ -34,13 +36,14 @@ gl:
               needs_to_be_reattached: Necesita ser reenxerado
     models:
       decidim/questions/accepted_question_event: A proposta foi aceptada
-      decidim/questions/admin/update_question_category_event: Modificouse a categoría de proposta
+      decidim/questions/admin/update_question_category_event: Modificouse a categoría
+        de proposta
       decidim/questions/creation_enabled_event: Creación de proposta habilitada
       decidim/questions/endorsing_enabled_event: Aprobación da proposta habilitada
       decidim/questions/evaluating_question_event: A proposta está a ser avaliada
+      decidim/questions/publish_question_event: Proposta publicada
       decidim/questions/question_endorsed_event: Proposta aprobada
       decidim/questions/question_mentioned_event: Proposta mencionada
-      decidim/questions/publish_question_event: Proposta publicada
       decidim/questions/rejected_question_event: Proposta rexeitada
       decidim/questions/voting_enabled_event: A votación da proposta habilitada
   activerecord:
@@ -74,7 +77,8 @@ gl:
             amendments_enabled: Modificacións habilitadas
             announcement: Anuncio
             attachments_allowed: Permitir anexos
-            can_accumulate_supports_beyond_threshold: Pode acumular soportes máis aló do limiar
+            can_accumulate_supports_beyond_threshold: Pode acumular soportes máis
+              aló do limiar
             collaborative_drafts_enabled: Esquemas colaborativos habilitados
             comments_enabled: Comentarios habilitados
             geocoding_enabled: Geocoding habilitado
@@ -83,14 +87,20 @@ gl:
             official_questions_enabled: Propostas oficiais habilitadas
             participatory_texts_enabled: Permitir textos participativos
             question_answering_enabled: Contestando a proposta habilitada
-            question_edit_before_minutes: As propostas poden ser editadas por autores antes de que pase moitos minutos
+            question_edit_before_minutes: As propostas poden ser editadas por autores
+              antes de que pase moitos minutos
             question_length: Lonxitude máxima do corpo da proposta
             question_limit: Límite de proposta por usuario
-            question_wizard_step_1_help_text: Asistente de propostas "Crear" texto de axuda paso a paso
-            question_wizard_step_2_help_text: Asistente de propostas "Comparar" texto de axuda paso a paso
-            question_wizard_step_3_help_text: Asistente de propostas Texto de axuda de paso "Completo"
-            question_wizard_step_4_help_text: Asistente de propostas "Publica" o texto de axuda paso a paso
-            resources_permissions_enabled: Os permisos de acción pódense establecer para cada proposta
+            question_wizard_step_1_help_text: Asistente de propostas "Crear" texto
+              de axuda paso a paso
+            question_wizard_step_2_help_text: Asistente de propostas "Comparar" texto
+              de axuda paso a paso
+            question_wizard_step_3_help_text: Asistente de propostas Texto de axuda
+              de paso "Completo"
+            question_wizard_step_4_help_text: Asistente de propostas "Publica" o texto
+              de axuda paso a paso
+            resources_permissions_enabled: Os permisos de acción pódense establecer
+              para cada proposta
             threshold_per_question: Umbral por proposta
             vote_limit: Límite de voto por usuario
           step:
@@ -104,141 +114,212 @@ gl:
             suggested_hashtags: Hashtags suxeriu aos usuarios novas propostas
             votes_blocked: Voto bloqueado
             votes_enabled: Votación habilitada
-            votes_hidden: Votos ocultos (se os votos están habilitados, a comprobación ocultará o número de votos)
+            votes_hidden: Votos ocultos (se os votos están habilitados, a comprobación
+              ocultará o número de votos)
+    datetime:
+      timeago: Timeago
     events:
       questions:
         collaborative_draft_access_accepted:
-          email_intro: '%{requester_name} foi aceptado para acceder como colaborador do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.'
+          email_intro: '%{requester_name} foi aceptado para acceder como colaborador
+            do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.'
           email_outro: Recibiches esta notificación porque es colaborador de <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{requester_name} foi aceptado para acceder como colaborador do %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> foi aceptado <strong>para acceder como contribuínte</strong> do borrador colaborativo de <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{requester_name} foi aceptado para acceder como colaborador
+            do %{resource_title}."
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
+            foi aceptado <strong>para acceder como contribuínte</strong> do borrador
+            colaborativo de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_rejected:
-          email_intro: '%{requester_name} foi rexeitado para acceder como colaborador do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.'
+          email_intro: '%{requester_name} foi rexeitado para acceder como colaborador
+            do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.'
           email_outro: Recibiches esta notificación porque es colaborador de <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{requester_name} foi rexeitado para acceder como colaborador do %{resource_title} borrador colaborativo."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> foi rexeitado <strong>para acceder como contribuínte</strong> do borrador colaborativo de <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{requester_name} foi rexeitado para acceder como colaborador
+            do %{resource_title} borrador colaborativo."
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
+            foi rexeitado <strong>para acceder como contribuínte</strong> do borrador
+            colaborativo de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_requested:
-          email_intro: '%{requester_name} solicitou acceso como colaborador. Pode <strong>aceptar ou rexeitar a solicitude</strong> da páxina de <a href="%{resource_path}">%{resource_title}</a> colaborativo.'
+          email_intro: '%{requester_name} solicitou acceso como colaborador. Pode
+            <strong>aceptar ou rexeitar a solicitude</strong> da páxina de <a href="%{resource_path}">%{resource_title}</a>
+            colaborativo.'
           email_outro: Recibiches esta notificación porque es colaborador de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: "%{requester_name} solicitou acceso para contribuír a %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> solicitou acceso para contribuír ao proxecto colaborativo de <a href="%{resource_path}">%{resource_title}</a> . <strong>acepta ou rexeita a solicitude</strong>.
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
+            solicitou acceso para contribuír ao proxecto colaborativo de <a href="%{resource_path}">%{resource_title}</a>
+            . <strong>acepta ou rexeita a solicitude</strong>.
         collaborative_draft_access_requester_accepted:
-          email_intro: Recibiches acceso como colaborador do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Recibiches esta notificación porque solicitou ser colaborador de <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: Recibiches acceso como colaborador do borrador colaborativo
+            <a href="%{resource_path}">%{resource_title}</a>.
+          email_outro: Recibiches esta notificación porque solicitou ser colaborador
+            de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: Recibiches como colaborador de %{resource_title}.
-          notification_title: Recibiches <strong>para acceder como colaborador</strong> do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.
+          notification_title: Recibiches <strong>para acceder como colaborador</strong>
+            do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_requester_rejected:
-          email_intro: Foi rexeitado a acceder como colaborador do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Recibiches esta notificación porque solicitou ser colaborador de <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: Foi rexeitado a acceder como colaborador do borrador colaborativo
+            <a href="%{resource_path}">%{resource_title}</a>.
+          email_outro: Recibiches esta notificación porque solicitou ser colaborador
+            de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: Foi rexeitado como colaborador de %{resource_title}.
-          notification_title: Quedaches <strong>rexeitado a acceder como colaborador</strong> do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.
+          notification_title: Quedaches <strong>rexeitado a acceder como colaborador</strong>
+            do borrador colaborativo <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_withdrawn:
-          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a> retirou o proxecto de colaboración <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
+            retirou o proxecto de colaboración <a href="%{resource_path}">%{resource_title}</a>.
           email_outro: Recibiches esta notificación porque es colaborador de <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{author_name} %{author_nickname} retirouse o %{resource_title} borrador colaborativo."
-          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> <strong>retirado</strong> o <a href="%{resource_path}">%{resource_title}</a> borrador de colaboración.
+          email_subject: "%{author_name} %{author_nickname} retirouse o %{resource_title}
+            borrador colaborativo."
+          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
+            <strong>retirado</strong> o <a href="%{resource_path}">%{resource_title}</a>
+            borrador de colaboración.
         creation_enabled:
-          email_intro: 'Agora podes crear novas propostas en %{participatory_space_title}. Comezar a participar nesta páxina:'
-          email_outro: Recibiches esta notificación porque estás seguindo %{participatory_space_title}. Podes deixar de recibir notificacións seguindo a ligazón anterior.
+          email_intro: 'Agora podes crear novas propostas en %{participatory_space_title}.
+            Comezar a participar nesta páxina:'
+          email_outro: Recibiches esta notificación porque estás seguindo %{participatory_space_title}.
+            Podes deixar de recibir notificacións seguindo a ligazón anterior.
           email_subject: As propostas agora están dispoñibles en %{participatory_space_title}
-          notification_title: Agora podes presentar <a href="%{resource_path}">novas propostas</a> en <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Agora podes presentar <a href="%{resource_path}">novas
+            propostas</a> en <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         endorsing_enabled:
-          email_intro: 'Podes aprobar propostas en %{participatory_space_title}. Comezar a participar nesta páxina:'
-          email_outro: Recibiches esta notificación porque estás seguindo %{participatory_space_title}. Podes deixar de recibir notificacións seguindo a ligazón anterior.
+          email_intro: 'Podes aprobar propostas en %{participatory_space_title}. Comezar
+            a participar nesta páxina:'
+          email_outro: Recibiches esta notificación porque estás seguindo %{participatory_space_title}.
+            Podes deixar de recibir notificacións seguindo a ligazón anterior.
           email_subject: As propostas de avaliación iniciáronse para %{participatory_space_title}
-          notification_title: Agora podes comezar <a href="%{resource_path}">propostas de aprobación</a> en <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Agora podes comezar <a href="%{resource_path}">propostas
+            de aprobación</a> en <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         question_accepted:
           affected_user:
-            email_intro: 'A túa proposta "%{resource_title}" foi aceptada. Podes ler a resposta nesta páxina:'
+            email_intro: 'A túa proposta "%{resource_title}" foi aceptada. Podes ler
+              a resposta nesta páxina:'
             email_outro: Recibiches esta notificación porque es un autor de "%{resource_title}".
             email_subject: A túa proposta foi aceptada
-            notification_title: A túa proposta <a href="%{resource_path}">%{resource_title}</a> foi aceptada.
+            notification_title: A túa proposta <a href="%{resource_path}">%{resource_title}</a>
+              foi aceptada.
           follower:
-            email_intro: 'A proposta "%{resource_title}" foi aceptada. Podes ler a resposta nesta páxina:'
-            email_outro: Recibiches esta notificación porque estás seguindo "%{resource_title}". Podes deixar de seguir desde a ligazón anterior.
+            email_intro: 'A proposta "%{resource_title}" foi aceptada. Podes ler a
+              resposta nesta páxina:'
+            email_outro: Recibiches esta notificación porque estás seguindo "%{resource_title}".
+              Podes deixar de seguir desde a ligazón anterior.
             email_subject: Aceptouse unha proposta que estás seguindo
-            notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a> foi aceptada.
+            notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a>
+              foi aceptada.
         question_endorsed:
-          email_intro: '%{endorser_name} %{endorser_nickname}, quen está seguindo, acaba de aprobar a proposta "%{resource_title}" e pensamos que pode ser interesante para ti. Consulte e contribúa:'
-          email_outro: Recibiches esta notificación porque estás seguindo %{endorser_nickname}. Podes deixar de recibir notificacións seguindo a ligazón anterior.
+          email_intro: '%{endorser_name} %{endorser_nickname}, quen está seguindo,
+            acaba de aprobar a proposta "%{resource_title}" e pensamos que pode ser
+            interesante para ti. Consulte e contribúa:'
+          email_outro: Recibiches esta notificación porque estás seguindo %{endorser_nickname}.
+            Podes deixar de recibir notificacións seguindo a ligazón anterior.
           email_subject: "%{endorser_nickname} aprobou unha nova proposta"
-          notification_title: A <a href="%{resource_path}">%{resource_title}</a> proposta foi aprobada por <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.
+          notification_title: A <a href="%{resource_path}">%{resource_title}</a> proposta
+            foi aprobada por <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.
         question_evaluating:
           affected_user:
-            email_intro: 'A túa proposta "%{resource_title}" está a ser avaliada. Podes consultar unha resposta nesta páxina:'
+            email_intro: 'A túa proposta "%{resource_title}" está a ser avaliada.
+              Podes consultar unha resposta nesta páxina:'
             email_outro: Recibiches esta notificación porque es un autor de "%{resource_title}".
             email_subject: A túa proposta está a ser avaliada
-            notification_title: A súa proposta <a href="%{resource_path}">%{resource_title}</a> está sendo avaliada.
+            notification_title: A súa proposta <a href="%{resource_path}">%{resource_title}</a>
+              está sendo avaliada.
           follower:
-            email_intro: 'A proposta "%{resource_title}" está a ser avaliada. Podes consultar unha resposta nesta páxina:'
-            email_outro: Recibiches esta notificación porque estás seguindo "%{resource_title}". Podes deixar de seguir desde a ligazón anterior.
+            email_intro: 'A proposta "%{resource_title}" está a ser avaliada. Podes
+              consultar unha resposta nesta páxina:'
+            email_outro: Recibiches esta notificación porque estás seguindo "%{resource_title}".
+              Podes deixar de seguir desde a ligazón anterior.
             email_subject: Estase evaluando unha proposta que estás seguindo
-            notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a> está a ser avaliada.
+            notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a>
+              está a ser avaliada.
         question_mentioned:
-          email_intro: A túa proposta "%{mentioned_question_title}" foi mencionada <a href="%{resource_path}">neste espazo</a> nos comentarios.
+          email_intro: A túa proposta "%{mentioned_question_title}" foi mencionada
+            <a href="%{resource_path}">neste espazo</a> nos comentarios.
           email_outro: Recibiches esta notificación porque es un autor de "%{resource_title}".
           email_subject: Enviouse a súa proposta "%{mentioned_question_title}"
-          notification_title: A túa proposta "%{mentioned_question_title}" foi mencionada <a href="%{resource_path}">neste espazo</a> nos comentarios.
+          notification_title: A túa proposta "%{mentioned_question_title}" foi mencionada
+            <a href="%{resource_path}">neste espazo</a> nos comentarios.
         question_published:
-          email_intro: '%{author_name} %{author_nickname}, quen está seguindo, publicou unha nova proposta chamada "%{resource_title}". Consulte e contribúa:'
-          email_outro: Recibiches esta notificación porque estás seguindo %{author_nickname}. Podes deixar de recibir notificacións seguindo a ligazón anterior.
+          email_intro: '%{author_name} %{author_nickname}, quen está seguindo, publicou
+            unha nova proposta chamada "%{resource_title}". Consulte e contribúa:'
+          email_outro: Recibiches esta notificación porque estás seguindo %{author_nickname}.
+            Podes deixar de recibir notificacións seguindo a ligazón anterior.
           email_subject: Nova proposta "%{resource_title}" por %{author_nickname}
-          notification_title: A <a href="%{resource_path}">%{resource_title}</a> proposta foi publicada por <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+          notification_title: A <a href="%{resource_path}">%{resource_title}</a> proposta
+            foi publicada por <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
         question_published_for_space:
-          email_intro: A proposta "%{resource_title}" engadiuse a "%{participatory_space_title}" que estás seguindo.
-          email_outro: Recibiches esta notificación porque estás seguindo "%{participatory_space_title}". Podes deixar de seguir desde a ligazón anterior.
+          email_intro: A proposta "%{resource_title}" engadiuse a "%{participatory_space_title}"
+            que estás seguindo.
+          email_outro: Recibiches esta notificación porque estás seguindo "%{participatory_space_title}".
+            Podes deixar de seguir desde a ligazón anterior.
           email_subject: Nova proposta "%{resource_title}" engadida a %{participatory_space_title}
-          notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a> engadiuse a %{participatory_space_title}
+          notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a>
+            engadiuse a %{participatory_space_title}
         question_rejected:
           affected_user:
-            email_intro: 'A túa proposta "%{resource_title}" foi rexeitada. Podes ler a resposta nesta páxina:'
+            email_intro: 'A túa proposta "%{resource_title}" foi rexeitada. Podes
+              ler a resposta nesta páxina:'
             email_outro: Recibiches esta notificación porque es un autor de "%{resource_title}".
             email_subject: A túa proposta foi rexeitada
-            notification_title: A túa proposta <a href="%{resource_path}">%{resource_title}</a> foi rexeitada.
+            notification_title: A túa proposta <a href="%{resource_path}">%{resource_title}</a>
+              foi rexeitada.
           follower:
-            email_intro: 'A proposta "%{resource_title}" foi rexeitada. Podes ler a resposta nesta páxina:'
-            email_outro: Recibiches esta notificación porque estás seguindo "%{resource_title}". Podes deixar de seguir desde a ligazón anterior.
+            email_intro: 'A proposta "%{resource_title}" foi rexeitada. Podes ler
+              a resposta nesta páxina:'
+            email_outro: Recibiches esta notificación porque estás seguindo "%{resource_title}".
+              Podes deixar de seguir desde a ligazón anterior.
             email_subject: A proposta que segues foi rexeitada
-            notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a> foi rexeitada.
+            notification_title: A proposta <a href="%{resource_path}">%{resource_title}</a>
+              foi rexeitada.
         question_update_category:
-          email_intro: 'Un administrador actualizou a categoría da túa proposta "%{resource_title}", comproba isto:'
+          email_intro: 'Un administrador actualizou a categoría da túa proposta "%{resource_title}",
+            comproba isto:'
           email_outro: Recibiches esta notificación porque es o autor da proposta.
           email_subject: A categoría de proposta %{resource_title} foi actualizada
-          notification_title: A categoría de proposta <a href="%{resource_path}">%{resource_title}</a> foi actualizada por un administrador.
+          notification_title: A categoría de proposta <a href="%{resource_path}">%{resource_title}</a>
+            foi actualizada por un administrador.
         voting_enabled:
-          email_intro: 'Podes votar propostas en %{participatory_space_title}. Comezar a participar nesta páxina:'
-          email_outro: Recibiches esta notificación porque estás seguindo %{participatory_space_title}. Podes deixar de recibir notificacións seguindo a ligazón anterior.
+          email_intro: 'Podes votar propostas en %{participatory_space_title}. Comezar
+            a participar nesta páxina:'
+          email_outro: Recibiches esta notificación porque estás seguindo %{participatory_space_title}.
+            Podes deixar de recibir notificacións seguindo a ligazón anterior.
           email_subject: A votación das propostas comezou para %{participatory_space_title}
-          notification_title: Agora podes comezar <a href="%{resource_path}">propostas de voto</a> en <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Agora podes comezar <a href="%{resource_path}">propostas
+            de voto</a> en <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     gamification:
       badges:
         accepted_questions:
           conditions:
-            - Escolle o espazo de participación do teu interese coa presentación de propostas habilitadas
-            - Intente facer propostas que se poidan realizar. Deste xeito son máis propensos a ser aceptados.
-          description: Este distintivo concedeuse cando participas activamente con novas propostas e estas son aceptadas.
+          - Escolle o espazo de participación do teu interese coa presentación de
+            propostas habilitadas
+          - Intente facer propostas que se poidan realizar. Deste xeito son máis propensos
+            a ser aceptados.
+          description: Este distintivo concedeuse cando participas activamente con
+            novas propostas e estas son aceptadas.
           description_another: Este usuario obtivo %{score} propostas aceptadas.
           description_own: Recibiches %{score} propostas.
           name: Propostas aceptadas
-          next_level_in: Obtén %{score} propostas máis aceptadas para alcanzar o seguinte nivel!
+          next_level_in: Obtén %{score} propostas máis aceptadas para alcanzar o seguinte
+            nivel!
           unearned_another: Este usuario aínda non recibiu ningunha proposta aceptada.
           unearned_own: Aínda non recibiu propostas.
         question_votes:
           conditions:
-            - Busque e pase un tempo a ler as propostas doutras persoas
-            - Dea soporte ás propostas que che gustan ou que che resulten interesantes
-          description: Este distintivo concedeuse cando apoias as propostas doutras persoas.
+          - Busque e pase un tempo a ler as propostas doutras persoas
+          - Dea soporte ás propostas que che gustan ou que che resulten interesantes
+          description: Este distintivo concedeuse cando apoias as propostas doutras
+            persoas.
           description_another: Este usuario deu soporte a %{score} propostas.
           description_own: Vostede deu apoio a %{score} propostas.
           name: A proposta é compatible
-          next_level_in: Dea soporte a máis de %{score} propostas para alcanzar o seguinte nivel!
+          next_level_in: Dea soporte a máis de %{score} propostas para alcanzar o
+            seguinte nivel!
           unearned_another: Este usuario aínda non deu soporte a ningunha proposta.
           unearned_own: Xa deu soporte a ningunha proposta aínda.
         questions:
           conditions:
-            - Escolle o espazo de participación do teu interese coa presentación de propostas habilitadas
-            - Crea unha nova proposta
-          description: Este distintivo é concedido cando participas activamente con novas propostas.
+          - Escolle o espazo de participación do teu interese coa presentación de
+            propostas habilitadas
+          - Crea unha nova proposta
+          description: Este distintivo é concedido cando participas activamente con
+            novas propostas.
           description_another: Este usuario creou %{score} propostas.
           description_own: Creaches %{score} propostas.
           name: Propostas
@@ -292,14 +373,20 @@ gl:
             import_doc: Importar documento
           import:
             invalid: O formulario non é válido.
-            success: Parabéns, foron analizadas as seguintes seccións do documento importado, convertéronse en propostas. Agora podes revisar e axustar o que necesites antes de publicar.
+            success: Parabéns, foron analizadas as seguintes seccións do documento
+              importado, convertéronse en propostas. Agora podes revisar e axustar
+              o que necesites antes de publicar.
           index:
-            info_1: As seguintes seccións foron analizadas dende o documento importado, convertéronse en propostas. Agora podes revisar e axustar o que necesites antes de publicar.
+            info_1: As seguintes seccións foron analizadas dende o documento importado,
+              convertéronse en propostas. Agora podes revisar e axustar o que necesites
+              antes de publicar.
             publish_document: Publicar documento
             title: TEXTO PARTICIPARIO PREVIEW
           new_import:
             bottom_hint: "(Poderá ver e ordenar as seccións do documento)"
-            document_legend: 'Engada un documento inferior a 2 MB, cada sección até que se analizen 3 niveis de profundidade nas Propostas. Os formatos soportados son: Markdown'
+            document_legend: 'Engada un documento inferior a 2 MB, cada sección até
+              que se analizen 3 niveis de profundidade nas Propostas. Os formatos
+              soportados son: Markdown'
             title: AGREGAR DOCUMENTOS
             upload_document: Cargar documento
           publish:
@@ -359,14 +446,16 @@ gl:
             invalid: 'Estas propostas xa tiñan a categoría %{category} : %{questions}.'
             select_a_category: Selecciona unha categoría
             select_a_question: Selecciona unha proposta
-            success: 'As propostas actualizáronse con éxito á categoría %{category} : %{questions}.'
+            success: 'As propostas actualizáronse con éxito á categoría %{category}
+              : %{questions}.'
         questions_imports:
           create:
             invalid: Produciuse un problema na importación das propostas
             success: "%{number} propostas importadas con éxito"
           new:
             create: Propostas de importación
-            no_components: Non existen outros compoñentes de proposta neste espazo participativo para importar as propostas.
+            no_components: Non existen outros compoñentes de proposta neste espazo
+              participativo para importar as propostas.
             select_component: Selecciona un compoñente
             select_states: Comprobe os estados das propostas para importar
         questions_merges:
@@ -386,10 +475,13 @@ gl:
       admin_log:
         question:
           answer: "%{user_name} respondeu á proposta %{resource_name} no espazo %{space_name}"
-          create: "%{user_name} creou a proposta %{resource_name} no espazo %{space_name} como proposta oficial"
-          update: "%{user_name} actualizou a %{resource_name} proposta oficial sobre o espazo %{space_name}"
+          create: "%{user_name} creou a proposta %{resource_name} no espazo %{space_name}
+            como proposta oficial"
+          update: "%{user_name} actualizou a %{resource_name} proposta oficial sobre
+            o espazo %{space_name}"
         question_note:
-          create: "%{user_name} deixou unha nota privada na proposta %{resource_name} no espazo %{space_name}"
+          create: "%{user_name} deixou unha nota privada na proposta %{resource_name}
+            no espazo %{space_name}"
       answers:
         accepted: Aceptada
         evaluating: Avaliación
@@ -418,7 +510,8 @@ gl:
           publish:
             error: Produciuse un erro ao publicar o borrador colaborativo.
             irreversible_action_modal:
-              body: Despois de publicar o proxecto como proposta, o borrador non será editable máis. A proposta non aceptará novos autores ou contribucións.
+              body: Despois de publicar o proxecto como proposta, o borrador non será
+                editable máis. A proposta non aceptará novos autores ou contribucións.
               cancel: Cancelar
               ok: Publicar como proposta
               title: A seguinte acción é irreversible
@@ -427,7 +520,8 @@ gl:
           withdraw:
             error: Houbo erros ao pechar o borrador colaborativo.
             irreversible_action_modal:
-              body: Despois de pechar o borrador, o borrador non será editable máis. O borrador non aceptará novos autores ou contribucións.
+              body: Despois de pechar o borrador, o borrador non será editable máis.
+                O borrador non aceptará novos autores ou contribucións.
               cancel: Cancelar
               ok: Retire o borrador colaborativo
               title: A seguinte acción é irreversible
@@ -491,16 +585,21 @@ gl:
             title: Solicitudes de colaboración
           rejected_request:
             error: Non se puido rexeitar como colaborador, téntao de novo máis tarde.
-            success: "O @%{user} foi rexeitado correctamente como colaborador"
+            success: O @%{user} foi rexeitado correctamente como colaborador
         show:
           back: De volta
           edit: Editar borrador colaborativo
           final_question: proposta final
-          final_question_help_text: Este borrador está rematado. Podes ver a proposta final rematada
+          final_question_help_text: Este borrador está rematado. Podes ver a proposta
+            final rematada
           hidden_authors_count:
             one: e %{count} persoas máis
             other: e %{count} persoas máis
-          info-message: Este é un <strong>proxecto colaborativo</strong> a proposta. Isto significa que pode axudar aos seus autores a configurar a proposta usando a sección de comentarios a continuación ou mellorala directamente solicitando o acceso para editala. Unha vez que os autores te outorgan acceso, podes realizar cambios neste borrador.
+          info-message: Este é un <strong>proxecto colaborativo</strong> a proposta.
+            Isto significa que pode axudar aos seus autores a configurar a proposta
+            usando a sección de comentarios a continuación ou mellorala directamente
+            solicitando o acceso para editala. Unha vez que os autores te outorgan
+            acceso, podes realizar cambios neste borrador.
           of_versions: "(de %{number})"
           publish: Publicar
           publish_info: Publica esta versión do borrador ou
@@ -563,6 +662,9 @@ gl:
           comment: Comentario
           comments: Comentarios
           endorse: Endosar
+      publish:
+        error: Houbo erros ao publicar a proposta.
+        success: Proposta publicada correctamente.
       question_endorsements:
         create:
           error: Houbo erros ao aprobar a proposta.
@@ -598,7 +700,8 @@ gl:
           title: Editar proposta
         edit_draft:
           discard: Descarta este borrador
-          discard_confirmation: '¿Estás seguro de que desexas descartar este borrador de proposta?'
+          discard_confirmation: "¿Estás seguro de que desexas descartar este borrador
+            de proposta?"
           send: Vista previa
           title: Editar borrador de proposta
         endorsement_identities_cabin:
@@ -607,6 +710,7 @@ gl:
           comments: Comentarios
         filters:
           activity: Actividade
+          amendment_type: Tipo
           category: Categoría
           category_prompt: Selecciona unha categoría
           origin: Orixe
@@ -614,7 +718,6 @@ gl:
           search: Busca
           state: Estado
           voted: Votado
-          amendment_type: Tipo
         filters_small_view:
           close_modal: Pechar modal
           filter: Filtro
@@ -644,10 +747,14 @@ gl:
             see_index: Ver índice
         preview:
           modify: Modificar a proposta
-          question_edit_before_minutes:
-            one: Poderá editar esta proposta durante o primeiro minuto despois de que a proposta se publique. Unha vez que pase esta xanela de tempo, non poderás editar a proposta.
-            other: Poderás editar esta proposta durante o primeiro %{count} minutos despois da publicación da proposta. Unha vez que pase esta xanela de tempo, non poderás editar a proposta.
           publish: Publicar
+          question_edit_before_minutes:
+            one: Poderá editar esta proposta durante o primeiro minuto despois de
+              que a proposta se publique. Unha vez que pase esta xanela de tempo,
+              non poderás editar a proposta.
+            other: Poderás editar esta proposta durante o primeiro %{count} minutos
+              despois da publicación da proposta. Unha vez que pase esta xanela de
+              tempo, non poderás editar a proposta.
           title: Publica a túa proposta
         question:
           creation_date: 'Creación: %{date}'
@@ -659,14 +766,17 @@ gl:
           hidden_endorsers_count:
             one: e %{count} persoas máis
             other: e %{count} persoas máis
-          link_to_collaborative_draft_help_text: Esta proposta é o resultado dun borrador colaborativo. Repasa o historial
+          link_to_collaborative_draft_help_text: Esta proposta é o resultado dun borrador
+            colaborativo. Repasa o historial
           link_to_collaborative_draft_text: Vexa o borrador colaborativo
           question_accepted_reason: 'Esta proposta foi aceptada porque:'
           question_in_evaluation_reason: Esta proposta está a ser avaliada
           question_rejected_reason: 'Esta proposta foi rexeitada porque:'
           report: Informe
-          withdraw_btn_hint: Pode retirar a súa proposta se cambia de opinión, sempre que non teña recibido ningún apoio. A proposta non se elimina, aparecerá na lista de propostas retiradas.
-          withdraw_confirmation: '¿Estás seguro de retirar esta proposta?'
+          withdraw_btn_hint: Pode retirar a súa proposta se cambia de opinión, sempre
+            que non teña recibido ningún apoio. A proposta non se elimina, aparecerá
+            na lista de propostas retiradas.
+          withdraw_confirmation: "¿Estás seguro de retirar esta proposta?"
           withdraw_question: Retire a proposta
         tags:
           changed_from: "(cambiado de <u>%{previous_category}</u> por un administrador)"
@@ -688,9 +798,11 @@ gl:
           can_accumulate_supports_beyond_threshold:
             description: Cada proposta pode acumular máis de %{limit} apoios
           minimum_votes_per_user:
-            description: Debes distribuír un mínimo de %{votes} votos entre diferentes propostas.
+            description: Debes distribuír un mínimo de %{votes} votos entre diferentes
+              propostas.
             given_enough_votes: Dicho soporte.
-            supports_remaining: Tes que votar máis %{remaining_votes} propostas para que os teus votos sexan tidos en conta.
+            supports_remaining: Tes que votar máis %{remaining_votes} propostas para
+              que os teus votos sexan tidos en conta.
           question_limit:
             description: Podes crear ata %{limit} propostas.
           threshold_per_question:
@@ -710,9 +822,6 @@ gl:
           step_3: Completa
           step_4: Publica a túa proposta
           step_of: Paso %{current_step_num} de %{total_steps}
-      publish:
-        error: Houbo erros ao publicar a proposta.
-        success: Proposta publicada correctamente.
       update:
         error: Produciuse un erro ao gardar a proposta.
         success: A proposta actualizouse con éxito.
@@ -742,3 +851,5 @@ gl:
       included_questions:
         question_project: 'Proposta que aparece nestes proxectos:'
         question_result: 'Proposta que aparece nestes resultados:'
+    scopes:
+      global: Global

@@ -1,12 +1,13 @@
 <tr data-id="<%= question.id %>">
   <td>
-    <%= check_box_tag "question_ids_s[]", question.id, false, class: "js-check-all-question js-question-list-check  js-question-id-#{question.id}" %><br />
+    <%= check_box_tag "question_ids_s[]", question.id, false, class: "js-check-all-question js-question-list-check  js-question-id-#{question.id}" %>
+    <br/>
   </td>
   <td>
-    <%= question.id %><br />
+    <%= question.id %><br/>
   </td>
   <td>
-    <%= present(question).title %><br />
+    <%= present(question).title %><br/>
   </td>
   <td>
     <% if question.category %>
@@ -49,7 +50,7 @@
   <% end %>
 
   <td>
-    <%= l question.created_at, format: :decidim_short %>
+    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.created_at)) %>
   </td>
 
   <td class="table-list__actions">
@@ -69,6 +70,6 @@
 
     <%= resource_permissions_link(question) %>
 
-   <%= icon_link_to "eye", resource_locator(question).path, t("actions.preview", scope: "decidim.questions.admin"), class: "action-icon--preview", target: :blank %>
+    <%= icon_link_to "eye", resource_locator(question).path, t("actions.preview", scope: "decidim.questions.admin"), class: "action-icon--preview", target: :blank %>
   </td>
 </tr>
