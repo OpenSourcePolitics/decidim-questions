@@ -63,6 +63,12 @@ en:
         one: Vote
         other: Votes
   decidim:
+    admin:
+      models:
+        participatory_process_user_role:
+          roles:
+            committee: Committee
+            service: Service
     components:
       questions:
         actions:
@@ -86,8 +92,8 @@ en:
             official_questions_enabled: Official questions enabled
             participatory_texts_enabled: Participatory texts enabled
             question_answering_enabled: Question answering enabled
-            question_edit_before_minutes: Questions can be edited by authors before
-              this many minutes passes
+            question_answering_roles_enabled: Question answering roles enabled
+            question_edit_before_minutes: Questions can be edited by authors before this many minutes passes
             question_length: Maximum question body length
             question_limit: Question limit per user
             question_wizard_step_1_help_text: Question wizard "Create" step help text

@@ -3,10 +3,18 @@
 module Decidim
   module Questions
     module Admin
-      class Permissions < Decidim::DefaultPermissions
+      class Permissions < Decidim::ParticipatoryProcesses::Permissions
         def permissions
+
+          Rails.logger.debug "==========="
+          Rails.logger.debug "Decidim::Questions::Admin::Permissions"
+          Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
+
           # The public part needs to be implemented yet
           return permission_action if permission_action.scope != :admin
+
+          has_access? if permission_action.subject == :component && permission_action.action == :read
 
           if create_permission_action?
             # There's no special condition to create question notes, only
@@ -45,6 +53,9 @@ module Decidim
             allow! if permission_action.action == :publish
           end
 
+          Rails.logger.debug permission_action.inspect
+          Rails.logger.debug "==========="
+
           permission_action
         end
 
@@ -52,6 +63,12 @@ module Decidim
 
         def question
           @question ||= context.fetch(:question, nil)
+        end
+
+        def has_access?
+          toggle_allow(admin_user? ||
+            can_manage_process?(role: :committee) ||
+            can_manage_process?(role: :service))
         end
 
         def admin_creation_is_enabled?

@@ -399,4 +399,34 @@ FactoryBot.define do
     description { Faker::Lorem.sentences(3).join("\n") }
     component { create(:question_component) }
   end
+
+  factory :process_committee, parent: :user, class: "Decidim::User" do
+    transient do
+      participatory_process { create(:participatory_process) }
+    end
+
+    organization { participatory_process.organization }
+
+    after(:create) do |user, evaluator|
+      create :participatory_process_user_role,
+             user: user,
+             participatory_process: evaluator.participatory_process,
+             role: :committee
+    end
+  end
+
+  factory :process_service, parent: :user, class: "Decidim::User" do
+    transient do
+      participatory_process { create(:participatory_process) }
+    end
+
+    organization { participatory_process.organization }
+
+    after(:create) do |user, evaluator|
+      create :participatory_process_user_role,
+             user: user,
+             participatory_process: evaluator.participatory_process,
+             role: :service
+    end
+  end
 end

@@ -28,6 +28,7 @@ Decidim.register_component(:questions) do |component|
     settings.attribute :threshold_per_question, type: :integer, default: 0
     settings.attribute :can_accumulate_supports_beyond_threshold, type: :boolean, default: false
     settings.attribute :question_answering_enabled, type: :boolean, default: true
+    settings.attribute :question_answering_roles_enabled, type: :boolean, default: true
     settings.attribute :official_questions_enabled, type: :boolean, default: true
     settings.attribute :comments_enabled, type: :boolean, default: true
     settings.attribute :geocoding_enabled, type: :boolean, default: false
@@ -136,7 +137,9 @@ Decidim.register_component(:questions) do |component|
       participatory_space: participatory_space,
       settings: {
         vote_limit: 0,
-        collaborative_drafts_enabled: true
+        collaborative_drafts_enabled: true,
+        question_answering_enabled: true,
+        question_answering_roles_enabled: true
       },
       step_settings: step_settings
     }
