@@ -7,7 +7,7 @@
 
     <div class="card-section">
       <div class="row column">
-        <%= f.collection_radio_buttons :state, [["accepted", t(".accepted")], ["rejected", t(".rejected")], ["evaluating", t(".evaluating")]], :first, :last, prompt: true %>
+        <%= f.collection_radio_buttons :state, [["accepted", t(".accepted")], ["rejected", t(".rejected")]], :first, :last, prompt: true %>
       </div>
 
       <div class="row column">
@@ -18,5 +18,6 @@
 
   <div class="button--double form-general-submit">
     <%= f.submit t(".answer_question") %>
+    <%= link_to t(".cancel"), questions_path %>
   </div>
 <% end %>

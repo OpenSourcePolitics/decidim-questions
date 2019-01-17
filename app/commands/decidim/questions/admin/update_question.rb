@@ -36,7 +36,6 @@ module Decidim
 
           transaction do
             update_question
-            update_question_author
             create_attachment if process_attachments?
           end
 
@@ -49,24 +48,17 @@ module Decidim
 
         def update_question
           Decidim.traceability.update!(
-            question,
-            form.current_user,
-            title: title_with_hashtags,
-            body: body_with_hashtags,
-            category: form.category,
-            scope: form.scope,
-            address: form.address,
-            latitude: form.latitude,
-            longitude: form.longitude,
-            created_in_meeting: form.created_in_meeting
+              question,
+              form.current_user,
+              title: title_with_hashtags,
+              body: body_with_hashtags,
+              category: form.category,
+              scope: form.scope,
+              address: form.address,
+              latitude: form.latitude,
+              longitude: form.longitude,
+              created_in_meeting: form.created_in_meeting
           )
-        end
-
-        def update_question_author
-          question.coauthorships.clear
-          question.add_coauthor(form.author)
-          question.save!
-          question
         end
       end
     end

@@ -32,7 +32,7 @@ module Decidim
 
           # Admins can only edit official questions if they are within the
           # time limit.
-          allow! if permission_action.subject == :question && permission_action.action == :edit && admin_edition_is_available?
+          allow! if permission_action.subject == :question && permission_action.action == :edit
 
           # Every user allowed by the space can update the category of the question
           allow! if permission_action.subject == :question_category && permission_action.action == :update
@@ -74,11 +74,6 @@ module Decidim
         def admin_creation_is_enabled?
           current_settings.try(:creation_enabled?) &&
             component_settings.try(:official_questions_enabled)
-        end
-
-        def admin_edition_is_available?
-          return unless question
-          (question.official? || question.official_meeting?) && question.votes.empty?
         end
 
         def admin_question_answering_is_enabled?

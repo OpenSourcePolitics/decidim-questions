@@ -1,15 +1,6 @@
 GIT
-  remote: https://github.com/bostko/doc2text.git
-  revision: 6e88ce1e068f80e3cf7dcbeca4f22d55576b12d7
-  branch: 0.4-stable
-  specs:
-    doc2text (0.3.3)
-      nokogiri (~> 1.6, >= 1.6.3)
-      rubyzip (~> 1.1, >= 1.1.6)
-
-GIT
-  remote: https://github.com/decidim/decidim
-  revision: 586b2a2b4ff0210503852c532f754fc14cbdbe72
+  remote: https://github.com/OpenSourcePolitics/decidim
+  revision: 760c738a1d794ed46d02958708aa55e082bb2ff2
   branch: 0.16-stable
   specs:
     decidim (0.16.0)
@@ -195,6 +186,15 @@ GIT
     decidim-verifications (0.16.0)
       decidim-core (= 0.16.0)
 
+GIT
+  remote: https://github.com/bostko/doc2text.git
+  revision: 6e88ce1e068f80e3cf7dcbeca4f22d55576b12d7
+  branch: 0.4-stable
+  specs:
+    doc2text (0.3.3)
+      nokogiri (~> 1.6, >= 1.6.3)
+      rubyzip (~> 1.1, >= 1.1.6)
+
 PATH
   remote: .
   specs:
@@ -345,7 +345,7 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.7.0)
+    devise-i18n (1.7.1)
       devise (>= 4.5)
     devise_invitable (1.7.5)
       actionmailer (>= 4.1.0)
