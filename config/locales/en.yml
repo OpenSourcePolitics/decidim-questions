@@ -64,11 +64,43 @@ en:
         other: Votes
   decidim:
     admin:
+      actions:
+        configure: Configure
+        duplicate: Duplicate
+        new_process: New process
+        preview: Preview
+      menu:
+        participatory_processes_submenu:
+          attachment_collections: Attachment collections
+          attachment_files: Attachment files
+          attachments: Attachments
+          categories: Categories
+          components: Components
+          info: Info
+          moderations: Moderations
+          private_users: Private users
+          process_admins: Process admins
+          steps: Steps
       models:
+        participatory_process:
+          fields:
+            created_at: Created at
+            private: Private
+            promoted: Promoted
+            published: Published
+            title: Title
         participatory_process_user_role:
           roles:
             committee: Committee
             service: Service
+      participatory_processes:
+        index:
+          not_published: Not published
+          private: Private
+          public: Public
+          published: Published
+      titles:
+        participatory_processes: Participatory processes
     components:
       questions:
         actions:
@@ -93,7 +125,8 @@ en:
             participatory_texts_enabled: Participatory texts enabled
             question_answering_enabled: Question answering enabled
             question_answering_roles_enabled: Question answering roles enabled
-            question_edit_before_minutes: Questions can be edited by authors before this many minutes passes
+            question_edit_before_minutes: Questions can be edited by authors before
+              this many minutes passes
             question_length: Maximum question body length
             question_limit: Question limit per user
             question_wizard_step_1_help_text: Question wizard "Create" step help text
@@ -452,17 +485,19 @@ en:
             title: Update question
             update: Update
           form:
+            Comittee: Comittee
+            Service: Service
             accepted: Accepted
             attachment_legend: "(Optional) Add an attachment"
             back: Back
+            comittee: Comittee
             created_in_meeting: This question comes from a meeting
             evaluating: Evaluating
-            middleman: Middleman
-            project_management: Project management
             recipient: Recipient
             rejected: Rejected
             select_a_category: Select a category
             select_a_meeting: Select a meeting
+            service: Service
           index:
             actions: Actions
             cancel: Cancel
