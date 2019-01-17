@@ -491,6 +491,7 @@ en:
             attachment_legend: "(Optional) Add an attachment"
             back: Back
             comittee: Comittee
+            committee: Committee
             created_in_meeting: This question comes from a meeting
             evaluating: Evaluating
             recipient: Recipient

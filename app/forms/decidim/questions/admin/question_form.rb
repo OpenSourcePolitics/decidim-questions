@@ -21,8 +21,10 @@ module Decidim
         attribute :meeting_id, Integer
         attribute :suggested_hashtags, Array[String]
         attribute :state, String
+        attribute :recipient, String
 
-        validates :state, presence: true, inclusion: { in: %w(accepted rejected evaluating) }
+        #validates :state, presence: true, inclusion: { in: %w(accepted rejected) }
+        validates :recipient, presence: true, inclusion: { in: %w(service committee) }
         validates :title, :body, presence: true, etiquette: true
         validates :title, length: { maximum: 150 }
         validates :address, geocoding: true, if: -> { current_component.settings.geocoding_enabled? }

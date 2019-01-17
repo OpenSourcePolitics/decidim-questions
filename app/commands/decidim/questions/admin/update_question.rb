@@ -57,7 +57,8 @@ module Decidim
               address: form.address,
               latitude: form.latitude,
               longitude: form.longitude,
-              created_in_meeting: form.created_in_meeting
+              created_in_meeting: form.created_in_meeting,
+              recipient: form.recipient
           )
         end
       end

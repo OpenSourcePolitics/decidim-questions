@@ -13,7 +13,7 @@ module Decidim
         def new
           enforce_permission_to :create, :question
           @form = form(Admin::QuestionForm).from_params(
-            attachment: form(AttachmentForm).from_params({})
+              attachment: form(AttachmentForm).from_params({})
           )
         end
 
@@ -41,15 +41,15 @@ module Decidim
           Admin::UpdateQuestionCategory.call(params[:category][:id], params[:question_ids]) do
             on(:invalid_category) do
               flash.now[:error] = I18n.t(
-                "questions.update_category.select_a_category",
-                scope: "decidim.questions.admin"
+                  "questions.update_category.select_a_category",
+                  scope: "decidim.questions.admin"
               )
             end
 
             on(:invalid_question_ids) do
               flash.now[:alert] = I18n.t(
-                "questions.update_category.select_a_question",
-                scope: "decidim.questions.admin"
+                  "questions.update_category.select_a_question",
+                  scope: "decidim.questions.admin"
               )
             end
 
@@ -96,8 +96,33 @@ module Decidim
                      end
         end
 
+        def query_with_role
+          @query ||= if current_component.settings.participatory_texts_enabled?
+                       Question.where(component: current_component)
+                           .where(recipient: user_role.role)
+                           .published
+                           .order(:position).ransack(params[:q])
+                     else
+                       Question.where(component: current_component)
+                           .where(recipient: user_role.role)
+                           .published
+                           .ransack(params[:q])
+                     end
+        end
+
+        def user_role
+          Decidim::ParticipatoryProcessUserRole.includes(:user)
+              .where(participatory_process: current_participatory_space)
+              .where(user: current_user)
+              .first
+        end
+
         def questions
-          @questions ||= query.result.page(params[:page]).per(15)
+          if user_role
+            @questions ||= query_with_role.result.page(params[:page]).per(15)
+          else
+            @questions ||= query.result.page(params[:page]).per(15)
+          end
         end
 
         def question
@@ -108,10 +133,10 @@ module Decidim
           return if response[:successful].blank?
 
           I18n.t(
-            "questions.update_category.success",
-            category: response[:category_name],
-            questions: response[:successful].to_sentence,
-            scope: "decidim.questions.admin"
+              "questions.update_category.success",
+              category: response[:category_name],
+              questions: response[:successful].to_sentence,
+              scope: "decidim.questions.admin"
           )
         end
 
@@ -119,10 +144,10 @@ module Decidim
           return if response[:errored].blank?
 
           I18n.t(
-            "questions.update_category.invalid",
-            category: response[:category_name],
-            questions: response[:errored].to_sentence,
-            scope: "decidim.questions.admin"
+              "questions.update_category.invalid",
+              category: response[:category_name],
+              questions: response[:errored].to_sentence,
+              scope: "decidim.questions.admin"
           )
         end
 

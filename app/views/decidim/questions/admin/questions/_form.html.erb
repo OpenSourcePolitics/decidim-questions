@@ -46,8 +46,7 @@
 
     <div class="row column">
       <label for="question_recipient"><%= t(".recipient") %></label>
-      <%= form.radio_button("state", t(".service")) %>
-      <%= form.radio_button("state", t(".comittee")) %>
+      <%= form.collection_radio_buttons :recipient, [["service", t(".service")], ["committee", t(".committee")]], :first, :last, prompt: true %>
     </div>
   </div>
 </div>
