@@ -494,6 +494,7 @@ en:
             committee: Committee
             created_in_meeting: This question comes from a meeting
             evaluating: Evaluating
+            none: None
             recipient: Recipient
             rejected: Rejected
             select_a_category: Select a category
