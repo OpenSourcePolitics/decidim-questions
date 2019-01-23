@@ -70,53 +70,8 @@ module Decidim
         end
 
         def question_actions
-          # allow! if permission_action.subject == :participatory_space
-          # allow! if permission_action.subject == :space_area
-          # allow! if permission_action.subject == :oauth_application
-          # allow! if permission_action.subject == :admin_log
-          # allow! if permission_action.subject == :organization
-          # allow! if permission_action.subject == :newsletter
-          # allow! if permission_action.subject == :managed_user
-          # allow! if permission_action.subject == :admin_user
-          # allow! if permission_action.subject == :static_page
-          # allow! if permission_action.subject == :moderation
-          # allow! if permission_action.subject == :space_private_user
-          # allow! if permission_action.subject == :process_user_role
-
-          # allow! if permission_action.subject == :attachment
-          # allow! if permission_action.subject == :attachment_collection
-
-          # allow! if permission_action.subject == :category
-
-          # allow! if permission_action.subject == :surveys
-          # allow! if permission_action.subject == :sortitions
-
-          # allow! if permission_action.subject == :questions
-
-          # allow! if permission_action.subject == :proposals
-
-          # allow! if permission_action.subject == :pages
-          # allow! if permission_action.subject == :meetings
-          # allow! if permission_action.subject == :debates
-          # allow! if permission_action.subject == :budgets
-          # allow! if permission_action.subject == :blogs
-          # allow! if permission_action.subject == :accountability
-
-          # allow! if permission_action.subject == :process
-          # allow! if permission_action.subject == :component
-
-          # allow! if permission_action.subject == :process_step
-
-          # allow! if permission_action.subject == :question_note
-
-          question_action
           question_note_action
           question_answer_action
-        end
-
-        def question_action
-          allow! if permission_action.subject == :question && permission_action.action == :edit
-          allow! if permission_action.subject == :question_category && permission_action.action == :update
         end
 
         def question_note_action
