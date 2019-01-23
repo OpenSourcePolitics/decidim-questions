@@ -54,39 +54,32 @@ module Decidim
 
         def update_with_versioning
           Decidim.traceability.update!(
-            question,
-            form.current_user,
-            title: title_with_hashtags,
-            body: body_with_hashtags,
-            category: form.category,
-            scope: form.scope,
-            address: form.address,
-            latitude: form.latitude,
-            longitude: form.longitude,
-            created_in_meeting: form.created_in_meeting,
-            recipient: form.recipient,
-            state: form.state
+              question,
+              form.current_user,
+              title: title_with_hashtags,
+              body: body_with_hashtags,
+              category: form.category,
+              recipient: form.recipient,
+              state: form.state
           )
         end
 
         def update_without_versioning
           PaperTrail.request(enabled: false) do
             @question.update!(
-              recipient: form.recipient,
-              state: form.state
+                recipient: form.recipient,
+                state: form.state
             )
           end
         end
 
         def only_recipient_or_state_changed?
-          # TODO: FIND A MORE ELEGANT WAY
-          form.attributes[:title] == question.attributes["title"] &&
-            form.attributes[:body] == question.attributes["body"] &&
-            form.attributes[:category] == question.attributes["category"] &&
-            (
-            form.attributes[:state] != question.attributes["state"] ||
-                form.attributes[:recipient] != question.attributes["recipient"]
-          )
+          diff = form.attributes.map { |key, value| key unless question.attributes[key.to_s] == value }
+          return true unless diff_include_user_input(diff)
+        end
+
+        def diff_include_user_input(diff)
+          diff.include?(:title) || diff.include?(:body) || diff.include?(:category_id)
         end
       end
     end
