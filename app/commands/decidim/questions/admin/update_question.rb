@@ -47,7 +47,7 @@ module Decidim
         attr_reader :form, :question, :attachment
 
         def update_question
-          return update_without_versioning if only_recipient_or_state_changed?
+          return update_without_versioning unless versioned_attributes_changed?
 
           update_with_versioning
         end
@@ -73,13 +73,13 @@ module Decidim
           end
         end
 
-        def only_recipient_or_state_changed?
-          diff = form.attributes.map { |key, value| key unless question.attributes[key.to_s] == value }
-          return true unless diff_include_user_input(diff)
-        end
+        # Return true if diff between form and model include versioned attributes
+        def versioned_attributes_changed?
+          diff = Decidim::Questions::Question::VERSIONED_ATTRIBUTES.map do | attr |
+            true if form.send(attr) != question.send(attr)
+          end
 
-        def diff_include_user_input(diff)
-          diff.include?(:title) || diff.include?(:body) || diff.include?(:category_id)
+          diff.include? true
         end
       end
     end

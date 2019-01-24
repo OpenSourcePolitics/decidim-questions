@@ -25,10 +25,13 @@ module Decidim
 
       fingerprint fields: %i[title body]
 
+      # Add a version on question only if the following fields are modified.
+      VERSIONED_ATTRIBUTES = %i[title body category].freeze
+
       amendable(
-        fields: %i[title body],
-        ignore: %i[published_at reference state answered_at answer],
-        form: 'Decidim::Questions::QuestionForm'
+          fields: %i[title body],
+          ignore: %i[published_at reference state answered_at answer],
+          form: 'Decidim::Questions::QuestionForm'
       )
 
       component_manifest_name 'questions'
@@ -60,11 +63,11 @@ module Decidim
       acts_as_list scope: :decidim_component_id
 
       searchable_fields({
-                          scope_id: :decidim_scope_id,
-                          participatory_space: { component: :participatory_space },
-                          D: :search_body,
-                          A: :search_title,
-                          datetime: :published_at
+                            scope_id: :decidim_scope_id,
+                            participatory_space: { component: :participatory_space },
+                            D: :search_body,
+                            A: :search_title,
+                            datetime: :published_at
                         },
                         index_on_create: ->(question) { question.official? },
                         index_on_update: ->(question) { question.visible? })
@@ -86,8 +89,8 @@ module Decidim
         return unless author.is_a?(Decidim::User)
 
         joins(:coauthorships)
-          .where('decidim_coauthorships.coauthorable_type = ?', name)
-          .where('decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ', author.id, author.class.base_class.name)
+            .where('decidim_coauthorships.coauthorable_type = ?', name)
+            .where('decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ', author.id, author.class.base_class.name)
       end
 
       # Public: Updates the vote count of this question.
