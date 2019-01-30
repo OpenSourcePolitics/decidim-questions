@@ -2,7 +2,7 @@
   <h2 class="card-title">
     <%= link_to "#{t ".questions"} > ", questions_path %>
     <% if question %>
-      <%= link_to present(question).title, question.url %>
+      <%= link_to present(question).reference, question.url %>
     <% else %>
       <%= t(".new_question") %>
     <% end %>

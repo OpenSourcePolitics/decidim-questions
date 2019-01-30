@@ -47,7 +47,7 @@ module Decidim
 
       has_many :notes, foreign_key: 'decidim_question_id', class_name: 'QuestionNote', dependent: :destroy, counter_cache: 'question_notes_count'
 
-      validates :title, :body, presence: true
+      validates :body, presence: true
 
       geocoded_by :address, http_headers: ->(question) { { 'Referer' => question.component.organization.host } }
 

@@ -17,16 +17,13 @@
               <%= check_box_tag "questions_bulk", "all", false, class: "js-check-all" %>
             </th>
             <th>
-              <%= sort_link(query, :id, t("models.question.fields.id", scope: "decidim.questions"), default_order: :desc ) %>
-            </th>
-            <th>
-              <%= sort_link(query, :title, t("models.question.fields.title", scope: "decidim.questions") ) %>
+              <%= sort_link(query, :title, t("models.question.fields.reference", scope: "decidim.questions") ) %>
             </th>
             <th>
               <%= sort_link(query, :category_name, t("models.question.fields.category", scope: "decidim.questions") ) %>
             </th>
 
-            <% if current_participatory_space.scopes_enabled? %>
+            <% if current_participatory_space.scopes_enabled? && current_participatory_space.has_subscopes? %>
               <th>
                 <%= sort_link(query, :scope_name, t("models.question.fields.scope", scope: "decidim.questions") ) %>
               </th>
@@ -45,12 +42,6 @@
             <% if current_component.settings.comments_enabled? and !current_settings.comments_blocked? %>
               <th>
                 <%= sort_link(query, :commentable_comments_count, t("models.question.fields.comments", scope: "decidim.questions") ) %>
-              </th>
-            <% end %>
-
-            <% if allowed_to? :create, :question_note %>
-              <th>
-                <%= sort_link(query, :question_notes_count, t("models.question.fields.private_discussions", scope: "decidim.questions") ) %>
               </th>
             <% end %>
 

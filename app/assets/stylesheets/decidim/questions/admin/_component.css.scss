@@ -12,39 +12,37 @@
   display: none;
 }
 
-.question_form_admin {
-  .body-wrapper {
-    margin: .5em 0 1em;
-    padding-left: .25em;
+.body-wrapper {
+  margin: .5em 0 1em;
+  padding-left: .25em;
 
-    .icon:first-child{
-      float: left;
-      position: relative;
-      margin: 0 .25em 0 2px;
-      left: -.25em;
-      color: #adadad;
-    }
-
+  .icon:first-child{
+    float: left;
+    position: relative;
+    margin: 0 .25em 0 2px;
+    left: -.25em;
+    color: #adadad;
   }
 
-  .card-section .callout {
+}
 
-    border-radius: $global-radius;
-    border-color: #eee;
-    margin-top: 5px;
+.card-section .callout {
 
-    .callout-header {
-      position: absolute;
-      top: -18px;
-      left: 5px;
-      background: inherit;
-      display: block;
-      padding: 2px 8px;
-    }
-    .callout-content.inline {
-      input[type="radio"] {
-        margin-bottom: .5rem
-      }
+  border-radius: $global-radius;
+  border-color: #eee;
+  margin-top: 5px;
+
+  .callout-header {
+    position: absolute;
+    top: -18px;
+    left: 5px;
+    background: inherit;
+    display: block;
+    padding: 2px 8px;
+  }
+  .callout-content.inline {
+    input[type="radio"] {
+      margin-bottom: .5rem
     }
   }
 }

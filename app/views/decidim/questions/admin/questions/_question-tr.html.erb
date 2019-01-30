@@ -4,17 +4,14 @@
     <br/>
   </td>
   <td>
-    <%= question.id %><br/>
-  </td>
-  <td>
-    <%= present(question).title %><br/>
+    <%= present(question).reference %><br/>
   </td>
   <td>
     <% if question.category %>
       <%= translated_attribute question.category.name %>
     <% end %>
   </td>
-  <% if current_participatory_space.scopes_enabled? %>
+  <% if current_participatory_space.scopes_enabled? && current_participatory_space.has_subscopes? %>
     <td>
       <% if question.scope %>
         <%= translated_attribute question.scope.name %>
@@ -24,9 +21,8 @@
     </td>
   <% end %>
   <td>
-    <%= t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
     <strong class="<%= question_state_css_class question.state %>">
-      <%= t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
+      <%= icon "bookmark", aria_label: t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
       <%= humanize_question_state question.state %>
     </strong>
   </td>
@@ -40,12 +36,6 @@
   <% if current_component.settings.comments_enabled? and !current_settings.comments_blocked? %>
     <td>
       <%= question.comments.count %>
-    </td>
-  <% end %>
-
-  <% if allowed_to? :create, :question_note %>
-    <td>
-      <%= question.question_notes_count %>
     </td>
   <% end %>
 
