@@ -1,14 +1,20 @@
 <div class="card-section">
   <div class="row column">
-    <strong><%= t ".author" %>: </strong>
-    <%= cell("decidim/coauthorships", question, has_actions: true, size: 3, context: { current_user: current_user }) %>
+    <%= cell("decidim/coauthorships", question, size: 3, context: { current_user: current_user }) %>
+  </div>
+  <div class="row column">
+    <div class="body-wrapper">
+      <%= icon "double-quote-serif-right" %>
+      <% if question.versions.where.not(object: nil).empty? %>
+        <%= present(question).body %>
+      <% else %>
+        <%= present(question.versions.where.not(object: nil).first.reify).body %>
+      <% end %>
+    </div>
   </div>
 </div>
 
 <div class="card-section">
-  <div class="row column">
-    <strong><%= t ".body" %>: </strong>  <%= present(question).body %>
-  </div>
   <div class="row column">
     <strong><%= t ".created_at" %>: </strong> <%= l question.created_at, format: :decidim_short %>
   </div>
@@ -16,4 +22,3 @@
     <strong><%= t ".question_votes_count" %>: </strong> <%= question.question_votes_count %>
   </div>
 </div>
-

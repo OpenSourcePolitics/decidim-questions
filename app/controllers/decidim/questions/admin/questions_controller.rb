@@ -13,6 +13,8 @@ module Decidim
         def new
           enforce_permission_to :create, :question
           @form = form(Admin::QuestionForm).from_params(
+              state: 'evaluating',
+              recipient: 'none',
               attachment: form(AttachmentForm).from_params({})
           )
         end
@@ -66,6 +68,8 @@ module Decidim
         def edit
           enforce_permission_to :edit, :question
           @form = form(Admin::QuestionForm).from_model(question)
+          @form.state = 'evaluating' if question.state.blank?
+          @form.recipient = 'none' if question.recipient.blank? && @form.state == 'evaluating'
           @form.attachment = form(AttachmentForm).from_params({})
         end
 

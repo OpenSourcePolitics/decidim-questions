@@ -6,6 +6,7 @@ Decidim.register_component(:questions) do |component|
   component.engine = Decidim::Questions::Engine
   component.admin_engine = Decidim::Questions::AdminEngine
   component.icon = "decidim/questions/icon.svg"
+  component.admin_stylesheet = "decidim/questions/admin/component"
 
   component.on(:before_destroy) do |instance|
     raise "Can't destroy this component when there are questions" if Decidim::Questions::Question.where(component: instance).any?
