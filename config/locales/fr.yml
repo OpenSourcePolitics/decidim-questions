@@ -21,14 +21,14 @@ fr:
         state: État
         suggested_hashtags: Hashtags suggérés
         title: Titre
-        user_group_id: Créer une proposition en tant que
+        user_group_id: Créer une question en tant que
       question_answer:
         answer: Répondre
       questions_copy:
-        copy_questions: Je comprends que cela va importer toutes les propositions
-          de la fonctionnalité sélectionnée vers la fonctionnalité actuelle et que
-          cette action ne peut pas être inversée.
-        origin_component_id: Fonctionnalité dont on veut copier les propositions
+        copy_questions: Je comprends que cela va importer toutes les questions de
+          la fonctionnalité sélectionnée vers la fonctionnalité actuelle et que cette
+          action ne peut pas être inversée.
+        origin_component_id: Fonctionnalité dont on veut copier les questions
     errors:
       models:
         question:
@@ -36,17 +36,17 @@ fr:
             attachment:
               needs_to_be_reattached: Doit être téléchargé de nouveau
     models:
-      decidim/questions/accepted_question_event: Proposition acceptée
-      decidim/questions/admin/update_question_category_event: Catégorie de proposition
+      decidim/questions/accepted_question_event: Question acceptée
+      decidim/questions/admin/update_question_category_event: Catégorie de question
         modifiée
       decidim/questions/creation_enabled_event: Autoriser la création de nouvelles
-        propositions
+        questions
       decidim/questions/endorsing_enabled_event: Activer le module de soutiens
-      decidim/questions/evaluating_question_event: Proposition en cours d'évaluation
-      decidim/questions/publish_question_event: Proposition publiée
-      decidim/questions/question_endorsed_event: Proposition soutenue
-      decidim/questions/question_mentioned_event: Proposition mentionnée
-      decidim/questions/rejected_question_event: Proposition non retenue
+      decidim/questions/evaluating_question_event: Question en cours d'évaluation
+      decidim/questions/publish_question_event: Question publiée
+      decidim/questions/question_endorsed_event: Question soutenue
+      decidim/questions/question_mentioned_event: Question mentionnée
+      decidim/questions/rejected_question_event: Question non retenue
       decidim/questions/voting_enabled_event: Activer le module de vote simple
   activerecord:
     models:
@@ -54,8 +54,8 @@ fr:
         one: Projet de collaboration
         other: Brouillons collaboratifs
       decidim/questions/question:
-        one: Proposition
-        other: Propositions
+        one: Question
+        other: Questions
       decidim/questions/question_endorsement:
         one: Soutien
         other: Soutiens
@@ -67,11 +67,43 @@ fr:
         other: Votes
   decidim:
     admin:
+      actions:
+        configure: Configurer
+        duplicate: Dupliquer
+        new_process: Nouveau procédé
+        preview: Aperçu
+      menu:
+        participatory_processes_submenu:
+          attachment_collections: Collections de pièces jointes
+          attachment_files: Fichiers joints
+          attachments: Pièces jointes
+          categories: Catégories
+          components: Composants
+          info: Info
+          moderations: Modérations
+          private_users: Utilisateurs privés
+          process_admins: Administrateurs de processus
+          steps: Étapes
       models:
+        participatory_process:
+          fields:
+            created_at: Créé à
+            private: Privé
+            promoted: Promu
+            published: Publié
+            title: Titre
         participatory_process_user_role:
           roles:
             committee: Comité de pilotage
             service: Service
+      participatory_processes:
+        index:
+          not_published: Non publié
+          private: Privé
+          public: Public
+          published: Publié
+      titles:
+        participatory_processes: Processus participatifs
     components:
       questions:
         actions:
@@ -79,7 +111,7 @@ fr:
           endorse: Soutenir
           vote: Voter
           withdraw: Retirer
-        name: Propositions
+        name: Questions
         settings:
           global:
             amendments_enabled: Modifications activées
@@ -91,36 +123,38 @@ fr:
             comments_enabled: Activer le module de commentaire
             geocoding_enabled: Géocodage activé
             minimum_votes_per_user: Nombre minimum de votes par utilisateur
-            new_question_help_text: Texte d'aide à la création d'une nouvelle proposition
-            official_questions_enabled: Autoriser la création de propositions officielles
+            new_question_help_text: Texte d'aide à la création d'une nouvelle question
+            official_questions_enabled: Autoriser la création de questions officielles
             participatory_texts_enabled: Textes participatifs activés
-            question_answering_enabled: Autoriser la réponse officielle aux propositions
-            question_answering_roles_enabled: Activer les rôles de \"Comité de pilotage\" et de \"Service\" de reponses officielles
-            question_edit_before_minutes: Délai (en minutes) après lequel les auteurs ne peuvent plus modifier leurs propositions
-            question_length: Nombre maximum de caractères du corps de la proposition
-            question_limit: Limite de proposition par utilisateur
+            question_answering_enabled: Autoriser la réponse officielle aux questions
+            question_answering_roles_enabled: Activer les rôles de \"Comité de pilotage\"
+              et de \"Service\" de reponses officielles
+            question_edit_before_minutes: Délai (en minutes) après lequel les auteurs
+              ne peuvent plus modifier leurs questions
+            question_length: Nombre maximum de caractères du corps de la question
+            question_limit: Limite de question par utilisateur
             question_wizard_step_1_help_text: Texte d'aide à l'étape "Créer" de la
-              création de proposition
+              création de question
             question_wizard_step_2_help_text: Texte d'aide à l'étape "Comparer" de
-              la création de proposition
+              la création de question
             question_wizard_step_3_help_text: Texte d'aide à l'étape "Compléter" de
-              la création de proposition
+              la création de question
             question_wizard_step_4_help_text: Texte d'aide à l'étape "Publier" de
-              la création de proposition
+              la création de question
             resources_permissions_enabled: Les autorisations d'actions peuvent être
-              définies pour chaque proposition
-            threshold_per_question: Seuil par proposition
+              définies pour chaque question
+            threshold_per_question: Seuil par question
             vote_limit: Limite de votes par utilisateur
           step:
             announcement: Annonce
-            automatic_hashtags: Hashtags ajoutés à toutes les propositions
+            automatic_hashtags: Hashtags ajoutés à toutes les questions
             comments_blocked: Bloquer la création de nouveaux commentaires
-            creation_enabled: Autoriser la création de nouvelles propositions
+            creation_enabled: Autoriser la création de nouvelles questions
             endorsements_blocked: Bloquer les soutiens
             endorsements_enabled: Activer le module de soutiens
-            question_answering_enabled: Autoriser la réponse officielle aux propositions
+            question_answering_enabled: Autoriser la réponse officielle aux questions
             suggested_hashtags: Hashtags suggérés aux utilisateurs pour de nouvelles
-              propositions
+              questions
             votes_blocked: Bloquer les votes
             votes_enabled: Activer le module de vote simple
             votes_hidden: Cacher les votes (si le module de votes est activé, le décompte
@@ -188,208 +222,206 @@ fr:
             <strong>retiré</strong> le <a href="%{resource_path}">%{resource_title}</a>
             projet de collaboration.
         creation_enabled:
-          email_intro: 'Vous pouvez maintenant créer de nouvelles propositions dans
-            %{participatory_space_title} ! Commencez à participer sur cette page :'
+          email_intro: 'Vous pouvez maintenant créer de nouvelles questions dans %{participatory_space_title}
+            ! Commencez à participer sur cette page :'
           email_outro: Vous avez reçu cette notification car vous suivez %{participatory_space_title}.
             Vous pouvez arrêter de recevoir des notifications en cliquant sur le lien
             précédent.
-          email_subject: Les propositions sont maintenant disponibles dans %{participatory_space_title}
+          email_subject: Les questions sont maintenant disponibles dans %{participatory_space_title}
           notification_title: Vous pouvez maintenant créer de <a href="%{resource_path}">nouvelles
-            propositions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         endorsing_enabled:
-          email_intro: 'Vous pouvez soutenir les différentes propositions dans %{participatory_space_title}
+          email_intro: 'Vous pouvez soutenir les différentes questions dans %{participatory_space_title}
             ! Commencez à participer en vous rendant sur cette page :'
           email_outro: Vous avez reçu cette notification car vous suivez %{participatory_space_title}.
             Vous pouvez arrêter de recevoir des notifications en cliquant sur ce dernier
             lien.
-          email_subject: Vous pouvez désormais soutenir des propositions dans %{participatory_space_title}
+          email_subject: Vous pouvez désormais soutenir des questions dans %{participatory_space_title}
           notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir
-            les propositions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         question_accepted:
           affected_user:
-            email_intro: 'Votre proposition "%{resource_title}" a été acceptée. Vous
+            email_intro: 'Votre question "%{resource_title}" a été acceptée. Vous
               pouvez lire la réponse sur cette page:'
             email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
               de "%{resource_title}".
-            email_subject: Votre proposition a été acceptée
-            notification_title: Votre proposition <a href="%{resource_path}">%{resource_title}</a>
+            email_subject: Votre question a été acceptée
+            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a>
               a été acceptée.
           follower:
-            email_intro: 'La proposition "%{resource_title}" a été acceptée. Vous
-              pouvez lire la réponse sur cette page :'
+            email_intro: 'La question "%{resource_title}" a été acceptée. Vous pouvez
+              lire la réponse sur cette page :'
             email_outro: Vous venez de recevoir cette notification parce que vous
               suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la
               suivre en cliquant sur ce dernier lien.
-            email_subject: Une proposition que vous suivez a été acceptée
-            notification_title: La proposition <a href="%{resource_path}">%{resource_title}</a>
+            email_subject: Une question que vous suivez a été acceptée
+            notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
               a été acceptée.
         question_endorsed:
           email_intro: '%{endorser_name} %{endorser_nickname}, qui vous suivez, vient
-            d’approuver la proposition "%{resource_title}" et nous pensons que cela
-            pourrait vous intéresser. Découvrez-le et contribuez:'
+            d’approuver la question "%{resource_title}" et nous pensons que cela pourrait
+            vous intéresser. Découvrez-le et contribuez:'
           email_outro: Vous avez reçu cette notification parce que vous suivez %{endorser_nickname}.
             Vous pouvez arrêter de recevoir des notifications en cliquant sur ce dernier
             lien.
-          email_subject: "%{endorser_nickname} a soutenu une nouvelle proposition"
-          notification_title: La proposition <a href="%{resource_path}">%{resource_title}</a>
+          email_subject: "%{endorser_nickname} a soutenu une nouvelle question"
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
             a été soutenue par <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.
         question_evaluating:
           affected_user:
-            email_intro: 'Votre proposition "%{resource_title}" est en cours d''évaluation.
+            email_intro: 'Votre question "%{resource_title}" est en cours d''évaluation.
               Vous pouvez rechercher une réponse sur cette page:'
             email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
               de "%{resource_title}".
-            email_subject: Votre proposition est en cours d'évaluation
-            notification_title: Votre proposition <a href="%{resource_path}">%{resource_title}</a>
+            email_subject: Votre question est en cours d'évaluation
+            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a>
               est en cours d'évaluation.
           follower:
-            email_intro: 'La proposition "%{resource_title}" est en cours d''évaluation.
+            email_intro: 'La question "%{resource_title}" est en cours d''évaluation.
               Vous pouvez consulter cette page pour voir si une réponse a été formulée
               :'
             email_outro: Vous venez de recevoir cette notification parce que vous
               suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la
               suivre en cliquant sur ce dernier lien.
-            email_subject: Une proposition que vous suivez est en cours d'évaluation
-            notification_title: La proposition <a href="%{resource_path}">%{resource_title}</a>
+            email_subject: Une question que vous suivez est en cours d'évaluation
+            notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
               est en cours d'évaluation.
         question_mentioned:
-          email_intro: Votre proposition "%{mentioned_question_title}" a été mentionnée
+          email_intro: Votre question "%{mentioned_question_title}" a été mentionnée
             <a href="%{resource_path}">dans cet espace</a>, dans les commentaires.
           email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
             de "%{resource_title}".
-          email_subject: Votre proposition "%{mentioned_question_title}" a été mentionnée
-          notification_title: Votre proposition "%{mentioned_question_title}" a été
-            mentionnée <a href="%{resource_path}">dans cet espace</a>, dans les commentaires.
+          email_subject: Votre question "%{mentioned_question_title}" a été mentionnée
+          notification_title: Votre question "%{mentioned_question_title}" a été mentionnée
+            <a href="%{resource_path}">dans cet espace</a>, dans les commentaires.
         question_published:
           email_intro: '%{author_name} %{author_nickname}, que vous suivez, a publié
-            une nouvelle proposition appelée "%{resource_title}". Découvrez-le et
-            contribuez:'
+            une nouvelle question appelée "%{resource_title}". Découvrez-le et contribuez:'
           email_outro: Vous avez reçu cette notification car vous suivez %{author_nickname}.
             Vous pouvez cesser de recevoir des notifications en suivant le lien précédent.
-          email_subject: Nouvelle proposition "%{resource_title}" par %{author_nickname}
-          notification_title: La proposition <a href="%{resource_path}">%{resource_title}</a>
+          email_subject: Nouvelle question "%{resource_title}" par %{author_nickname}
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
             a été publiée par <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
         question_published_for_space:
-          email_intro: La proposition "%{resource_title}" a été publiée dans "%{participatory_space_title}"
+          email_intro: La question "%{resource_title}" a été publiée dans "%{participatory_space_title}"
             que vous suivez.
           email_outro: Vous avez reçu cette notification parce que vous suivez "%{participatory_space_title}".
             Vous pouvez cesser de le suivre en cliquant sur le lien précédent.
-          email_subject: Nouvelle proposition "%{resource_title}" ajoutée à %{participatory_space_title}
-          notification_title: La proposition <a href="%{resource_path}">%{resource_title}</a>
+          email_subject: Nouvelle question "%{resource_title}" ajoutée à %{participatory_space_title}
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
             a été publiée dans %{participatory_space_title}
         question_rejected:
           affected_user:
-            email_intro: 'Votre proposition "%{resource_title}" a été rejetée. Vous
-              pouvez lire la réponse sur cette page:'
+            email_intro: 'Votre question "%{resource_title}" a été rejetée. Vous pouvez
+              lire la réponse sur cette page:'
             email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
               de "%{resource_title}".
-            email_subject: Votre proposition a été rejetée
-            notification_title: Votre proposition <a href="%{resource_path}">%{resource_title}</a>
+            email_subject: Votre question a été rejetée
+            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a>
               a été rejetée.
           follower:
-            email_intro: 'La proposition "%{resource_title}" n''a pas été retenue.
-              Vous pouvez lire le commentaire ici :'
+            email_intro: 'La question "%{resource_title}" n''a pas été retenue. Vous
+              pouvez lire le commentaire ici :'
             email_outro: Vous venez de recevoir cette notification parce que vous
               suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la
               suivre en cliquant sur ce dernier lien.
-            email_subject: Une proposition que vous suivez n'a pas été retenue
-            notification_title: La proposition <a href="%{resource_path}">%{resource_title}</a>
+            email_subject: Une question que vous suivez n'a pas été retenue
+            notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
               n'a pas été retenue.
         question_update_category:
-          email_intro: 'Un administrateur a mis à jour la catégorie de votre proposition
+          email_intro: 'Un administrateur a mis à jour la catégorie de votre question
             "%{resource_title}". Vous pouvez y accéder ici :'
           email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
-            de la proposition.
-          email_subject: La catégorie de la proposition %{resource_title} a été mise
+            de la question.
+          email_subject: La catégorie de la question %{resource_title} a été mise
             à jour
-          notification_title: La catégorie de la proposition <a href="%{resource_path}">%{resource_title}</a>
+          notification_title: La catégorie de la question <a href="%{resource_path}">%{resource_title}</a>
             a été mise à jour par un administrateur.
         voting_enabled:
-          email_intro: 'Vous pouvez soutenir les propositions de %{participatory_space_title}
+          email_intro: 'Vous pouvez soutenir les questions de %{participatory_space_title}
             ! Participez ici :'
           email_outro: Vous avez reçu cette notification car vous suivez %{participatory_space_title}.
             Vous pouvez arrêter de recevoir des notifications en suivant le lien précédent.
-          email_subject: Vous pouvez désormais voter les propositions dans %{participatory_space_title}
+          email_subject: Vous pouvez désormais voter les questions dans %{participatory_space_title}
           notification_title: Vous pouvez maintenant commencer <a href="%{resource_path}">à
-            voter pour les propositions</a> de <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            voter pour les questions</a> de <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     gamification:
       badges:
         accepted_questions:
           conditions:
           - Choisissez l'espace de participation qui vous intéresse avec la soumission
-            des propositions activée
-          - Essayez de faire des propositions qui peuvent être réalisées. De cette
-            façon, ils sont plus susceptibles d'être acceptés.
+            des questions activée
+          - Essayez de faire des questions qui peuvent être réalisées. De cette façon,
+            ils sont plus susceptibles d'être acceptés.
           description: Ce badge est attribué lorsque vous participez activement à
-            de nouvelles propositions et que celles-ci sont acceptées.
-          description_another: "%{score} des propositions de cet utilisateur ont été
+            de nouvelles questions et que celles-ci sont acceptées.
+          description_another: "%{score} des questions de cet utilisateur ont été
             acceptées."
-          description_own: "%{score} de vos propositions ont été acceptées."
-          name: Propositions acceptées
-          next_level_in: Vous atteindrez le niveau suivant lorsque %{score} propositions
+          description_own: "%{score} de vos questions ont été acceptées."
+          name: Questions acceptées
+          next_level_in: Vous atteindrez le niveau suivant lorsque %{score} questions
             supplémentaires seront acceptés !
-          unearned_another: Aucune proposition de cet auteur n'a encore été acceptée.
-          unearned_own: Aucune de vos propositions n'a encore été acceptée.
+          unearned_another: Aucune question de cet auteur n'a encore été acceptée.
+          unearned_own: Aucune de vos questions n'a encore été acceptée.
         question_votes:
           conditions:
-          - Parcourir et passer du temps à lire les propositions d'autres personnes
-          - Soutenez les propositions que vous aimez ou trouvez intéressantes
-          description: Ce badge est attribué lorsque vous soutenez les propositions
-            d'autres personnes.
-          description_another: Cet utilisateur a soutenu %{score} propositions.
-          description_own: Vous avez soutenu %{score} propositions.
-          name: Supports de proposition
-          next_level_in: Soutenir %{score} propositions supplémentaires pour atteindre
+          - Parcourir et passer du temps à lire les questions d'autres personnes
+          - Soutenez les questions que vous aimez ou trouvez intéressantes
+          description: Ce badge est attribué lorsque vous soutenez les questions d'autres
+            personnes.
+          description_another: Cet utilisateur a soutenu %{score} questions.
+          description_own: Vous avez soutenu %{score} questions.
+          name: Supports de question
+          next_level_in: Soutenir %{score} questions supplémentaires pour atteindre
             le niveau supérieur!
-          unearned_another: Cet utilisateur n'a soutenu aucun proposition pour le
-            moment.
-          unearned_own: Vous n'avez soutenu aucune proposition pour le moment.
+          unearned_another: Cet utilisateur n'a soutenu aucun question pour le moment.
+          unearned_own: Vous n'avez soutenu aucune question pour le moment.
         questions:
           conditions:
           - Choisissez l'espace de participation qui vous intéresse avec la soumission
-            des propositions activée
-          - Créer une nouvelle proposition
+            des questions activée
+          - Créer une nouvelle question
           description: Ce badge est attribué lorsque vous participez activement à
-            de nouvelles propositions.
-          description_another: Cet utilisateur a créé %{score} propositions.
-          description_own: Vous avez créé %{score} propositions.
-          name: Propositions
-          next_level_in: Créez %{score} propositions supplémentaires pour atteindre
-            le niveau suivant !
-          unearned_another: Cet utilisateur n'a pas encore créé de proposition.
-          unearned_own: Vous n'avez créé aucune proposition pour le moment.
+            de nouvelles questions.
+          description_another: Cet utilisateur a créé %{score} questions.
+          description_own: Vous avez créé %{score} questions.
+          name: Questions
+          next_level_in: Créez %{score} questions supplémentaires pour atteindre le
+            niveau suivant !
+          unearned_another: Cet utilisateur n'a pas encore créé de question.
+          unearned_own: Vous n'avez créé aucune question pour le moment.
     metrics:
       accepted_questions:
-        description: Nombre de propositions acceptées par les utilisateurs
-        object: les propositions
-        title: Propositions Acceptées
+        description: Nombre de questions acceptées par les utilisateurs
+        object: les questions
+        title: Questions Acceptées
       endorsements:
-        description: Nombre d'avenants générés dans les propositions
+        description: Nombre d'avenants générés dans les questions
         object: avenants
         title: Endossements
       questions:
-        description: Nombre de propositions générées
-        object: les propositions
-        title: Les propositions
+        description: Nombre de questions générées
+        object: les questions
+        title: Les questions
       votes:
-        description: Nombre de votes générés dans les propositions par les utilisateurs
+        description: Nombre de votes générés dans les questions par les utilisateurs
         object: votes
         title: Votes
     participatory_processes:
       participatory_process_groups:
         highlighted_questions:
-          questions: Propositions
+          questions: Questions
     participatory_spaces:
       highlighted_questions:
         see_all: Tout voir (%{count})
     questions:
       actions:
         answer: Répondre
-        edit_question: Modifier la proposition
+        edit_question: Modifier la question
         import: Importer depuis une autre fonctionnalité
-        new: Nouvelle proposition
+        new: Nouvelle question
         participatory_texts: Textes participatifs
-        private_discussions: Private discussions
+        private_discussions: Discussions privées
         private_notes: Notes privées
         title: Actions
       admin:
@@ -397,35 +429,35 @@ fr:
           preview: Aperçu
         exports:
           comments: Commentaires
-          questions: Propositions
+          questions: Questions
         models:
           question:
-            name: Proposition
+            name: Question
         participatory_texts:
           bulk-actions:
             import_doc: Document d'importation
           import:
             invalid: Le formulaire est invalide!
             success: Félicitations, les sections suivantes ont été analysées à partir
-              du document importé, elles ont été converties en propositions. Maintenant,
+              du document importé, elles ont été converties en questions. Maintenant,
               vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de
               publier.
           index:
             info_1: Les sections suivantes ont été analysées à partir du document
-              importé et ont été converties en propositions. Maintenant, vous pouvez
+              importé et ont été converties en questions. Maintenant, vous pouvez
               revoir et ajuster tout ce dont vous avez besoin avant de publier.
             publish_document: Publier le document
             title: APERÇU DU TEXTE PARTICIPATIF
           new_import:
             bottom_hint: "(Vous pourrez prévisualiser et trier les sections de document)"
             document_legend: 'Ajoutez un document inférieur à 2 Mo. Chaque section
-              jusqu’à 3 niveaux sera analysée dans Propositions. Les formats supportés
+              jusqu’à 3 niveaux sera analysée dans Questions. Les formats supportés
               sont: Markdown'
             title: AJOUTER UN DOCUMENT
             upload_document: Télécharger le document
           publish:
-            invalid: Impossible de publier des propositions
-            success: Toutes les propositions ont été publiées
+            invalid: Impossible de publier des questions
+            success: Toutes les questions ont été publiées
           sections:
             article: "<em>article</em>"
             section: "<em>Section:</em> <strong>%{title}</strong>"
@@ -434,13 +466,14 @@ fr:
           edit:
             accepted: Retenue
             answer_question: Répondre
+            cancel: Annuler
             evaluating: En cours d'évaluation
             rejected: Non retenue
-            title: Réponse à la proposition %{title}
+            title: Réponse à la question %{title}
         question_notes:
           create:
-            error: Un problème est survenu lors de la création de cette note de proposition
-            success: Note de proposition créée avec succès
+            error: Un problème est survenu lors de la création de cette note de question
+            success: Note de question créée avec succès
           form:
             note: Remarque
             submit: Soumettre
@@ -448,20 +481,34 @@ fr:
           title: Notes privées
         questions:
           answer:
-            invalid: Il y a eu un problème concernant la réponse à cette proposition
-            success: La réponse à la proposition a été publiée avec succès
+            invalid: Il y a eu un problème concernant la réponse à cette question
+            success: La réponse à la question a été publiée avec succès
           create:
-            invalid: Il y a eu un problème lors de la création de cette proposition
-            success: Proposition créée avec succès
+            invalid: Il y a eu un problème lors de la création de cette question
+            success: Question créée avec succès
           edit:
-            title: Mise à jour de la proposition
+            cancel: Annuler
+            content: Contenu
+            publish: Publier
+            status: Statut
+            title: Mise à jour de la question
             update: Mettre à jour
           form:
+            Comittee: Comité
+            Service: Service après-vente
+            accepted: Accepté
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             back: Back
-            created_in_meeting: Cette proposition provient d'une réunion
+            comittee: Comité
+            committee: Commission
+            created_in_meeting: Cette question provient d'une réunion
+            evaluating: Évaluer les
+            none: Aucun
+            recipient: Bénéficiaire
+            rejected: Rejeté
             select_a_category: Sélectionner une catégorie
             select_a_meeting: Sélectionnez une réunion
+            service: Service après-vente
           index:
             actions: Actions
             cancel: Annuler
@@ -470,55 +517,71 @@ fr:
             merge_button: Fusionner
             select_component: Sélectionnez un composant
             selected: choisi
-            split: Propositions fractionnées
+            split: Questions fractionnées
             split_button: Divisé
-            title: Propositions
+            title: Questions
             update: Mettre à jour
           new:
+            attachment_legend: Légende des pièces jointes
+            content: Contenu
             create: Créer
-            title: Créer une proposition
+            created_in_meeting: Créé en réunion
+            select_a_category: Sélectionnez une catégorie
+            select_a_meeting: Sélectionnez une réunion
+            status: Statut
+            title: Créer une question
           update_category:
-            invalid: 'Ces propositions avaient déjà la catégorie %{category} : %{questions}.'
+            invalid: 'Ces questions avaient déjà la catégorie %{category} : %{questions}.'
             select_a_category: Veuillez sélectionner une catégorie
-            select_a_question: Veuillez sélectionner une proposition
-            success: 'Les propositions ont bien été mises à jour dans la catégorie
-              %{category} : %{questions}.'
+            select_a_question: Veuillez sélectionner une question
+            success: 'Les questions ont bien été mises à jour dans la catégorie %{category}
+              : %{questions}.'
         questions_imports:
           create:
-            invalid: Un problème est survenu lors de l'importation des propositions
-            success: "%{number} propositions importées avec succès"
+            invalid: Un problème est survenu lors de l'importation des questions
+            success: "%{number} questions importées avec succès"
           new:
-            create: Importer des propositions
-            no_components: Il n'y a pas d'autre fonctionnalité de proposition dans
-              cet espace participatif dans laquelle importer les propositions.
+            create: Importer des questions
+            no_components: Il n'y a pas d'autre fonctionnalité de question dans cet
+              espace participatif dans laquelle importer les questions.
             select_component: Veuillez sélectionner une fonctionnalité
-            select_states: Vérifiez l'état des propositions à importer
+            select_states: Vérifiez l'état des questions à importer
         questions_merges:
           create:
-            invalid: Une erreur s'est produite lors de la fusion des propositions
-              sélectionnées.
-            success: A fusionné avec succès les propositions dans un nouveau.
+            invalid: Une erreur s'est produite lors de la fusion des questions sélectionnées.
+            success: A fusionné avec succès les questions dans un nouveau.
         questions_splits:
           create:
-            invalid: Une erreur s'est produite lors de la division des propositions
-              sélectionnées.
-            success: Divisé avec succès les propositions en nouvelles.
+            invalid: Une erreur s'est produite lors de la division des questions sélectionnées.
+            success: Divisé avec succès les questions en nouvelles.
         shared:
           info_question:
             body: Corps du texte
             created_at: Date de création
+            info_question_bottom:
+              body: Corps
+              created_at: Créé à
+              question_votes_count: Le décompte des voix pour les questions
+            info_question_bottom_full:
+              author: Auteur
+              body: Corps
+              created_at: Créé à
+              question_votes_count: Le décompte des voix pour les questions
+            info_question_top:
+              new_question: Nouvelle question
+              questions: Les questions
             question_votes_count: Nombre de votes
-            questions: Propositions
+            questions: Questions
       admin_log:
         question:
-          answer: "%{user_name} a répondu à la proposition %{resource_name} sur l'espace
+          answer: "%{user_name} a répondu à la question %{resource_name} sur l'espace
             %{space_name}"
-          create: "%{user_name} a créé la proposition %{resource_name} sur l'espace
-            %{space_name} en tant que proposition officielle"
-          update: "%{user_name} mis à jour le %{resource_name} proposition officielle
+          create: "%{user_name} a créé la question %{resource_name} sur l'espace %{space_name}
+            en tant que question officielle"
+          update: "%{user_name} mis à jour le %{resource_name} question officielle
             sur le %{space_name} espace"
         question_note:
-          create: "%{user_name} a publié une note privée sur la proposition %{resource_name}
+          create: "%{user_name} a publié une note privée sur la question %{resource_name}
             sur l'espace %{space_name}"
       answers:
         accepted: Retenue
@@ -529,32 +592,32 @@ fr:
       application_helper:
         filter_origin_values:
           all: Tout
-          citizens: Propositions citoyennes
+          citizens: Questions citoyennes
           meetings: Des réunions
-          official: Propositions officielles
+          official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
           accepted: Accepté
           all: Tout
           evaluating: Évaluer
-          except_rejected: Toutes sauf les propositions non retenues
+          except_rejected: Toutes sauf les questions non retenues
           rejected: Rejeté
         filter_type_values:
           all: Tout
           amendments: Amendements
-          questions: Les propositions
+          questions: Les questions
       collaborative_drafts:
         collaborative_draft:
           publish:
             error: Il y a eu des erreurs lors de la publication du brouillon collaboratif.
             irreversible_action_modal:
-              body: Après avoir publié le projet en tant que proposition, le projet
-                ne sera plus éditable. La proposition n'acceptera pas de nouveaux
-                auteurs ou contributions.
+              body: Après avoir publié le projet en tant que question, le projet ne
+                sera plus éditable. La question n'acceptera pas de nouveaux auteurs
+                ou contributions.
               cancel: Annuler
-              ok: Publier en tant que proposition
+              ok: Publier en tant que question
               title: L'action suivante est irréversible
-            success: Projet collaboratif publié avec succès en tant que proposition.
+            success: Projet collaboratif publié avec succès en tant que question.
           view_collaborative_draft: Afficher le brouillon collaboratif
           withdraw:
             error: Il y a eu des erreurs en fermant le projet de collaboration.
@@ -630,26 +693,26 @@ fr:
         show:
           back: Retour
           edit: Modifier un brouillon collaboratif
-          final_question: proposition finale
+          final_question: question finale
           final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la
-            proposition finale terminée
+            question finale terminée
           hidden_authors_count:
             one: et %{count} personne de plus
             other: et %{count} autres personnes
           info-message: Ceci est un <strong>projet collaboratif</strong> pour une
-            proposition. Cela signifie que vous pouvez aider leurs auteurs à façonner
-            la proposition en utilisant la section commentaire ci-dessous ou l'améliorer
+            question. Cela signifie que vous pouvez aider leurs auteurs à façonner
+            la question en utilisant la section commentaire ci-dessous ou l'améliorer
             directement en demandant l'accès pour la modifier. Une fois que les auteurs
             vous accordent l'accès, vous pourrez apporter des modifications à ce brouillon.
           of_versions: "(de %{number})"
           publish: Publier
           publish_info: Publiez cette version du brouillon ou
-          published_question: proposition publiée
+          published_question: question publiée
           request_access: Demande d'accès
           requested_access: Accès demandé
           see_other_versions: voir d'autres versions
           version: Version %{number}
-          version_history: voir l'historique des versions de cette proposition
+          version_history: voir l'historique des versions de cette question
           withdraw: retirer le projet
         states:
           open: Ouvrir
@@ -668,14 +731,14 @@ fr:
           step_3: Complétez votre projet collaboratif
           step_of: Etape %{current_step_num} sur %{total_steps}
       create:
-        error: Il y a eu des erreurs lors de la sauvegarde de la proposition.
-        success: Proposition créée avec succès. Enregistrée comme brouillon.
+        error: Il y a eu des erreurs lors de la sauvegarde de la question.
+        success: Question créée avec succès. Enregistrée comme brouillon.
       destroy_draft:
         error: Des erreurs sont survenues lors de la suppression du brouillon de la
-          proposition.
-        success: Le brouillon de la proposition a bien été supprimé.
+          question.
+        success: Le brouillon de la question a bien été supprimé.
       last_activity:
-        new_question_at_html: "<span>Nouvelle proposition à %{link}</span>"
+        new_question_at_html: "<span>Nouvelle question à %{link}</span>"
       models:
         collaborative_draft:
           fields:
@@ -689,8 +752,8 @@ fr:
             endorsements: Soutiens
             id: ID
             notes: Remarques
-            official_question: Proposition officielle
-            private_discussions: Private discussions
+            official_question: Question officielle
+            private_discussions: Discussions privées
             published_at: Publiée à
             reference: Référence
             scope: Périmètre d'application
@@ -698,8 +761,8 @@ fr:
             title: Titre
             votes: Votes
       new:
-        limit_reached: Vous ne pouvez pas créer de nouvelles propositions car vous
-          avez dépassé le nombre autorisé.
+        limit_reached: Vous ne pouvez pas créer de nouvelles questions car vous avez
+          dépassé le nombre autorisé.
       participatory_text_question:
         alternative_title: Il n'y a pas de textes participatifs pour le moment
         buttons:
@@ -708,11 +771,11 @@ fr:
           comments: commentaires
           endorse: Endosser
       publish:
-        error: Il y a eu des erreurs lors de la publication de la proposition.
-        success: Proposition publiée avec succès.
+        error: Il y a eu des erreurs lors de la publication de la question.
+        success: Question publiée avec succès.
       question_endorsements:
         create:
-          error: Des erreurs sont survenues au moment de soutenir la proposition.
+          error: Des erreurs sont survenues au moment de soutenir la question.
         identities:
           done: Terminé
           select_identity: Sélectionnez l'utilisateur
@@ -724,31 +787,31 @@ fr:
           endorse: Endosser
       question_votes:
         create:
-          error: Des erreurs se sont produites lors du soutien de la proposition.
+          error: Des erreurs se sont produites lors du soutien de la question.
       questions:
         compare:
-          mine_is_different: Ma proposition est différente
-          no_similars_found: Bien joué ! Aucune proposition similaire n'a été trouvée
-          title: Propositions similaires
+          mine_is_different: Ma question est différente
+          no_similars_found: Bien joué ! Aucune question similaire n'a été trouvée
+          title: Questions similaires
         complete:
           send: Envoyer
-          title: Complétez votre proposition
+          title: Complétez votre question
         count:
           questions_count:
-            one: "%{count} proposition"
-            other: "%{count} propositions"
+            one: "%{count} question"
+            other: "%{count} questions"
         edit:
           attachment_legend: "(Facultatif) Ajouter une pièce jointe"
           back: Retour
           select_a_category: Veuillez sélectionner une catégorie
           send: Envoyer
-          title: Modifier la proposition
+          title: Modifier la question
         edit_draft:
           discard: Supprimer ce brouillon
           discard_confirmation: Êtes-vous sûr de vouloir supprimer le brouillon de
-            votre proposition ?
+            votre question ?
           send: Aperçu
-          title: Modifier le brouillon de votre proposition
+          title: Modifier le brouillon de votre question
         endorsement_identities_cabin:
           endorse: Soutenir
         endorsements_card_row:
@@ -762,7 +825,7 @@ fr:
           related_to: Liées à
           search: Rechercher
           state: État
-          voted: Ne montrer que les propositions pour lesquelles j'ai voté
+          voted: Ne montrer que les questions pour lesquelles j'ai voté
         filters_small_view:
           close_modal: Fermer la fenêtre de dialogue
           filter: Filtrer
@@ -770,18 +833,18 @@ fr:
           unfold: Voir plus
         index:
           collaborative_drafts_list: Accéder aux brouillons collaboratifs
-          new_question: Nouvelle proposition
-          see_all_withdrawn: Voir toutes les propositions retirées
-          view_question: Voir la proposition
+          new_question: Nouvelle question
+          see_all_withdrawn: Voir toutes les questions retirées
+          view_question: Voir la question
         linked_questions:
           question_votes:
             one: vote
             other: votes
         new:
           send: Continuer
-          title: Créer une proposition
+          title: Créer une question
         orders:
-          label: 'Classement des propositions par :'
+          label: 'Classement des questions par :'
           most_voted: Les plus votées
           random: Aléatoire
           recent: Les plus récentes
@@ -791,41 +854,40 @@ fr:
           view_index:
             see_index: Voir index
         preview:
-          modify: Modifier la proposition
+          modify: Modifier la question
           publish: Publier
           question_edit_before_minutes:
-            one: Vous avez la possibilité de modifier cette proposition dans la première
+            one: Vous avez la possibilité de modifier cette question dans la première
               minute suivant sa publication. Une fois ce laps de temps écoulé, vous
               ne pourrez plus la modifier.
-            other: Vous avez la possibilité de modifier cette proposition dans les
-              %{count} minutes suivant sa publication. Une fois ce laps de temps écoulé,
-              vous ne pourrez plus la modifier.
-          title: Publier la proposition
+            other: Vous avez la possibilité de modifier cette question dans les %{count}
+              minutes suivant sa publication. Une fois ce laps de temps écoulé, vous
+              ne pourrez plus la modifier.
+          title: Publier la question
         question:
           creation_date: 'Création : %{date}'
-          view_question: Voir la proposition
+          view_question: Voir la question
         show:
           back_to: Retour à
-          edit_question: Modifier la proposition
+          edit_question: Modifier la question
           endorsements_list: Liste des soutiens
           hidden_endorsers_count:
             one: et %{count} personne de plus
             other: et %{count} autres personnes
-          link_to_collaborative_draft_help_text: Cette proposition est le résultat
-            d'un projet collaboratif. Revoir l'histoire
+          link_to_collaborative_draft_help_text: Cette question est le résultat d'un
+            projet collaboratif. Revoir l'histoire
           link_to_collaborative_draft_text: Voir le brouillon collaboratif
-          question_accepted_reason: 'Cette proposition a été retenue parce que :'
-          question_in_evaluation_reason: Cette proposition est en cours d'évaluation
-          question_rejected_reason: 'Cette proposition n''a pas été retenue parce
-            que :'
+          question_accepted_reason: 'Cette question a été retenue parce que :'
+          question_in_evaluation_reason: Cette question est en cours d'évaluation
+          question_rejected_reason: 'Cette question n''a pas été retenue parce que
+            :'
           report: Signaler
-          withdraw_btn_hint: Si vous changez d'avis et tant que votre proposition
-            n'a pas reçu de vote, commentaire et/ou soutien, vous pouvez toujours
-            la retirer. Cette dernière ne sera pas supprimée mais elle apparaîtra
-            dans la liste des propositions retirées.
-          withdraw_confirmation: Êtes-vous sûr de vouloir retirer cette proposition
-            ?
-          withdraw_question: Retirer la proposition
+          withdraw_btn_hint: Si vous changez d'avis et tant que votre question n'a
+            pas reçu de vote, commentaire et/ou soutien, vous pouvez toujours la retirer.
+            Cette dernière ne sera pas supprimée mais elle apparaîtra dans la liste
+            des questions retirées.
+          withdraw_confirmation: Êtes-vous sûr de vouloir retirer cette question ?
+          withdraw_question: Retirer la question
         tags:
           changed_from: "(modifié depuis <u>%{previous_category}</u> par un administrateur)"
           filed_as: Classée en tant que
@@ -840,51 +902,51 @@ fr:
           count:
             one: VOTE
             other: VOTES
-          most_popular_question: Proposition la plus populaire
+          most_popular_question: Question la plus populaire
           need_more_votes: Besoin de plus de votes
         voting_rules:
           can_accumulate_supports_beyond_threshold:
-            description: Chaque proposition doit rassembler plus de %{limit} votes
+            description: Chaque question doit rassembler plus de %{limit} votes
           minimum_votes_per_user:
             description: Vous devez répartir un minimum de %{votes} voix entre différentes
-              propositions.
+              questions.
             given_enough_votes: Vous avez donné suffisamment de soutien.
-            supports_remaining: Vous devez voter %{remaining_votes} proposition supplémentaire
+            supports_remaining: Vous devez voter %{remaining_votes} question supplémentaire
               pour que vos votes soient pris en compte.
           question_limit:
-            description: Vous pouvez créer jusqu'à %{limit} propositions.
+            description: Vous pouvez créer jusqu'à %{limit} questions.
           threshold_per_question:
-            description: Pour être acceptées, les propositions doivent atteindre %{limit}
+            description: Pour être acceptées, les questions doivent atteindre %{limit}
               votes
           title: 'Le vote est soumis aux règles suivantes :'
           vote_limit:
-            description: Vous pouvez voter pour %{limit} propositions au maximum.
+            description: Vous pouvez voter pour %{limit} questions au maximum.
             left: Restant
             votes: Votes
         wizard_aside:
           back: Retour
-          info: Vous créez une <strong>proposition</strong>.
+          info: Vous créez une <strong>question</strong>.
         wizard_steps:
           see_steps: voir les étapes
-          step_1: Créer une proposition
-          step_2: Comparer aux autres propositions
-          step_3: Compléter votre proposition
-          step_4: Publier votre proposition
+          step_1: Créer une question
+          step_2: Comparer aux autres questions
+          step_3: Compléter votre question
+          step_4: Publier votre question
           step_of: Étape %{current_step_num} sur %{total_steps}
       update:
-        error: Des erreurs se sont produites lors de l'enregistrement de la proposition.
-        success: Proposition mise à jour avec succès.
+        error: Des erreurs se sont produites lors de l'enregistrement de la question.
+        success: Question mise à jour avec succès.
       update_draft:
         error: Des erreurs sont survenues lors de l'enregistrement du brouillon de
-          la proposition.
-        success: Le brouillon de proposition a été mis à jour.
+          la question.
+        success: Le brouillon de question a été mis à jour.
       versions:
         changes_at_title: Changements à "%{title}"
         index:
           title: Des versions
         stats:
           back_to_collaborative_draft: Revenir au brouillon collaboratif
-          back_to_question: Retourner à la proposition
+          back_to_question: Retourner à la question
           number_of_versions: Des versions
           show_all_versions: Afficher toutes les versions
           version_author: Auteur de la version
@@ -895,11 +957,11 @@ fr:
           version_index: Version %{index}
     resource_links:
       copied_from_component:
-        question_question: Propositions associées
+        question_question: Questions associées
       included_projects:
         project_result: 'Réalisations apparaissant dans ce projet :'
       included_questions:
-        question_project: 'Proposition figurant dans ces projets :'
-        question_result: 'Proposition figurant dans ces réalisations :'
+        question_project: 'Question figurant dans ces projets :'
+        question_result: 'Question figurant dans ces réalisations :'
     scopes:
       global: Global
