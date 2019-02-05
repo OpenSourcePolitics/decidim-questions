@@ -4,7 +4,10 @@
     <br/>
   </td>
   <td>
-    <%= present(question).reference %><br/>
+    <%= question.id %><br/>
+  </td>
+  <td>
+    <%= present(question).title %><br/>
   </td>
   <td>
     <% if question.category %>

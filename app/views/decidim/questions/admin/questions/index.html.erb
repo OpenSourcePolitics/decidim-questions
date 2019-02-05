@@ -17,7 +17,10 @@
               <%= check_box_tag "questions_bulk", "all", false, class: "js-check-all" %>
             </th>
             <th>
-              <%= sort_link(query, :title, t("models.question.fields.reference", scope: "decidim.questions") ) %>
+              <%= sort_link(query, :id, t("models.question.fields.id", scope: "decidim.questions"), default_order: :desc ) %>
+            </th>
+            <th>
+              <%= sort_link(query, :title, t("models.question.fields.title", scope: "decidim.questions") ) %>
             </th>
             <th>
               <%= sort_link(query, :category_name, t("models.question.fields.category", scope: "decidim.questions") ) %>
