@@ -5,6 +5,7 @@ module Decidim
     module Admin
       # A form object to be used when admin users want to create a question.
       class QuestionForm < Decidim::Form
+        include TranslatableAttributes
         include Decidim::ApplicationHelper
         mimic :question
 
@@ -23,6 +24,9 @@ module Decidim
         attribute :state, String
         attribute :recipient, String
 
+        translatable_attribute :answer, String
+
+        validates :answer, translatable_presence: true, if: ->(form) { form.state == "rejected" }
         validates :state, presence: true, inclusion: { in: %w(accepted evaluating rejected) }
         validates :recipient, presence: true, inclusion: { in: %w(service committee none) }
         validates :title, :body, presence: true, etiquette: true
@@ -33,7 +37,6 @@ module Decidim
         validates :meeting_as_author, presence: true, if: ->(form) { form.created_in_meeting? }
 
         validate :scope_belongs_to_participatory_space_scope
-
         validate :notify_missing_attachment_if_errored
 
         delegate :categories, to: :current_component

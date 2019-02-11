@@ -36,6 +36,7 @@ module Decidim
 
           transaction do
             update_question
+            update_answer unless form.answer.blank?
             create_attachment if process_attachments?
           end
 
@@ -52,30 +53,39 @@ module Decidim
           update_with_versioning
         end
 
+        def update_answer
+          PaperTrail.request(enabled: false) do
+            question.update!(
+              answer: form.answer,
+              answered_at: Time.current
+            )
+          end
+        end
+
         def update_with_versioning
           Decidim.traceability.update!(
-              question,
-              form.current_user,
-              title: title_with_hashtags,
-              body: body_with_hashtags,
-              category: form.category,
-              recipient: form.recipient,
-              state: form.state
+            question,
+            form.current_user,
+            title: title_with_hashtags,
+            body: body_with_hashtags,
+            category: form.category,
+            recipient: form.recipient,
+            state: form.state
           )
         end
 
         def update_without_versioning
           PaperTrail.request(enabled: false) do
-            @question.update!(
-                recipient: form.recipient,
-                state: form.state
+            question.update!(
+              recipient: form.recipient,
+              state: form.state
             )
           end
         end
 
         # Return true if diff between form and model include versioned attributes
         def versioned_attributes_changed?
-          diff = Decidim::Questions::Question::VERSIONED_ATTRIBUTES.map do | attr |
+          diff = Decidim::Questions::Question::VERSIONED_ATTRIBUTES.map do |attr|
             true if form.send(attr) != question.send(attr)
           end
 
