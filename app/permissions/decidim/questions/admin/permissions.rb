@@ -61,22 +61,27 @@ module Decidim
 
         def committee_action?
           return unless can_manage_question?(role: :committee)
+
+          allow! if permission_action.subject == :question && permission_action.action == :edit
           question_actions
         end
 
         def service_action?
           return unless can_manage_question?(role: :service)
+
           question_actions
         end
 
         def question_actions
+          allow! if permission_action.subject == :questions && permission_action.action == :read
           question_note_action
           question_answer_action
         end
 
         def question_note_action
           # TODO: Use only read action and move component permission to the right place
-          allow! if permission_action.subject == :component
+          allow! if permission_action.subject == :component && permission_action.action == :manage
+
           allow! if permission_action.subject == :question_note && permission_action.action == :create
         end
 
