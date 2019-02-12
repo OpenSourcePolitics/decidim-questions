@@ -1,8 +1,9 @@
 <div class="card-divider">
   <h2 class="card-title">
-    <%= link_to "#{t ".questions"} > ", questions_path %>
+    <%= link_to "#{t ".questions"}", questions_path %>
+    >
     <% if question %>
-      <%= link_to present(question).title, question.url %>
+      <%= link_to present(question).title, question.path %>
     <% else %>
       <%= t(".new_question") %>
     <% end %>

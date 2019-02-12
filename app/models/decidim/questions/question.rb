@@ -152,13 +152,6 @@ module Decidim
         answered? && state == 'evaluating'
       end
 
-      # Public: Checks if the organization has marked the question as evaluating it.
-      #
-      # Returns Boolean.
-      def evaluating?
-        answered? && state == 'evaluating'
-      end
-
       # Public: Checks if the author has withdrawn the question.
       #
       # Returns Boolean.
@@ -171,8 +164,10 @@ module Decidim
         ResourceLocatorPresenter.new(self).url
       end
 
-      # Public: alias the reported_content_url method
-      alias url reported_content_url
+      # Public: Expose user side path
+      def path
+        Decidim::ResourceLocatorPresenter.new(self).path
+      end
 
       # Public: Whether the question is official or not.
       def official?
