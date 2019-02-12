@@ -152,6 +152,13 @@ module Decidim
         answered? && state == 'evaluating'
       end
 
+      # Public: Checks if the organization has marked the question as evaluating it.
+      #
+      # Returns Boolean.
+      def evaluating?
+        answered? && state == 'evaluating'
+      end
+
       # Public: Checks if the author has withdrawn the question.
       #
       # Returns Boolean.

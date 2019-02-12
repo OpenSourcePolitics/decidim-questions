@@ -577,6 +577,7 @@ en:
       answers:
         accepted: Accepted
         evaluating: Evaluating
+        pending: Answer pending
         not_answered: Not answered
         rejected: Rejected
         withdrawn: Withdrawn

@@ -35,15 +35,28 @@ module Decidim
         attr_reader :form, :question
 
         def answer_question
+          return answer_question_permanently unless question.evaluating?
+
+          answer_question_temporary
+        end
+
+        def answer_question_temporary
+          question.update!(
+              state: "pending",
+              answer: @form.answer,
+          )
+        end
+
+        def answer_question_permanently
           Decidim.traceability.perform_action!(
-            "answer",
-            question,
-            form.current_user
+              "answer",
+              question,
+              form.current_user
           ) do
             question.update!(
-              state: @form.state,
-              answer: @form.answer,
-              answered_at: Time.current
+                state: @form.state,
+                answer: @form.answer,
+                answered_at: Time.current
             )
           end
         end
@@ -53,29 +66,29 @@ module Decidim
 
           if question.accepted?
             publish_event(
-              "decidim.events.questions.question_accepted",
-              Decidim::Questions::AcceptedQuestionEvent
+                "decidim.events.questions.question_accepted",
+                Decidim::Questions::AcceptedQuestionEvent
             )
           elsif question.rejected?
             publish_event(
-              "decidim.events.questions.question_rejected",
-              Decidim::Questions::RejectedQuestionEvent
+                "decidim.events.questions.question_rejected",
+                Decidim::Questions::RejectedQuestionEvent
             )
           elsif question.evaluating?
             publish_event(
-              "decidim.events.questions.question_evaluating",
-              Decidim::Questions::EvaluatingQuestionEvent
+                "decidim.events.questions.question_evaluating",
+                Decidim::Questions::EvaluatingQuestionEvent
             )
           end
         end
 
         def publish_event(event, event_class)
           Decidim::EventsManager.publish(
-            event: event,
-            event_class: event_class,
-            resource: question,
-            affected_users: question.notifiable_identities,
-            followers: question.followers - question.notifiable_identities
+              event: event,
+              event_class: event_class,
+              resource: question,
+              affected_users: question.notifiable_identities,
+              followers: question.followers - question.notifiable_identities
           )
         end
 
