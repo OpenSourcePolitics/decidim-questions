@@ -50,7 +50,7 @@ fr:
         other: Brouillons collaboratifs
       decidim/questions/question:
         one: Question
-        other: Questions
+        other: Question
       decidim/questions/question_endorsement:
         one: Soutien
         other: Soutiens
@@ -145,7 +145,7 @@ fr:
             votes_enabled: Activer le module de vote simple
             votes_hidden: Cacher les votes (si le module de votes est activé, le décompte des votes sera caché)
     datetime:
-      timeago: "%{time} ago"
+      timeago: "il y a %{time}"
     events:
       questions:
         collaborative_draft_access_accepted:
@@ -349,7 +349,7 @@ fr:
             success: Toutes les questions ont été publiées
           sections:
             article: "<em>article</em>"
-            section: "<em>Section:</em> <strong>%{title}</strong>"
+            section: "<em>Section :</em> <strong>%{title}</strong>"
             sub-section: "<em>Sous-section:</em> %{title}"
         question_answers:
           edit:
@@ -387,7 +387,7 @@ fr:
             Service: Service après-vente
             accepted: Accepté
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
-            back: Back
+            back: Retour
             comittee: Comité
             committee: Commission
             created_in_meeting: Cette question provient d'une réunion
@@ -469,7 +469,7 @@ fr:
       answers:
         accepted: Retenue
         evaluating: En cours d'évaluation
-        pending: Answer pending
+        pending: Réponse en attente
         not_answered: En attente de réponse
         rejected: Non retenue
         withdrawn: Retirée
