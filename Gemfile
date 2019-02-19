@@ -9,7 +9,7 @@ gem "decidim-questions", path: "."
 
 gem "bootsnap", "~> 1.3"
 
-gem "doc2text", git: "https://github.com/bostko/doc2text.git", branch: "0.4-stable"
+gem "doc2text", "~> 0.4.0"
 
 gem "puma", "~> 3.0"
 gem "uglifier", "~> 4.1"
@@ -23,6 +23,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "deepl-rb"
   gem "letter_opener_web", "~> 1.3"
   gem "listen", "~> 3.1"
   gem "spring", "~> 2.0"

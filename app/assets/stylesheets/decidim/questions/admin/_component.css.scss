@@ -1,0 +1,48 @@
+@import "decidim/utils/helpers";
+@import "decidim/utils/keyframes";
+@import "decidim/utils/mixins";
+@import "decidim/modules/help";
+@import "decidim/modules/typography";
+@import "decidim/modules/author-avatar";
+// @import "decidim/modules/cards";
+@import "decidim/modules/collapsible-list";
+@import "decidim/variables";
+
+.tooltip .ml-s {
+  display: none;
+}
+
+.body-wrapper {
+  margin: .5em 0 1em;
+  padding-left: .25em;
+
+  .icon:first-child{
+    float: left;
+    position: relative;
+    margin: 0 .25em 0 2px;
+    left: -.25em;
+    color: #adadad;
+  }
+
+}
+
+.card-section .callout {
+
+  border-radius: $global-radius;
+  border-color: #eee;
+  margin-top: 5px;
+
+  .callout-header {
+    position: absolute;
+    top: -18px;
+    left: 5px;
+    background: inherit;
+    display: block;
+    padding: 2px 8px;
+  }
+  .callout-content.inline {
+    input[type="radio"] {
+      margin-bottom: .5rem
+    }
+  }
+}
