@@ -109,21 +109,21 @@ fr:
         name: Questions
         settings:
           global:
-            amendments_enabled: Modifications activées
+            amendments_enabled: Activer le module Amendements
             announcement: Annonce
             attachments_allowed: Autoriser les pièces jointes
             can_accumulate_supports_beyond_threshold: Peut accumuler des supports au-delà du seuil
-            collaborative_drafts_enabled: Brouillons collaboratifs activés
-            comments_enabled: Activer le module de commentaire
-            geocoding_enabled: Géocodage activé
+            collaborative_drafts_enabled: Activer le module de Brouillons collaboratifs
+            comments_enabled: Activer le module de Commentaire
+            geocoding_enabled: Activer le module de Geocoding
             minimum_votes_per_user: Nombre minimum de votes par utilisateur
             new_question_help_text: Texte d'aide à la création d'une nouvelle question
             official_questions_enabled: Autoriser la création de questions officielles
-            participatory_texts_enabled: Textes participatifs activés
+            participatory_texts_enabled: Activer le module de Textes participatifs
             question_answering_enabled: Autoriser la réponse officielle aux questions
-            question_answering_roles_enabled: Activer les rôles de \"Comité de pilotage\" et de \"Service\" de reponses officielles
+            question_answering_roles_enabled: Activer les rôles de \"Comité de pilotage\" et de \"Maîtrise d'ouvrage\"
             question_edit_before_minutes: Délai (en minutes) après lequel les auteurs ne peuvent plus modifier leurs questions
-            question_length: Nombre maximum de caractères du corps de la question
+            question_length: Nombre maximum de caractères de la question
             question_limit: Limite de question par utilisateur
             question_wizard_step_1_help_text: Texte d'aide à l'étape "Créer" de la création de question
             question_wizard_step_2_help_text: Texte d'aide à l'étape "Comparer" de la création de question
@@ -138,7 +138,7 @@ fr:
             comments_blocked: Bloquer la création de nouveaux commentaires
             creation_enabled: Autoriser la création de nouvelles questions
             endorsements_blocked: Bloquer les soutiens
-            endorsements_enabled: Activer le module de soutiens
+            endorsements_enabled: Activer le module de Soutien
             question_answering_enabled: Autoriser la réponse officielle aux questions
             suggested_hashtags: Hashtags suggérés aux utilisateurs pour de nouvelles questions
             votes_blocked: Bloquer les votes
@@ -149,35 +149,35 @@ fr:
     events:
       questions:
         collaborative_draft_access_accepted:
-          email_intro: '%{requester_name} a été accepté en tant que contributeur du projet collaboratif <a href="%{resource_path}">%{resource_title}</a>.'
-          email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: '%{requester_name} a été accepté en tant que contributeur du brouillon collaboratif <a href="%{resource_path}">%{resource_title}</a>.'
+          email_outro: Vous avez reçu cette notification car vous êtes contributeur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: "%{requester_name} a été accepté pour accéder en tant que contributeur du %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> a été <strong>admis à l' accès en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> projet de collaboration.
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> a été <strong>admis à l' accès en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> brouillon collaboratif.
         collaborative_draft_access_rejected:
-          email_intro: '%{requester_name} a été refusé d''accès en tant que contributeur du projet collaboratif <a href="%{resource_path}">%{resource_title}</a>.'
-          email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: '%{requester_name} a été refusé d''accès en tant que contributeur du brouillon collaboratif <a href="%{resource_path}">%{resource_title}</a>.'
+          email_outro: Vous avez reçu cette notification car vous êtes contributeur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: "%{requester_name} a été rejetée pour accéder en tant que contributeur du %{resource_title} projet de collaboration."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> a été <strong>rejeté pour accéder en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> projet de collaboration.
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> a été <strong>rejeté pour accéder en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> brouillon collaboratif.
         collaborative_draft_access_requested:
           email_intro: '%{requester_name} demandé l''accès en tant que contributeur. Vous pouvez <strong>accepter ou rejeter la demande</strong> de la page de brouillon collaboratif <a href="%{resource_path}">%{resource_title}</a>.'
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: "%{requester_name} demandé un accès pour contribuer à %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> demandé un accès pour contribuer au projet de collaboration <a href="%{resource_path}">%{resource_title}</a> . S'il vous plaît <strong>accepter ou rejeter la demande</strong>.
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> demandé un accès pour contribuer au brouillon collaboratif <a href="%{resource_path}">%{resource_title}</a> . S'il vous plaît <strong>accepter ou rejeter la demande</strong>.
         collaborative_draft_access_requester_accepted:
           email_intro: Vous avez été accepté pour accéder en tant que contributeur du projet collaboratif <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Vous avez reçu cette notification car vous avez demandé à devenir collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
+          email_outro: Vous avez reçu cette notification car vous avez demandé à devenir contributeur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: Vous avez été accepté comme contributeur de %{resource_title}.
-          notification_title: Vous avez été <strong>accepté d'accéder en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> projet de collaboration.
+          notification_title: Vous avez été <strong>accepté d'accéder en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> brouillon collaboratif.
         collaborative_draft_access_requester_rejected:
-          email_intro: Vous avez été refusé à accéder en tant que contributeur du projet collaboratif <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Vous avez reçu cette notification car vous avez demandé à devenir collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: Vous avez été refusé à accéder en tant que contributeur du brouillon collaboratif <a href="%{resource_path}">%{resource_title}</a>.
+          email_outro: Vous avez reçu cette notification car vous avez demandé à devenir contributeur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: Vous avez été rejeté en tant que contributeur de %{resource_title}.
-          notification_title: Vous avez été <strong>rejeté pour accéder en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> projet de collaboration.
+          notification_title: Vous avez été <strong>rejeté pour accéder en tant que contributeur</strong> du <a href="%{resource_path}">%{resource_title}</a> brouillon collaboratif.
         collaborative_draft_withdrawn:
           email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a> retiré le projet de collaboration <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{author_name} %{author_nickname} retiré le %{resource_title} projet de collaboration."
-          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> <strong>retiré</strong> le <a href="%{resource_path}">%{resource_title}</a> projet de collaboration.
+          email_outro: Vous avez reçu cette notification car vous êtes contributeur de <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{author_name} %{author_nickname} retiré le %{resource_title} brouillon collaboratif."
+          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> <strong>retiré</strong> le <a href="%{resource_path}">%{resource_title}</a> brouillon collaboratif.
         creation_enabled:
           email_intro: 'Vous pouvez maintenant créer de nouvelles questions dans %{participatory_space_title} ! Commencez à participer sur cette page :'
           email_outro: Vous avez reçu cette notification car vous suivez %{participatory_space_title}. Vous pouvez arrêter de recevoir des notifications en cliquant sur le lien précédent.
@@ -190,14 +190,14 @@ fr:
           notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         question_accepted:
           affected_user:
-            email_intro: 'Votre question "%{resource_title}" a été acceptée. Vous pouvez lire la réponse sur cette page:'
+            email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez lire la réponse sur cette page:'
             email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur de "%{resource_title}".
-            email_subject: Votre question a été acceptée
-            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a> a été acceptée.
+            email_subject: Une réponse a été publiée pour votre question
+            notification_title: Une réponse a été publiée <a href="%{resource_path}">%{resource_title}</a> pour votre question.
           follower:
-            email_intro: 'La question "%{resource_title}" a été acceptée. Vous pouvez lire la réponse sur cette page :'
+            email_intro: 'Une réponse a été publiée pour la question "%{resource_title}". Vous pouvez lire la réponse sur cette page :'
             email_outro: Vous venez de recevoir cette notification parce que vous suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la suivre en cliquant sur ce dernier lien.
-            email_subject: Une question que vous suivez a été acceptée
+            email_subject: Une question que vous suivez a reçu une réponse
             notification_title: La question <a href="%{resource_path}">%{resource_title}</a> a été acceptée.
         question_endorsed:
           email_intro: '%{endorser_name} %{endorser_nickname}, qui vous suivez, vient d’approuver la question "%{resource_title}" et nous pensons que cela pourrait vous intéresser. Découvrez-le et contribuez:'
