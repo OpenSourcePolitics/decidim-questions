@@ -157,7 +157,7 @@ fr:
           email_intro: '%{requester_name} a été refusé d''accès en tant que collaborateur de <a href="%{resource_path}">%{resource_title}</a>.'
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: "%{requester_name} a été rejetée pour accéder en tant que collaborateur de %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> a été <strong>rejeté pour accéder en tant que collaborateur </strong> du <a href="%{resource_path}">%{resource_title}</a>.
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> a été <strong>rejeté pour accéder en tant que collaborateur </strong> de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_requested:
           email_intro: '%{requester_name} demandé l''accès en tant que collaborateur. Vous pouvez <strong>accepter ou rejeter la demande</strong> depuis la page de <a href="%{resource_path}">%{resource_title}</a>.'
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
@@ -167,17 +167,17 @@ fr:
           email_intro: Vous avez été accepté pour accéder en tant que collaborateur de la question <a href="%{resource_path}">%{resource_title}</a>.
           email_outro: Vous avez reçu cette notification car vous avez demandé à devenir collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: Vous avez été accepté comme collaborateur de %{resource_title}.
-          notification_title: 'Vous avez été <strong>accepté d''accéder en tant que collaborateur</strong> de : <a href="%{resource_path}">%{resource_title}</a>.'
+          notification_title: Vous avez été <strong>accepté d'accéder en tant que collaborateur</strong> de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_requester_rejected:
-          email_intro: 'Vous avez été refusé à accéder en tant que collaborateur de la question : <a href="%{resource_path}">%{resource_title}</a>.'
+          email_intro: Vous avez été refusé à accéder en tant que collaborateur de la question <a href="%{resource_path}">%{resource_title}</a>.
           email_outro: Vous avez reçu cette notification car vous avez demandé à devenir collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
           email_subject: Vous avez été rejeté en tant que collaborateur de %{resource_title}.
           notification_title: Vous avez été <strong>rejeté pour accéder en tant que collaborateur</strong> de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_withdrawn:
-          email_intro: '<a href="%{author_path}">%{author_name} %{author_nickname}</a> retiré la question collaborative : <a href="%{resource_path}">%{resource_title}</a>.'
+          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a> retiré la question collaborative <a href="%{resource_path}">%{resource_title}</a>.
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{author_name} %{author_nickname} retiré la question collaborative : %{resource_title}."
-          notification_title: '<a href="%{author_path}">%{author_name} %{author_nickname}</a> <strong>retiré</strong> la question collaborative : <a href="%{resource_path}">%{resource_title}</a>.'
+          email_subject: "%{author_name} %{author_nickname} retiré la question collaborative %{resource_title}."
+          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> <strong>retiré</strong> la question collaborative <a href="%{resource_path}">%{resource_title}</a>.
         creation_enabled:
           email_intro: 'Vous pouvez maintenant créer de nouvelles questions dans %{participatory_space_title} ! Commencez à participer sur cette page :'
           email_outro: Vous avez reçu cette notification car vous suivez %{participatory_space_title}. Vous pouvez arrêter de recevoir des notifications en cliquant sur le lien précédent.
@@ -272,12 +272,12 @@ fr:
           description_another: Cet utilisateur a soutenu %{score} questions.
           description_own: Vous avez soutenu %{score} questions.
           name: Soutiens de question
-          next_level_in: Soutenir %{score} questions supplémentaires pour atteindre le niveau supérieur!
+          next_level_in: Soutenir %{score} questions supplémentaires pour atteindre le niveau supérieur !
           unearned_another: Cet utilisateur n'a soutenu aucun question pour le moment.
           unearned_own: Vous n'avez soutenu aucune question pour le moment.
         questions:
           conditions:
-            - Choisissez l'espace de participation qui vous intéresse avec la soumission des questions activée
+            - Choisissez l'espace de participation qui vous intéresse où vous pouvez poser des questions
             - Poser une nouvelle question
           description: Ce badge est attribué lorsque vous participez activement à de nouvelles questions.
           description_another: Cet utilisateur a posé %{score} questions.
@@ -384,7 +384,7 @@ fr:
             update: Mettre à jour
           form:
             Comittee: Comité de pilotage
-            Service: Maîtrise d'ouvrage
+            Service: Service
             accepted: Retenue
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             back: Retour
@@ -397,7 +397,7 @@ fr:
             rejected: Non recevable
             select_a_category: Sélectionner une catégorie
             select_a_meeting: Sélectionnez une réunion
-            service: Maîtrise d'ouvrage
+            service: Service
           index:
             actions: Actions
             cancel: Annuler
@@ -499,30 +499,30 @@ fr:
               cancel: Annuler
               ok: Publier en tant que question
               title: L'action suivante est irréversible
-            success: Brouillon collaboratif publié avec succès.
-          view_collaborative_draft: Afficher le brouillon collaboratif
+            success: Question collaborative publiée avec succès.
+          view_collaborative_draft: Afficher la question collaborative
           withdraw:
-            error: Il y a eu des erreurs en fermant le brouillon collaboratif.
+            error: Il y a eu des erreurs en fermant la question collaborative.
             irreversible_action_modal:
-              body: Après avoir fermé le brouillon, il ne sera plus modifiable. Le projet n'acceptera pas de nouveaux auteurs ou contributions.
+              body: Après avoir fermé le brouillon, il ne sera plus modifiable. La question n'acceptera pas de nouveaux auteurs ou contributions.
               cancel: Annuler
-              ok: Retirer le brouillon collaboratif
+              ok: Retirer la question collaborative
               title: L'action suivante est irréversible
-            success: Le brouillon collaboratif a bien été retiré.
+            success: La question collaborative a bien été retirée.
         compare:
-          mine_is_different: Mon brouillon collaboratif est différent
-          no_similars_found: Bien joué ! Aucun brouillon collaboratif similaire n'a été trouvé
-          title: Brouillons collaboratifs similaires
+          mine_is_different: Ma question collaborative est différente
+          no_similars_found: Bien joué ! Aucune question collaborative similaire n'a été trouvée
+          title: Questions collaboratives similaires
         complete:
           send: Envoyer
-          title: Complétez votre brouillon collaboratif
+          title: Complétez votre question collaborative
         count:
           drafts_count:
-            one: "%{count} brouillon collaboratif"
-            other: "%{count} projet collaboratif"
+            one: "%{count} question collaborative"
+            other: "%{count} questions collaboratives"
         create:
-          error: Il y a eu un problème lors de la création de ce brouillon collaboratif
-          success: Brouillon collaboratif créé avec succès.
+          error: Il y a eu un problème lors de la création de cette question collaborative
+          success: Question collaborative créée avec succès.
         edit:
           attachment_legend: "(Facultatif) Ajouter une pièce jointe"
           back: Retour
