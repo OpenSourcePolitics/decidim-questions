@@ -1,5 +1,14 @@
 <%= decidim_form_for(@form, html: { class: "form new_question question_form_admin" }) do |f| %>
-  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+  <%= render partial: "form",
+             object: f,
+             locals: {
+                 title: t(".title"),
+                 content: t(".content"),
+                 status: t(".status")
+             }
+  %>
+
+  <%= javascript_include_tag "decidim/questions/admin/questions_form" %>
 
   <div class="button--double form-general-submit">
     <%= f.submit t(".create") %>

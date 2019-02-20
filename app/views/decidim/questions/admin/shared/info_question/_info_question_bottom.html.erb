@@ -1,0 +1,14 @@
+<div class="card-section">
+  <div class="row column">
+    <div class="body-wrapper">
+      <%= icon "double-quote-serif-right" %>
+      <%= present(question).body %>
+    </div>
+  </div>
+  <div class="row column">
+    <strong><%= t ".created_at" %>: </strong> <%= l question.created_at, format: :decidim_short %>
+  </div>
+  <div class="row column">
+    <strong><%= t ".question_votes_count" %>: </strong> <%= question.question_votes_count %>
+  </div>
+</div>

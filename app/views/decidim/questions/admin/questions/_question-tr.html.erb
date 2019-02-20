@@ -1,19 +1,20 @@
 <tr data-id="<%= question.id %>">
   <td>
-    <%= check_box_tag "question_ids_s[]", question.id, false, class: "js-check-all-question js-question-list-check  js-question-id-#{question.id}" %><br />
+    <%= check_box_tag "question_ids_s[]", question.id, false, class: "js-check-all-question js-question-list-check  js-question-id-#{question.id}" %>
+    <br/>
   </td>
   <td>
-    <%= question.id %><br />
+    <%= question.id %><br/>
   </td>
   <td>
-    <%= present(question).title %><br />
+    <%= present(question).title %><br/>
   </td>
   <td>
     <% if question.category %>
       <%= translated_attribute question.category.name %>
     <% end %>
   </td>
-  <% if current_participatory_space.scopes_enabled? %>
+  <% if current_participatory_space.scopes_enabled? && current_participatory_space.has_subscopes? %>
     <td>
       <% if question.scope %>
         <%= translated_attribute question.scope.name %>
@@ -23,9 +24,8 @@
     </td>
   <% end %>
   <td>
-    <%= t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
     <strong class="<%= question_state_css_class question.state %>">
-      <%= t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
+      <%= icon "bookmark", aria_label: t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
       <%= humanize_question_state question.state %>
     </strong>
   </td>
@@ -42,23 +42,17 @@
     </td>
   <% end %>
 
-  <% if allowed_to? :create, :question_note %>
-    <td>
-      <%= question.question_notes_count %>
-    </td>
-  <% end %>
-
   <td>
-    <%= l question.created_at, format: :decidim_short %>
+    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.created_at)) %>
   </td>
 
   <td class="table-list__actions">
-    <% if allowed_to? :edit, :question, question: question %>
+    <% if allowed_to? :edit, :question %>
       <%= icon_link_to "pencil", edit_question_path(question), t("actions.edit_question", scope: "decidim.questions"), class: "action-icon--edit-question" %>
     <% end %>
 
     <% if allowed_to? :create, :question_note %>
-      <%= icon_link_to "chat", question_question_notes_path(question_id: question.id), t("actions.private_notes", scope: "decidim.questions"), class: "action-icon--index-notes" %>
+      <%= icon_link_to "chat", question_question_notes_path(question_id: question.id), t("actions.private_discussions", scope: "decidim.questions"), class: "action-icon--index-notes" %>
     <% end %>
 
     <% if allowed_to? :create, :question_answer and !question.emendation? %>
@@ -69,6 +63,6 @@
 
     <%= resource_permissions_link(question) %>
 
-   <%= icon_link_to "eye", resource_locator(question).path, t("actions.preview", scope: "decidim.questions.admin"), class: "action-icon--preview", target: :blank %>
+    <%= icon_link_to "eye", resource_locator(question).path, t("actions.preview", scope: "decidim.questions.admin"), class: "action-icon--preview", target: :blank %>
   </td>
 </tr>
