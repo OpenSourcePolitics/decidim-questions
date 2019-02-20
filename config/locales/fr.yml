@@ -771,11 +771,11 @@ fr:
           minimum_votes_per_user:
             description: Vous devez répartir un minimum de %{votes} voix entre différentes questions.
             given_enough_votes: Vous avez donné suffisamment de soutien.
-            supports_remaining: Vous devez voter %{remaining_votes} question supplémentaire pour que vos votes soient pris en compte.
+            supports_remaining: Vous devez voter pour %{remaining_votes} question supplémentaire pour que vos votes soient pris en compte.
           question_limit:
             description: Vous pouvez créer jusqu'à %{limit} questions.
           threshold_per_question:
-            description: Pour être acceptées, les questions doivent atteindre %{limit} votes
+            description: Pour être retenues, les questions doivent atteindre %{limit} votes
           title: 'Le vote est soumis aux règles suivantes :'
           vote_limit:
             description: Vous pouvez voter pour %{limit} questions au maximum.
@@ -792,10 +792,10 @@ fr:
           step_4: Publier votre question
           step_of: Étape %{current_step_num} sur %{total_steps}
       update:
-        error: Des erreurs se sont produites lors de l'enregistrement de la question.
+        error: Des erreurs se sont produites lors de la sauvegarde de la question.
         success: Question mise à jour avec succès.
       update_draft:
-        error: Des erreurs sont survenues lors de l'enregistrement du brouillon de la question.
+        error: Des erreurs sont survenues lors de la sauvegarde du brouillon de la question.
         success: Le brouillon de question a été mis à jour.
       versions:
         changes_at_title: Changements à "%{title}"
@@ -803,7 +803,7 @@ fr:
           title: Des versions
         stats:
           back_to_collaborative_draft: Revenir au brouillon collaboratif
-          back_to_question: Retourner à la question
+          back_to_question: Revenir à la question
           number_of_versions: Des versions
           show_all_versions: Afficher toutes les versions
           version_author: Auteur de la version
@@ -818,7 +818,7 @@ fr:
       included_projects:
         project_result: 'Réalisations apparaissant dans ce projet :'
       included_questions:
-        question_project: 'Question figurant dans ces projets :'
-        question_result: 'Question figurant dans ces réalisations :'
+        question_project: 'Questions figurant dans ces projets :'
+        question_result: 'Questions figurant dans ces réalisations :'
     scopes:
       global: Global
