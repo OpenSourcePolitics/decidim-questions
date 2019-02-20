@@ -232,10 +232,10 @@ fr:
           notification_title: La question <a href="%{resource_path}">%{resource_title}</a> a été publiée dans %{participatory_space_title}
         question_rejected:
           affected_user:
-            email_intro: 'Votre question "%{resource_title}" a été rejetée. Vous pouvez lire la réponse sur cette page:'
+            email_intro: 'Votre question "%{resource_title}" a été considérée comme non recevable. Vous pouvez en consulter la raison sur cette page:'
             email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur de "%{resource_title}".
-            email_subject: Votre question a été rejetée
-            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a> a été rejetée.
+            email_subject: Votre question a été considérée comme non recevable
+            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a> a été considérée comme non recevable.
           follower:
             email_intro: 'La question "%{resource_title}" n''a pas été retenue. Vous pouvez lire le commentaire ici :'
             email_outro: Vous venez de recevoir cette notification parce que vous suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la suivre en cliquant sur ce dernier lien.
@@ -249,54 +249,54 @@ fr:
         voting_enabled:
           email_intro: 'Vous pouvez soutenir les questions de %{participatory_space_title} ! Participez ici :'
           email_outro: Vous avez reçu cette notification car vous suivez %{participatory_space_title}. Vous pouvez arrêter de recevoir des notifications en suivant le lien précédent.
-          email_subject: Vous pouvez désormais voter les questions dans %{participatory_space_title}
+          email_subject: Vous pouvez désormais voter pour les questions dans %{participatory_space_title}
           notification_title: Vous pouvez maintenant commencer <a href="%{resource_path}">à voter pour les questions</a> de <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     gamification:
       badges:
         accepted_questions:
           conditions:
             - Choisissez l'espace de participation qui vous intéresse avec la soumission des questions activée
-            - Essayez de faire des questions qui peuvent être réalisées. De cette façon, ils sont plus susceptibles d'être acceptés.
-          description: Ce badge est attribué lorsque vous participez activement à de nouvelles questions et que celles-ci sont acceptées.
-          description_another: '%{score} des questions de cet utilisateur ont été acceptées.'
-          description_own: '%{score} de vos questions ont été acceptées.'
-          name: Questions acceptées
-          next_level_in: Vous atteindrez le niveau suivant lorsque %{score} questions supplémentaires seront acceptés !
-          unearned_another: Aucune question de cet auteur n'a encore été acceptée.
-          unearned_own: Aucune de vos questions n'a encore été acceptée.
+            - Essayez de poser des questions qui peuvent être réalisées. De cette façon, elles sont plus susceptibles d'être retenue et de recevoir une réponse.
+          description: Ce badge est attribué lorsque vous posez des questions et que celles-ci sont retenues.
+          description_another: '%{score} des questions de cet utilisateur ont été retenues.'
+          description_own: '%{score} de vos questions ont été retenues.'
+          name: Questions retenues
+          next_level_in: Vous atteindrez le niveau suivant lorsque %{score} questions supplémentaires seront retenues !
+          unearned_another: Aucune question de cet auteur n'a encore été retenue.
+          unearned_own: Aucune de vos questions n'a encore été retenue.
         question_votes:
           conditions:
-            - Parcourir et passer du temps à lire les questions d'autres personnes
+            - Naviguer et passer du temps à lire les questions d'autres personnes
             - Soutenez les questions que vous aimez ou trouvez intéressantes
           description: Ce badge est attribué lorsque vous soutenez les questions d'autres personnes.
           description_another: Cet utilisateur a soutenu %{score} questions.
           description_own: Vous avez soutenu %{score} questions.
-          name: Supports de question
+          name: Soutiens de question
           next_level_in: Soutenir %{score} questions supplémentaires pour atteindre le niveau supérieur!
           unearned_another: Cet utilisateur n'a soutenu aucun question pour le moment.
           unearned_own: Vous n'avez soutenu aucune question pour le moment.
         questions:
           conditions:
             - Choisissez l'espace de participation qui vous intéresse avec la soumission des questions activée
-            - Créer une nouvelle question
+            - Poser une nouvelle question
           description: Ce badge est attribué lorsque vous participez activement à de nouvelles questions.
-          description_another: Cet utilisateur a créé %{score} questions.
-          description_own: Vous avez créé %{score} questions.
+          description_another: Cet utilisateur a posé %{score} questions.
+          description_own: Vous avez posé %{score} questions.
           name: Questions
-          next_level_in: Créez %{score} questions supplémentaires pour atteindre le niveau suivant !
-          unearned_another: Cet utilisateur n'a pas encore créé de question.
-          unearned_own: Vous n'avez créé aucune question pour le moment.
+          next_level_in: Posez %{score} questions supplémentaires pour atteindre le niveau suivant !
+          unearned_another: Cet utilisateur n'a pas encore posé de question.
+          unearned_own: Vous n'avez posé aucune question pour le moment.
     metrics:
       accepted_questions:
-        description: Nombre de questions acceptées par les utilisateurs
+        description: Nombre de questions retenues par les utilisateurs
         object: les questions
-        title: Questions Acceptées
+        title: Questions Retenues
       endorsements:
-        description: Nombre d'avenants générés dans les questions
-        object: avenants
-        title: Endossements
+        description: Nombre de soutiens générés par les questions posées
+        object: soutiens
+        title: Soutiens
       questions:
-        description: Nombre de questions générées
+        description: Nombre de questions posées
         object: les questions
         title: Les questions
       votes:
