@@ -528,18 +528,18 @@ fr:
           back: Retour
           select_a_category: Veuillez sélectionner une catégorie
           send: Envoyer
-          title: Modifier un brouillon collaboratif
+          title: Modifier la question collaborative
         filters:
           all: Tout
           amendment: Amendements
           category: Catégorie
           category_prompt: Catégories
           open: Ouvrir
-          published: Publié
-          related_to: Lié à
+          published: Publiée
+          related_to: Liée à
           search: Chercher
           state: État
-          withdrawn: Retiré
+          withdrawn: Retirée
         filters_small_view:
           close_modal: Fermer la fenêtre
           filter: Filtre
@@ -547,31 +547,31 @@ fr:
           unfold: Voir la suite
         new:
           send: Continuer
-          title: Créez votre brouillon collaboratif
+          title: Créez votre question collaborative
         new_collaborative_draft_button:
-          new_collaborative_draft: Nouveau brouillon collaboratif
+          new_collaborative_draft: Nouvelle question collaborative
         orders:
-          label: 'Trier les brouillons par:'
+          label: 'Trier les questions par:'
           most_contributed: Avec le plus de contribution
           random: Aléatoire
-          recent: Récent
+          recent: Récente
         requests:
           accepted_request:
-            error: Votre demande de contribution n'a pas pu aboutir, veuillez réessayer plus tard.
-            success: "@%{user} a été accepté comme contributeur avec succès"
+            error: Votre demande de collaboration n'a pas pu aboutir, veuillez réessayer plus tard.
+            success: "@%{user} a été accepté comme collaborateur avec succès"
           access_requested:
             error: Votre demande n'a pas pu être complétée, réessayez plus tard.
-            success: Votre demande de contribution a été envoyée avec succès
+            success: Votre demande de collaboration a été envoyée avec succès
           collaboration_requests:
             accept_request: Accepté
             reject_request: Rejeté
-            title: Demandes de contribution
+            title: Demandes de collaboration
           rejected_request:
             error: Ne peut être rejeté en tant que contributeur, réessayez plus tard.
-            success: "@%{user} a bien été rejeté en tant que contributeur"
+            success: "@%{user} a bien été rejeté en tant que collaborateur"
         show:
           back: Retour
-          edit: Modifier un brouillon collaboratif
+          edit: Modifier la question collaborative
           final_question: question finale
           final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la question qui en est issue
           hidden_authors_count:
@@ -590,19 +590,19 @@ fr:
           withdraw: retirer le brouillon
         states:
           open: Ouvrir
-          published: Publié
-          withdrawn: Retiré
+          published: Publiée
+          withdrawn: Retirée
         update:
-          error: Il y a eu des erreurs lors de la sauvegarde du brouillon collaboratif.
-          success: Brouillon collaboratif mis à jour avec succès.
+          error: Il y a eu des erreurs lors de la sauvegarde de la question collaborative.
+          success: Question collaborative mise à jour avec succès.
         wizard_aside:
           back: Retour
-          info: Vous créez un <strong>brouillon collaboratif</strong>.
+          info: Vous créez une <strong>question collaborative</strong>.
         wizard_steps:
           see_steps: voir les étapes
-          step_1: Créez votre brouillon collaboratif
-          step_2: Comparer avec les autres brouillons collaboratifs
-          step_3: Complétez votre brouillon collaboratif
+          step_1: Créez votre question collaborative
+          step_2: Comparer avec les autres questions collaboratives
+          step_3: Complétez votre question collaborative
           step_of: Etape %{current_step_num} sur %{total_steps}
       create:
         error: Il y a eu des erreurs lors de la sauvegarde de la question.
@@ -702,7 +702,7 @@ fr:
           filter_by: Filtrer par
           unfold: Voir plus
         index:
-          collaborative_drafts_list: Accéder aux brouillons collaboratifs
+          collaborative_drafts_list: Accéder aux questions collaboratives
           new_question: Nouvelle question
           see_all_withdrawn: Voir toutes les questions retirées
           view_question: Voir la question
@@ -740,8 +740,8 @@ fr:
           hidden_endorsers_count:
             one: et %{count} personne de plus
             other: et %{count} autres personnes
-          link_to_collaborative_draft_help_text: Cette question est le résultat d'un brouillon collaboratif. Voir l'historique
-          link_to_collaborative_draft_text: Voir le brouillon collaboratif
+          link_to_collaborative_draft_help_text: Cette question est le résultat d'une collaboration. Voir l'historique
+          link_to_collaborative_draft_text: Voir la question collaborative
           question_accepted_reason: 'Cette question a reçu une réponse car :'
           question_in_evaluation_reason: Cette question est en cours de traitement
           question_rejected_reason: 'Cette question est considérée comme non recevable car :'
@@ -802,7 +802,7 @@ fr:
         index:
           title: Des versions
         stats:
-          back_to_collaborative_draft: Revenir au brouillon collaboratif
+          back_to_collaborative_draft: Revenir à la version actuelle
           back_to_question: Revenir à la question
           number_of_versions: Des versions
           show_all_versions: Afficher toutes les versions
