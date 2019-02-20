@@ -300,7 +300,7 @@ fr:
         object: les questions
         title: Les questions
       votes:
-        description: Nombre de votes générés dans les questions par les utilisateurs
+        description: Nombre de votes soumis par les utilisateurs pour les questions
         object: votes
         title: Votes
     participatory_processes:
@@ -309,7 +309,7 @@ fr:
           questions: Questions
     participatory_spaces:
       highlighted_questions:
-        see_all: Tout voir (%{count})
+        see_all: Voir tout (%{count})
     questions:
       actions:
         answer: Répondre
@@ -331,9 +331,9 @@ fr:
             name: Question
         participatory_texts:
           bulk-actions:
-            import_doc: Document d'importation
+            import_doc: Importer un document
           import:
-            invalid: Le formulaire est invalide!
+            invalid: Le formulaire est invalide !
             success: Félicitations, les sections suivantes ont été analysées à partir du document importé, elles ont été converties en questions. Maintenant, vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de publier.
           index:
             info_1: Les sections suivantes ont été analysées à partir du document importé et ont été converties en questions. Maintenant, vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de publier.
@@ -348,7 +348,7 @@ fr:
             invalid: Impossible de publier des questions
             success: Toutes les questions ont été publiées
           sections:
-            article: "<em>article</em>"
+            article: "<em>Article</em>"
             section: "<em>Section :</em> <strong>%{title}</strong>"
             sub-section: "<em>Sous-section:</em> %{title}"
         question_answers:
@@ -356,17 +356,17 @@ fr:
             accepted: Retenue
             answer_question: Répondre
             cancel: Annuler
-            evaluating: En cours d'évaluation
-            rejected: Non retenue
+            evaluating: En attente de réponse
+            rejected: Non recevable
             title: Réponse à la question %{title}
         question_notes:
           create:
-            error: Un problème est survenu lors de la création de cette note de question
-            success: Note de question créée avec succès
+            error: Un problème est survenu lors de la création de cette note
+            success: Note créée avec succès
           form:
-            note: Remarque
+            note: Note
             submit: Soumettre
-          leave_your_note: Laisser une remarque
+          leave_your_note: Laisser une note
           title: Notes privées
         questions:
           answer:
@@ -383,31 +383,31 @@ fr:
             title: Mise à jour de la question
             update: Mettre à jour
           form:
-            Comittee: Comité
-            Service: Service après-vente
-            accepted: Accepté
+            Comittee: Comité de pilotage
+            Service: Maîtrise d'ouvrage
+            accepted: Retenue
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             back: Retour
-            comittee: Comité
-            committee: Commission
+            comittee: Comité de pilotage
+            committee: Comité de pilotage
             created_in_meeting: Cette question provient d'une réunion
-            evaluating: Évaluer les
+            evaluating: A traiter
             none: Aucun
-            recipient: Bénéficiaire
-            rejected: Rejeté
+            recipient: Destinataire
+            rejected: Non recevable
             select_a_category: Sélectionner une catégorie
             select_a_meeting: Sélectionnez une réunion
-            service: Service après-vente
+            service: Maîtrise d'ouvrage
           index:
             actions: Actions
             cancel: Annuler
             change_category: Changer de catégorie
             merge: Fusionner dans un nouveau
             merge_button: Fusionner
-            select_component: Sélectionnez un composant
+            select_component: Sélectionnez une fonctionnalité
             selected: choisi
             split: Questions fractionnées
-            split_button: Divisé
+            split_button: Fractionner
             title: Questions
             update: Mettre à jour
           new:
@@ -430,30 +430,30 @@ fr:
             success: "%{number} questions importées avec succès"
           new:
             create: Importer des questions
-            no_components: Il n'y a pas d'autre fonctionnalité de question dans cet espace participatif dans laquelle importer les questions.
+            no_components: Il n'y a pas d'autre fonctionnalité de question dans cet espace participatif dans laquelle importer.
             select_component: Veuillez sélectionner une fonctionnalité
-            select_states: Vérifiez l'état des questions à importer
+            select_states: Vérifiez le statut des questions à importer
         questions_merges:
           create:
             invalid: Une erreur s'est produite lors de la fusion des questions sélectionnées.
-            success: A fusionné avec succès les questions dans un nouveau.
+            success: Fusion des questions dans une seule réussie.
         questions_splits:
           create:
-            invalid: Une erreur s'est produite lors de la division des questions sélectionnées.
-            success: Divisé avec succès les questions en nouvelles.
+            invalid: Une erreur s'est produite lors de la fraction des questions sélectionnées.
+            success: Fraction des questions réussie.
         shared:
           info_question:
             body: Corps du texte
             created_at: Date de création
             info_question_bottom:
-              body: Corps
+              body: Corps du texte
               created_at: Créé à
-              question_votes_count: Le décompte des voix pour les questions
+              question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               author: Auteur
-              body: Corps
+              body: Corps du texte
               created_at: Créé à
-              question_votes_count: Le décompte des voix pour les questions
+              question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
               questions: Les questions
@@ -468,26 +468,26 @@ fr:
           create: "%{user_name} a publié une note privée sur la question %{resource_name} sur l'espace %{space_name}"
       answers:
         accepted: Retenue
-        evaluating: En cours d'évaluation
-        pending: Réponse en attente
-        not_answered: En attente de réponse
-        rejected: Non retenue
+        evaluating: En attente de réponse
+        pending: En attente de validation
+        not_answered: A traiter
+        rejected: Non recevable
         withdrawn: Retirée
       application_helper:
         filter_origin_values:
-          all: Tout
+          all: Toutes
           citizens: Questions citoyennes
           meetings: Des réunions
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Accepté
-          all: Tout
-          evaluating: Évaluer
-          except_rejected: Toutes sauf les questions non retenues
-          rejected: Rejeté
+          accepted: Retenues
+          all: Toutes
+          evaluating: En attente de réponse
+          except_rejected: Toutes sauf les questions non recevables
+          rejected: Non retenue
         filter_type_values:
-          all: Tout
+          all: Toutes
           amendments: Amendements
           questions: Les questions
       collaborative_drafts:
@@ -495,34 +495,34 @@ fr:
           publish:
             error: Il y a eu des erreurs lors de la publication du brouillon collaboratif.
             irreversible_action_modal:
-              body: Après avoir publié le projet en tant que question, le projet ne sera plus éditable. La question n'acceptera pas de nouveaux auteurs ou contributions.
+              body: Après avoir publié le brouillon en tant que question, il ne sera plus modifiable. La question n'acceptera pas de nouveaux auteurs ou contributions.
               cancel: Annuler
               ok: Publier en tant que question
               title: L'action suivante est irréversible
-            success: Projet collaboratif publié avec succès en tant que question.
+            success: Brouillon collaboratif publié avec succès.
           view_collaborative_draft: Afficher le brouillon collaboratif
           withdraw:
-            error: Il y a eu des erreurs en fermant le projet de collaboration.
+            error: Il y a eu des erreurs en fermant le brouillon collaboratif.
             irreversible_action_modal:
-              body: Après avoir fermé le brouillon, le brouillon ne sera plus éditable. Le projet n'acceptera pas de nouveaux auteurs ou contributions.
+              body: Après avoir fermé le brouillon, il ne sera plus modifiable. Le projet n'acceptera pas de nouveaux auteurs ou contributions.
               cancel: Annuler
-              ok: Retirer le projet collaboratif
+              ok: Retirer le brouillon collaboratif
               title: L'action suivante est irréversible
-            success: Projet de collaboration retiré avec succès.
+            success: Le brouillon collaboratif a bien été retiré.
         compare:
-          mine_is_different: Mon projet de collaboration est différent
-          no_similars_found: Bien joué! Aucun projet de collaboration similaire n'a été trouvé
-          title: Projets collaboratifs similaires
+          mine_is_different: Mon brouillon collaboratif est différent
+          no_similars_found: Bien joué ! Aucun brouillon collaboratif similaire n'a été trouvé
+          title: Brouillons collaboratifs similaires
         complete:
           send: Envoyer
-          title: Complétez votre projet collaboratif
+          title: Complétez votre brouillon collaboratif
         count:
           drafts_count:
-            one: "%{count} projet collaboratif"
+            one: "%{count} brouillon collaboratif"
             other: "%{count} projet collaboratif"
         create:
-          error: Il y a eu un problème lors de la création de ces brouillons collaboratifs
-          success: Projet collaboratif créé avec succès.
+          error: Il y a eu un problème lors de la création de ce brouillon collaboratif
+          success: Brouillon collaboratif créé avec succès.
         edit:
           attachment_legend: "(Facultatif) Ajouter une pièce jointe"
           back: Retour
@@ -544,65 +544,65 @@ fr:
           close_modal: Fermer la fenêtre
           filter: Filtre
           filter_by: Filtrer par
-          unfold: Se dérouler
+          unfold: Voir la suite
         new:
           send: Continuer
-          title: Créez votre projet collaboratif
+          title: Créez votre brouillon collaboratif
         new_collaborative_draft_button:
-          new_collaborative_draft: Nouveau projet de collaboration
+          new_collaborative_draft: Nouveau brouillon collaboratif
         orders:
-          label: 'Ordre des brouillons par:'
-          most_contributed: La plupart ont contribué
+          label: 'Trier les brouillons par:'
+          most_contributed: Avec le plus de contribution
           random: Aléatoire
           recent: Récent
         requests:
           accepted_request:
-            error: Ne peut être accepté en tant que collaborateur, réessayez plus tard.
-            success: "@%{user} a été accepté comme collaborateur avec succès"
+            error: Votre demande de contribution n'a pas pu aboutir, veuillez réessayer plus tard.
+            success: "@%{user} a été accepté comme contributeur avec succès"
           access_requested:
             error: Votre demande n'a pas pu être complétée, réessayez plus tard.
-            success: Votre demande de collaboration a été envoyée avec succès
+            success: Votre demande de contribution a été envoyée avec succès
           collaboration_requests:
             accept_request: Accepté
             reject_request: Rejeté
-            title: Demandes de collaboration
+            title: Demandes de contribution
           rejected_request:
-            error: Ne peut être rejeté en tant que collaborateur, réessayez plus tard.
-            success: "@%{user} a été rejeté en tant que collaborateur avec succès"
+            error: Ne peut être rejeté en tant que contributeur, réessayez plus tard.
+            success: "@%{user} a bien été rejeté en tant que contributeur"
         show:
           back: Retour
           edit: Modifier un brouillon collaboratif
           final_question: question finale
-          final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la question finale terminée
+          final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la question qui en est issue
           hidden_authors_count:
             one: et %{count} personne de plus
             other: et %{count} autres personnes
-          info-message: Ceci est un <strong>projet collaboratif</strong> pour une question. Cela signifie que vous pouvez aider leurs auteurs à façonner la question en utilisant la section commentaire ci-dessous ou l'améliorer directement en demandant l'accès pour la modifier. Une fois que les auteurs vous accordent l'accès, vous pourrez apporter des modifications à ce brouillon.
+          info-message: Ceci est un <strong>brouillon collaboratif</strong> pour une question. Cela signifie que vous pouvez aider leurs auteurs à façonner la question en utilisant la section commentaire ci-dessous ou l'améliorer directement en demandant l'accès pour la modifier. Une fois que les auteurs vous accordent l'accès, vous pourrez apporter des modifications à ce brouillon.
           of_versions: "(de %{number})"
           publish: Publier
           publish_info: Publiez cette version du brouillon ou
           published_question: question publiée
-          request_access: Demande d'accès
-          requested_access: Accès demandé
+          request_access: Demande de collaboration
+          requested_access: Demande de collaboration demandé
           see_other_versions: voir d'autres versions
           version: Version %{number}
           version_history: voir l'historique des versions de cette question
-          withdraw: retirer le projet
+          withdraw: retirer le brouillon
         states:
           open: Ouvrir
           published: Publié
           withdrawn: Retiré
         update:
-          error: Il y a eu des erreurs lors de l'enregistrement du brouillon collaboratif.
-          success: Projet de collaboration mis à jour avec succès.
+          error: Il y a eu des erreurs lors de la sauvegarde du brouillon collaboratif.
+          success: Brouillon collaboratif mis à jour avec succès.
         wizard_aside:
-          back: Arrière
-          info: Vous créez un <strong>projet collaboratif</strong>.
+          back: Retour
+          info: Vous créez un <strong>brouillon collaboratif</strong>.
         wizard_steps:
           see_steps: voir les étapes
-          step_1: Créez votre projet collaboratif
-          step_2: Comparer avec les projets collaboratifs
-          step_3: Complétez votre projet collaboratif
+          step_1: Créez votre brouillon collaboratif
+          step_2: Comparer avec les autres brouillons collaboratifs
+          step_3: Complétez votre brouillon collaboratif
           step_of: Etape %{current_step_num} sur %{total_steps}
       create:
         error: Il y a eu des erreurs lors de la sauvegarde de la question.
@@ -628,7 +628,7 @@ fr:
             private_discussions: Discussions privées
             published_at: Publiée à
             reference: Référence
-            scope: Périmètre d'application
+            scope: Secteur
             state: État
             title: Titre
             votes: Votes
@@ -637,10 +637,10 @@ fr:
       participatory_text_question:
         alternative_title: Il n'y a pas de textes participatifs pour le moment
         buttons:
-          amend: Modifier
+          amend: Amender
           comment: Commentaire
-          comments: commentaires
-          endorse: Endosser
+          comments: Commentaires
+          endorse: Soutenir
       publish:
         error: Il y a eu des erreurs lors de la publication de la question.
         success: Question publiée avec succès.
@@ -655,10 +655,10 @@ fr:
           already_endorsed: Soutenue
           endorse: Soutenir
         render_endorsements_button_card_part:
-          endorse: Endosser
+          endorse: Soutenir
       question_votes:
         create:
-          error: Des erreurs se sont produites lors du soutien de la question.
+          error: Des erreurs se sont produites lors du vote pour la question.
       questions:
         compare:
           mine_is_different: Ma question est différente
@@ -697,7 +697,7 @@ fr:
           state: État
           voted: Ne montrer que les questions pour lesquelles j'ai voté
         filters_small_view:
-          close_modal: Fermer la fenêtre de dialogue
+          close_modal: Fermer la fenêtre
           filter: Filtrer
           filter_by: Filtrer par
           unfold: Voir plus
@@ -712,15 +712,15 @@ fr:
             other: votes
         new:
           send: Continuer
-          title: Créer une question
+          title: Poser une question
         orders:
-          label: 'Classement des questions par :'
+          label: 'Trier les questions par :'
           most_voted: Les plus votées
           random: Aléatoire
           recent: Les plus récentes
         participatory_texts:
           index:
-            document_index: Index de document
+            document_index: Index du document
           view_index:
             see_index: Voir index
         preview:
@@ -740,11 +740,11 @@ fr:
           hidden_endorsers_count:
             one: et %{count} personne de plus
             other: et %{count} autres personnes
-          link_to_collaborative_draft_help_text: Cette question est le résultat d'un projet collaboratif. Revoir l'histoire
+          link_to_collaborative_draft_help_text: Cette question est le résultat d'un brouillon collaboratif. Voir l'historique
           link_to_collaborative_draft_text: Voir le brouillon collaboratif
-          question_accepted_reason: 'Cette question a été retenue parce que :'
-          question_in_evaluation_reason: Cette question est en cours d'évaluation
-          question_rejected_reason: 'Cette question n''a pas été retenue parce que :'
+          question_accepted_reason: 'Cette question a reçu une réponse car :'
+          question_in_evaluation_reason: Cette question est en cours de traitement
+          question_rejected_reason: 'Cette question est considérée comme non recevable car :'
           report: Signaler
           withdraw_btn_hint: Si vous changez d'avis et tant que votre question n'a pas reçu de vote, commentaire et/ou soutien, vous pouvez toujours la retirer. Cette dernière ne sera pas supprimée mais elle apparaîtra dans la liste des questions retirées.
           withdraw_confirmation: Êtes-vous sûr de vouloir retirer cette question ?
