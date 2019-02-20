@@ -2,9 +2,9 @@ fr:
   activemodel:
     attributes:
       collaborative_draft:
-        body: Corps
+        body: Corps du texte
         category_id: Catégorie
-        decidim_scope_id: Portée
+        decidim_scope_id: Secteur
         has_address: Renseigner une adresse
         state: État
         title: Titre
@@ -34,19 +34,19 @@ fr:
               needs_to_be_reattached: Doit être téléchargé de nouveau
     models:
       decidim/questions/accepted_question_event: Question acceptée
-      decidim/questions/admin/update_question_category_event: Catégorie de question modifiée
+      decidim/questions/admin/update_question_category_event: Catégorie de la question modifiée
       decidim/questions/creation_enabled_event: Autoriser la création de nouvelles questions
       decidim/questions/endorsing_enabled_event: Activer le module de soutiens
-      decidim/questions/evaluating_question_event: Question en cours d'évaluation
+      decidim/questions/evaluating_question_event: Question en attente de réponse
       decidim/questions/publish_question_event: Question publiée
       decidim/questions/question_endorsed_event: Question soutenue
       decidim/questions/question_mentioned_event: Question mentionnée
-      decidim/questions/rejected_question_event: Question non retenue
+      decidim/questions/rejected_question_event: Question non recevable
       decidim/questions/voting_enabled_event: Activer le module de vote simple
   activerecord:
     models:
       decidim/questions/collaborative_draft:
-        one: Projet de collaboration
+        one: Brouillon collaboratif
         other: Brouillons collaboratifs
       decidim/questions/question:
         one: Question
@@ -55,7 +55,7 @@ fr:
         one: Soutien
         other: Soutiens
       decidim/questions/question_note:
-        one: Remarque
+        one: Note
         other: Remarques
       decidim/questions/question_vote:
         one: Vote
@@ -65,7 +65,7 @@ fr:
       actions:
         configure: Configurer
         duplicate: Dupliquer
-        new_process: Nouveau procédé
+        new_process: Nouveau processus participatif
         preview: Aperçu
       menu:
         participatory_processes_submenu:
@@ -90,7 +90,7 @@ fr:
         participatory_process_user_role:
           roles:
             committee: Comité de pilotage
-            service: Service
+            service: Maîtrise d'ouvrage
       participatory_processes:
         index:
           not_published: Non publié
