@@ -385,7 +385,7 @@ fr:
           form:
             Comittee: Comité de pilotage
             Service: Service
-            accepted: Retenue
+            accepted: Reçue
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             back: Retour
             comittee: Comité de pilotage
@@ -467,7 +467,7 @@ fr:
         question_note:
           create: "%{user_name} a publié une note privée sur la question %{resource_name} sur l'espace %{space_name}"
       answers:
-        accepted: Retenue
+        accepted: Reçue
         evaluating: En attente de réponse
         pending: En attente de validation
         not_answered: A traiter
@@ -481,7 +481,7 @@ fr:
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Retenues
+          accepted: Réponse publiée
           all: Toutes
           evaluating: En attente de réponse
           except_rejected: Toutes sauf les questions non recevables
