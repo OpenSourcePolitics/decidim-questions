@@ -237,10 +237,10 @@ fr:
             email_subject: Votre question a été considérée comme non recevable
             notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a> a été considérée comme non recevable.
           follower:
-            email_intro: 'La question "%{resource_title}" n''a pas été retenue. Vous pouvez lire le commentaire ici :'
+            email_intro: 'La question "%{resource_title}" n''a pas été reçue. Vous pouvez lire la justification sur cette page :'
             email_outro: Vous venez de recevoir cette notification parce que vous suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la suivre en cliquant sur ce dernier lien.
-            email_subject: Une question que vous suivez n'a pas été retenue
-            notification_title: La question <a href="%{resource_path}">%{resource_title}</a> n'a pas été retenue.
+            email_subject: Une question que vous suivez n'a pas été reçue
+            notification_title: La question <a href="%{resource_path}">%{resource_title}</a> n'a pas été reçue.
         question_update_category:
           email_intro: 'Un administrateur a mis à jour la catégorie de votre question "%{resource_title}". Vous pouvez y accéder ici :'
           email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur de la question.
@@ -256,11 +256,11 @@ fr:
         accepted_questions:
           conditions:
             - Choisissez l'espace de participation qui vous intéresse avec la soumission des questions activée
-            - Essayez de poser des questions qui peuvent être réalisées. De cette façon, elles sont plus susceptibles d'être retenue et de recevoir une réponse.
-          description: Ce badge est attribué lorsque vous posez des questions et que celles-ci sont retenues.
-          description_another: '%{score} des questions de cet utilisateur ont été retenues.'
-          description_own: '%{score} de vos questions ont été retenues.'
-          name: Questions retenues
+            - Essayez de mettre une seule idée par question. De cette façon, elles sont plus susceptibles d'obtenir une réponse.
+          description: Ce badge est attribué lorsque vous posez des questions et que celles-ci sont reçues.
+          description_another: '%{score} des questions de cet utilisateur ont été reçues.'
+          description_own: '%{score} de vos questions ont été reçues.'
+          name: Questions reçues
           next_level_in: Vous atteindrez le niveau suivant lorsque %{score} questions supplémentaires seront retenues !
           unearned_another: Aucune question de cet auteur n'a encore été retenue.
           unearned_own: Aucune de vos questions n'a encore été retenue.
