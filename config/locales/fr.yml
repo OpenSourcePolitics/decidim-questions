@@ -261,9 +261,9 @@ fr:
           description_another: '%{score} des questions de cet utilisateur ont été reçues.'
           description_own: '%{score} de vos questions ont été reçues.'
           name: Questions reçues
-          next_level_in: Vous atteindrez le niveau suivant lorsque %{score} questions supplémentaires seront retenues !
-          unearned_another: Aucune question de cet auteur n'a encore été retenue.
-          unearned_own: Aucune de vos questions n'a encore été retenue.
+          next_level_in: Vous atteindrez le niveau suivant lorsque %{score} questions supplémentaires seront reçues !
+          unearned_another: Aucune question de cet auteur n'a encore été reçue.
+          unearned_own: Aucune de vos questions n'a encore été reçue.
         question_votes:
           conditions:
             - Naviguer et passer du temps à lire les questions d'autres personnes
@@ -288,9 +288,9 @@ fr:
           unearned_own: Vous n'avez posé aucune question pour le moment.
     metrics:
       accepted_questions:
-        description: Nombre de questions retenues par les utilisateurs
+        description: Nombre de questions reçues par utilisateur
         object: les questions
-        title: Questions Retenues
+        title: Questions reçues
       endorsements:
         description: Nombre de soutiens générés par les questions posées
         object: soutiens
@@ -353,7 +353,7 @@ fr:
             sub-section: "<em>Sous-section:</em> %{title}"
         question_answers:
           edit:
-            accepted: Retenue
+            accepted: Reçue
             answer_question: Répondre
             cancel: Annuler
             evaluating: En attente de réponse
