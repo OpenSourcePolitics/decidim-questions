@@ -190,7 +190,7 @@ fr:
           notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         question_accepted:
           affected_user:
-            email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez lire la réponse sur cette page:'
+            email_intro: 'Votre question "%{resource_title}" a obtenu une réponse. Vous pouvez la lire sur cette page :'
             email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur de "%{resource_title}".
             email_subject: Une réponse a été publiée pour votre question
             notification_title: Une réponse a été publiée <a href="%{resource_path}">%{resource_title}</a> pour votre question.
