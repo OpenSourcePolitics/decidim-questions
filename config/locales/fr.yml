@@ -485,7 +485,7 @@ fr:
           all: Toutes
           evaluating: En attente de réponse
           except_rejected: Toutes sauf les questions non recevables
-          rejected: Non retenue
+          rejected: Non recevable
         filter_type_values:
           all: Toutes
           amendments: Amendements
@@ -775,7 +775,7 @@ fr:
           question_limit:
             description: Vous pouvez créer jusqu'à %{limit} questions.
           threshold_per_question:
-            description: Pour être retenues, les questions doivent atteindre %{limit} votes
+            description: Pour être reçues, les questions doivent atteindre %{limit} votes
           title: 'Le vote est soumis aux règles suivantes :'
           vote_limit:
             description: Vous pouvez voter pour %{limit} questions au maximum.
