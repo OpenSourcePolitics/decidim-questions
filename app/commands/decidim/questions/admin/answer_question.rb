@@ -106,6 +106,7 @@ module Decidim
         # Whether the user can manage the given process or not.
         def can_manage_process?(role: :any)
           return unless form.current_user
+          return true if form.current_user.admin?
 
           participatory_processes_with_role_privileges(role).include? form.current_participatory_space
         end
