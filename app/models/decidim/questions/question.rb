@@ -131,6 +131,13 @@ module Decidim
         answered_at.present? && state.present?
       end
 
+      # Public: Checks if question is answered with a permanent status
+      #
+      # Returns Boolean.
+      def answered_permanently?
+        answered? && (state == 'accepted' || state == 'rejected')
+      end
+
       # Public: Checks if the organization has accepted a question.
       #
       # Returns Boolean.
