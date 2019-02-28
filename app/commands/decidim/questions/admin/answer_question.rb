@@ -21,7 +21,7 @@ module Decidim
         #
         # Returns nothing.
         def call
-          return broadcast(:invalid) if form.invalid?
+          return broadcast(:invalid) if form.invalid? || question.answered_permanently?
 
           answer_question
           notify_followers
