@@ -32,6 +32,10 @@ en:
       models:
         question:
           attributes:
+            title:
+              forbidden_words: "The following words are forbidden: \"%{words}\""
+            body:
+              forbidden_words: "The following words are forbidden: \"%{words}\""
             attachment:
               needs_to_be_reattached: Needs to be reattached
     models:
@@ -111,6 +115,7 @@ en:
         name: Questions
         settings:
           global:
+            moderation_dictionary: Moderation dictionary
             amendments_enabled: Amendments enabled
             announcement: Announcement
             attachments_allowed: Allow attachments
@@ -249,7 +254,7 @@ en:
             email_intro: 'The question "%{resource_title}" has been accepted. You
               can read the answer in this page:'
             email_outro: You have received this notification because you are following
-              "%{resource_title}". You can unfollow it from the previous link.
+                           "%{resource_title}". You can unfollow it from the previous link.
             email_subject: A question you're following has been accepted
             notification_title: The <a href="%{resource_path}">%{resource_title}</a>
               question has been accepted.
@@ -277,7 +282,7 @@ en:
             email_intro: 'The question "%{resource_title}" is currently being evaluated.
               You can check for an answer in this page:'
             email_outro: You have received this notification because you are following
-              "%{resource_title}". You can unfollow it from the previous link.
+                           "%{resource_title}". You can unfollow it from the previous link.
             email_subject: A question you're following is being evaluated
             notification_title: The <a href="%{resource_path}">%{resource_title}</a>
               question is being evaluated.
@@ -303,8 +308,8 @@ en:
           email_intro: The question "%{resource_title}" has been added to "%{participatory_space_title}"
             that you are following.
           email_outro: You have received this notification because you are following
-            "%{participatory_space_title}". You can unfollow it from the previous
-            link.
+                         "%{participatory_space_title}". You can unfollow it from the previous
+                         link.
           email_subject: New question "%{resource_title}" added to %{participatory_space_title}
           notification_title: The question <a href="%{resource_path}">%{resource_title}</a>
             has been added to %{participatory_space_title}
@@ -321,7 +326,7 @@ en:
             email_intro: 'The question "%{resource_title}" has been rejected. You
               can read the answer in this page:'
             email_outro: You have received this notification because you are following
-              "%{resource_title}". You can unfollow it from the previous link.
+                           "%{resource_title}". You can unfollow it from the previous link.
             email_subject: A question you're following has been rejected
             notification_title: The <a href="%{resource_path}">%{resource_title}</a>
               question has been rejected.

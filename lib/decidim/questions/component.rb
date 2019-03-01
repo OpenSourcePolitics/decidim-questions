@@ -21,6 +21,7 @@ Decidim.register_component(:questions) do |component|
   component.permissions_class_name = "Decidim::Questions::Permissions"
 
   component.settings(:global) do |settings|
+    settings.attribute :moderation_dictionary, type: :text, required: false
     settings.attribute :vote_limit, type: :integer, default: 0
     settings.attribute :minimum_votes_per_user, type: :integer, default: 0
     settings.attribute :question_limit, type: :integer, default: 0
