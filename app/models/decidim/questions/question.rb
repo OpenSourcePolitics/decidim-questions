@@ -23,48 +23,51 @@ module Decidim
       include Decidim::Questions::ParticipatoryTextSection
       include Decidim::Amendable
 
-      fingerprint fields: [:title, :body]
+      fingerprint fields: %i[title body]
+
+      # Add a version on question only if the following fields are modified.
+      VERSIONED_ATTRIBUTES = %i[title body category].freeze
 
       amendable(
-        fields: [:title, :body],
-        ignore: [:published_at, :reference, :state, :answered_at, :answer],
-        form:   "Decidim::Questions::QuestionForm"
+          fields: %i[title body],
+          ignore: %i[published_at reference state answered_at answer],
+          form: 'Decidim::Questions::QuestionForm'
       )
 
-      component_manifest_name "questions"
+      component_manifest_name 'questions'
 
-      has_many :endorsements, foreign_key: "decidim_question_id", class_name: "QuestionEndorsement", dependent: :destroy, counter_cache: "question_endorsements_count"
+      has_many :endorsements, foreign_key: 'decidim_question_id', class_name: 'QuestionEndorsement', dependent: :destroy, counter_cache: 'question_endorsements_count'
 
       has_many :votes,
                -> { final },
-               foreign_key: "decidim_question_id",
-               class_name: "Decidim::Questions::QuestionVote",
+               foreign_key: 'decidim_question_id',
+               class_name: 'Decidim::Questions::QuestionVote',
                dependent: :destroy,
-               counter_cache: "question_votes_count"
+               counter_cache: 'question_votes_count'
 
-      has_many :notes, foreign_key: "decidim_question_id", class_name: "QuestionNote", dependent: :destroy, counter_cache: "question_notes_count"
+      has_many :notes, foreign_key: 'decidim_question_id', class_name: 'QuestionNote', dependent: :destroy, counter_cache: 'question_notes_count'
 
       validates :title, :body, presence: true
 
-      geocoded_by :address, http_headers: ->(question) { { "Referer" => question.component.organization.host } }
+      geocoded_by :address, http_headers: ->(question) { { 'Referer' => question.component.organization.host } }
 
-      scope :accepted, -> { where(state: "accepted") }
-      scope :rejected, -> { where(state: "rejected") }
-      scope :evaluating, -> { where(state: "evaluating") }
-      scope :withdrawn, -> { where(state: "withdrawn") }
-      scope :except_rejected, -> { where.not(state: "rejected").or(where(state: nil)) }
-      scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
+      scope :accepted, -> { where(state: 'accepted') }
+      scope :rejected, -> { where(state: 'rejected') }
+      scope :evaluating, -> { where(state: 'evaluating') }
+      scope :withdrawn, -> { where(state: 'withdrawn') }
+      scope :except_rejected, -> { where.not(state: 'rejected').or(where(state: nil)) }
+      scope :except_withdrawn, -> { where.not(state: 'withdrawn').or(where(state: nil)) }
       scope :drafts, -> { where(published_at: nil) }
       scope :published, -> { where.not(published_at: nil) }
 
       acts_as_list scope: :decidim_component_id
 
       searchable_fields({
-                          scope_id: :decidim_scope_id,
-                          participatory_space: { component: :participatory_space },
-                          D: :search_body,
-                          A: :search_title,
-                          datetime: :published_at
+                            scope_id: :decidim_scope_id,
+                            participatory_space: { component: :participatory_space },
+                            D: :search_body,
+                            A: :search_title,
+                            datetime: :published_at
                         },
                         index_on_create: ->(question) { question.official? },
                         index_on_update: ->(question) { question.visible? })
@@ -72,7 +75,7 @@ module Decidim
       def self.order_randomly(seed)
         transaction do
           connection.execute("SELECT setseed(#{connection.quote(seed)})")
-          order(Arel.sql("RANDOM()")).load
+          order(Arel.sql('RANDOM()')).load
         end
       end
 
@@ -86,17 +89,17 @@ module Decidim
         return unless author.is_a?(Decidim::User)
 
         joins(:coauthorships)
-          .where("decidim_coauthorships.coauthorable_type = ?", name)
-          .where("decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ", author.id, author.class.base_class.name)
+            .where('decidim_coauthorships.coauthorable_type = ?', name)
+            .where('decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ', author.id, author.class.base_class.name)
       end
 
       # Public: Updates the vote count of this question.
       #
       # Returns nothing.
-      # rubocop:disable Rails/SkipsModelValidations
       def update_votes_count
         update_columns(question_votes_count: votes.count)
       end
+
       # rubocop:enable Rails/SkipsModelValidations
 
       # Public: Check if the user has voted the question.
@@ -132,33 +135,38 @@ module Decidim
       #
       # Returns Boolean.
       def accepted?
-        answered? && state == "accepted"
+        answered? && state == 'accepted'
       end
 
       # Public: Checks if the organization has rejected a question.
       #
       # Returns Boolean.
       def rejected?
-        answered? && state == "rejected"
+        answered? && state == 'rejected'
       end
 
       # Public: Checks if the organization has marked the question as evaluating it.
       #
       # Returns Boolean.
       def evaluating?
-        answered? && state == "evaluating"
+        answered? && state == 'evaluating'
       end
 
       # Public: Checks if the author has withdrawn the question.
       #
       # Returns Boolean.
       def withdrawn?
-        state == "withdrawn"
+        state == 'withdrawn'
       end
 
       # Public: Overrides the `reported_content_url` Reportable concern method.
       def reported_content_url
         ResourceLocatorPresenter.new(self).url
+      end
+
+      # Public: Expose user side path
+      def path
+        Decidim::ResourceLocatorPresenter.new(self).path
       end
 
       # Public: Whether the question is official or not.
@@ -168,7 +176,7 @@ module Decidim
 
       # Public: Whether the question is created in a meeting or not.
       def official_meeting?
-        authors.first.class.name == "Decidim::Meetings::Meeting"
+        authors.first.class.name == 'Decidim::Meetings::Meeting'
       end
 
       # Public: The maximum amount of votes allowed for this question.
@@ -253,7 +261,7 @@ module Decidim
       private
 
       def copied_from_other_component?
-        linked_resources(:questions, "copied_from_component").any?
+        linked_resources(:questions, 'copied_from_component').any?
       end
     end
   end

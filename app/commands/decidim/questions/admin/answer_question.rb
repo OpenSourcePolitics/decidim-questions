@@ -35,8 +35,20 @@ module Decidim
         attr_reader :form, :question
 
         def answer_question
+          return answer_question_temporary if can_manage_process?(role: :service)
+          answer_question_permanently
+        end
+
+        def answer_question_temporary
+          question.update!(
+            state: 'pending',
+            answer: @form.answer
+          )
+        end
+
+        def answer_question_permanently
           Decidim.traceability.perform_action!(
-            "answer",
+            'answer',
             question,
             form.current_user
           ) do
@@ -49,21 +61,21 @@ module Decidim
         end
 
         def notify_followers
-          return if (question.previous_changes.keys & %w(state)).empty?
+          return if (question.previous_changes.keys & %w[state]).empty?
 
           if question.accepted?
             publish_event(
-              "decidim.events.questions.question_accepted",
+              'decidim.events.questions.question_accepted',
               Decidim::Questions::AcceptedQuestionEvent
             )
           elsif question.rejected?
             publish_event(
-              "decidim.events.questions.question_rejected",
+              'decidim.events.questions.question_rejected',
               Decidim::Questions::RejectedQuestionEvent
             )
           elsif question.evaluating?
             publish_event(
-              "decidim.events.questions.question_evaluating",
+              'decidim.events.questions.question_evaluating',
               Decidim::Questions::EvaluatingQuestionEvent
             )
           end
@@ -89,6 +101,20 @@ module Decidim
               Decidim::Gamification.increment_score(coauthorship.author, :accepted_questions)
             end
           end
+        end
+
+        # Whether the user can manage the given process or not.
+        def can_manage_process?(role: :any)
+          return unless form.current_user
+          return true if form.current_user.admin?
+
+          participatory_processes_with_role_privileges(role).include? form.current_participatory_space
+        end
+
+        # Returns a collection of Participatory processes where the given user has the
+        # specific role privilege.
+        def participatory_processes_with_role_privileges(role)
+          Decidim::ParticipatoryProcessesWithUserRole.for(form.current_user, role)
         end
       end
     end

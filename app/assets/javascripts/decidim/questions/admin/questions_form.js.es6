@@ -1,9 +1,32 @@
+// = require decidim/tooltip_keep_on_hover
+
 $(() => {
   const $form = $(".question_form_admin");
 
   if ($form.length > 0) {
     const $questionCreatedInMeeting = $form.find("#question_created_in_meeting");
     const $questionMeeting = $form.find("#question_meeting");
+
+    const states = $('input[name="question[state]"]');
+    const current_state = states.filter("[checked]");
+    const roles = $('#recipient_role_wrapper');
+    const answer = $('#question_answer_wrapper');
+
+    if(states.length) {
+      if (current_state.val() !== "evaluating") {
+        roles.hide();
+        answer.removeClass('hide');
+      }
+      states.change((e) => {
+        if ($(e.currentTarget).val() === "evaluating") {
+          roles.show();
+          answer.addClass('hide');
+        } else {
+          roles.hide();
+          answer.removeClass('hide');
+        }
+      })
+    }
 
     const toggleDisabledHiddenFields = () => {
       const enabledMeeting = $questionCreatedInMeeting.prop("checked");
