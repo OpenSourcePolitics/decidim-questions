@@ -5,6 +5,8 @@ Here's the procedure followed for 0.16 iteration.
 
 > _this procedure can be improved for sure. Operations are split and isolated in commits.  Not sure if `git merge` algorithms prefer clean operation series (movement/rename then text remplacement) or aggregated ones (movement/rename/replace in the same commit)._
 
+> **For each steps, assume that you are replacing "Proposal" with "Question" ;) !**
+
 ### Step 1 : checking out version
 
 ```shell
@@ -13,8 +15,8 @@ cd decidim-questions
 ```
 
 ### Step 2 : Cleaning directories
-- remove all directory except decidim-proposals
-- remove all files at the root except .gitignore
+- remove all directory **except** decidim-proposals
+- remove all files at the root **except** .gitignore
 
 --> see commit [5c80700](https://github.com/OpenSourcePolitics/decidim-questions/commit/5c807001953b7609fbae6cce2caa69177af4d003)
 
@@ -30,17 +32,22 @@ git mv decidim-proposals decidim-questions
 ```shell
 git ls-tree -dr HEAD --name-only | grep proposal
 ```
---> Use the list to generate commands
+--> Use the list to generate commands like  
+`mkdir -p <new-directory>`
+
 #### 3.3 : moving files
 ```shell
 git ls-files | grep proposal
 ```
---> Use the list to generate commands
+--> Use the list to generate commands like  
+`git mv <source> <destination>`
+
 #### 3.4 : Deleting old directories
 ```shell
 git ls-tree -dr HEAD --name-only | grep proposal
 ```
---> Use the list to generate commands
+--> Use the lists to generate commands like  
+`rm -rf <old-directory>`
 
 **--> see the [gist](https://gist.github.com/moustachu/5e37796f4c82858eef890bedca5b1884) with full generated commands list**
 
