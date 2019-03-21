@@ -195,7 +195,7 @@ PATH
       cells-rails (~> 0.0.9)
       decidim-comments (= 0.16.0)
       decidim-core (= 0.16.0)
-      doc2text (>= 0.3.3)
+      doc2text (>= 0.4.0)
       kaminari (~> 1.0)
       ransack (~> 2.0)
       redcarpet (>= 3.4)
@@ -759,7 +759,7 @@ DEPENDENCIES
   web-console (~> 3.5)
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.5.3p105
 
 BUNDLED WITH
    1.17.3
