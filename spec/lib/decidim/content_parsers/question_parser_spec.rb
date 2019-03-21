@@ -121,6 +121,21 @@ module Decidim
           end
         end
 
+        context "when content has a link that is not in a questions component" do
+          let(:question) { create(:question, component: component) }
+          let(:content) do
+            url = question_url(question).sub(%r{/questions/}, "/something-else/")
+            "This content references a non-question with same ID as a question #{url}."
+          end
+
+          it { is_expected.to eq(content) }
+          it "has metadata with no reference to the question" do
+            subject
+            expect(parser.metadata).to be_a(Decidim::ContentParsers::QuestionParser::Metadata)
+            expect(parser.metadata.linked_questions).to be_empty
+          end
+        end
+
         context "when content has words similar to links but not links" do
           let(:similars) do
             %w(AA:aaa AA:sss aa:aaa aa:sss aaa:sss aaaa:sss aa:ssss aaa:ssss)

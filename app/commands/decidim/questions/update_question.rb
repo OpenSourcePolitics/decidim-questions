@@ -53,39 +53,35 @@ module Decidim
 
       attr_reader :form, :question, :current_user, :attachment
 
-      def question_attributes
-        fields = {}
-
-        fields[:title] = title_with_hashtags
-        fields[:body] = body_with_hashtags
-        fields[:category] = form.category
-        fields[:scope] = form.scope
-        fields[:address] = form.address
-        fields[:latitude] = form.latitude
-        fields[:longitude] = form.longitude
-
-        fields
-      end
-
       # Prevent PaperTrail from creating an additional version
       # in the question multi-step creation process (step 3: complete)
+      #
+      # A first version will be created in step 4: publish
+      # for diff rendering in the question control version
       def update_draft
         PaperTrail.request(enabled: false) do
-          @question.update(question_attributes)
+          @question.update(attributes)
           @question.coauthorships.clear
           @question.add_coauthor(current_user, user_group: user_group)
         end
       end
 
       def update_question
-        @question = Decidim.traceability.update!(
-          @question,
-          current_user,
-          question_attributes,
-          visibility: "public-only"
-        )
+        @question.update!(attributes)
         @question.coauthorships.clear
         @question.add_coauthor(current_user, user_group: user_group)
+      end
+
+      def attributes
+        {
+          title: title_with_hashtags,
+          body: body_with_hashtags,
+          category: form.category,
+          scope: form.scope,
+          address: form.address,
+          latitude: form.latitude,
+          longitude: form.longitude
+        }
       end
 
       def question_limit_reached?
@@ -109,11 +105,11 @@ module Decidim
       end
 
       def current_user_questions
-        Question.from_author(current_user).where(component: form.current_component).published.where.not(id: question.id)
+        Question.from_author(current_user).where(component: form.current_component).published.where.not(id: question.id).except_withdrawn
       end
 
       def user_group_questions
-        Question.from_user_group(user_group).where(component: form.current_component).published.where.not(id: question.id)
+        Question.from_user_group(user_group).where(component: form.current_component).published.where.not(id: question.id).except_withdrawn
       end
     end
   end

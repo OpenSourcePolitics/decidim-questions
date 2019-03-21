@@ -15,13 +15,13 @@ module Decidim
         end
 
         def new_import
-          enforce_permission_to :import, :participatory_texts
+          enforce_permission_to :manage, :participatory_texts
           participatory_text = Decidim::Questions::ParticipatoryText.find_by(component: current_component)
           @import = form(Admin::ImportParticipatoryTextForm).from_model(participatory_text)
         end
 
         def import
-          enforce_permission_to :import, :participatory_texts
+          enforce_permission_to :manage, :participatory_texts
           @import = form(Admin::ImportParticipatoryTextForm).from_params(params)
 
           Admin::ImportParticipatoryText.call(@import) do
@@ -37,23 +37,55 @@ module Decidim
           end
         end
 
-        def publish
-          enforce_permission_to :publish, :participatory_texts
+        # When `save_draft` param exists, questions are only saved.
+        # When no `save_draft` param is set, questions are saved and published.
+        def update
+          enforce_permission_to :manage, :participatory_texts
+
           form_params = params.require(:preview_participatory_text).permit!
           @preview_form = form(Admin::PreviewParticipatoryTextForm).from_params(questions: form_params[:questions_attributes]&.values)
 
-          PublishParticipatoryText.call(@preview_form) do
-            on(:ok) do
-              flash[:notice] = I18n.t("participatory_texts.publish.success", scope: "decidim.questions.admin")
-              redirect_to questions_path
-            end
+          if params.has_key?("save_draft")
+            UpdateParticipatoryText.call(@preview_form) do
+              on(:ok) do
+                flash[:notice] = I18n.t("participatory_texts.update.success", scope: "decidim.questions.admin")
+                redirect_to participatory_texts_path(component_id: current_component.id, initiative_slug: "asdf")
+              end
 
-            on(:invalid) do |failures|
-              alert_msg = [I18n.t("participatory_texts.publish.invalid", scope: "decidim.questions.admin")]
-              failures.each_pair { |id, msg| alert_msg << "ID:[#{id}] #{msg}" }
-              flash.now[:alert] = alert_msg.join("<br/>").html_safe
-              index
-              render action: "index"
+              on(:invalid) do |failures|
+                alert_msg = [I18n.t("participatory_texts.publish.invalid", scope: "decidim.questions.admin")]
+                failures.each_pair { |id, msg| alert_msg << "ID:[#{id}] #{msg}" }
+                flash.now[:alert] = alert_msg.join("<br/>").html_safe
+                index
+                render action: "index"
+              end
+            end
+          else
+            PublishParticipatoryText.call(@preview_form) do
+              on(:ok) do
+                flash[:notice] = I18n.t("participatory_texts.publish.success", scope: "decidim.questions.admin")
+                redirect_to questions_path
+              end
+
+              on(:invalid) do |failures|
+                alert_msg = [I18n.t("participatory_texts.publish.invalid", scope: "decidim.questions.admin")]
+                failures.each_pair { |id, msg| alert_msg << "ID:[#{id}] #{msg}" }
+                flash.now[:alert] = alert_msg.join("<br/>").html_safe
+                index
+                render action: "index"
+              end
+            end
+          end
+        end
+
+        # Removes all the unpublished questions (drafts).
+        def discard
+          enforce_permission_to :manage, :participatory_texts
+
+          DiscardParticipatoryText.call(current_component) do
+            on(:ok) do
+              flash[:notice] = I18n.t("participatory_texts.discard.success", scope: "decidim.questions.admin")
+              redirect_to participatory_texts_path(component_id: current_component.id, initiative_slug: "asdf")
             end
           end
         end

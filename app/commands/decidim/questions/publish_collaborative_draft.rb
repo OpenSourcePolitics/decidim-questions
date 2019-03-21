@@ -79,6 +79,7 @@ module Decidim
           new_question = Question.new(question_attributes)
           new_question.coauthorships = @collaborative_draft.coauthorships
           new_question.category = @collaborative_draft.category
+          new_question.attachments = @collaborative_draft.attachments
           new_question.save!
           new_question
         end

@@ -43,29 +43,28 @@ module Decidim
 
       attr_reader :form, :question, :attachment
 
-      def question_attributes
-        fields = {}
-
-        fields[:title] = title_with_hashtags
-        fields[:body] = body_with_hashtags
-        fields[:component] = form.component
-
-        fields
-      end
-
-      # This will be the PaperTrail version that is
-      # shown in the version control feature (1 of 1)
+      # Prevent PaperTrail from creating an additional version
+      # in the question multi-step creation process (step 1: create)
+      #
+      # A first version will be created in step 4: publish
+      # for diff rendering in the question version control
       def create_question
-        @question = Decidim.traceability.perform_action!(
-          :create,
-          Decidim::Questions::Question,
-          @current_user,
-          visibility: "public-only"
-        ) do
-          question = Question.new(question_attributes)
-          question.add_coauthor(@current_user, user_group: user_group)
-          question.save!
-          question
+        PaperTrail.request(enabled: false) do
+          @question = Decidim.traceability.perform_action!(
+            :create,
+            Decidim::Questions::Question,
+            @current_user,
+            visibility: "public-only"
+          ) do
+            question = Question.new(
+              title: title_with_hashtags,
+              body: body_with_hashtags,
+              component: form.component
+            )
+            question.add_coauthor(@current_user, user_group: user_group)
+            question.save!
+            question
+          end
         end
       end
 

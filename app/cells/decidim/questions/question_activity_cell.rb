@@ -12,7 +12,15 @@ module Decidim
       end
 
       def resource_link_text
-        Decidim::Questions::QuestionPresenter.new(resource).title
+        presenter.title
+      end
+
+      def description
+        presenter.body(links: true)
+      end
+
+      def presenter
+        @presenter ||= Decidim::Questions::QuestionPresenter.new(resource).title
       end
     end
   end

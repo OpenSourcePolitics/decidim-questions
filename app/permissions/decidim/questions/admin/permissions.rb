@@ -41,10 +41,8 @@ module Decidim
             # Every user allowed by the space can split questions to another component
             allow! if permission_action.subject == :questions && permission_action.action == :split
             if permission_action.subject == :participatory_texts && participatory_texts_are_enabled?
-              # Every user allowed by the space can import participatory texts to questions
-              allow! if permission_action.action == :import
-              # Every user allowed by the space can publish participatory texts to questions
-              allow! if permission_action.action == :publish
+              # Every user allowed by the space can manage (import, update and publish) participatory texts to questions
+              allow! if permission_action.action == :manage
             end
           end
 

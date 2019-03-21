@@ -3,9 +3,8 @@
 module Decidim
   module Questions
     module Admin
-      # A command with all the business logic when an admin imports questions from
-      # a participatory text.
-      class PublishParticipatoryText < UpdateParticipatoryText
+      # A command with all the business logic when an admin updates participatory text questions.
+      class UpdateParticipatoryText < Rectify::Command
         # Public: Initializes the command.
         #
         # form - A PreviewParticipatoryTextForm form object with the params.
@@ -22,9 +21,7 @@ module Decidim
         def call
           transaction do
             @failures = {}
-            # TODO (merge 20190320) : check if still needed
-            # update_contents_and_resort_questions(form)
-            publish_drafts
+            update_contents_and_resort_questions(form)
           end
 
           if @failures.any?
@@ -46,13 +43,6 @@ module Decidim
             question.body = prop_form.body if question.participatory_text_level == Decidim::Questions::ParticipatoryTextSection::LEVELS[:article]
 
             add_failure(question) unless question.save
-          end
-          raise ActiveRecord::Rollback if @publish_failures.any?
-        end
-
-        def publish_drafts
-          Decidim::Questions::Question.where(component: form.current_component).drafts.find_each do |question|
-            add_failure(question) unless question.update(published_at: Time.current)
           end
           raise ActiveRecord::Rollback if @failures.any?
         end
