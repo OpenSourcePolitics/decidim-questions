@@ -86,7 +86,7 @@ module Decidim
         end
 
         def question_answer_action
-          allow! if permission_action.subject == :question_answer && permission_action.action == :create
+          allow! if admin_question_answering_is_enabled? && permission_action.subject == :question_answer && permission_action.action == :create
         end
 
         # Whether the user can manage the given process or not.
