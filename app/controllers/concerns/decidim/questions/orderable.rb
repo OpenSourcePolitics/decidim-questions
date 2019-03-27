@@ -59,7 +59,7 @@ module Decidim
           when "most_voted"
             questions.order(question_votes_count: :desc)
           when "recent"
-            questions.order(created_at: :desc)
+            questions.order(published_at: :desc)
           end
         end
       end
