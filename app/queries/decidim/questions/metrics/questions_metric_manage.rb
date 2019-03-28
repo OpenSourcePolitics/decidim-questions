@@ -37,6 +37,8 @@ module Decidim
           components = Decidim::Component.where(participatory_space: spaces).published
           @query = Decidim::Questions::Question.where(component: components).joins(:component)
                                                .left_outer_joins(:category)
+                                               .state_visible
+                                               .not_hidden.upstream_not_hidden
           @query = @query.where("decidim_questions_questions.published_at <= ?", end_time).except_withdrawn
           @query = @query.group("decidim_categorizations.decidim_category_id",
                                 :participatory_space_type,

@@ -17,7 +17,7 @@ module Decidim
       private
 
       def questions
-        @questions ||= Decidim::Questions::Question.published.not_hidden.upstream_not_hidden.except_withdrawn
+        @questions ||= Decidim::Questions::Question.published.state_visible.not_hidden.upstream_not_hidden.except_withdrawn
                                                    .where(component: model)
                                                    .order_randomly(rand * 2 - 1)
       end

@@ -35,6 +35,7 @@ module Decidim
           @questions = search
                        .results
                        .published
+                       .state_visible
                        .not_hidden
                        .upstream_not_hidden
                        .includes(:category)
