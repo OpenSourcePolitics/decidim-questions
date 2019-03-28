@@ -36,6 +36,7 @@ module Decidim
                        .results
                        .published
                        .not_hidden
+                       .upstream_not_hidden
                        .includes(:category)
                        .includes(:scope)
 
@@ -112,7 +113,8 @@ module Decidim
 
       def publish
         @step = :step_4
-        PublishQuestion.call(@question, current_user) do
+        caller = component_settings.upstream_moderation ? AddToUpstreamQuestion : PublishQuestion
+        caller.call(@question, current_user) do
           on(:ok) do
             flash[:notice] = I18n.t("questions.publish.success", scope: "decidim")
             redirect_to question_path(@question)
@@ -236,7 +238,7 @@ module Decidim
       end
 
       def ensure_is_draft
-        @question = Question.not_hidden.where(component: current_component).find(params[:id])
+        @question = Question.not_hidden.upstream_not_hidden.where(component: current_component).find(params[:id])
         redirect_to Decidim::ResourceLocatorPresenter.new(@question).path unless @question.draft?
       end
 

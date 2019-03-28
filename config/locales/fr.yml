@@ -131,6 +131,7 @@ fr:
             question_wizard_step_4_help_text: Texte d'aide à l'étape "Publier" de la création de question
             resources_permissions_enabled: Les autorisations d'actions peuvent être définies pour chaque question
             threshold_per_question: Seuil par question
+            upstream_moderation: Modération à priori
             vote_limit: Limite de votes par utilisateur
           step:
             announcement: Annonce

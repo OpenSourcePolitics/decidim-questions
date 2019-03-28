@@ -82,6 +82,11 @@ edit_link(
   </div>
   <div class="columns mediumlarge-8 mediumlarge-pull-4">
     <div class="section">
+      <% if component_settings.upstream_moderation && @question.upstream_pending? %>
+        <div class="callout warning">
+          <%= t("decidim.shared.upstream_moderation.pending_info") %>
+        </div>
+      <% end %>
       <%== cell("decidim/questions/question_m", @question, full_badge: true).badge %>
       <% unless @question.participatory_text_level == "section" || @question.participatory_text_level == "subsection" %>
         <%= simple_format present(@question).body(links: true) %>

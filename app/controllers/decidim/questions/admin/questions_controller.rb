@@ -96,7 +96,7 @@ module Decidim
           @query ||= if current_component.settings.participatory_texts_enabled?
                        Question.where(component: current_component).published.order(:position).ransack(params[:q])
                      else
-                       Question.where(component: current_component).published.ransack(params[:q])
+                       Question.where(component: current_component).published.not_hidden.upstream_not_hidden.ransack(params[:q])
                      end
         end
 

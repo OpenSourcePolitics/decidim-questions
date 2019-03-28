@@ -1,12 +1,7 @@
 GIT
   remote: https://github.com/OpenSourcePolitics/decidim
-<<<<<<< HEAD
-  revision: 0e965a7bd5afbb299d4c3f12433004f3ce7f0fd9
+  revision: 1d3433a73beccca9cb22cc72493dfa079590cc08
   branch: 0.16-upstream_moderation
-=======
-  revision: debd8ffe1b3231ce8dea532c868fffa5ab727742
-  branch: 0.16-stable
->>>>>>> master
   specs:
     decidim (0.16.0)
       decidim-accountability (= 0.16.0)
@@ -201,7 +196,7 @@ PATH
       cells-rails (~> 0.0.9)
       decidim-comments (= 0.16.0)
       decidim-core (= 0.16.0)
-      doc2text (>= 0.3.3)
+      doc2text (>= 0.4.0)
       kaminari (~> 1.0)
       ransack (~> 2.0)
       redcarpet (>= 3.4)
@@ -338,11 +333,7 @@ GEM
     deepl-rb (2.2.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-<<<<<<< HEAD
-    devise (4.6.1)
-=======
     devise (4.6.2)
->>>>>>> master
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 6.0)
@@ -401,11 +392,7 @@ GEM
       railties (>= 4.1, < 6.0)
       tzinfo (~> 1.2, >= 1.2.2)
     geocoder (1.5.1)
-<<<<<<< HEAD
-    globalid (0.4.1)
-=======
     globalid (0.4.2)
->>>>>>> master
       activesupport (>= 4.2.0)
     graphiql-rails (1.4.11)
       railties
@@ -537,11 +524,7 @@ GEM
       paper_trail-association_tracking (< 2)
       request_store (~> 1.1)
     paper_trail-association_tracking (1.1.1)
-<<<<<<< HEAD
-    parallel (1.14.0)
-=======
     parallel (1.16.0)
->>>>>>> master
     parser (2.6.2.0)
       ast (~> 2.4.0)
     pg (1.1.4)
@@ -710,11 +693,7 @@ GEM
       sprockets (>= 3.0.0)
     system_test_html_screenshots (0.1.2)
       actionpack (>= 5.2, < 6.0.a)
-<<<<<<< HEAD
-    temple (0.8.0)
-=======
     temple (0.8.1)
->>>>>>> master
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thor (0.20.3)
@@ -781,11 +760,7 @@ DEPENDENCIES
   web-console (~> 3.5)
 
 RUBY VERSION
-<<<<<<< HEAD
-   ruby 2.6.0p0
-=======
    ruby 2.5.3p105
->>>>>>> master
 
 BUNDLED WITH
    2.0.1

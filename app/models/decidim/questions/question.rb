@@ -4,6 +4,7 @@ module Decidim
   module Questions
     # The data store for a Question in the Decidim::Questions component.
     class Question < Questions::ApplicationRecord
+      include Decidim::UpstreamReportable
       include Decidim::Resourceable
       include Decidim::Coauthorable
       include Decidim::HasComponent
@@ -23,15 +24,15 @@ module Decidim
       include Decidim::Questions::ParticipatoryTextSection
       include Decidim::Amendable
 
-      fingerprint fields: %i[title body]
+      fingerprint fields: [:title, :body]
 
       # Add a version on question only if the following fields are modified.
-      VERSIONED_ATTRIBUTES = %i[title body category].freeze
+      VERSIONED_ATTRIBUTES = [:title, :body, :category]
 
       amendable(
-          fields: %i[title body],
-          ignore: %i[published_at reference state answered_at answer],
-          form: 'Decidim::Questions::QuestionForm'
+        fields: [:title, :body],
+        ignore: [:published_at, :reference, :state, :answered_at, :answer],
+        form: 'Decidim::Questions::QuestionForm'
       )
 
       component_manifest_name 'questions'

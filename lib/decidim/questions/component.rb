@@ -75,7 +75,7 @@ Decidim.register_component(:questions) do |component|
   end
 
   component.register_stat :questions_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.except_withdrawn.not_hidden.count
+    Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.except_withdrawn.not_hidden.upstream_not_hidden.count
   end
 
   component.register_stat :questions_accepted, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
@@ -83,17 +83,17 @@ Decidim.register_component(:questions) do |component|
   end
 
   component.register_stat :votes_count, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden.upstream_not_hidden
     Decidim::Questions::QuestionVote.where(question: questions).count
   end
 
   component.register_stat :endorsements_count, priority: Decidim::StatsRegistry::MEDIUM_PRIORITY do |components, start_at, end_at|
-    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).not_hidden
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).not_hidden.upstream_not_hidden
     Decidim::Questions::QuestionEndorsement.where(question: questions).count
   end
 
   component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden.upstream_not_hidden
     Decidim::Comments::Comment.where(root_commentable: questions).count
   end
 
