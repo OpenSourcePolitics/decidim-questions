@@ -35,7 +35,7 @@ module Decidim
         attr_reader :form, :question
 
         def answer_question
-          return answer_question_temporary if can_manage_process?(role: :service)
+          return answer_question_temporary if !form.current_user.admin && participatory_processes_with_role_privileges(:service).present?
           answer_question_permanently
         end
 
@@ -101,14 +101,6 @@ module Decidim
               Decidim::Gamification.increment_score(coauthorship.author, :accepted_questions)
             end
           end
-        end
-
-        # Whether the user can manage the given process or not.
-        def can_manage_process?(role: :any)
-          return unless form.current_user
-          return true if form.current_user.admin?
-
-          participatory_processes_with_role_privileges(role).include? form.current_participatory_space
         end
 
         # Returns a collection of Participatory processes where the given user has the

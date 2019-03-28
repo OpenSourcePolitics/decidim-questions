@@ -79,6 +79,21 @@ module Decidim
           @form = form(Admin::QuestionForm).from_params(params)
           Admin::UpdateQuestion.call(@form, @question) do
             on(:ok) do |_question|
+              if _question.upstream_pending?
+                Decidim.traceability.perform_action!(
+                  "accept",
+                  _question.upstream_moderation,
+                  current_user,
+                  extra: {
+                    upstream_reportable_type: "Decidim::Questions::Question"
+                  }
+                ) do
+                  _question.upstream_moderation.update!(
+                    hidden_at: nil,
+                    pending: false
+                  )
+                end
+              end
               flash[:notice] = I18n.t('questions.update.success', scope: 'decidim')
               redirect_to questions_path
             end
@@ -96,7 +111,8 @@ module Decidim
           @query ||= if current_component.settings.participatory_texts_enabled?
                        Question.where(component: current_component).published.order(:position).ransack(params[:q])
                      else
-                       Question.where(component: current_component).published.not_hidden.upstream_not_hidden.ransack(params[:q])
+                       role = current_user.admin ? "admin" : user_role.role
+                       Question.where(component: current_component).published.not_hidden.upstream_not_hidden_for(role).ransack(params[:q])
                      end
         end
 
@@ -122,7 +138,7 @@ module Decidim
         end
 
         def questions
-          @questions ||= if user_role
+          @questions ||= if user_role&.role == "service"
                            query_with_role.result.page(params[:page]).per(15)
                          else
                            query.result.page(params[:page]).per(15)

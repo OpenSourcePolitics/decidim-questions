@@ -95,6 +95,11 @@ module Decidim
             .where('decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ', author.id, author.class.base_class.name)
       end
 
+      def self.upstream_not_hidden_for(user_role)
+        upstream_not_hidden unless %w(admin committee).include?(user_role)
+        all
+      end
+
       # Public: Updates the vote count of this question.
       #
       # Returns nothing.

@@ -5,7 +5,9 @@
   <div class="row column">
     <div class="body-wrapper">
       <%= icon "double-quote-serif-right" %>
-      <% if question.versions.where.not(object: nil).empty? %>
+      <% if component_settings.upstream_moderation %>
+        <%= present(question).body %>
+      <% elsif question.versions.where.not(object: nil).empty? %>
         <%= present(question).body %>
       <% else %>
         <%= present(question.versions.where.not(object: nil).first.reify).body %>
