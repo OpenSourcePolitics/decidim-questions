@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 module Decidim
-  module ParticipatoryProcesses
-    class QuestionsPermissions < Decidim::ParticipatoryProcesses::Permissions
+  module Admin
+    class RolesPermissions < Decidim::ParticipatoryProcesses::Permissions
       def permissions
-
         Rails.logger.debug "==========="
-        Rails.logger.debug "Decidim::ParticipatoryProcesses::QuestionsPermissions"
+        Rails.logger.debug "Decidim::Admin::RolesPermissions"
         Rails.logger.debug permission_action.inspect
         Rails.logger.debug "==========="
 
@@ -23,6 +22,7 @@ module Decidim
 
       def committee_action?
         return unless can_manage_process?(role: :committee)
+        allow! if permission_action.subject == :moderation
         questions_action?
       end
 
