@@ -1,0 +1,13 @@
+<p><%= t(".hello", name: @user.name) %></p>
+
+<p>
+  <%= t(".question_title", { question_title: @question.title }) %>
+</p>
+
+<p>
+  <%= @question_note.body %>
+</p>
+
+<p>
+  <%= link_to t(".question_note"), question_note_url %>
+</p>

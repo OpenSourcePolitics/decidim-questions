@@ -61,6 +61,13 @@ en:
         one: Vote
         other: Votes
   decidim:
+    questions_mailer:
+      note_created:
+        hello: Hello %{name}
+        question_title: "A new question note has been created : %{question_title}"
+        question_note: Voir la note
+      note:
+        created: A new private note has been created
     components:
       questions:
         actions:
