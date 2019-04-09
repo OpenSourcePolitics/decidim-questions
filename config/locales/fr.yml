@@ -61,6 +61,14 @@ fr:
         one: Vote
         other: Votes
   decidim:
+    questions_mailer:
+      note_created:
+        hello: Bonjour %{name}
+        question_title: "Une nouvelle note a été créée sur la question : %{question_title}"
+        question_note_body: "Son contenu est : %{question_note_body}"
+        question_note_link: Voir la note
+      note:
+        created: A new private note has been created
     admin:
       actions:
         configure: Configurer
