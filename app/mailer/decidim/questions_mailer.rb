@@ -1,7 +1,7 @@
 module Decidim
   class QuestionsMailer < Decidim::ApplicationMailer
     helper Decidim::ResourceHelper
-    helper_method :questions_url
+    helper_method :question_note_anchor
 
     def note_created(user, question_note)
       with_user(user) do
@@ -16,8 +16,14 @@ module Decidim
 
     private
 
-    def questions_url
+    def question_note_url
       Decidim::EngineRouter.admin_proxy(@question.component).question_question_notes_path(question_id: @question.id)
+    end
+
+    def question_note_anchor
+      return unless question_note_url
+
+      question_note_url + "#note_#{@question_note.id}"
     end
   end
 end
