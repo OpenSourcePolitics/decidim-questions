@@ -65,7 +65,8 @@ en:
       note_created:
         hello: Hello %{name}
         question_title: "A new question note has been created : %{question_title}"
-        question_note: Voir la note
+        question_note_body: "Question note content : %{question_note_body}"
+        question_note_link: See notes
       note:
         created: A new private note has been created
     components:
@@ -323,7 +324,7 @@ en:
             section: "<em>Section:</em> <strong>%{title}</strong>"
             sub-section: "<em>Subsection:</em> %{title}"
           update:
-             success: Participatory text updated successfully.
+            success: Participatory text updated successfully.
         question_answers:
           edit:
             accepted: Accepted

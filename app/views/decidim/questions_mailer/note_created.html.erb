@@ -5,9 +5,9 @@
 </p>
 
 <p>
-  <%= @question_note.body %>
+  <%= t(".question_note_body", { question_note_body: @question_note.body }) %>
 </p>
 
 <p>
-  <%= link_to t(".question_note"), question_note_url %>
+  <%= link_to t(".question_note_link"), questions_url %>
 </p>
