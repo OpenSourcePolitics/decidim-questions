@@ -24,6 +24,7 @@ module Decidim
           return broadcast(:invalid) if form.invalid?
 
           answer_question
+          notify_committee
           notify_followers
           increment_score
 
@@ -44,6 +45,22 @@ module Decidim
             state: 'pending',
             answer: @form.answer
           )
+        end
+
+        def notify_committee
+          return unless question.state == 'pending'
+
+          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee )
+
+          unless recipients.empty?
+            Decidim::EventsManager.publish(
+              event: 'decidim.events.questions.forward_question',
+              event_class: Decidim::Questions::Admin::ForwardQuestionEvent,
+              resource: question,
+              affected_users: Decidim::User.where(id: recipients.pluck(:decidim_user_id)).to_a
+            )
+          end
+
         end
 
         def answer_question_permanently

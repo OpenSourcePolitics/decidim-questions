@@ -194,8 +194,12 @@ en:
             %{participatory_space_title}. You can stop receiving notifications following
             the previous link.
           email_subject: Questions endorsing has started for %{participatory_space_title}
-          notification_title: You can now start <a href="%{resource_path}">endorsing
-            questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: You can now start <a href="%{resource_path}">endorsing questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+        forward_question:
+          email_intro: 'The question "%{resource_title}" has been forwarded to you and needs your input.'
+          email_outro: You have received this notification because you have a role in the treatment of this question.
+          email_subject: A question is waiting for an answer
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a> has been forwarded to you and needs your input.
         question_accepted:
           affected_user:
             email_intro: 'Your question "%{resource_title}" has been accepted. You
