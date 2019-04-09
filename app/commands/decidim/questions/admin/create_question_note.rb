@@ -50,7 +50,7 @@ module Decidim
 
         def send_mail_to_users_with_role
           recipients.each do |recipient|
-            Decidim::QuestionsMailer.note_created(recipient, question_note).deliver_now
+            Decidim::QuestionsMailer.note_created(recipient, question_note).deliver_later
           end
         end
 
