@@ -17,7 +17,7 @@ module Decidim
     private
 
     def question_note_url
-      Decidim::EngineRouter.admin_proxy(@question.component).question_question_notes_path(question_id: @question.id)
+      Decidim::EngineRouter.admin_proxy(@question.component).question_question_notes_url(question_id: @question.id)
     end
 
     def question_note_anchor
