@@ -11,6 +11,9 @@ module Decidim
 
         committee_action?
         service_action?
+        moderator_action?
+        collaborator_action?
+        process_admin?
 
         org_admin_action?
 
@@ -20,14 +23,39 @@ module Decidim
         permission_action
       end
 
+      def moderator_action?
+        return unless can_manage_process?(role: :moderator)
+
+        allow! if permission_action.subject == :moderation
+        questions_action?
+      end
+
+      def collaborator_action?
+        return unless can_manage_process?(role: :collaborator)
+
+        allow! if permission_action.subject == :moderation
+        questions_action?
+      end
+
+      def process_admin?
+        return unless can_manage_process?(role: :admin)
+
+        allow! if permission_action.subject == :moderation
+        allow! if permission_action.subject == :component && permission_action.action == :read
+
+        questions_action?
+      end
+
       def committee_action?
         return unless can_manage_process?(role: :committee)
+
         allow! if permission_action.subject == :moderation
         questions_action?
       end
 
       def service_action?
         return unless can_manage_process?(role: :service)
+
         questions_action?
       end
 

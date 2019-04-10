@@ -5,7 +5,6 @@ module Decidim
     module Admin
       class Permissions < Decidim::ParticipatoryProcesses::Permissions
         def permissions
-
           Rails.logger.debug "==========="
           Rails.logger.debug "Decidim::Questions::Admin::Permissions"
           Rails.logger.debug permission_action.inspect
@@ -15,6 +14,7 @@ module Decidim
           return permission_action if permission_action.scope != :admin
 
           has_access? if permission_action.subject == :component && permission_action.action == :read
+          has_access? if permission_action.subject == :question && permission_action.action == :read
 
           if create_permission_action?
             # There's no special condition to create question notes, only
@@ -49,6 +49,10 @@ module Decidim
           committee_action?
           service_action?
 
+          moderator_action?
+          collaborator_action?
+          process_admin_action?
+
           Rails.logger.debug permission_action.inspect
           Rails.logger.debug "==========="
 
@@ -56,6 +60,33 @@ module Decidim
         end
 
         private
+
+        def process_admin_action?
+          return unless can_manage_question?(role: :admin)
+
+          allow! if permission_action.subject == :component && permission_action.action == :read
+          allow! if permission_action.subject == :question && permission_action.action == :edit
+          question_actions
+        end
+
+        # A moderator needs to be able to read the question component they are assigned to,
+        # and needs to perform all actions for the moderations of the question component.
+        def moderator_action?
+          return unless can_manage_question?(role: :moderator)
+
+          allow! if permission_action.subject == :moderation
+        end
+
+        # Collaborators can read/preview everything inside their question component.
+        def collaborator_action?
+          return unless can_manage_question?(role: :collaborator)
+
+          allow! if permission_action.action == :read || permission_action.action == :preview
+        end
+
+        def process_admin?
+          can_manage_question?(role: :admin)
+        end
 
         def committee_action?
           return unless can_manage_question?(role: :committee)
