@@ -21,6 +21,8 @@ ActiveSupport.on_load(:active_record) {
   
 }
 
+require 'extends/decidim-admin/controllers/decidim/participatory_processes/admin/moderations_controller_extend.rb'
+require 'extends/decidim-admin/controllers/decidim/participatory_processes/admin/upstream_moderations_controller_extend.rb'
 require 'extends/decidim-participatory_processes/controllers/decidim/participatory_processes/admin/participatory_processes_controller_extend.rb'
 require 'extends/decidim-core/commands/decidim/amendable/create_extend.rb'
 require 'extends/decidim-core/commands/decidim/amendable/promote_extend.rb'
