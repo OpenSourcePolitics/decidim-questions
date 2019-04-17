@@ -270,6 +270,21 @@ module Decidim
       def copied_from_other_component?
         linked_resources(:questions, 'copied_from_component').any?
       end
+
+      def participatory_space_moderators
+        @participatory_space_moderators ||= get_participatory_space_moderators
+      end
+
+      def get_participatory_space_moderators
+        organization_admins = participatory_space.organization.admins.pluck(:id)
+        process_users = Decidim::ParticipatoryProcessUserRole
+            .where(participatory_process: participatory_space)
+            .where(role: [:admin, :moderator, :committee])
+            .pluck(:decidim_user_id)
+            .uniq
+        Decidim::User.where(id: organization_admins + process_users)
+
+      end
     end
   end
 end
