@@ -40,7 +40,9 @@ module Decidim
       end
 
       def description
-        truncate(present(model).body, length: 100)
+        html = present(model).body
+        safe = strip_tags(html)
+        truncate(safe, length: 100)
       end
 
       def badge_classes
