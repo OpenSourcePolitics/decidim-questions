@@ -24,9 +24,27 @@
           <%= form.categories_select :category_id, @form.categories, prompt: t(".select_a_category") %>
         </div>
       <% end %>
+
       <% if current_participatory_space.has_subscopes? %>
         <div class="row column">
           <%= scopes_picker_field form, :scope_id %>
+        </div>
+      <% end %>
+
+      <% if component_settings.attachments_allowed? %>
+        <div class="row column">
+          <fieldset>
+            <legend><%= t(".attachment_legend") %></legend>
+            <%= form.fields_for :attachment, @form.attachment do |form| %>
+              <div class="row column">
+                <%= form.text_field :title %>
+              </div>
+
+              <div class="row column">
+                <%= form.upload :file, optional: false %>
+              </div>
+            <% end %>
+          </fieldset>
         </div>
       <% end %>
     </div>
