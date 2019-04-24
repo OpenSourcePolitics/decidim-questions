@@ -240,6 +240,10 @@ fr:
           email_intro: 'La question "%{resource_title}" vous a été transmise et attend votre réponse.'
           email_subject: Une question est en attente de traitement
           notification_title: La question <a href="%{resource_path}">%{resource_title}</a> vous a été transmise et attend votre réponse.
+        validate_question:
+          email_intro: 'La réponse à la question "%{resource_title}" a été envoyée et attend votre validation'
+          email_subject: Une réponse attend votre validation
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a> a été envoyée et attend votre validation.
         question_accepted:
           affected_user:
             email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez

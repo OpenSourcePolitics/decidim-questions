@@ -200,6 +200,10 @@ en:
           email_outro: You have received this notification because you have a role in the treatment of this question.
           email_subject: A question is waiting for an answer
           notification_title: The question <a href="%{resource_path}">%{resource_title}</a> has been forwarded to you and needs your input.
+        validate_question:
+          email_intro: 'The answer to the question: "%{resource_title}" has been send and is waiting for your validation'
+          email_subject: An answer is waiting for your validation
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a> has been answered and is waiting for your validation.
         question_accepted:
           affected_user:
             email_intro: 'Your question "%{resource_title}" has been accepted. You

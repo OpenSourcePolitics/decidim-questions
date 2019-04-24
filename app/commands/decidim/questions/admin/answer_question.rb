@@ -54,8 +54,8 @@ module Decidim
 
           unless recipients.empty?
             Decidim::EventsManager.publish(
-              event: 'decidim.events.questions.forward_question',
-              event_class: Decidim::Questions::Admin::ForwardQuestionEvent,
+              event: 'decidim.events.questions.validate_question',
+              event_class: Decidim::Questions::Admin::ValidateQuestionEvent,
               resource: question,
               affected_users: Decidim::User.where(id: recipients.pluck(:decidim_user_id)).to_a
             )
