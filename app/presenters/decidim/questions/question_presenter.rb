@@ -8,7 +8,8 @@ module Decidim
     class QuestionPresenter < SimpleDelegator
       include Rails.application.routes.mounted_helpers
       include ActionView::Helpers::UrlHelper
-
+      include Decidim::TranslationsHelper
+      
       def author
         @author ||= if official?
                       Decidim::Questions::OfficialAuthorPresenter.new
@@ -47,6 +48,11 @@ module Decidim
 
       def body(links: false, extras: true)
         renderer = Decidim::ContentRenderers::HashtagRenderer.new(question.body)
+        renderer.render(links: links, extras: extras).html_safe
+      end
+
+      def answer(links: false, extras: true)
+        renderer = Decidim::ContentRenderers::HashtagRenderer.new(translated_attribute(question.answer))
         renderer.render(links: links, extras: extras).html_safe
       end
     end

@@ -441,6 +441,9 @@ en:
           form:
             note: Note
             submit: Submit
+          index:
+            answered_at: Last edited
+            answer_title: Answer
           leave_your_note: Leave your note
           title: Private notes
         questions:

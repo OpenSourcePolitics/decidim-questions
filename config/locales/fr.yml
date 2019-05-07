@@ -488,6 +488,9 @@ fr:
           form:
             note: Note
             submit: Soumettre
+          index:
+            answered_at: Dernière édition le
+            answer_title: Réponse
           leave_your_note: Laisser une note
           title: Notes privées
         questions:

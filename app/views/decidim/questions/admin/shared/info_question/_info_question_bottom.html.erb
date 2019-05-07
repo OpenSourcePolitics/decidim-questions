@@ -1,5 +1,8 @@
 <div class="card-section">
   <div class="row column">
+    <%= cell("decidim/coauthorships", question, size: 3, context: { current_user: current_user }) %>
+  </div>
+  <div class="row column">
     <div class="body-wrapper">
       <%= icon "double-quote-serif-right" %>
       <%= present(question).body %>
