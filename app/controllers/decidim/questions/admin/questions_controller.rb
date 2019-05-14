@@ -131,7 +131,7 @@ module Decidim
         end
 
         def user_role
-          Decidim::ParticipatoryProcessUserRole.includes(:user)
+          @user_role ||= Decidim::ParticipatoryProcessUserRole.includes(:user)
                                                .where(participatory_process: current_participatory_space)
                                                .where(user: current_user)
                                                .first

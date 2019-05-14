@@ -163,6 +163,33 @@ Decidim.register_component(:questions) do |component|
       global = nil
     end
 
+    email = "committee-user-#{participatory_space.underscored_name}-#{participatory_space.id}@example.org"
+    name = "#{Faker::Name.name} #{participatory_space.id} #{n} committee"
+
+    committee_user = Decidim::User.find_or_initialize_by(email: email)
+    author.update!(
+      password: "decidim123456",
+      password_confirmation: "decidim123456",
+      name: name,
+      nickname: Faker::Twitter.unique.screen_name,
+      organization: component.organization,
+      tos_agreement: "1",
+      confirmed_at: Time.current
+    )
+    Decidim::ParticipatoryProcessUserRole.create!(role: "committee", participatory_process: participatory_space, user: committee_user)
+
+    service_user = Decidim::User.find_or_initialize_by(email: email)
+    author.update!(
+      password: "decidim123456",
+      password_confirmation: "decidim123456",
+      name: name,
+      nickname: Faker::Twitter.unique.screen_name,
+      organization: component.organization,
+      tos_agreement: "1",
+      confirmed_at: Time.current
+    )
+    Decidim::ParticipatoryProcessUserRole.create!(role: "service", participatory_process: participatory_space, user: service_user)
+
     5.times do |n|
       state, answer = if n > 3
                         ["accepted", Decidim::Faker::Localized.sentence(10)]
