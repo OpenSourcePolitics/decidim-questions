@@ -15,6 +15,7 @@ module Decidim
           collection do
             resource :questions_import, only: [:new, :create]
             resource :questions_merge, only: [:create]
+            resource :questions_move, only: [:create]
             resource :questions_split, only: [:create]
           end
           resources :question_answers, only: [:edit, :update]

@@ -464,6 +464,8 @@ en:
             change_category: Change category
             merge: Merge into a new one
             merge_button: Merge
+            move: Move questions
+            move_button: Move
             select_component: Select a component
             selected: selected
             split: Split questions
