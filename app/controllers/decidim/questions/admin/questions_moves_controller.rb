@@ -9,7 +9,7 @@ module Decidim
 
           @form = form(Admin::QuestionsMoveForm).from_params(params)
 
-          Admin::MoveQuestions.call(@form) do
+          Admin::MoveQuestions.call(@form, current_user) do
             on(:ok) do |_question|
               flash[:notice] = I18n.t("questions_moves.create.success", scope: "decidim.questions.admin")
               redirect_to EngineRouter.admin_proxy(current_component).root_path

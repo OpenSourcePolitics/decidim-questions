@@ -37,6 +37,7 @@ en:
     models:
       decidim/questions/accepted_question_event: Question accepted
       decidim/questions/admin/update_question_category_event: Question category changed
+      decidim/questions/admin/moved_question_event: Question moved
       decidim/questions/creation_enabled_event: Question creation enabled
       decidim/questions/endorsing_enabled_event: Question endorsing enabled
       decidim/questions/evaluating_question_event: Question is being evaluated
@@ -195,6 +196,10 @@ en:
             the previous link.
           email_subject: Questions endorsing has started for %{participatory_space_title}
           notification_title: You can now start <a href="%{resource_path}">endorsing questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+        moved_question:
+          email_intro: 'The question: "%{resource_title}" has been moved to %{component_title}'
+          email_subject: The question "%{resource_title}" has been moved
+          notification_title: 'The question <a href="%{resource_path}">%{resource_title}</a> has been moved to <a href="%{component_url}">%{component_title}</a>'
         forward_question:
           email_intro: 'The question "%{resource_title}" has been forwarded to you and needs your input.'
           email_outro: You have received this notification because you have a role in the treatment of this question.

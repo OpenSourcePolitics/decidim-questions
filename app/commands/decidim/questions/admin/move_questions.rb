@@ -9,8 +9,9 @@ module Decidim
         # Public: Initializes the command.
         #
         # form - A form object with the params.
-        def initialize(form)
+        def initialize(form, current_user)
           @form = form
+          @current_user = current_user
         end
 
         # Executes the command. Broadcasts these events:
@@ -22,7 +23,10 @@ module Decidim
         def call
           return broadcast(:invalid) unless form.valid?
 
-          broadcast(:ok, move_questions)
+          move_questions
+          notify
+
+          broadcast(:ok, questions)
         end
 
         private
@@ -31,9 +35,29 @@ module Decidim
 
         def move_questions
           transaction do
-            form.questions.each do |question|
-              question.update!(component: form.target_component)
+            questions.each do |question|
+              Decidim.traceability.update!(
+                question,
+                @current_user,
+                { component: form.target_component },
+                visibility: "admin-only"
+              )
             end
+          end
+        end
+
+        def questions
+          form.questions
+        end
+
+        def notify
+          questions.each do |question|
+            Decidim::EventsManager.publish(
+              event: 'decidim.events.questions.moved_question',
+              event_class: Decidim::Questions::Admin::MovedQuestionEvent,
+              resource: question,
+              affected_users: question.notifiable_identities
+            ) if question.coauthorships.any?
           end
         end
       end
