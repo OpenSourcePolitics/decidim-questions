@@ -44,15 +44,24 @@ module Decidim
         delegate :categories, to: :current_component
 
         def map_model(model)
-          return unless model.categorization
+          if context.blank?
+            @context = {
+              current_organization: model.organization,
+              current_participatory_space: model.participatory_space,
+              current_component: model.component
+            }
+          end
 
-          self.category_id = model.categorization.decidim_category_id
+          self.category_id = model.categorization.try(:decidim_category_id)
           self.scope_id = model.decidim_scope_id
+          self.state = 'evaluating' if model.try(:state).blank?
 
           if model.recipient == "committee"
             self.committee_users_ids = model.recipient_ids
           elsif model.recipient == "service"
             self.service_users_ids = model.recipient_ids
+          elsif model.recipient.blank? && state == 'evaluating'
+            self.recipient = 'none'
           end
 
           @suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
@@ -119,34 +128,20 @@ module Decidim
           @component_suggested_hashtags ||= ordered_hashtag_list(current_component.current_settings.suggested_hashtags)
         end
 
-        def committee_users
-          @committee_users ||= Decidim::ParticipatoryProcessUserRole
-                               .includes(:user)
-                               .where(participatory_process: current_participatory_space)
-                               .where(role: "committee").map(&:user)
+        def available_committee_users
+          @available_service_users ||= available_users_for("committee")
         end
 
-        def service_users
-          @service_users ||= Decidim::ParticipatoryProcessUserRole
-                             .includes(:user)
-                             .where(participatory_process: current_participatory_space)
-                             .where(role: "service").map(&:user)
+        def available_service_users
+          @available_service_users ||= available_users_for("service")
         end
 
-        def committee_users_ids=(values)
-          @committee_users_ids = if values.include?("all")
-                                   committee_users.map(&:id)
-                                 else
-                                   values.map(&:to_i).compact
-                                 end
+        def committee_users_ids
+          fetch_users(@committee_users_ids, available_committee_users)
         end
 
-        def service_users_ids=(values)
-          @service_users_ids = if values.include?("all")
-                                   service_users.map(&:id)
-                                 else
-                                   values.map(&:to_i).compact
-                                 end
+        def service_users_ids
+          fetch_users(@service_users_ids, available_service_users)
         end
 
         def recipient_ids
@@ -157,6 +152,23 @@ module Decidim
         end
 
         private
+
+        def available_users_for(role)
+          return [] unless current_participatory_space.present?
+
+          Decidim::ParticipatoryProcessUserRole
+            .includes(:user)
+            .where(participatory_process: current_participatory_space)
+            .where(role: role).map(&:user)
+        end
+
+        def fetch_users(ids, collection)
+          return [] if ids.blank?
+          return collection.map(&:id) if ids.include?("all")
+
+          ids = ids.compact.map(&:to_i)
+          collection.select { |user| ids.include?(user.id) }.map(&:id)
+        end
 
         def scope_belongs_to_participatory_space_scope
           errors.add(:scope_id, :invalid) if current_participatory_space.out_of_scope?(scope)

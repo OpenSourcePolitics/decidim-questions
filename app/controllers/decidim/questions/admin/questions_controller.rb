@@ -68,8 +68,6 @@ module Decidim
         def edit
           enforce_permission_to :edit, :question
           @form = form(Admin::QuestionForm).from_model(question)
-          @form.state = 'evaluating' if question.try(:state).blank?
-          @form.recipient = 'none' if question.try(:recipient).blank? && @form.state == 'evaluating'
           @form.attachment = form(AttachmentForm).from_params({})
         end
 
@@ -78,17 +76,17 @@ module Decidim
 
           @form = form(Admin::QuestionForm).from_params(params)
           Admin::UpdateQuestion.call(@form, @question) do
-            on(:ok) do |_question|
-              if _question.upstream_pending?
+            on(:ok) do |question|
+              if question.upstream_pending?
                 Decidim.traceability.perform_action!(
                   "accept",
-                  _question.upstream_moderation,
+                  question.upstream_moderation,
                   current_user,
                   extra: {
                     upstream_reportable_type: "Decidim::Questions::Question"
                   }
                 ) do
-                  _question.upstream_moderation.update!(
+                  question.upstream_moderation.update!(
                     hidden_at: nil,
                     pending: false
                   )

@@ -70,23 +70,9 @@
         </div>
       </div>
     </div>
-    <% if @form.service_users&.any? %>
-      <div class="row column hide" id="question_service_users_wrapper">
-        <%= form.select :service_users_ids,
-          @form.service_users.map{|user| [user.name, user.id]}.prepend(["All", "all"]),
-        { include_blank: false },
-        { multiple: true, class: "chosen-select" } %>
-      </div>
-    <% end %>
-    <% if @form.committee_users&.any? %>
-      <div class="row column hide" id="question_committee_users_wrapper">
-        <%= form.select :committee_users_ids,
-            @form.committee_users.map{|user| [user.name, user.id]}.prepend(["All", "all"]),
-        { include_blank: false },
-        { multiple: true, class: "chosen-select" } %>
-      </div>
-    <% end %>
-    <div class="row column hide" id="question_answer_wrapper">
+    <%= recipients_select(form, :service_users_ids, @form.available_service_users) %>
+    <%= recipients_select(form, :committee_users_ids, @form.available_committee_users) %>
+    <div class="row column" id="question_answer_wrapper">
       <%= form.translated :editor, :answer, autofocus: true, rows: 15 %>
     </div>
   </div>
