@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 require "spec_helper"
 
 describe Decidim::Questions::Admin::UpdateQuestion do
@@ -9,33 +10,34 @@ describe Decidim::Questions::Admin::UpdateQuestion do
   let(:organization) { component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
-    form_klass.from_params(
-      form_params
-    ).with_context(
+    form_klass.from_params(params).with_context(context)
+  end
+  let(:context) do
+    {
       current_organization: organization,
       current_participatory_space: component.participatory_space,
       current_user: user,
       current_component: component
-    )
+    }
   end
+  let(:params) do
+    {
+      title: question.title,
+      body: question.body,
+      scope_id: question.scope.try(:id),
+      state: state,
+      recipient: recipient,
+      recipient_ids: recipient_ids,
+      answer: question.answer
+    }
+  end
+  let(:state) { "accepted" }
+  let(:recipient) { "none" }
+  let(:recipient_ids) { [] }
 
-  let!(:question) { create :question, :official, component: component }
-
-  let(:has_address) { false }
-  let(:address) { nil }
-  let(:latitude) { 40.1234 }
-  let(:longitude) { 2.1234 }
+  let!(:question) { create :question, :official, state: "accepted", component: component }
 
   describe "call" do
-    let(:form_params) do
-      {
-        title: "A reasonable question title",
-        body: "A reasonable question body",
-        address: address,
-        has_address: has_address
-      }
-    end
-
     let(:command) do
       described_class.new(form, question)
     end
@@ -57,6 +59,10 @@ describe Decidim::Questions::Admin::UpdateQuestion do
     end
 
     describe "when the form is valid" do
+      before do
+        expect(form).to be_valid
+      end
+
       it "broadcasts ok" do
         expect { command.call }.to broadcast(:ok)
       end
@@ -80,27 +86,39 @@ describe Decidim::Questions::Admin::UpdateQuestion do
         expect(action_log.version.event).to eq "update"
       end
 
-      context "when geocoding is enabled" do
-        let(:component) { create(:question_component, :with_geocoding_enabled) }
+      context "when changing untraceable attrtibutes", versioning: true do
+        let(:state) { "evaluating" }
 
-        context "when the has address checkbox is checked" do
-          let(:has_address) { true }
+        it "does not trace the update" do
+          expect { command.call }.to_not change(Decidim::ActionLog, :count)
+          expect(question.reload.state).to eq("evaluating")
+        end
+      end
 
-          context "when the address is present" do
-            let(:address) { "Carrer Pare Llaurador 113, baixos, 08224 Terrassa" }
+      context "when it has some recipients" do
+        let(:committee_user) { create :user, :confirmed, organization: organization }
+        let(:state) { "evaluating" }
+        let(:recipient) { "committee" }
+        let(:recipient_ids) { [committee_user.id] }
 
-            before do
-              stub_geocoding(address, [latitude, longitude])
-            end
+        before do
+          expect(form).to receive(:recipient_ids).at_least(:once).and_return(recipient_ids)
+        end
 
-            it "sets the latitude and longitude" do
-              command.call
-              question = Decidim::Questions::Question.last
+        it "notifies them" do
+          expect(Decidim::EventsManager).to receive(:publish).with(
+            hash_including(
+              event: 'decidim.events.questions.forward_question',
+              affected_users: array_including(
+                having_attributes(
+                  id: committee_user.id,
+                  class: Decidim::User
+                )
+              )
+            )
+          )
 
-              expect(question.latitude).to eq(latitude)
-              expect(question.longitude).to eq(longitude)
-            end
-          end
+          command.call
         end
       end
     end

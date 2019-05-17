@@ -129,7 +129,7 @@ module Decidim
         end
 
         def available_committee_users
-          @available_service_users ||= available_users_for("committee")
+          @available_committee_users ||= available_users_for("committee")
         end
 
         def available_service_users

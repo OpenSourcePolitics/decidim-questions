@@ -22,6 +22,8 @@ en:
         suggested_hashtags: Suggested hashtags
         title: Title
         user_group_id: Create question as
+        committee_users_ids: Committee users to notify
+        service_users_ids: Service users to notify
       question_answer:
         answer: Answer
       questions_copy:

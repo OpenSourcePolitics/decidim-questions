@@ -398,6 +398,7 @@ en:
             select_a_category: Select a category
             select_a_meeting: Select a meeting
             service: Service
+            all: All users
           index:
             actions: Actions
             cancel: Cancel

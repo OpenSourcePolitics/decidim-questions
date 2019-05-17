@@ -14,13 +14,15 @@ module Decidim
           @meetings_as_authors_selected ||= @question.authors.pluck(:id)
         end
 
+        # Public: Creates a multiple select component so an admin can
+        # choose which users should be the recipients of a question.
         def recipients_select(form, role, collection)
           return if collection.blank?
 
           content_tag(:div, class: "row column", id: "#{role}_wrapper") do
             form.select(
               role,
-              collection.map { |user| [user.name, user.id] }.prepend(["All", "all"]),
+              collection.map { |user| [user.name, user.id] }.prepend([t("decidim.questions.admin.questions.form.all"), "all"]),
               { include_blank: false },
               { multiple: true, class: "chosen-select" }
             )

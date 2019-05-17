@@ -109,7 +109,6 @@ module Decidim
               affected_users: Decidim::User.where(id: form.recipient_ids).to_a
             )
           end
-
         end
 
         def answer_question
