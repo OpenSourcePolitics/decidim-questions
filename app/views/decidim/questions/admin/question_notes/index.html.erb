@@ -1,23 +1,23 @@
 <%= render "decidim/questions/admin/shared/info_question" %>
 
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title">
-      <%= t ".answer_title" %>
-    </h2>
-  </div>
-  <% if question.answered? %>
-    <div class="card-section">
-      <div class="row column">
-        <div class="body-wrapper">
-          <%= present(question).answer %>
+<% if question.answered? && !question.answer.blank?  %>
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title">
+        <%= t ".answer_title" %>
+      </h2>
+    </div>
+      <div class="card-section">
+        <div class="row column">
+          <div class="body-wrapper">
+            <%= present(question).answer %>
+          </div>
+        </div>
+        <div class="row column">
+          <strong><%= t ".answered_at" %> : </strong> <%= l question.answered_at, format: :decidim_short %>
         </div>
       </div>
-      <div class="row column">
-        <strong><%= t ".answered_at" %>: </strong> <%= l question.answered_at, format: :decidim_short %>
-      </div>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
 
 <%= render "question_notes" %>
