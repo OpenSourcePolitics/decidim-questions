@@ -106,41 +106,30 @@ module Decidim
         private
 
         def query
-          @query ||= if current_component.settings.participatory_texts_enabled?
-                       Question.where(component: current_component).published.order(:position).ransack(params[:q])
-                     else
-                       role = current_user.admin ? "admin" : user_role.role
-                       Question.where(component: current_component).published.not_hidden.upstream_not_hidden_for(role).ransack(params[:q])
-                     end
-        end
+          return @query if defined?(@query)
 
-        def query_with_role
-          @query ||= if current_component.settings.participatory_texts_enabled?
-                       Question.where(component: current_component)
-                               .where(recipient: user_role.role)
-                               .published
-                               .order(:position).ransack(params[:q])
-                     else
-                       Question.where(component: current_component)
-                               .where(recipient: user_role.role)
-                               .published
-                               .ransack(params[:q])
-                     end
+          @query = Question.where(component: current_component)
+                           .published
+                           .not_hidden
+                           .upstream_not_hidden_for(user_role)
+
+          @query = @query.where("recipient_ids @> ARRAY[?]", [current_user.id]) if user_role == "service"
+          @query = @query.order(:position) if current_component.settings.participatory_texts_enabled?
+          @query = @query.ransack(params[:q])
         end
 
         def user_role
+          return "admin" if current_user.admin?
+
           @user_role ||= Decidim::ParticipatoryProcessUserRole.includes(:user)
                                                .where(participatory_process: current_participatory_space)
                                                .where(user: current_user)
+                                               .pluck(:role)
                                                .first
         end
 
         def questions
-          @questions ||= if user_role&.role == "service"
-                           query_with_role.result.page(params[:page]).per(15)
-                         else
-                           query.result.page(params[:page]).per(15)
-                         end
+          @questions ||= query.result.page(params[:page]).per(15)
         end
 
         def question
