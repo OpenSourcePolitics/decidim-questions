@@ -22,8 +22,7 @@ module Decidim
         def call
           transaction do
             @failures = {}
-            # TODO (merge 20190320) : check if still needed
-            # update_contents_and_resort_questions(form)
+            update_contents_and_resort_questions(form)
             publish_drafts
           end
 
@@ -37,18 +36,6 @@ module Decidim
         private
 
         attr_reader :form
-
-        def update_contents_and_resort_questions(form)
-          form.questions.each do |prop_form|
-            question = Decidim::Questions::Question.where(component: form.current_component).find(prop_form.id)
-            question.set_list_position(prop_form.position) if question.position != prop_form.position
-            question.title = prop_form.title
-            question.body = prop_form.body if question.participatory_text_level == Decidim::Questions::ParticipatoryTextSection::LEVELS[:article]
-
-            add_failure(question) unless question.save
-          end
-          raise ActiveRecord::Rollback if @publish_failures.any?
-        end
 
         def publish_drafts
           Decidim::Questions::Question.where(component: form.current_component).drafts.find_each do |question|

@@ -49,6 +49,26 @@ describe "Participatory texts", type: :system do
         should_have_question("#questions div.hover-section:last-child", question_article)
       end
     end
+
+    context " when participatory text level is not article" do
+      it "not renders the participatory text body" do
+        question_section = questions.first
+        question_section.participatory_text_level = "section"
+        question_section.save!
+        visit_component
+        should_have_question("#questions div.hover-section:first-child", question_section)
+      end
+    end
+
+    context "when participatory text level is article" do
+      it "renders the question body" do
+        question_article = questions.last
+        question_article.participatory_text_level = "article"
+        question_article.save!
+        visit_component
+        should_have_question("#questions div.hover-section:last-child", question_article)
+      end
+    end
   end
 
   context "when listing questions in a participatory process as participatory texts" do
