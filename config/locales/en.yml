@@ -591,6 +591,7 @@ en:
           related_to: Related to
           search: Search
           state: State
+          type: Type
           withdrawn: Withdrawn
         filters_small_view:
           close_modal: Close modal

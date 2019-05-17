@@ -608,17 +608,17 @@ fr:
         filter_origin_values:
           all: Toutes
           citizens: Questions citoyennes
-          meetings: Des réunions
+          meetings: Elaborées en réunion publique
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Retenues
+          accepted: Acceptées
           all: Toutes
           evaluating: En attente de réponse
-          except_rejected: Toutes sauf les questions non recevables
-          rejected: Non retenue
+          except_rejected: Toutes sauf les questions rejetées
+          rejected: Rejetées
         filter_type_values:
-          all: Toutes
+          all: Tous
           amendments: Amendements
           questions: Les questions
       collaborative_drafts:
@@ -674,6 +674,7 @@ fr:
           related_to: Liée à
           search: Chercher
           state: État
+          type: Type
           withdrawn: Retirée
         filters_small_view:
           close_modal: Fermer la fenêtre

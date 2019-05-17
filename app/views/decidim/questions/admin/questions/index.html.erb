@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card with-overflow">
   <div class="card-divider">
     <h2 class="card-title flex--sbc">
       <div>
@@ -8,6 +8,9 @@
       <%= render partial: "bulk-actions" %>
     </h2>
   </div>
+  <div class="filters__section">
+    <%= render partial: "filters" %>
+  </div>
   <div class="card-section">
     <div class="table-scroll">
       <table class="table-list">
@@ -16,25 +19,34 @@
             <th>
               <%= check_box_tag "questions_bulk", "all", false, class: "js-check-all" %>
             </th>
+            <% if component_settings.amendments_enabled && !(params[:q] && params[:q][:is_emendation_true].present?) %>
+              <th>
+                <%= sort_link(query, :id, t("questions.filters.type", scope: "decidim.questions") ) %>
+              </th>
+              <th></th>
+            <% end %>
             <th>
               <%= sort_link(query, :id, t("models.question.fields.id", scope: "decidim.questions"), default_order: :desc ) %>
             </th>
             <th>
               <%= sort_link(query, :title, t("models.question.fields.title", scope: "decidim.questions") ) %>
             </th>
-            <th>
-              <%= sort_link(query, :category_name, t("models.question.fields.category", scope: "decidim.questions") ) %>
-            </th>
-
+            <% unless params[:q] && params[:q][:category_id_eq] %>
+              <th>
+                <%= sort_link(query, :category_name, t("models.question.fields.category", scope: "decidim.questions") ) %>
+              </th>
+            <% end %>
             <% if current_participatory_space.scopes_enabled? && current_participatory_space.has_subscopes? %>
               <th>
                 <%= sort_link(query, :scope_name, t("models.question.fields.scope", scope: "decidim.questions") ) %>
               </th>
             <% end %>
 
-            <th>
-              <%= sort_link(query, :state, t("models.question.fields.state", scope: "decidim.questions") ) %>
-            </th>
+            <% unless params[:q] && params[:q][:state_eq] %>
+              <th>
+                <%= sort_link(query, :state, t("models.question.fields.state", scope: "decidim.questions") ) %>
+              </th>
+            <% end %>
 
             <% if current_settings.votes_enabled? %>
               <th>

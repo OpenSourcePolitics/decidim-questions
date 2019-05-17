@@ -394,7 +394,7 @@ shared_examples "manage questions" do
 
       it "cannot answer a question" do
         visit_component_admin
-        within find("tr", text: I18n.t("decidim/amendment", scope: "activerecord.models", count: 1)) do
+        within find("tr", text: emendation.title) do
           expect(page).to have_no_link("Answer")
         end
       end
