@@ -74,7 +74,8 @@ module Decidim
             body: body_with_hashtags,
             category: form.category,
             recipient: form.recipient,
-            state: form.state
+            state: form.state,
+            published_at: published_at
           )
         end
 
@@ -82,7 +83,8 @@ module Decidim
           PaperTrail.request(enabled: false) do
             question.update!(
               recipient: form.recipient,
-              state: form.state
+              state: form.state,
+              published_at: published_at
             )
           end
         end
@@ -191,6 +193,17 @@ module Decidim
         # specific role privilege.
         def participatory_processes_with_role_privileges(role)
           Decidim::ParticipatoryProcessesWithUserRole.for(form.current_user, role)
+        end
+
+        # Update the publish date when evaluating or accepted
+        def published_at
+          if question.state.nil? && %w(evaluating accepted).include?(form.state)
+            Time.current
+          elsif question.state != form.state && %w(accepted).include?(form.state)
+            Time.current
+          else
+            question.published_at
+          end
         end
       end
     end

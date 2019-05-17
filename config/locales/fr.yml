@@ -569,14 +569,17 @@ fr:
           info_question:
             body: Corps du texte
             created_at: Date de création
+            published_at: Date de publication
             info_question_bottom:
               body: Corps du texte
-              created_at: Créé à
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               author: Auteur
               body: Corps du texte
-              created_at: Créé à
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
@@ -766,7 +769,8 @@ fr:
             id: ID
             official_question: Question officielle
             private_discussions: Discussions privées
-            published_at: Publiée à
+            created_at: Soumise le
+            published_at: Publiée
             reference: Référence
             scope: Secteur
             state: État

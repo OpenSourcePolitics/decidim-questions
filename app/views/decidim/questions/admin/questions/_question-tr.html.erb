@@ -66,7 +66,11 @@
   <% end %>
 
   <td>
-    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.created_at)) %>
+    <%= l question.created_at, format: :decidim_short %>
+  </td>
+
+  <td>
+    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
   </td>
 
   <td class="table-list__actions">

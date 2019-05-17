@@ -61,6 +61,10 @@
             <% end %>
 
             <th>
+              <%= sort_link(query, :created_at, t("models.question.fields.created_at", scope: "decidim.questions") ) %>
+            </th>
+
+            <th>
               <%= sort_link(query, :published_at, t("models.question.fields.published_at", scope: "decidim.questions") ) %>
             </th>
 

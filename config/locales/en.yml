@@ -501,6 +501,7 @@ en:
           info_question:
             body: Body
             created_at: Creation date
+            published_at: Publication date
             question_votes_count: Votes count
             questions: Questions
       admin_log:
@@ -681,7 +682,8 @@ en:
             id: ID
             notes: Notes
             official_question: Official question
-            published_at: Published at
+            created_at: Created on
+            published_at: Published
             scope: Scope
             state: State
             title: Title
