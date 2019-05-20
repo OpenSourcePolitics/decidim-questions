@@ -50,14 +50,16 @@ module Decidim
         def notify_committee
           return unless question.state == 'pending'
 
-          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee )
+          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee ).pluck(:decidim_user_id)
+          recipients += Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :admin ).pluck(:decidim_user_id)
+          recipients += form.current_organization.admins.pluck(:id)
 
           unless recipients.empty?
             Decidim::EventsManager.publish(
               event: 'decidim.events.questions.validate_question',
               event_class: Decidim::Questions::Admin::ValidateQuestionEvent,
               resource: question,
-              affected_users: Decidim::User.where(id: recipients.pluck(:decidim_user_id)).to_a
+              affected_users: Decidim::User.where(id: recipients).to_a
             )
           end
 
