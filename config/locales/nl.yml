@@ -67,10 +67,15 @@ nl:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -498,6 +503,9 @@ nl:
           form:
             note: Opmerking
             submit: Bevestigen
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Laat je opmerking achter
           title: Privé-opmerkingen
         questions:
@@ -580,13 +588,16 @@ nl:
             created_at: Aangemaakt op
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Aantal stemmen
             questions: Voorstellen
       admin_log:
@@ -765,12 +776,15 @@ nl:
           fields:
             category: Categorie
             comments: Reacties
+            created_at: Created on
             endorsements: Endorsements
             id: ID
             notes: Opmerkingen
             official_question: Officieel voorstel
             published_at: Gepubliceerd op
+            reference: Reference
             scope: Scope
+            short_ref: N°
             state: Status
             title: Titel
             votes: Stemmen
@@ -838,6 +852,7 @@ nl:
           related_to: Gerelateerd aan
           search: Zoeken
           state: Status
+          type: Type
           voted: Gestemd
         filters_small_view:
           close_modal: Dialoogvenster sluiten

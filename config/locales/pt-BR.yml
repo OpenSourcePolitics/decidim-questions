@@ -67,10 +67,15 @@ pt-BR:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -477,6 +482,9 @@ pt-BR:
           form:
             note: Nota
             submit: Enviar
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Deixe sua nota
           title: Notas privadas
         questions:
@@ -557,13 +565,16 @@ pt-BR:
             created_at: Data de criação
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Contagem de votos
             questions: Propostas
       admin_log:
@@ -740,12 +751,15 @@ pt-BR:
           fields:
             category: Categoria
             comments: Comentários
+            created_at: Created on
             endorsements: Endossos
             id: ID
             notes: Notas
             official_question: Proposta oficial
             published_at: Publicado em
+            reference: Reference
             scope: Âmbito
+            short_ref: N°
             state: Estado
             title: Título
             votes: Votos
@@ -813,6 +827,7 @@ pt-BR:
           related_to: Relacionado a
           search: Pesquisa
           state: Estado
+          type: Type
           voted: Votado
         filters_small_view:
           close_modal: Fechar modal

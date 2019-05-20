@@ -20,7 +20,7 @@ module Decidim
       end
 
       def presenter
-        @presenter ||= Decidim::Questions::QuestionPresenter.new(resource).title
+        @presenter ||= Decidim::Questions::QuestionPresenter.new(resource)
       end
     end
   end

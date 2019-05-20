@@ -67,10 +67,15 @@ ca:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -476,6 +481,9 @@ ca:
           form:
             note: Nota
             submit: Enviar
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Deixa la teva nota
           title: Notes privades
         questions:
@@ -556,13 +564,16 @@ ca:
             created_at: Data de creació
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Nombre de suports
             questions: Propostes
       admin_log:
@@ -742,12 +753,15 @@ ca:
           fields:
             category: Categoria
             comments: Comentaris
+            created_at: Created on
             endorsements: Adhesions
             id: ID
             notes: Notes
             official_question: Proposta oficial
             published_at: Publicat a
+            reference: Reference
             scope: Àmbit
+            short_ref: N°
             state: Estat
             title: Títol
             votes: Suports
@@ -815,6 +829,7 @@ ca:
           related_to: Relacionat amb
           search: Cerca
           state: Estat
+          type: Type
           voted: Has donat suport
         filters_small_view:
           close_modal: Tancar finestra

@@ -69,10 +69,15 @@ fr:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configurer
         duplicate: Dupliquer
+        filter: Filter
         new_process: Nouveau processus participatif
         preview: Aperçu
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Collection de pièces jointes
@@ -502,6 +507,9 @@ fr:
           form:
             note: Note
             submit: Soumettre
+          index:
+            answer_title: Réponse
+            answered_at: Dernière édition le
           leave_your_note: Laisser une note
           title: Notes privées
         questions:
@@ -591,16 +599,19 @@ fr:
             created_at: Date de création
             info_question_bottom:
               body: Corps du texte
-              created_at: Créé à
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               author: Auteur
               body: Corps du texte
-              created_at: Créé à
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
               questions: Les questions
+            published_at: Date de publication
             question_votes_count: Nombre de votes
             questions: Questions
       admin_log:
@@ -625,17 +636,17 @@ fr:
         filter_origin_values:
           all: Toutes
           citizens: Questions citoyennes
-          meetings: Des réunions
+          meetings: Elaborées en réunion publique
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Retenues
+          accepted: Acceptées
           all: Toutes
           evaluating: En attente de réponse
-          except_rejected: Toutes sauf les questions non recevables
-          rejected: Non retenue
+          except_rejected: Toutes sauf les questions rejetées
+          rejected: Rejetées
         filter_type_values:
-          all: Toutes
+          all: Tous
           amendments: Amendements
           questions: Les questions
       collaborative_drafts:
@@ -691,6 +702,7 @@ fr:
           related_to: Liée à
           search: Chercher
           state: État
+          type: Type
           withdrawn: Retirée
         filters_small_view:
           close_modal: Fermer la fenêtre
@@ -781,14 +793,16 @@ fr:
           fields:
             category: Catégorie
             comments: Commentaires
+            created_at: Soumise le
             endorsements: Soutiens
             id: ID
             notes: Notes
             official_question: Question officielle
             private_discussions: Discussions privées
-            published_at: Publiée à
+            published_at: Publiée
             reference: Référence
             scope: Secteur
+            short_ref: N°
             state: État
             title: Titre
             votes: Votes
@@ -857,6 +871,7 @@ fr:
           related_to: Liées à
           search: Rechercher
           state: État
+          type: Type
           voted: Ne montrer que les questions pour lesquelles j'ai voté
         filters_small_view:
           close_modal: Fermer la fenêtre

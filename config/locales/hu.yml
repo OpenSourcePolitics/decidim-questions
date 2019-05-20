@@ -66,10 +66,15 @@ hu:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -480,6 +485,9 @@ hu:
           form:
             note: Jegyzet
             submit: Küldés
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Jegyzet elhagyása
           title: Privát jegyzetek
         questions:
@@ -560,13 +568,16 @@ hu:
             created_at: Létrehozás dátuma
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Szavazatok száma
             questions: Javaslatok
       admin_log:
@@ -741,12 +752,15 @@ hu:
           fields:
             category: Kategória
             comments: Hozzászólások
+            created_at: Created on
             endorsements: Jóváhagyások
             id: ID
             notes: Jegyzetek
             official_question: Hivatalos javaslat
             published_at: 'Közzétéve:'
+            reference: Reference
             scope: Hatáskör
+            short_ref: N°
             state: Állapot
             title: Cím
             votes: Szavazatok
@@ -813,6 +827,7 @@ hu:
           related_to: Kapcsolódó
           search: Keresés
           state: Állapot
+          type: Type
           voted: Szavazott
         filters_small_view:
           close_modal: Modal bezárása

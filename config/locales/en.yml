@@ -3,10 +3,15 @@ en:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -107,6 +112,9 @@ en:
           form:
             note: Note
             submit: Submit
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Leave your note
           title: Private notes
         questions:
@@ -180,15 +188,19 @@ en:
             success: Successfully splitted the questions into new ones.
         shared:
           info_question:
+            created_at: Created at
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
       application_helper:
         filter_origin_values:
           all: All
@@ -330,11 +342,12 @@ en:
           fields:
             category: Category
             comments: Comments
+            created_at: Created on
             endorsements: Endorsements
-            id: ID
             official_question: Official question
-            published_at: Published at
+            published_at: Published
             scope: Scope
+            short_ref: N°
             state: State
             title: Title
             votes: Votes
@@ -401,6 +414,7 @@ en:
           related_to: Related to
           search: Search
           state: State
+          type: Type
           voted: Voted
         filters_small_view:
           close_modal: Close modal

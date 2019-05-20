@@ -66,10 +66,15 @@ tr-TR:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -487,6 +492,9 @@ tr-TR:
           form:
             note: Note
             submit: Submit
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Leave your note
           title: Private notes
         questions:
@@ -567,13 +575,16 @@ tr-TR:
             created_at: Creation date
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Votes count
             questions: Questions
       admin_log:
@@ -749,12 +760,15 @@ tr-TR:
           fields:
             category: Category
             comments: Comments
+            created_at: Created on
             endorsements: Endorsements
             id: ID
             notes: Notes
             official_question: Official question
             published_at: Published at
+            reference: Reference
             scope: Scope
+            short_ref: N°
             state: State
             title: Title
             votes: Votes
@@ -821,6 +835,7 @@ tr-TR:
           related_to: Related to
           search: Search
           state: State
+          type: Type
           voted: Voted
         filters_small_view:
           close_modal: Close modal

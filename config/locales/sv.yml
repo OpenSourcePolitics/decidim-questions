@@ -67,10 +67,15 @@ sv:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -475,6 +480,9 @@ sv:
           form:
             note: Annteckning
             submit: Skicka in
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Lämna din anteckning
           title: Privata anteckningar
         questions:
@@ -554,13 +562,16 @@ sv:
             created_at: Skapandedatum
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Antal röster
             questions: Förslag
       admin_log:
@@ -737,12 +748,15 @@ sv:
           fields:
             category: Kategori
             comments: Kommentarer
+            created_at: Created on
             endorsements: Påskrifter
             id: ID
             notes: Anteckningar
             official_question: Officiellt förslag
             published_at: Publicerad vid
+            reference: Reference
             scope: Omfattning
+            short_ref: N°
             state: Status
             title: Titel
             votes: Röster
@@ -809,6 +823,7 @@ sv:
           related_to: Relaterad till
           search: Sök
           state: Status
+          type: Type
           voted: Röstade
         filters_small_view:
           close_modal: Stäng fönstret

@@ -67,10 +67,15 @@ eu:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -487,6 +492,9 @@ eu:
           form:
             note: Ohar
             submit: Bidali
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Utzi zure oharra
           title: Ohar pribatuak
         questions:
@@ -566,13 +574,16 @@ eu:
             created_at: Sortze data
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Botoen zenbaketa
             questions: proposamenak
       admin_log:
@@ -749,12 +760,15 @@ eu:
           fields:
             category: Kategoria
             comments: Oharrak
+            created_at: Created on
             endorsements: Oniritziak
             id: NORTASUN AGIRIA
             notes: Oharrak
             official_question: Proposamen ofiziala
             published_at: Argitaratu at
+            reference: Reference
             scope: Esparrua
+            short_ref: N°
             state: Estatu
             title: Titulua
             votes: Euskarriak
@@ -822,6 +836,7 @@ eu:
           related_to: Honekin lotuta
           search: Bilatu
           state: Estatu
+          type: Type
           voted: Bozkatuta
         filters_small_view:
           close_modal: Itxi leihoa

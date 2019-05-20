@@ -66,10 +66,15 @@ it:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -489,6 +494,9 @@ it:
           form:
             note: Nota
             submit: Sottoscrivi
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Lascia il tuo messaggio
           title: Note private
         questions:
@@ -571,13 +579,16 @@ it:
             created_at: Data di creazione
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Contare i voti
             questions: proposte
       admin_log:
@@ -757,12 +768,15 @@ it:
           fields:
             category: Categoria
             comments: Commenti
+            created_at: Created on
             endorsements: Riconoscimenti
             id: ID
             notes: Gli appunti
             official_question: Proposta ufficiale
             published_at: Pubblicato a
+            reference: Reference
             scope: Visibilità
+            short_ref: N°
             state: Stato
             title: Titolo
             votes: Voti
@@ -830,6 +844,7 @@ it:
           related_to: Associata a
           search: Cerca
           state: Stato
+          type: Type
           voted: Votata
         filters_small_view:
           close_modal: Chiudi modalità

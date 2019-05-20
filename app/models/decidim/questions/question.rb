@@ -245,6 +245,19 @@ module Decidim
         Arel.sql(query)
       end
 
+      ransacker :is_emendation do |_parent|
+        query = <<-SQL
+        (
+          SELECT EXISTS (
+            SELECT 1 FROM decidim_amendments
+            WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Questions::Question'
+            AND decidim_amendments.decidim_emendation_id = decidim_questions_proposals.id
+          )
+        )
+        SQL
+        Arel.sql(query)
+      end
+
       def self.export_serializer
         Decidim::Questions::QuestionSerializer
       end
@@ -263,6 +276,10 @@ module Decidim
         return true if draft?
         limit = updated_at + component.settings.question_edit_before_minutes.minutes
         Time.current < limit
+      end
+
+      def short_ref
+        reference.split('-').last
       end
 
       private

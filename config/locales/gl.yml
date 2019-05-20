@@ -67,10 +67,15 @@ gl:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -476,6 +481,9 @@ gl:
           form:
             note: Nota
             submit: Enviar
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Deixe a súa nota
           title: Notas privadas
         questions:
@@ -556,13 +564,16 @@ gl:
             created_at: Data de creación
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Reconto de votos
             questions: Propostas
       admin_log:
@@ -737,12 +748,15 @@ gl:
           fields:
             category: Categoría
             comments: Comentarios
+            created_at: Created on
             endorsements: Aprobacións
             id: ID
             notes: Notas
             official_question: Proposta oficial
             published_at: Publicado en
+            reference: Reference
             scope: Alcance
+            short_ref: N°
             state: Estado
             title: Título
             votes: Votos
@@ -810,6 +824,7 @@ gl:
           related_to: Relacionado con
           search: Busca
           state: Estado
+          type: Type
           voted: Votado
         filters_small_view:
           close_modal: Pechar modal

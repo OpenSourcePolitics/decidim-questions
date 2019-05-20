@@ -76,10 +76,15 @@ uk:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -496,6 +501,9 @@ uk:
           form:
             note: Примітка
             submit: Надіслати
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Залиште свою нотатку
           title: Приватні примітки
         questions:
@@ -575,13 +583,16 @@ uk:
             created_at: Дата створення
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Кількість голосів
             questions: Пропозиції
       admin_log:
@@ -757,12 +768,15 @@ uk:
           fields:
             category: Категорія
             comments: Коментарі
+            created_at: Created on
             endorsements: Прояви підтримки
             id: Псевдонім
             notes: Примітки
             official_question: Службова пропозиція
             published_at: 'Оприлюднено:'
+            reference: Reference
             scope: Обсяг
+            short_ref: N°
             state: Стан
             title: Назва
             votes: Голоси
@@ -830,6 +844,7 @@ uk:
           related_to: Пов'язане з
           search: Шукати
           state: Стан
+          type: Type
           voted: Проголосоване
         filters_small_view:
           close_modal: Закрити віконце

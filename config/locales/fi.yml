@@ -67,10 +67,15 @@ fi:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configure
         duplicate: Duplicate
+        filter: Filter
         new_process: New process
         preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Attachment collections
@@ -479,6 +484,9 @@ fi:
           form:
             note: Huomautus
             submit: Lähetä
+          index:
+            answer_title: Answer
+            answered_at: Last edited
           leave_your_note: Jätä huomautuksesi
           title: Omat muistiinpanot
         questions:
@@ -559,13 +567,16 @@ fi:
             created_at: Luonnin ajankohta
             info_question_bottom:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
               new_question: New question
               questions: Questions
+            published_at: Published at
             question_votes_count: Äänten määrä
             questions: Ehdotukset
       admin_log:
@@ -741,12 +752,15 @@ fi:
           fields:
             category: Aihepiiri
             comments: Kommentit
+            created_at: Created on
             endorsements: Suositukset
             id: ID
             notes: Huomautuksia
             official_question: Virallinen ehdotus
             published_at: Julkaistu
+            reference: Reference
             scope: Teema
+            short_ref: N°
             state: Tila
             title: Otsikko
             votes: Äänet
@@ -813,6 +827,7 @@ fi:
           related_to: Liittyy aiheeseen
           search: Haku
           state: Tila
+          type: Type
           voted: Äänestetty
         filters_small_view:
           close_modal: Sulje ikkuna
