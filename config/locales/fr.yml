@@ -68,10 +68,15 @@ fr:
   decidim:
     admin:
       actions:
+        cancel: Cancel
         configure: Configurer
         duplicate: Dupliquer
+        filter: Filter
         new_process: Nouveau processus participatif
         preview: Aperçu
+      impersonatable_users:
+        index:
+          search: Search
       menu:
         participatory_processes_submenu:
           attachment_collections: Collection de pièces jointes
@@ -84,6 +89,7 @@ fr:
           private_users: Utilisateurs privés
           process_admins: Administrateurs de processus
           steps: Étapes
+          upstream_moderations: Upstream moderations
       models:
         participatory_process:
           fields:
@@ -235,15 +241,14 @@ fr:
             Vous pouvez arrêter de recevoir des notifications en cliquant sur ce dernier
             lien.
           email_subject: Vous pouvez désormais soutenir des questions dans %{participatory_space_title}
-          notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir
+            les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         forward_question:
-          email_intro: 'La question "%{resource_title}" vous a été transmise et attend votre réponse.'
+          email_intro: La question "%{resource_title}" vous a été transmise et attend
+            votre réponse.
           email_subject: Une question est en attente de traitement
-          notification_title: La question <a href="%{resource_path}">%{resource_title}</a> vous a été transmise et attend votre réponse.
-        validate_question:
-          email_intro: 'La réponse à la question "%{resource_title}" a été envoyée et attend votre validation'
-          email_subject: Une réponse attend votre validation
-          notification_title: La question <a href="%{resource_path}">%{resource_title}</a> a été envoyée et attend votre validation.
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
+            vous a été transmise et attend votre réponse.
         question_accepted:
           affected_user:
             email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez
@@ -341,6 +346,12 @@ fr:
             à jour
           notification_title: La catégorie de la question <a href="%{resource_path}">%{resource_title}</a>
             a été mise à jour par un administrateur.
+        validate_question:
+          email_intro: La réponse à la question "%{resource_title}" a été envoyée
+            et attend votre validation
+          email_subject: Une réponse attend votre validation
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
+            a été envoyée et attend votre validation.
         voting_enabled:
           email_intro: 'Vous pouvez soutenir les questions de %{participatory_space_title}
             ! Participez ici :'
@@ -489,8 +500,8 @@ fr:
             note: Note
             submit: Soumettre
           index:
-            answered_at: Dernière édition le
             answer_title: Réponse
+            answered_at: Dernière édition le
           leave_your_note: Laisser une note
           title: Notes privées
         questions:
@@ -511,6 +522,7 @@ fr:
             Comittee: Comité de pilotage
             Service: Service
             accepted: Retenue
+            all: All
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             back: Retour
             comittee: Comité de pilotage
@@ -572,7 +584,6 @@ fr:
           info_question:
             body: Corps du texte
             created_at: Date de création
-            published_at: Date de publication
             info_question_bottom:
               body: Corps du texte
               created_at: Date de soumission
@@ -587,6 +598,7 @@ fr:
             info_question_top:
               new_question: Nouvelle question
               questions: Les questions
+            published_at: Date de publication
             question_votes_count: Nombre de votes
             questions: Questions
       admin_log:
@@ -768,15 +780,15 @@ fr:
           fields:
             category: Catégorie
             comments: Commentaires
+            created_at: Soumise le
             endorsements: Soutiens
             id: ID
             official_question: Question officielle
             private_discussions: Discussions privées
-            created_at: Soumise le
             published_at: Publiée
             reference: Référence
-            short_ref: "N°"
             scope: Secteur
+            short_ref: N°
             state: État
             title: Titre
             votes: Votes
@@ -845,6 +857,7 @@ fr:
           related_to: Liées à
           search: Rechercher
           state: État
+          type: Type
           voted: Ne montrer que les questions pour lesquelles j'ai voté
         filters_small_view:
           close_modal: Fermer la fenêtre
@@ -993,3 +1006,6 @@ fr:
         question_result: 'Questions figurant dans ces réalisations :'
     scopes:
       global: Global
+    shared:
+      upstream_moderation:
+        pending_info: Pending info
