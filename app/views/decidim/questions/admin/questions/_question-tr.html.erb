@@ -3,17 +3,39 @@
     <%= check_box_tag "question_ids_s[]", question.id, false, class: "js-check-all-question js-question-list-check  js-question-id-#{question.id}" %>
     <br/>
   </td>
+  <% if component_settings.amendments_enabled && !(params[:q] && params[:q][:is_emendation_true].present?) %>
+    <td>
+      <span class="table-list__type-icon" data-toggle="<%= type_label_for_all(questions) %>">
+        <% if question.emendation? %>
+          <%= icon "paperclip", aria_label: t("decidim/amendment", scope: "activerecord.models", count: 1) %>
+        <% else %>
+          <%= icon "file", aria_label: t("decidim/questions/question", scope: "activerecord.models", count: 1) %>
+        <% end %>
+      </span>
+    </td>
+    <td>
+      <span id="<%= type_label_for(question) %>" class="table-list__type-label" data-toggler=".expanded">
+        <% if question.emendation? %>
+          <%= t("decidim/amendment", scope: "activerecord.models", count: 1) %>
+        <% else %>
+          <%= t("decidim/questions/question", scope: "activerecord.models", count: 1) %>
+        <% end %>
+      </span>
+    </td>
+  <% end %>
   <td>
-    <%= question.id %><br/>
+    <%= question.short_ref if %w(evaluating accepted).include?(question.state) && !question.emendation?  %><br/>
   </td>
   <td>
     <%= present(question).title %><br/>
   </td>
-  <td>
-    <% if question.category %>
-      <%= translated_attribute question.category.name %>
-    <% end %>
-  </td>
+  <% unless params[:q] && params[:q][:category_id_eq] %>
+    <td>
+      <% if question.category %>
+        <%= translated_attribute question.category.name %>
+      <% end %>
+    </td>
+  <% end %>
   <% if current_participatory_space.scopes_enabled? && current_participatory_space.has_subscopes? %>
     <td>
       <% if question.scope %>
@@ -23,12 +45,13 @@
       <% end %>
     </td>
   <% end %>
-  <td>
-    <strong class="<%= question_state_css_class question.state %>">
-      <%= icon "bookmark", aria_label: t("decidim/amendment", scope: "activerecord.models", count: 1) if question.emendation? %>
-      <%= humanize_question_state question.state %>
-    </strong>
-  </td>
+  <% unless params[:q] && params[:q][:state_eq] %>
+    <td>
+      <strong class="<%= question_state_css_class question.state %>">
+        <%= humanize_question_state question.state %>
+      </strong>
+    </td>
+  <% end %>
 
   <% if current_settings.votes_enabled? %>
     <td>
@@ -43,7 +66,11 @@
   <% end %>
 
   <td>
-    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.created_at)) %>
+    <%= l question.created_at, format: :decidim_short %>
+  </td>
+
+  <td>
+    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
   </td>
 
   <td class="table-list__actions">

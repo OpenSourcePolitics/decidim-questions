@@ -107,6 +107,32 @@ describe "Admin manages particpatory texts", type: :system do
     expect(page).to have_content "PREVIEW PARTICIPATORY TEXT"
   end
 
+  def edit_participatory_text_body(index, new_body)
+    elem = Array.wrap(find("#participatory-text li"))[index]
+    elem.find("a.accordion-title").click
+
+    elem.fill_in(
+      "Body",
+      with: new_body
+    )
+  end
+
+  def save_participatory_text_drafts
+    # click twice as clicking once provokes flaky tests
+    click_button "Save draft"
+    find("button[name=save_draft]").click
+    expect(page).to have_content "Participatory text updated successfully."
+    expect(page).to have_content "PREVIEW PARTICIPATORY TEXT"
+  end
+
+  def discard_participatory_text_drafts
+    page.accept_alert "Are you sure to discard the whole participatory text draft?" do
+      click_link "Discard all"
+    end
+    expect(page).to have_content "All Participatory text drafts have been discarded."
+    expect(page).to have_content "PREVIEW PARTICIPATORY TEXT"
+  end
+
   describe "importing partipatory texts from a document" do
     it "creates questions" do
       visit_participatory_texts

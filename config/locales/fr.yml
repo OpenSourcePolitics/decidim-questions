@@ -488,6 +488,9 @@ fr:
           form:
             note: Note
             submit: Soumettre
+          index:
+            answered_at: Dernière édition le
+            answer_title: Réponse
           leave_your_note: Laisser une note
           title: Notes privées
         questions:
@@ -569,14 +572,17 @@ fr:
           info_question:
             body: Corps du texte
             created_at: Date de création
+            published_at: Date de publication
             info_question_bottom:
               body: Corps du texte
-              created_at: Créé à
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               author: Auteur
               body: Corps du texte
-              created_at: Créé à
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
@@ -605,17 +611,17 @@ fr:
         filter_origin_values:
           all: Toutes
           citizens: Questions citoyennes
-          meetings: Des réunions
+          meetings: Elaborées en réunion publique
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Retenues
+          accepted: Acceptées
           all: Toutes
           evaluating: En attente de réponse
-          except_rejected: Toutes sauf les questions non recevables
-          rejected: Non retenue
+          except_rejected: Toutes sauf les questions rejetées
+          rejected: Rejetées
         filter_type_values:
-          all: Toutes
+          all: Tous
           amendments: Amendements
           questions: Les questions
       collaborative_drafts:
@@ -671,6 +677,7 @@ fr:
           related_to: Liée à
           search: Chercher
           state: État
+          type: Type
           withdrawn: Retirée
         filters_small_view:
           close_modal: Fermer la fenêtre
@@ -765,8 +772,10 @@ fr:
             id: ID
             official_question: Question officielle
             private_discussions: Discussions privées
-            published_at: Publiée à
+            created_at: Soumise le
+            published_at: Publiée
             reference: Référence
+            short_ref: "N°"
             scope: Secteur
             state: État
             title: Titre

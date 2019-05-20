@@ -443,6 +443,9 @@ en:
           form:
             note: Note
             submit: Submit
+          index:
+            answered_at: Last edited
+            answer_title: Answer
           leave_your_note: Leave your note
           title: Private notes
         questions:
@@ -503,6 +506,7 @@ en:
           info_question:
             body: Body
             created_at: Creation date
+            published_at: Publication date
             question_votes_count: Votes count
             questions: Questions
       admin_log:
@@ -590,6 +594,7 @@ en:
           related_to: Related to
           search: Search
           state: State
+          type: Type
           withdrawn: Withdrawn
         filters_small_view:
           close_modal: Close modal
@@ -682,7 +687,10 @@ en:
             id: ID
             notes: Notes
             official_question: Official question
-            published_at: Published at
+            created_at: Created on
+            published_at: Published
+            reference: Reference
+            short_ref: "N°"
             scope: Scope
             state: State
             title: Title
