@@ -775,6 +775,7 @@ fr:
             created_at: Soumise le
             published_at: Publiée
             reference: Référence
+            short_ref: "N°"
             scope: Secteur
             state: État
             title: Titre

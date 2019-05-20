@@ -18,6 +18,9 @@
 
 <div class="card-section">
   <div class="row column">
+    <strong><%= question.short_ref %></strong>
+  </div>
+  <div class="row column">
     <strong><%= t ".created_at" %>: </strong> <%= l question.created_at, format: :decidim_short %>
   </div>
   <div class="row column">

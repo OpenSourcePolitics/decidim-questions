@@ -687,6 +687,8 @@ en:
             official_question: Official question
             created_at: Created on
             published_at: Published
+            reference: Reference
+            short_ref: "N°"
             scope: Scope
             state: State
             title: Title

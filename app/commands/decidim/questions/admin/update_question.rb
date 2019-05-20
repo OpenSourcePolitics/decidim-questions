@@ -7,6 +7,7 @@ module Decidim
       class UpdateQuestion < Rectify::Command
         include AttachmentMethods
         include HashtagsMethods
+        include ReferenceMethods
 
         # Public: Initializes the command.
         #
@@ -35,6 +36,7 @@ module Decidim
           end
 
           transaction do
+            manage_custom_reference
             update_question
             notify_recipients
             update_answer unless form.answer.blank?
