@@ -46,6 +46,10 @@ module Decidim
             end
           end
 
+          if user.admin? || process_admin?
+            allow! if permission_action.subject == :questions && permission_action.action == :move
+          end
+
           committee_action?
           service_action?
 

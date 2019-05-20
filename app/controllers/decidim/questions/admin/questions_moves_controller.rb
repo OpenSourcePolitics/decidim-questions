@@ -5,7 +5,7 @@ module Decidim
     module Admin
       class QuestionsMovesController < Admin::ApplicationController
         def create
-          enforce_permission_to :merge, :questions
+          enforce_permission_to :move, :questions
 
           @form = form(Admin::QuestionsMoveForm).from_params(params)
 
