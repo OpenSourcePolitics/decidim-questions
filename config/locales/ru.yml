@@ -1,20 +1,32 @@
+---
 ru:
   activemodel:
     attributes:
+      collaborative_draft:
+        body: Body
+        category_id: Category
+        decidim_scope_id: Scope
+        has_address: Has address
+        state: State
+        title: Title
+        user_group_id: Create collaborative draft as
       question:
         answer: Ответить
         answered_at: 'Получен ответ:'
+        automatic_hashtags: Hashtags automatically added
         body: Основной текст
         category_id: Категория
         has_address: Имеет адрес
         scope_id: Охват
         state: Cостояние
+        suggested_hashtags: Suggested hashtags
         title: Заголовок
         user_group_id: Создать предложение в качестве
       question_answer:
         answer: Ответить
       questions_copy:
-        copy_questions: Я понимаю, что при этом все предложения из выбранной составляющей будут позаимствованы в текущую, и что это действие нельзя будет отменить.
+        copy_questions: Я понимаю, что при этом все предложения из выбранной составляющей
+          будут позаимствованы в текущую, и что это действие нельзя будет отменить.
         origin_component_id: Составляющая, откуда нужно скопировать предложения
     errors:
       models:
@@ -24,38 +36,80 @@ ru:
               needs_to_be_reattached: Необходимо заново прикрепить
     models:
       decidim/questions/accepted_question_event: Предложение принято
-      decidim/questions/admin/update_question_category_event: Категория предложения изменена
+      decidim/questions/admin/moved_question_event: Question moved
+      decidim/questions/admin/update_question_category_event: Категория предложения
+        изменена
       decidim/questions/creation_enabled_event: Включена возможность создания предложений
-      decidim/questions/endorsing_enabled_event: Включена возможность поддерживать предложения
+      decidim/questions/endorsing_enabled_event: Включена возможность поддерживать
+        предложения
       decidim/questions/evaluating_question_event: Предложение сейчас рассматривается
+      decidim/questions/publish_question_event: Предложение обнародовано
       decidim/questions/question_endorsed_event: Предложение поддержали
       decidim/questions/question_mentioned_event: Предложение упомянуто
-      decidim/questions/publish_question_event: Предложение обнародовано
       decidim/questions/rejected_question_event: Предложение отклонено
-      decidim/questions/voting_enabled_event: Включена возможность голосовать по поводу предложений
+      decidim/questions/voting_enabled_event: Включена возможность голосовать по поводу
+        предложений
   activerecord:
     models:
+      decidim/questions/collaborative_draft:
+        one: Collaborative draft
+        other: Collaborative drafts
       decidim/questions/question:
-        one: Предложение
         few: Предложения
         many: Предложений
+        one: Предложение
         other: Предложений
       decidim/questions/question_endorsement:
-        one: Выражение поддержки
         few: Выражения поддержки
         many: Выражений поддержки
+        one: Выражение поддержки
         other: Выражений поддержки
       decidim/questions/question_note:
-        one: Примечание
         few: Примечания
         many: Примечаний
+        one: Примечание
         other: Примечаний
       decidim/questions/question_vote:
-        one: Голос
         few: Голоса
         many: Голосов
+        one: Голос
         other: Голосов
   decidim:
+    admin:
+      actions:
+        configure: Configure
+        duplicate: Duplicate
+        new_process: New process
+        preview: Preview
+      menu:
+        participatory_processes_submenu:
+          attachment_collections: Attachment collections
+          attachment_files: Attachment files
+          attachments: Attachments
+          categories: Categories
+          components: Components
+          info: Info
+          moderations: Moderations
+          private_users: Private users
+          process_admins: Process admins
+          steps: Steps
+          upstream_moderations: Upstream moderations
+      models:
+        participatory_process:
+          fields:
+            created_at: Created at
+            private: Private
+            promoted: Promoted
+            published: Published
+            title: Title
+      participatory_processes:
+        index:
+          not_published: Not published
+          private: Private
+          public: Public
+          published: Published
+      titles:
+        participatory_processes: Participatory processes
     components:
       questions:
         actions:
@@ -66,101 +120,315 @@ ru:
         name: Предложения
         settings:
           global:
+            amendments_enabled: Amendments enabled
             announcement: Объявление
             attachments_allowed: Разрешить прикрпеленные файлы
-            can_accumulate_supports_beyond_threshold: Может накапливать выражения поддержки свыше порогового значения
+            can_accumulate_supports_beyond_threshold: Может накапливать выражения
+              поддержки свыше порогового значения
+            collaborative_drafts_enabled: Collaborative drafts enabled
             comments_enabled: Комментарии включены
             geocoding_enabled: Геокодирование включено
+            minimum_votes_per_user: Minimum votes per user
             new_question_help_text: Подсказки по созданию нового предложения
             official_questions_enabled: Включена возможность выдвигать служебные предложения
+            participatory_texts_enabled: Participatory texts enabled
             question_answering_enabled: Включена возможность отвечать на предложения
-            question_edit_before_minutes: Предложения могут быть отредактированы авторами до того, как пройдет столько минут
+            question_edit_before_minutes: Предложения могут быть отредактированы авторами
+              до того, как пройдет столько минут
             question_length: Предельная длина основного текста предложения
             question_limit: Предельное количество предложений от одного участника
             question_wizard_step_1_help_text: Справка мастера предложений о шаге "Создать"
             question_wizard_step_2_help_text: Справка мастера предложений о шаге "Сравнить"
             question_wizard_step_3_help_text: Справка мастера предложений о шаге "Завершить"
             question_wizard_step_4_help_text: Справка мастера предложений о шаге "Обнародовать"
-            resources_permissions_enabled: Для каждого предложения можно задать те или иные разрешения на действия
+            resources_permissions_enabled: Для каждого предложения можно задать те
+              или иные разрешения на действия
             threshold_per_question: Порог для каждого предложения
+            upstream_moderation: Upstream moderation
             vote_limit: Предельное количество голосов для одного участника
           step:
             announcement: Объявление
+            automatic_hashtags: Hashtags added to all questions
             comments_blocked: Комментарии отключены
             creation_enabled: Включена возможность создания предложений
             endorsements_blocked: Возможность выразить поддержку отключена
             endorsements_enabled: Возможность выразить поддержку включена
             question_answering_enabled: Включена возможность отвечать на предложения
+            suggested_hashtags: Hashtags suggested to users for new questions
             votes_blocked: Голосование отключено
             votes_enabled: Голосование включено
-            votes_hidden: Голоса скрыты (если голосование включено, то при поставленной здесь птичке будет скрыто количество голосов)
+            votes_hidden: Голоса скрыты (если голосование включено, то при поставленной
+              здесь птичке будет скрыто количество голосов)
+    datetime:
+      timeago: Timeago
     events:
       questions:
+        collaborative_draft_access_accepted:
+          email_intro: '%{requester_name} has been accepted to access as a contributor
+            of the <a href="%{resource_path}">%{resource_title}</a> collaborative
+            draft.'
+          email_outro: You have received this notification because you are a collaborator
+            of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{requester_name} has been accepted to access as a contributor
+            of the %{resource_title}."
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
+            has been <strong>accepted to access as a contributor</strong> of the <a
+            href="%{resource_path}">%{resource_title}</a> collaborative draft.
+        collaborative_draft_access_rejected:
+          email_intro: '%{requester_name} has been rejected to access as a contributor
+            of the <a href="%{resource_path}">%{resource_title}</a> collaborative
+            draft.'
+          email_outro: You have received this notification because you are a collaborator
+            of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{requester_name} has been rejected to access as a contributor
+            of the %{resource_title} collaborative draft."
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
+            has been <strong>rejected to access as a contributor</strong> of the <a
+            href="%{resource_path}">%{resource_title}</a> collaborative draft.
+        collaborative_draft_access_requested:
+          email_intro: '%{requester_name} requested access as a contributor. You can
+            <strong>accept or reject the request</strong> from the <a href="%{resource_path}">%{resource_title}</a>
+            collaborative draft page.'
+          email_outro: You have received this notification because you are a collaborator
+            of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{requester_name} requested access to contribute to %{resource_title}."
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
+            requested access to contribute to the <a href="%{resource_path}">%{resource_title}</a>
+            collaborative draft. Please <strong>accept or reject the request</strong>.
+        collaborative_draft_access_requester_accepted:
+          email_intro: You have been accepted to access as a contributor of the <a
+            href="%{resource_path}">%{resource_title}</a> collaborative draft.
+          email_outro: You have received this notification because you requested to
+            become a collaborator of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: You have been accepted as a contributor of %{resource_title}.
+          notification_title: You have been <strong>accepted to access as a contributor</strong>
+            of the <a href="%{resource_path}">%{resource_title}</a> collaborative
+            draft.
+        collaborative_draft_access_requester_rejected:
+          email_intro: You have been rejected to access as a contributor of the <a
+            href="%{resource_path}">%{resource_title}</a> collaborative draft.
+          email_outro: You have received this notification because you requested to
+            become a collaborator of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: You have been rejected as a contributor of %{resource_title}.
+          notification_title: You have been <strong>rejected to access as a contributor</strong>
+            of the <a href="%{resource_path}">%{resource_title}</a> collaborative
+            draft.
+        collaborative_draft_withdrawn:
+          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
+            withdrawn the <a href="%{resource_path}">%{resource_title}</a> collaborative
+            draft.
+          email_outro: You have received this notification because you are a collaborator
+            of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{author_name} %{author_nickname} withdrawn the %{resource_title}
+            collaborative draft."
+          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
+            <strong>withdrawn</strong> the <a href="%{resource_path}">%{resource_title}</a>
+            collaborative draft.
         creation_enabled:
-          email_intro: 'Теперь вы можете создавать новые предложения в %{participatory_space_title}! Начните со страницы:'
-          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}». Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
+          email_intro: 'Теперь вы можете создавать новые предложения в %{participatory_space_title}!
+            Начните со страницы:'
+          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}».
+            Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
           email_subject: Теперь в %{participatory_space_title} можно вносить предложения
-          notification_title: Теперь в <a href="%{participatory_space_url}">%{participatory_space_title}</a> появилась возможность вносить <a href="%{resource_path}">новые предложения</a>
+          notification_title: Теперь в <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            появилась возможность вносить <a href="%{resource_path}">новые предложения</a>
         endorsing_enabled:
-          email_intro: 'Теперь вы можете поддерживать предложения в %{participatory_space_title}! Начните со страницы:'
-          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}». Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
-          email_subject: В %{participatory_space_title} началось предоставление поддержки предложениям
-          notification_title: Теперь в <a href="%{participatory_space_url}">%{participatory_space_title}</a> появилась возможность <a href="%{resource_path}">поддерживать предложения</a>
+          email_intro: 'Теперь вы можете поддерживать предложения в %{participatory_space_title}!
+            Начните со страницы:'
+          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}».
+            Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
+          email_subject: В %{participatory_space_title} началось предоставление поддержки
+            предложениям
+          notification_title: Теперь в <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            появилась возможность <a href="%{resource_path}">поддерживать предложения</a>
+        forward_question:
+          email_intro: The question "%{resource_title}" has been forwarded to you
+            and needs your input.
+          email_outro: You have received this notification because you have a role
+            in the treatment of this question.
+          email_subject: A question is waiting for an answer
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a>
+            has been forwarded to you and needs your input.
+        moved_question:
+          email_intro: 'The question: "%{resource_title}" has been moved to %{component_title}'
+          email_subject: The question "%{resource_title}" has been moved
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a>
+            has been moved to <a href="%{component_url}">%{component_title}</a>
         question_accepted:
+          affected_user:
+            email_intro: 'Your question "%{resource_title}" has been accepted. You
+              can read the answer in this page:'
+            email_outro: You have received this notification because you are an author
+              of "%{resource_title}".
+            email_subject: Your question has been accepted
+            notification_title: Your question <a href="%{resource_path}">%{resource_title}</a>
+              has been accepted.
           follower:
-            email_intro: 'Предложение "%{resource_title}" было принято. Вы можете прочитать ответ на странице:'
-            email_outro: Вы получили это уведомление, потому что вы следите за «%{resource_title}». Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
+            email_intro: 'Предложение "%{resource_title}" было принято. Вы можете
+              прочитать ответ на странице:'
+            email_outro: Вы получили это уведомление, потому что вы следите за «%{resource_title}».
+              Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
             email_subject: Предложение, за которым вы следите, было принято
-            notification_title: Предложение <a href="%{resource_path}">%{resource_title}</a> было принято.
+            notification_title: Предложение <a href="%{resource_path}">%{resource_title}</a>
+              было принято.
         question_endorsed:
-          email_outro: Вы получили это уведомление, потому что вы следите за «%{endorser_nickname}». Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
+          email_intro: '%{endorser_name} %{endorser_nickname}, who you are following,
+            has just endorsed the "%{resource_title}" question and we think it may
+            be interesting to you. Check it out and contribute:'
+          email_outro: Вы получили это уведомление, потому что вы следите за «%{endorser_nickname}».
+            Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
           email_subject: "%{endorser_nickname} поддержал новое предложение"
-          notification_title: <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a> поддержал предложение <a href="%{resource_path}">%{resource_title}</a>.
+          notification_title: <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>
+            поддержал предложение <a href="%{resource_path}">%{resource_title}</a>.
         question_evaluating:
+          affected_user:
+            email_intro: 'Your question "%{resource_title}" is currently being evaluated.
+              You can check for an answer in this page:'
+            email_outro: You have received this notification because you are an author
+              of "%{resource_title}".
+            email_subject: Your question is being evaluated
+            notification_title: Your question <a href="%{resource_path}">%{resource_title}</a>
+              is being evaluated.
           follower:
-            email_intro: 'Предложение "%{resource_title}" сейчас рассматривается. Вы можете проверить наличие ответа на странице:'
-            email_outro: Вы получили это уведомление, потому что вы следите за «%{resource_title}». Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
+            email_intro: 'Предложение "%{resource_title}" сейчас рассматривается.
+              Вы можете проверить наличие ответа на странице:'
+            email_outro: Вы получили это уведомление, потому что вы следите за «%{resource_title}».
+              Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
             email_subject: Предложение, за которым вы следите, сейчас рассматривается
-            notification_title: Предложение <a href="%{resource_path}">%{resource_title}</a> на рассмотрении.
+            notification_title: Предложение <a href="%{resource_path}">%{resource_title}</a>
+              на рассмотрении.
         question_mentioned:
-          email_intro: Ваше предложение «%{mentioned_question_title}» было упомянуто в комментариях <a href="%{resource_path}">в этом пространстве</a>.
+          email_intro: Ваше предложение «%{mentioned_question_title}» было упомянуто
+            в комментариях <a href="%{resource_path}">в этом пространстве</a>.
+          email_outro: You have received this notification because you are an author
+            of "%{resource_title}".
           email_subject: Ваше предложение "%{mentioned_question_title}"было упомянуто
-          notification_title: Ваше предложение «%{mentioned_question_title}» было упомянуто в комментариях <a href="%{resource_path}">в этом пространстве</a>.
+          notification_title: Ваше предложение «%{mentioned_question_title}» было
+            упомянуто в комментариях <a href="%{resource_path}">в этом пространстве</a>.
         question_published:
-          email_outro: Вы получили это уведомление, потому что вы следите за «%{author_nickname}». Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
-          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> обнародовал предложение <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: '%{author_name} %{author_nickname}, who you are following,
+            has published a new question called "%{resource_title}". Check it out
+            and contribute:'
+          email_outro: Вы получили это уведомление, потому что вы следите за «%{author_nickname}».
+            Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
+          email_subject: New question "%{resource_title}" by %{author_nickname}
+          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
+            обнародовал предложение <a href="%{resource_path}">%{resource_title}</a>.
         question_published_for_space:
-          email_intro: В "%{participatory_space_title}", за которым вы следите, добавлено предложение "%{resource_title}".
-          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}». Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
-          notification_title: В %{participatory_space_title} было добавлено предложение <a href="%{resource_path}">%{resource_title}</a>
+          email_intro: В "%{participatory_space_title}", за которым вы следите, добавлено
+            предложение "%{resource_title}".
+          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}».
+            Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
+          email_subject: New question "%{resource_title}" added to %{participatory_space_title}
+          notification_title: В %{participatory_space_title} было добавлено предложение
+            <a href="%{resource_path}">%{resource_title}</a>
         question_rejected:
+          affected_user:
+            email_intro: 'Your question "%{resource_title}" has been rejected. You
+              can read the answer in this page:'
+            email_outro: You have received this notification because you are an author
+              of "%{resource_title}".
+            email_subject: Your question been rejected
+            notification_title: Your question <a href="%{resource_path}">%{resource_title}</a>
+              has been rejected.
           follower:
-            email_intro: 'Предложение "%{resource_title}" было отклонено. Вы можете прочитать ответ на странице:'
-            email_outro: Вы получили это уведомление, потому что вы следите за «%{resource_title}». Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
+            email_intro: 'Предложение "%{resource_title}" было отклонено. Вы можете
+              прочитать ответ на странице:'
+            email_outro: Вы получили это уведомление, потому что вы следите за «%{resource_title}».
+              Вы можете перестать за ним следить, перейдя по приведенной выше ссылке.
             email_subject: Предложение, за которым вы следите, было отклонено
-            notification_title: Предложение <a href="%{resource_path}">%{resource_title}</a> было отклонено.
+            notification_title: Предложение <a href="%{resource_path}">%{resource_title}</a>
+              было отклонено.
         question_update_category:
-          email_intro: 'Администратор обновил категорию вашего предложения «%{resource_title}», проверьте её:'
-          email_outro: Вы получили это уведомление, потому что вы являетесь автором предложения.
+          email_intro: 'Администратор обновил категорию вашего предложения «%{resource_title}»,
+            проверьте её:'
+          email_outro: Вы получили это уведомление, потому что вы являетесь автором
+            предложения.
           email_subject: Обновлена категория предложений %{resource_title}
-          notification_title: Категория предложений <a href="%{resource_path}">%{resource_title}</a> была обновлена ​​администратором.
+          notification_title: Категория предложений <a href="%{resource_path}">%{resource_title}</a>
+            была обновлена ​​администратором.
+        validate_question:
+          email_intro: 'The answer to the question: "%{resource_title}" has been send
+            and is waiting for your validation'
+          email_subject: An answer is waiting for your validation
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a>
+            has been answered and is waiting for your validation.
         voting_enabled:
-          email_intro: 'Теперь вы можете голосовать по предложениям в %{participatory_space_title}! Начните со страницы:'
-          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}». Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
+          email_intro: 'Теперь вы можете голосовать по предложениям в %{participatory_space_title}!
+            Начните со страницы:'
+          email_outro: Вы получили это уведомление, потому что вы следите за «%{participatory_space_title}».
+            Вы можете отписаться от уведомлений, перейдя по приведенной выше ссылке.
           email_subject: В %{participatory_space_title} началось голосование по предложениям
-          notification_title: Теперь в <a href="%{participatory_space_url}">%{participatory_space_title}</a> появилась возможность <a href="%{resource_path}">голосовать по предложениям</a>
+          notification_title: Теперь в <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            появилась возможность <a href="%{resource_path}">голосовать по предложениям</a>
+    gamification:
+      badges:
+        accepted_questions:
+          conditions: '["Choose the participation space of your interest with submission
+            for questions enabled", "Try to make questions that can be carried out.
+            This way they are more likely to be accepted."]'
+          description: This badge is granted when you actively participate with new
+            questions and these are accepted.
+          description_another: This user has gotten %{score} questions accepted.
+          description_own: You got %{score} questions accepted.
+          name: Accepted questions
+          next_level_in: Get %{score} more questions accepted to reach the next level!
+          unearned_another: This user hasn't gotten any questions accepted yet.
+          unearned_own: You got no questions accepted yet.
+        question_votes:
+          conditions: '["Browse and spend some time reading other people''s questions",
+            "Give support to the questions you like or find interesting"]'
+          description: This badge is granted when you support other people's questions.
+          description_another: This user has given support to %{score} questions.
+          description_own: You have given support to %{score} questions.
+          name: Question supports
+          next_level_in: Give support to %{score} more questions to reach the next
+            level!
+          unearned_another: This user hasn't given support to any questions yet.
+          unearned_own: You have given support to no questions yet.
+        questions:
+          conditions: '["Choose the participation space of your interest with submission
+            for questions enabled", "Create a new question"]'
+          description: This badge is granted when you actively participate with new
+            questions.
+          description_another: This user has created %{score} questions.
+          description_own: You have created %{score} questions.
+          name: Questions
+          next_level_in: Create %{score} more questions to reach the next level!
+          unearned_another: This user hasn't created any questions yet.
+          unearned_own: You have created no questions yet.
     metrics:
+      accepted_questions:
+        description: Number of questions accepted by users
+        object: questions
+        title: Accepted Questions
+      endorsements:
+        description: Number of endorsements generated in questions
+        object: endorsements
+        title: Endorsements
+      questions:
+        description: Number of questions generated
+        object: questions
+        title: Questions
       votes:
+        description: Number of votes generated in questions by users
+        object: votes
         title: Голоса
     participatory_processes:
       participatory_process_groups:
         highlighted_questions:
           questions: Предложения
+    participatory_spaces:
+      highlighted_questions:
+        see_all: See all (%{count})
     questions:
       actions:
         answer: Ответить
+        edit_question: Edit question
         import: Позаимствовать из другой составляющей
         new: Внести новое предложение
+        participatory_texts: Participatory texts
+        private_discussions: Private discussions
         private_notes: Частные примечания
         title: Действия
       admin:
@@ -172,10 +440,45 @@ ru:
         models:
           question:
             name: Предложение
+        participatory_texts:
+          bulk-actions:
+            are_you_sure: Are you sure to discard the whole participatory text draft?
+            discard_all: Discard all
+            import_doc: Import document
+          discard:
+            success: All Participatory text drafts have been discarded.
+          import:
+            invalid: The form is invalid!
+            success: Congratulations, the following sections have been parsed from
+              the imported document, they have been converted to questions. Now you
+              can review and adjust whatever you need before publishing.
+          index:
+            info_1: The following sections have been parsed from the imported document,
+              they have been converted to questions. Now you can review and adjust
+              whatever you need before publishing.
+            publish_document: Publish document
+            save_draft: Save draft
+            title: PREVIEW PARTICIPATORY TEXT
+          new_import:
+            bottom_hint: "(You will be able to preview and sort document sections)"
+            document_legend: 'Add a document lesser than 2MB, each section until 3
+              levels deep will be parsed into Questions. Suported formats are: Markdown'
+            title: ADD DOCUMENT
+            upload_document: Upload document
+          publish:
+            invalid: Could not publish questions
+            success: All questions have been published
+          sections:
+            article: "<em>Article</em>"
+            section: "<em>Section:</em> <strong>%{title}</strong>"
+            sub-section: "<em>Subsection:</em> %{title}"
+          update:
+            success: Participatory text updated successfully.
         question_answers:
           edit:
             accepted: Принято
             answer_question: Ответить
+            cancel: Cancel
             evaluating: Рассматривается
             rejected: Отклонено
             title: Ответ на предложение %{title}
@@ -195,18 +498,42 @@ ru:
           create:
             invalid: При попытке создать предложение произошла ошибка
             success: Предложение успешно создано
+          edit:
+            cancel: Cancel
+            content: Content
+            status: Status
+            title: Update question
+            update: Update
           form:
+            accepted: Accepted
             attachment_legend: "(Необязательно) Прикрепить файл"
+            committee: Committee
+            created_in_meeting: This question comes from a meeting
+            evaluating: Evaluating
+            none: None
+            recipient: Recipient
+            rejected: Rejected
             select_a_category: Выберите категорию
+            select_a_meeting: Select a meeting
+            service: Service
           index:
             actions: Действия
             cancel: Отменить
             change_category: Изменить категорию
+            merge: Merge into a new one
+            merge_button: Merge
+            move: Move questions
+            move_button: Move
+            select_component: Select a component
             selected: выбранные
+            split: Split questions
+            split_button: Split
             title: Предложения
             update: Обновить
           new:
+            content: Content
             create: Внести
+            status: Status
             title: Создать предложение
           update_category:
             invalid: 'Эти предложения уже относились к категории %{category}: %{questions}.'
@@ -219,21 +546,48 @@ ru:
             success: "%{number} предложений успешно позаимствованы"
           new:
             create: Позаимствовать предложения
-            no_components: В этом пространстве соучастия нет других составляющих предложений, из которых можно было бы позаимствовать предложения.
+            no_components: В этом пространстве соучастия нет других составляющих предложений,
+              из которых можно было бы позаимствовать предложения.
             select_component: Пожалуйста, выберите составляющую
             select_states: Проверьте состояние предложений, которые вы хотите позаимствовать
+        questions_merges:
+          create:
+            invalid: There was an error merging the selected questions.
+            success: Successfully merged the questions into a new one.
+        questions_moves:
+          create:
+            invalid: Invalid
+            success: Success
+        questions_splits:
+          create:
+            invalid: There was an error spliting the selected questions.
+            success: Successfully splitted the questions into new ones.
         shared:
           info_question:
             body: Основной текст
             created_at: Дата создания
+            info_question_bottom:
+              created_at: Created at
+              question_votes_count: Question votes count
+            info_question_bottom_full:
+              created_at: Created at
+              question_votes_count: Question votes count
+            info_question_top:
+              new_question: New question
+              questions: Questions
             question_votes_count: Количество голосов
             questions: Предложения
       admin_log:
         question:
-          answer: "%{user_name} ответил на предложение %{resource_name} в пространстве %{space_name}"
-          create: "%{user_name} создал в пространстве %{space_name} предложение %{resource_name} в качестве служебного предложения"
+          answer: "%{user_name} ответил на предложение %{resource_name} в пространстве
+            %{space_name}"
+          create: "%{user_name} создал в пространстве %{space_name} предложение %{resource_name}
+            в качестве служебного предложения"
+          update: "%{user_name} updated the %{resource_name} official question on
+            the %{space_name} space"
         question_note:
-          create: "%{user_name} оставил частное примечание по предложению %{resource_name} в пространстве %{space_name}"
+          create: "%{user_name} оставил частное примечание по предложению %{resource_name}
+            в пространстве %{space_name}"
       answers:
         accepted: Принято
         evaluating: Рассматривается
@@ -242,20 +596,156 @@ ru:
         withdrawn: Отозван
       application_helper:
         filter_origin_values:
+          all: All
           citizens: Граждане
+          meetings: Meetings
           official: Служебные
+          user_groups: User groups
         filter_state_values:
+          accepted: Accepted
+          all: All
+          evaluating: Evaluating
           except_rejected: Все, кроме отклоненных
+          rejected: Rejected
+        filter_type_values:
+          all: All
+          amendments: Amendments
+          questions: Questions
       collaborative_drafts:
+        collaborative_draft:
+          publish:
+            error: There's been errors when publishing the collaborative draft.
+            irreversible_action_modal:
+              body: After publishing the draft as a question, the draft won't be editable
+                anymore. The question won't accept new authors or contributions.
+              cancel: Cancel
+              ok: Publish as a Question
+              title: The following action is irreversible
+            success: Collaborative draft published successfully as a question.
+          view_collaborative_draft: View Collaborative Draft
+          withdraw:
+            error: There's been errors closing the collaborative draft.
+            irreversible_action_modal:
+              body: After closing the draft, the draft won't be editable anymore.
+                The draft won't accept new authors or contributions.
+              cancel: Cancel
+              ok: Withdraw the collaborative draft
+              title: The following action is irreversible
+            success: Collaborative draft withdrawn successfully.
+        compare:
+          mine_is_different: My collaborative draft is different
+          no_similars_found: Well done! No similar collaborative drafts found
+          title: Similar collaborative drafts
+        complete:
+          send: Send
+          title: Complete your collaborative draft
+        count:
+          drafts_count:
+            one: "%{count} collaborative draft"
+            other: "%{count} collaborative draft"
+        create:
+          error: There's been a problem creating this collaborative drafts
+          success: Collaborative draft successfully created.
+        edit:
+          attachment_legend: "(Optional) Add an attachment"
+          back: Back
+          select_a_category: Please select a category
+          send: Send
+          title: Edit collaborative draft
         filters:
+          all: All
+          amendment: Amendments
+          category: Category
+          category_prompt: Category Prompt
+          open: Open
+          published: Published
+          related_to: Related to
+          search: Search
           state: Cостояние
+          withdrawn: Withdrawn
+        filters_small_view:
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          unfold: Unfold
+        new:
+          send: Continue
+          title: Create Your collaborative draft
+        new_collaborative_draft_button:
+          new_collaborative_draft: New collaborative draft
+        orders:
+          label: 'Order drafts by:'
+          most_contributed: Most contributed
+          random: Random
+          recent: Recent
+        requests:
+          accepted_request:
+            error: Could not be accepted as a collaborator, try again later.
+            success: "@%{user} has been accepted as a collaborator successfully"
+          access_requested:
+            error: Your request could not be completed, try again later.
+            success: Your request to collaborate has been sent successfully
+          collaboration_requests:
+            accept_request: Accept
+            reject_request: Reject
+            title: Collaboration requests
+          rejected_request:
+            error: Could not be rejected as a collaborator, try again later.
+            success: "@%{user} has been rejected as a collaborator successfully"
+        show:
+          back: Back
+          edit: Edit collaborative draft
+          final_question: final question
+          final_question_help_text: This draft is finished. You can see the final
+            finished question
+          hidden_authors_count:
+            one: and %{count} more person
+            other: and %{count} more people
+          info-message: This is a <strong>collaborative draft</strong> for a question.
+            This means that you can help their authors to shape the question using
+            the comment section below or improve it directly by requesting access
+            to edit it. Once the authors grant you access, youl'll be able to make
+            changes to this draft.
+          of_versions: "(of %{number})"
+          publish: Publish
+          publish_info: Publish this version of the draft or
+          published_question: published question
+          request_access: Request access
+          requested_access: Access requested
+          see_other_versions: see other versions
+          version: Version %{number}
+          version_history: see version history for this question
+          withdraw: withdraw the draft
+        states:
+          open: Open
+          published: Published
+          withdrawn: Withdrawn
+        update:
+          error: There's been errors when saving the collaborative draft.
+          success: Collaborative draft updated successfully.
+        wizard_aside:
+          back: Back
+          info: You are creating a <strong>collaborative draft</strong>.
+        wizard_steps:
+          see_steps: see steps
+          step_1: Create your collaborative draft
+          step_2: Compare with collaborative drafts
+          step_3: Complete your collaborative draft
+          step_of: Step %{current_step_num} of %{total_steps}
       create:
         error: При попытке сохранить это предложение произошли ошибки.
         success: Предложение успешно создано. Сохранено как черновик.
       destroy_draft:
         error: При попытке удалить этот черновик предложения произошли ошибки.
         success: Черновик предложения был успешно удален.
+      last_activity:
+        new_question_at_html: "<span>New question at %{link}</span>"
       models:
+        collaborative_draft:
+          fields:
+            authors: Authors
+            comments: Comments
+            contributions: Contributions
         question:
           fields:
             category: Категория
@@ -270,7 +760,18 @@ ru:
             title: Заголовок
             votes: Голоса
       new:
-        limit_reached: Вы не можете создавать новые предложения, так как вы превысили лимит.
+        limit_reached: Вы не можете создавать новые предложения, так как вы превысили
+          лимит.
+      participatory_text_question:
+        alternative_title: There are no participatory texts at the moment
+        buttons:
+          amend: Amend
+          comment: Comment
+          comments: Comments
+          endorse: Endorse
+      publish:
+        error: При попытке обнародовать это предложение произошли ошибки.
+        success: Предложение успешно обнародовано.
       question_endorsements:
         create:
           error: При попытке поддержать это предложение произошли ошибки.
@@ -294,6 +795,10 @@ ru:
         complete:
           send: Отправить
           title: Завершите свое предложение
+        count:
+          questions_count:
+            one: "%{count} question"
+            other: "%{count} questions"
         edit:
           attachment_legend: "(Необязательно) Добавить вложение"
           back: Вернуться
@@ -311,6 +816,7 @@ ru:
           comments: Комментарии
         filters:
           activity: Деятельность
+          amendment_type: Type
           category: Категория
           category_prompt: Выберите категорию
           origin: Источник
@@ -324,14 +830,15 @@ ru:
           filter_by: 'Отобрать по признаку:'
           unfold: Развернуть
         index:
+          collaborative_drafts_list: Access collaborative drafts
           new_question: Внести предложение
           see_all_withdrawn: Просмотреть все отозванные предложения
           view_question: Просмотреть предложение
         linked_questions:
           question_votes:
-            one: голосовать
             few: голоса
             many: голоса
+            one: голосовать
             other: голоса
         new:
           send: Продолжить
@@ -341,26 +848,48 @@ ru:
           most_voted: С наибольшим количеством голосов
           random: Произвольно
           recent: Недавние
+        participatory_texts:
+          index:
+            document_index: Document index
+          view_index:
+            see_index: See index
         preview:
           modify: Изменить предложение
-          question_edit_before_minutes:
-            one: Вы сможете отредактировать это предложение в течение первой минуты после того, как предложение было обнародовано. После того, как пройдет этот промежуток времени, вы не сможете редактировать предложение.
-            few: Вы сможете отредактировать это предложение в течение первых %{count} минут после обнародования предложения. После того, как пройдет этот промежуток времени, вы не сможете редактировать предложение.
-            many: Вы сможете отредактировать это предложение в течение первых %{count} минут после обнародования предложения. После того, как пройдет этот промежуток времени, вы не сможете редактировать предложение.
-            other: Вы сможете отредактировать это предложение в течение первых %{count} минут после обнародования предложения. После того, как пройдет этот промежуток времени, вы не сможете редактировать предложение.
           publish: Обнародовать
+          question_edit_before_minutes:
+            few: Вы сможете отредактировать это предложение в течение первых %{count}
+              минут после обнародования предложения. После того, как пройдет этот
+              промежуток времени, вы не сможете редактировать предложение.
+            many: Вы сможете отредактировать это предложение в течение первых %{count}
+              минут после обнародования предложения. После того, как пройдет этот
+              промежуток времени, вы не сможете редактировать предложение.
+            one: Вы сможете отредактировать это предложение в течение первой минуты
+              после того, как предложение было обнародовано. После того, как пройдет
+              этот промежуток времени, вы не сможете редактировать предложение.
+            other: Вы сможете отредактировать это предложение в течение первых %{count}
+              минут после обнародования предложения. После того, как пройдет этот
+              промежуток времени, вы не сможете редактировать предложение.
           title: Обнародуйте свое предложение
         question:
           creation_date: 'Создано: %{date}'
           view_question: Просмотреть предложение
         show:
+          back_to: Back to
           edit_question: Редактировать предложение
           endorsements_list: Список тех, кто поддержал
+          hidden_endorsers_count:
+            one: and %{count} more person
+            other: and %{count} more people
+          link_to_collaborative_draft_help_text: This question is the result of a
+            collaborative draft. Review the history
+          link_to_collaborative_draft_text: See the collaborative draft
           question_accepted_reason: 'Это предложение было принято, поскольку:'
           question_in_evaluation_reason: Это предложение сейчас рассматривается
           question_rejected_reason: 'Это предложение было отклонено, поскольку:'
           report: Пожаловаться
-          withdraw_btn_hint: Вы можете снять свое предложение, если передумаете, пока вы не получили никакой поддержки. Предложение не будет удалено, оно будет указано в списке снятых предложений.
+          withdraw_btn_hint: Вы можете снять свое предложение, если передумаете, пока
+            вы не получили никакой поддержки. Предложение не будет удалено, оно будет
+            указано в списке снятых предложений.
           withdraw_confirmation: Вы действительно хотите снять это предложение?
           withdraw_question: Снять предложение
         tags:
@@ -375,19 +904,27 @@ ru:
           votes_blocked: Голосование отключено
         votes_count:
           count:
-            one: ГОЛОС
             few: ГОЛОСА
             many: ГОЛОСОВ
+            one: ГОЛОС
             other: ГОЛОСА
           most_popular_question: Самое популярное предложение
           need_more_votes: Нужно больше голосов
         voting_rules:
           can_accumulate_supports_beyond_threshold:
-            description: Каждое предложение может накапливать более %{limit} выражений поддержки
+            description: Каждое предложение может накапливать более %{limit} выражений
+              поддержки
+          minimum_votes_per_user:
+            description: You must distribute a minimum of %{votes} votes among different
+              questions.
+            given_enough_votes: You've given enough supports.
+            supports_remaining: You have to vote %{remaining_votes} more questions
+              for your votes to be taken into account.
           question_limit:
             description: Вы можете создать до %{limit} предложений.
           threshold_per_question:
-            description: Для того чтобы пройти проверку, предложения должны получить %{limit} выражений поддержки
+            description: Для того чтобы пройти проверку, предложения должны получить
+              %{limit} выражений поддержки
           title: 'Голосование регулируется следующими правилами:'
           vote_limit:
             description: Вы можете проголосовать до %{limit} предложений.
@@ -403,15 +940,35 @@ ru:
           step_3: Завершите
           step_4: Обнародуйте свое предложение
           step_of: Шаг %{current_step_num} из %{total_steps}
-      publish:
-        error: При попытке обнародовать это предложение произошли ошибки.
-        success: Предложение успешно обнародовано.
       update:
         error: При попытке сохранить это предложение произошли ошибки.
         success: Предложение успешно обновлено.
       update_draft:
         error: При попытке сохранить этот черновик предложения произошли ошибки.
         success: Черновик предложения успешно обновлен.
+      versions:
+        changes_at_title: Changes at "%{title}"
+        index:
+          title: Versions
+        stats:
+          back_to_collaborative_draft: Go back to collaborative draft
+          back_to_question: Go back to question
+          number_of_versions: Versions
+          show_all_versions: Show all versions
+          version_author: Version author
+          version_created_at: Version created at
+          version_number: Version number
+          version_number_out_of_total: "%{current_version} out of %{total_count}"
+        version:
+          version_index: Version %{index}
+    questions_mailer:
+      note:
+        created: A new private note has been created
+      note_created:
+        hello: Hello %{name}
+        question_note_body: 'Question note content : %{question_note_body}'
+        question_note_link: See note
+        question_title: 'A new question note has been created : %{question_title}'
     resource_links:
       copied_from_component:
         question_question: Подобные предложения
@@ -420,3 +977,8 @@ ru:
       included_questions:
         question_project: 'Предложение представлено в проектах:'
         question_result: 'Предложения, представленные в этих итогах:'
+    scopes:
+      global: Global
+    shared:
+      upstream_moderation:
+        pending_info: Pending info

@@ -37,6 +37,7 @@ fr:
               needs_to_be_reattached: Doit être téléchargé de nouveau
     models:
       decidim/questions/accepted_question_event: Question acceptée
+      decidim/questions/admin/moved_question_event: Question moved
       decidim/questions/admin/update_question_category_event: Catégorie de la question
         modifiée
       decidim/questions/creation_enabled_event: Autoriser la création de nouvelles
@@ -84,6 +85,7 @@ fr:
           private_users: Utilisateurs privés
           process_admins: Administrateurs de processus
           steps: Étapes
+          upstream_moderations: Upstream moderations
       models:
         participatory_process:
           fields:
@@ -235,15 +237,21 @@ fr:
             Vous pouvez arrêter de recevoir des notifications en cliquant sur ce dernier
             lien.
           email_subject: Vous pouvez désormais soutenir des questions dans %{participatory_space_title}
-          notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir
+            les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         forward_question:
-          email_intro: 'La question "%{resource_title}" vous a été transmise et attend votre réponse.'
+          email_intro: La question "%{resource_title}" vous a été transmise et attend
+            votre réponse.
+          email_outro: You have received this notification because you have a role
+            in the treatment of this question.
           email_subject: Une question est en attente de traitement
-          notification_title: La question <a href="%{resource_path}">%{resource_title}</a> vous a été transmise et attend votre réponse.
-        validate_question:
-          email_intro: 'La réponse à la question "%{resource_title}" a été envoyée et attend votre validation'
-          email_subject: Une réponse attend votre validation
-          notification_title: La question <a href="%{resource_path}">%{resource_title}</a> a été envoyée et attend votre validation.
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
+            vous a été transmise et attend votre réponse.
+        moved_question:
+          email_intro: 'The question: "%{resource_title}" has been moved to %{component_title}'
+          email_subject: The question "%{resource_title}" has been moved
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a>
+            has been moved to <a href="%{component_url}">%{component_title}</a>
         question_accepted:
           affected_user:
             email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez
@@ -341,6 +349,12 @@ fr:
             à jour
           notification_title: La catégorie de la question <a href="%{resource_path}">%{resource_title}</a>
             a été mise à jour par un administrateur.
+        validate_question:
+          email_intro: La réponse à la question "%{resource_title}" a été envoyée
+            et attend votre validation
+          email_subject: Une réponse attend votre validation
+          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
+            a été envoyée et attend votre validation.
         voting_enabled:
           email_intro: 'Vous pouvez soutenir les questions de %{participatory_space_title}
             ! Participez ici :'
@@ -526,6 +540,8 @@ fr:
             change_category: Changer de catégorie
             merge: Fusionner dans un nouveau
             merge_button: Fusionner
+            move: Move questions
+            move_button: Move
             select_component: Sélectionnez une fonctionnalité
             selected: choisi
             split: Questions fractionnées
@@ -561,6 +577,10 @@ fr:
           create:
             invalid: Une erreur s'est produite lors de la fusion des questions sélectionnées.
             success: Fusion des questions dans une seule réussie.
+        questions_moves:
+          create:
+            invalid: Invalid
+            success: Success
         questions_splits:
           create:
             invalid: Une erreur s'est produite lors de la fraction des questions sélectionnées.
@@ -763,6 +783,7 @@ fr:
             comments: Commentaires
             endorsements: Soutiens
             id: ID
+            notes: Notes
             official_question: Question officielle
             private_discussions: Discussions privées
             published_at: Publiée à
@@ -984,3 +1005,6 @@ fr:
         question_result: 'Questions figurant dans ces réalisations :'
     scopes:
       global: Global
+    shared:
+      upstream_moderation:
+        pending_info: Pending info
