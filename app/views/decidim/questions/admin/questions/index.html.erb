@@ -26,7 +26,7 @@
               <th></th>
             <% end %>
             <th>
-              <%= sort_link(query, :id, t("models.question.fields.id", scope: "decidim.questions"), default_order: :desc ) %>
+              <%= t("models.question.fields.short_ref", scope: "decidim.questions") %>
             </th>
             <th>
               <%= sort_link(query, :title, t("models.question.fields.title", scope: "decidim.questions") ) %>

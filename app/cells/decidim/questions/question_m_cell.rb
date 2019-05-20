@@ -15,7 +15,7 @@ module Decidim
       private
 
       def title
-        present(model).title
+        model.short_ref + ' • ' + present(model).title
       end
 
       def body

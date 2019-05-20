@@ -278,6 +278,10 @@ module Decidim
         Time.current < limit
       end
 
+      def short_ref
+        reference.split('-').last
+      end
+
       private
 
       def copied_from_other_component?

@@ -3,7 +3,7 @@
     <%= link_to "#{t ".questions"}", questions_path %>
     &gt;
     <% if question %>
-      <%= link_to present(question).title, question.path %>
+      <%= link_to question.short_ref + ' • ' + present(question).title, question.path %>
     <% else %>
       <%= t(".new_question") %>
     <% end %>
