@@ -164,31 +164,33 @@ Decidim.register_component(:questions) do |component|
     end
 
     email = "committee-user-#{participatory_space.underscored_name}-#{participatory_space.id}@example.org"
-    name = "#{Faker::Name.name} #{participatory_space.id} #{n} committee"
+    name = "#{Faker::Name.name} #{participatory_space.id} committee"
 
-    committee_user = Decidim::User.find_or_initialize_by(email: email)
-    author.update!(
-      password: "decidim123456",
-      password_confirmation: "decidim123456",
-      name: name,
-      nickname: Faker::Twitter.unique.screen_name,
-      organization: component.organization,
-      tos_agreement: "1",
-      confirmed_at: Time.current
-    )
-    Decidim::ParticipatoryProcessUserRole.create!(role: "committee", participatory_process: participatory_space, user: committee_user)
+    if participatory_space.is_a?(Decidim::ParticipatoryProcess)
+      committee_user = Decidim::User.find_or_initialize_by(email: email)
+      committee_user.update!(
+        password: "decidim123456",
+        password_confirmation: "decidim123456",
+        name: name,
+        nickname: Faker::Twitter.unique.screen_name,
+        organization: component.organization,
+        tos_agreement: "1",
+        confirmed_at: Time.current
+      )
+      Decidim::ParticipatoryProcessUserRole.create!(role: "committee", participatory_process: participatory_space, user: committee_user)
 
-    service_user = Decidim::User.find_or_initialize_by(email: email)
-    author.update!(
-      password: "decidim123456",
-      password_confirmation: "decidim123456",
-      name: name,
-      nickname: Faker::Twitter.unique.screen_name,
-      organization: component.organization,
-      tos_agreement: "1",
-      confirmed_at: Time.current
-    )
-    Decidim::ParticipatoryProcessUserRole.create!(role: "service", participatory_process: participatory_space, user: service_user)
+      service_user = Decidim::User.find_or_initialize_by(email: email)
+      service_user.update!(
+        password: "decidim123456",
+        password_confirmation: "decidim123456",
+        name: name,
+        nickname: Faker::Twitter.unique.screen_name,
+        organization: component.organization,
+        tos_agreement: "1",
+        confirmed_at: Time.current
+      )
+      Decidim::ParticipatoryProcessUserRole.create!(role: "service", participatory_process: participatory_space, user: service_user)
+    end
 
     5.times do |n|
       state, answer = if n > 3
