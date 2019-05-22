@@ -505,6 +505,7 @@ hu:
             update: frissítés
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Nem kötelező) Melléklet hozzáadása"
             committee: Committee
             created_in_meeting: Ez a javaslat egy találkozóból származik
@@ -577,7 +578,7 @@ hu:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Szavazatok száma
             questions: Javaslatok
       admin_log:

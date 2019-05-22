@@ -502,6 +502,7 @@ pt-BR:
             update: Atualizar
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Opcional) Adicionar um anexo"
             committee: Committee
             created_in_meeting: Esta proposta vem de uma reunião

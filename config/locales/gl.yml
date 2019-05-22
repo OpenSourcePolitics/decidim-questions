@@ -501,6 +501,7 @@ gl:
             update: Actualización
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Opcional) Engada un anexo"
             committee: Committee
             created_in_meeting: Esta proposta provén dunha reunión
@@ -573,7 +574,7 @@ gl:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Reconto de votos
             questions: Propostas
       admin_log:

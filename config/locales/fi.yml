@@ -504,6 +504,7 @@ fi:
             update: Päivitä
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Valinnainen) Lisää liite"
             committee: Committee
             created_in_meeting: Tämä ehdotus on luotu tapaamisessa
@@ -576,7 +577,7 @@ fi:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Äänten määrä
             questions: Ehdotukset
       admin_log:

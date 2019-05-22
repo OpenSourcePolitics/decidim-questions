@@ -508,6 +508,7 @@ es:
             update: Actualizar
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Opcional) Añadir un archivo adjunto"
             committee: Committee
             created_in_meeting: Esta propuesta procede de un encuentro
@@ -580,7 +581,7 @@ es:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Número de apoyos
             questions: Propuestas
       admin_log:

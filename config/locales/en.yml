@@ -132,6 +132,7 @@ en:
             update: Update
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Optional) Add an attachment"
             committee: Committee
             evaluating: Evaluating
@@ -188,7 +189,7 @@ en:
             success: Successfully splitted the questions into new ones.
         shared:
           info_question:
-            created_at: Created at
+            created_at: Creation date
             info_question_bottom:
               created_at: Created at
               published_at: Published at
@@ -200,7 +201,7 @@ en:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
       application_helper:
         filter_origin_values:
           all: All

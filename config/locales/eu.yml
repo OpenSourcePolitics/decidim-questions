@@ -512,6 +512,7 @@ eu:
             update: eguneratzearen
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Aukerakoa) Gehitu eranskin bat"
             committee: Committee
             created_in_meeting: Proposamen hau bilera batetik dator
@@ -583,7 +584,7 @@ eu:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Botoen zenbaketa
             questions: proposamenak
       admin_log:

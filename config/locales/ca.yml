@@ -501,6 +501,7 @@ ca:
             update: Actualització
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Opcional) Afegiu un fitxer adjunt"
             committee: Committee
             created_in_meeting: Aquesta proposta prové d'una trobada
@@ -573,7 +574,7 @@ ca:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Nombre de suports
             questions: Propostes
       admin_log:

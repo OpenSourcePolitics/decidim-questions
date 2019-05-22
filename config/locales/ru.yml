@@ -514,6 +514,7 @@ ru:
             update: Update
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Необязательно) Прикрепить файл"
             committee: Committee
             created_in_meeting: This question comes from a meeting

@@ -500,6 +500,7 @@ sv:
             update: Uppdatera
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Valfritt) Lägg till en bilaga"
             committee: Committee
             created_in_meeting: Detta förslag kommer från ett möte

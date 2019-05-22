@@ -505,6 +505,7 @@ es-PY:
             update: Actualizar
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Opcional) Añadir un archivo adjunto"
             committee: Committee
             created_in_meeting: Esta propuesta viene de una reunión.
@@ -577,7 +578,7 @@ es-PY:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Número de votos
             questions: Propuestas
       admin_log:

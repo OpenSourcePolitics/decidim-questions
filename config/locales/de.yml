@@ -515,6 +515,7 @@ de:
             update: Aktualisieren
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Optional) Fügen Sie einen Anhang hinzu"
             committee: Committee
             created_in_meeting: Dieser Vorschlag stammt von einer Besprechung
@@ -589,7 +590,7 @@ de:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
             question_votes_count: Stimmen zählen
             questions: Vorschläge
       admin_log:

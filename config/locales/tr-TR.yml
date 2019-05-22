@@ -512,6 +512,7 @@ tr-TR:
             update: Update
           form:
             accepted: Accepted
+            all: All
             attachment_legend: "(Optional) Add an attachment"
             committee: Committee
             created_in_meeting: This question comes from a meeting

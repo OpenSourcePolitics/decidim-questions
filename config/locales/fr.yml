@@ -247,16 +247,14 @@ fr:
         forward_question:
           email_intro: La question "%{resource_title}" vous a été transmise et attend
             votre réponse.
-          email_outro: You have received this notification because you have a role
-            in the treatment of this question.
+          email_outro: Vous venez de recevoir cette notification parce que vous avez un rôle un jouer dans le traitement de la ressource citées.
           email_subject: Une question est en attente de traitement
           notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
             vous a été transmise et attend votre réponse.
         moved_question:
-          email_intro: 'The question: "%{resource_title}" has been moved to %{component_title}'
-          email_subject: The question "%{resource_title}" has been moved
-          notification_title: The question <a href="%{resource_path}">%{resource_title}</a>
-            has been moved to <a href="%{component_url}">%{component_title}</a>
+          email_intro: 'La question "%{resource_title}" a été déplacée dans "%{component_title}".'
+          email_subject: 'La question "%{resource_title}" a été déplacée'
+          notification_title: 'La question "<a href="%{resource_path}">%{resource_title}</a>" a été déplacée dans "<a href="%{component_url}">%{component_title}</a>"'
         question_accepted:
           affected_user:
             email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez
@@ -530,6 +528,7 @@ fr:
             Comittee: Comité de pilotage
             Service: Service
             accepted: Retenue
+            all: All
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             back: Retour
             comittee: Comité de pilotage
