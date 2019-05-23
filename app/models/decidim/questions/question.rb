@@ -300,7 +300,6 @@ module Decidim
             .pluck(:decidim_user_id)
             .uniq
         Decidim::User.where(id: organization_admins + process_users)
-
       end
     end
   end

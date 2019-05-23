@@ -5,6 +5,7 @@ module Decidim
     module Admin
       # A command with all the business logic when an admin answers a question.
       class AnswerQuestion < Rectify::Command
+        include ReferenceMethods
         # Public: Initializes the command.
         #
         # form - A form object with the params.
@@ -23,6 +24,7 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          manage_custom_reference
           answer_question
           notify_committee
           notify_followers

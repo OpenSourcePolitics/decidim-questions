@@ -6,21 +6,38 @@ module Decidim
       private
 
       def reference_need_update?
-        need_update = question.state.nil? && %w(evaluating accepted).include?(form.state)
-        need_update ||= question.state != form.state && %w(accepted).include?(form.state)
+        return !question.emendation? &&
+                  !question.short_ref.match?(/\A\D\d+\Z/) &&
+                (
+                  question.state.nil? && %w(evaluating accepted).include?(form.state) ||
+                  question.state != form.state && %w(accepted).include?(form.state)
+                )
       end
 
       def manage_custom_reference
-        return question.published_at unless reference_need_update?
+        return unless reference_need_update?
+        question.update_column(:reference, get_custom_reference(question))
+      end
 
-        prefix = question.component.name[Decidim.config.default_locale.to_s].capitalize[0]
-        current_ref = Decidim::Questions::Question.where(state: ['evaluating','accepted']).order(published_at: :desc).first.reference
-        next_short_ref = current_ref.split(prefix).last
-        next_short_ref = next_short_ref =~ /\A\d+\Z/ ? next_short_ref.to_i + 1 : 1
+      def get_custom_reference(resource)
+        return unless resource.class.to_s == "Decidim::Questions::Question"
 
-        default_ref = Decidim.reference_generator.call(question, question.component)
+        prefix = resource.component.name[Decidim.config.default_locale.to_s].capitalize[0]
 
-        question.update_column(:reference, default_ref + '-' + prefix + next_short_ref.to_s)
+        references = Decidim::Questions::Question.where("reference ~* ?", prefix + '\d+$')
+                        .where(component: resource.component, state: ['evaluating','accepted'])
+                        .pluck(:reference)
+        references = references.to_a.map do |reference|
+          ref = reference.split(prefix).last
+          reference = ref =~ /\A\d+\Z/ ? ref.to_i : 0
+        end
+        references.sort!
+
+        current_index = references.empty? ? 0 : references.last
+        current_index = current_index + 1
+        default_ref = Decidim.reference_generator.call(resource, resource.component)
+
+        return default_ref + '-' + prefix + current_index.to_s
       end
     end
   end

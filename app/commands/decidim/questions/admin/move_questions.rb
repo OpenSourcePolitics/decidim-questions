@@ -34,14 +34,54 @@ module Decidim
         attr_reader :form
 
         def move_questions
+          prefix = form.target_component.name[Decidim.config.default_locale.to_s].capitalize[0]
+
+          references = Decidim::Questions::Question.where("reference ~* ?", prefix + '\d+$')
+                        .where(component: form.target_component, state: ['evaluating','accepted'])
+                        .pluck(:reference)
+          references = references.to_a.map do |reference|
+            ref = reference.split(prefix).last
+            reference = ref =~ /\A\d+\Z/ ? ref.to_i : 0
+          end
+          references.sort!
+
+          current_index = references.empty? ? 0 : references.last
+          current_index = current_index + 1
+
           transaction do
             questions.each do |question|
+              reference = Decidim.reference_generator.call(question, form.target_component)
+              if !question.emendation? && %w(evaluating accepted).include?(question.state)
+                reference = reference + '-' + prefix + current_index.to_s
+                current_index += 1
+              end
+
               Decidim.traceability.update!(
                 question,
                 @current_user,
-                { component: form.target_component },
+                {
+                  component: form.target_component,
+                  reference: reference
+                },
                 visibility: "admin-only"
               )
+            end
+          end
+        end
+
+        def manage_custom_references
+          prefix = form.target_component.name[Decidim.config.default_locale.to_s].capitalize[0]
+          current_ref = Decidim::Questions::Question.where(component: form.target_component, state: ['evaluating','accepted']).order(published_at: :desc).first.reference
+          current_index = current_ref.split(prefix).last
+          current_index = next_short_ref =~ /\A\d+\Z/ ? next_short_ref.to_i + 1 : 1
+
+          transaction do
+            questions.each do |question|
+              if !question.emendation? && %w(evaluating accepted).include?(question.state)
+                default_ref = Decidim.reference_generator.call(question, form.target_component)
+                question.update_column(:reference, default_ref + '-' + prefix + next_short_ref.to_s)
+                current_index += 1
+              end
             end
           end
         end
