@@ -15,7 +15,11 @@ module Decidim
       private
 
       def title
-        model.short_ref + ' • ' + present(model).title
+        if %w(evaluating accepted).include?(model.state)
+          model.short_ref + ' • ' + present(model).title
+        else
+          present(model).title
+        end
       end
 
       def body

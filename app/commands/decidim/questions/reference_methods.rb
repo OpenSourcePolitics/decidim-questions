@@ -16,7 +16,7 @@ module Decidim
         prefix = question.component.name[Decidim.config.default_locale.to_s].capitalize[0]
         current_ref = Decidim::Questions::Question.where(state: ['evaluating','accepted']).order(published_at: :desc).first.reference
         next_short_ref = current_ref.split(prefix).last
-        next_short_ref = next_short_ref =~ /\A\d+\Z/ ? next_short_ref.to_i + 1 : 0
+        next_short_ref = next_short_ref =~ /\A\d+\Z/ ? next_short_ref.to_i + 1 : 1
 
         default_ref = Decidim.reference_generator.call(question, question.component)
 
