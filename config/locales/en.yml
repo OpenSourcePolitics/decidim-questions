@@ -213,6 +213,7 @@ en:
           all: All
           evaluating: Evaluating
           except_rejected: All except rejected
+          pending: Awaiting validation
           rejected: Rejected
         filter_type_values:
           all: All

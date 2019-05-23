@@ -72,7 +72,7 @@ fr:
         cancel: Cancel
         configure: Configurer
         duplicate: Dupliquer
-        filter: Filter
+        filter: Filtrer
         new_process: Nouveau processus participatif
         preview: Aperçu
       impersonatable_users:
@@ -644,6 +644,7 @@ fr:
           all: Toutes
           evaluating: En attente de réponse
           except_rejected: Toutes sauf les questions rejetées
+          pending: En attente de validation
           rejected: Rejetées
         filter_type_values:
           all: Tous
