@@ -20,9 +20,11 @@
   <div class="row column">
     <strong><%= t ".created_at" %>: </strong> <%= l question.created_at, format: :decidim_short %>
   </div>
-  <div class="row column">
-    <strong><%= t ".published_at" %>: </strong> <%= l question.published_at, format: :decidim_short %>
-  </div>
+  <% if %w(accepted).include?(question.state) %>
+    <div class="row column">
+      <strong><%= t ".published_at" %>: </strong> <%= l question.published_at, format: :decidim_short %>
+    </div>
+  <% end %>
   <div class="row column">
     <strong><%= t ".question_votes_count" %>: </strong> <%= question.question_votes_count %>
   </div>
