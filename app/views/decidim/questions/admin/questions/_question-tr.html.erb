@@ -70,7 +70,9 @@
   </td>
 
   <td>
-    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
+    <% if %w(accepted).include?(question.state) %>
+      <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
+    <% end %>
   </td>
 
   <td class="table-list__actions">
