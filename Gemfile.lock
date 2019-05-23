@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/OpenSourcePolitics/decidim
-  revision: 487187c9cfd576c525ab6afbd58e424d403628cc
+  revision: dd08c007407b323aee2722345cb1897759bcb353
   branch: 0.16-upstream_moderation
   specs:
     decidim (0.16.1)
@@ -761,7 +761,7 @@ DEPENDENCIES
   web-console (~> 3.5)
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.5.3p105
 
 BUNDLED WITH
    1.17.3
