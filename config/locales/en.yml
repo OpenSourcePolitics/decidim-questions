@@ -29,6 +29,10 @@ en:
           steps: Steps
           upstream_moderations: Upstream moderations
       models:
+        participatory_process_user_role:
+          roles:
+            service: service
+            committee: committee
         participatory_process:
           fields:
             created_at: Created at
