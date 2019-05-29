@@ -1,5 +1,8 @@
 ---
 nl:
+  activerecord:
+    models:
+      decidim/questions/collaborative_draft: collaborative draft
   decidim:
     admin:
       actions:
@@ -43,7 +46,49 @@ nl:
         participatory_processes: Participatory processes
     components:
       questions:
+        actions:
+          endorse: endorse
+          vote: vote
         name: Voorstellen
+        settings:
+          global:
+            amendments_enabled: amendments enabled
+            announcement: announcement
+            attachments_allowed: attachments allowed
+            can_accumulate_supports_beyond_threshold: can accumulate supports beyond
+              threshold
+            collaborative_drafts_enabled: collaborative drafts enabled
+            comments_enabled: comments enabled
+            geocoding_enabled: geocoding enabled
+            minimum_votes_per_user: minimum votes per user
+            new_question_help_text: new question help_text
+            official_questions_enabled: official questions enabled
+            participatory_texts_enabled: participatory texts enabled
+            question_answering_enabled: question answering enabled
+            question_answering_roles_enabled: question answering roles enabled
+            question_edit_before_minutes: question edit before minutes
+            question_length: question length
+            question_limit: question limit
+            question_wizard_step_1_help_text: question wizard step 1 help text
+            question_wizard_step_2_help_text: question wizard step 2 help text
+            question_wizard_step_3_help_text: question wizard step 3 help text
+            question_wizard_step_4_help_text: question wizard step 4 help text
+            resources_permissions_enabled: resources permissions enabled
+            threshold_per_question: threshold per question
+            upstream_moderation: upstream moderation
+            vote_limit: vote limit
+          step:
+            announcement: announcement
+            automatic_hashtags: automatic hashtags
+            comments_blocked: comments blocked
+            creation_enabled: creation enabled
+            endorsements_blocked: endorsements blocked
+            endorsements_enabled: endorsements enabled
+            question_answering_enabled: question answering enabled
+            suggested_hashtags: suggested hashtags
+            votes_blocked: votes blocked
+            votes_enabled: votes enabled
+            votes_hidden: votes hidden
     datetime:
       timeago: Timeago
     participatory_processes:
@@ -65,6 +110,9 @@ nl:
       admin:
         actions:
           preview: Voorbeeldweergave
+        exports:
+          comments: comments
+          questions: questions
         models:
           question:
             name: Voorstel
@@ -206,6 +254,11 @@ nl:
               new_question: New question
               questions: Questions
             published_at: Published at
+      answers:
+        accepted: accepted
+        evaluating: evaluating
+        not_answered: Not answered
+        rejected: rejected
       application_helper:
         filter_origin_values:
           all: Allemaal
@@ -268,11 +321,15 @@ nl:
           send: Sturen
           title: Bewerk samenwerkingsconcept
         filters:
+          all: all
           category: Categorie
           category_prompt: Categorie Prompt
+          open: open
+          published: published
           related_to: Gerelateerd aan
           search: Zoeken
           state: Status
+          withdrawn: withdrawn
         filters_small_view:
           close_modal: Modal sluiten
           filter: Filter
@@ -283,6 +340,11 @@ nl:
           title: Creëer uw gezamenlijke concept
         new_collaborative_draft_button:
           new_collaborative_draft: Nieuwe gezamenlijke trekking
+        orders:
+          label: label
+          most_contributed: most_contributed
+          random: random
+          recent: recent
         requests:
           accepted_request:
             error: Kan niet worden geaccepteerd als bijdrager, probeer het later opnieuw.
@@ -442,6 +504,11 @@ nl:
         new:
           send: Doorgaan
           title: Maak voorstel aan
+        orders:
+          label: label
+          most_voted: most voted
+          random: random
+          recent: recent
         participatory_texts:
           index:
             document_index: Documentindex
@@ -465,6 +532,7 @@ nl:
           back_to: Terug naar
           edit_question: Bewerk voorstel
           endorsements_list: Lijst met aanbevelingen
+          hidden_endorsers_count: "%{count} hidden endorsers"
           link_to_collaborative_draft_help_text: Dit voorstel is het resultaat van
             een gezamenlijk concept. Bekijk de geschiedenis
           link_to_collaborative_draft_text: Bekijk de samenwerkende trekking
@@ -482,6 +550,9 @@ nl:
           vote: Stem
           votes_blocked: Stemmen uitgeschakeld
         votes_count:
+          count:
+            one: vote
+            other: votes
           most_popular_question: Populairste voorstel
           need_more_votes: Meer stemmen nodig
         voting_rules:

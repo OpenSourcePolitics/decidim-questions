@@ -1,5 +1,8 @@
 ---
 hu:
+  activerecord:
+    models:
+      decidim/questions/collaborative_draft: collaborative draft
   decidim:
     admin:
       actions:
@@ -43,7 +46,49 @@ hu:
         participatory_processes: Participatory processes
     components:
       questions:
+        actions:
+          endorse: endorse
+          vote: vote
         name: Javaslatok
+        settings:
+          global:
+            amendments_enabled: amendments enabled
+            announcement: announcement
+            attachments_allowed: attachments allowed
+            can_accumulate_supports_beyond_threshold: can accumulate supports beyond
+              threshold
+            collaborative_drafts_enabled: collaborative drafts enabled
+            comments_enabled: comments enabled
+            geocoding_enabled: geocoding enabled
+            minimum_votes_per_user: minimum votes per user
+            new_question_help_text: new question help_text
+            official_questions_enabled: official questions enabled
+            participatory_texts_enabled: participatory texts enabled
+            question_answering_enabled: question answering enabled
+            question_answering_roles_enabled: question answering roles enabled
+            question_edit_before_minutes: question edit before minutes
+            question_length: question length
+            question_limit: question limit
+            question_wizard_step_1_help_text: question wizard step 1 help text
+            question_wizard_step_2_help_text: question wizard step 2 help text
+            question_wizard_step_3_help_text: question wizard step 3 help text
+            question_wizard_step_4_help_text: question wizard step 4 help text
+            resources_permissions_enabled: resources permissions enabled
+            threshold_per_question: threshold per question
+            upstream_moderation: upstream moderation
+            vote_limit: vote limit
+          step:
+            announcement: announcement
+            automatic_hashtags: automatic hashtags
+            comments_blocked: comments blocked
+            creation_enabled: creation enabled
+            endorsements_blocked: endorsements blocked
+            endorsements_enabled: endorsements enabled
+            question_answering_enabled: question answering enabled
+            suggested_hashtags: suggested hashtags
+            votes_blocked: votes blocked
+            votes_enabled: votes enabled
+            votes_hidden: votes hidden
     datetime:
       timeago: Timeago
     participatory_processes:
@@ -65,6 +110,9 @@ hu:
       admin:
         actions:
           preview: Előnézet
+        exports:
+          comments: comments
+          questions: questions
         models:
           question:
             name: Javaslat
@@ -203,6 +251,11 @@ hu:
               new_question: New question
               questions: Questions
             published_at: Published at
+      answers:
+        accepted: accepted
+        evaluating: evaluating
+        not_answered: Not answered
+        rejected: rejected
       application_helper:
         filter_origin_values:
           all: Minden
@@ -262,11 +315,15 @@ hu:
           send: Küldés
           title: Közös vázlat szerkesztése
         filters:
+          all: all
           category: Kategória
           category_prompt: Prompt Kategória
+          open: open
+          published: published
           related_to: Kapcsolódó
           search: Keresés
           state: Állapot
+          withdrawn: withdrawn
         filters_small_view:
           close_modal: Modal bezárása
           filter: Szűrés
@@ -277,6 +334,11 @@ hu:
           title: Hozz létre közös vázlatot
         new_collaborative_draft_button:
           new_collaborative_draft: Új közös vázlat
+        orders:
+          label: label
+          most_contributed: most_contributed
+          random: random
+          recent: recent
         requests:
           accepted_request:
             error: Nem lehet közreműködő partner, próbáld újra később.
@@ -435,6 +497,11 @@ hu:
         new:
           send: Tovább
           title: Hozz létre javaslatot
+        orders:
+          label: label
+          most_voted: most voted
+          random: random
+          recent: recent
         participatory_texts:
           index:
             document_index: Dokumentum index
@@ -458,6 +525,7 @@ hu:
           back_to: Vissza a
           edit_question: Javaslat szerkesztése
           endorsements_list: Jóváhagyások listája
+          hidden_endorsers_count: "%{count} hidden endorsers"
           link_to_collaborative_draft_help_text: Ez a javaslat egy közös vázlat eredménye.
             Nézd át az előzményeket
           link_to_collaborative_draft_text: Közös vázlat megtekintése
@@ -475,6 +543,9 @@ hu:
           vote: Szavazás
           votes_blocked: Szavazás letiltva
         votes_count:
+          count:
+            one: vote
+            other: votes
           most_popular_question: Legnépszerűbb javaslat
           need_more_votes: Több szavazat kell
         voting_rules:

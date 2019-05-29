@@ -1,5 +1,8 @@
 ---
 ru:
+  activerecord:
+    models:
+      decidim/questions/collaborative_draft: collaborative draft
   decidim:
     admin:
       actions:
@@ -43,7 +46,49 @@ ru:
         participatory_processes: Participatory processes
     components:
       questions:
+        actions:
+          endorse: endorse
+          vote: vote
         name: Предложения
+        settings:
+          global:
+            amendments_enabled: amendments enabled
+            announcement: announcement
+            attachments_allowed: attachments allowed
+            can_accumulate_supports_beyond_threshold: can accumulate supports beyond
+              threshold
+            collaborative_drafts_enabled: collaborative drafts enabled
+            comments_enabled: comments enabled
+            geocoding_enabled: geocoding enabled
+            minimum_votes_per_user: minimum votes per user
+            new_question_help_text: new question help_text
+            official_questions_enabled: official questions enabled
+            participatory_texts_enabled: participatory texts enabled
+            question_answering_enabled: question answering enabled
+            question_answering_roles_enabled: question answering roles enabled
+            question_edit_before_minutes: question edit before minutes
+            question_length: question length
+            question_limit: question limit
+            question_wizard_step_1_help_text: question wizard step 1 help text
+            question_wizard_step_2_help_text: question wizard step 2 help text
+            question_wizard_step_3_help_text: question wizard step 3 help text
+            question_wizard_step_4_help_text: question wizard step 4 help text
+            resources_permissions_enabled: resources permissions enabled
+            threshold_per_question: threshold per question
+            upstream_moderation: upstream moderation
+            vote_limit: vote limit
+          step:
+            announcement: announcement
+            automatic_hashtags: automatic hashtags
+            comments_blocked: comments blocked
+            creation_enabled: creation enabled
+            endorsements_blocked: endorsements blocked
+            endorsements_enabled: endorsements enabled
+            question_answering_enabled: question answering enabled
+            suggested_hashtags: suggested hashtags
+            votes_blocked: votes blocked
+            votes_enabled: votes enabled
+            votes_hidden: votes hidden
     datetime:
       timeago: Timeago
     participatory_processes:
@@ -65,6 +110,9 @@ ru:
       admin:
         actions:
           preview: Предпросмотр
+        exports:
+          comments: comments
+          questions: questions
         models:
           question:
             name: Предложение
@@ -201,6 +249,11 @@ ru:
               new_question: New question
               questions: Questions
             published_at: Published at
+      answers:
+        accepted: accepted
+        evaluating: evaluating
+        not_answered: Not answered
+        rejected: rejected
       application_helper:
         filter_origin_values:
           all: All
@@ -260,11 +313,15 @@ ru:
           send: Send
           title: Edit collaborative draft
         filters:
+          all: all
           category: Category
           category_prompt: Category Prompt
+          open: open
+          published: published
           related_to: Related to
           search: Search
           state: Cостояние
+          withdrawn: withdrawn
         filters_small_view:
           close_modal: Close modal
           filter: Filter
@@ -275,6 +332,11 @@ ru:
           title: Create Your collaborative draft
         new_collaborative_draft_button:
           new_collaborative_draft: New collaborative draft
+        orders:
+          label: label
+          most_contributed: most_contributed
+          random: random
+          recent: recent
         requests:
           accepted_request:
             error: Could not be accepted as a collaborator, try again later.
@@ -436,6 +498,11 @@ ru:
         new:
           send: Продолжить
           title: Создайте свое предложение
+        orders:
+          label: label
+          most_voted: most voted
+          random: random
+          recent: recent
         participatory_texts:
           index:
             document_index: Document index
@@ -465,6 +532,7 @@ ru:
           back_to: Back to
           edit_question: Редактировать предложение
           endorsements_list: Список тех, кто поддержал
+          hidden_endorsers_count: "%{count} hidden endorsers"
           link_to_collaborative_draft_help_text: This question is the result of a
             collaborative draft. Review the history
           link_to_collaborative_draft_text: See the collaborative draft
@@ -482,6 +550,9 @@ ru:
           vote: Голосовать
           votes_blocked: Голосование отключено
         votes_count:
+          count:
+            one: vote
+            other: votes
           most_popular_question: Самое популярное предложение
           need_more_votes: Нужно больше голосов
         voting_rules:
