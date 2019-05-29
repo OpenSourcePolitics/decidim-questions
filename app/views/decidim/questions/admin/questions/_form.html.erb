@@ -70,7 +70,9 @@
         </div>
       </div>
     </div>
-    <div class="row column hide" id="question_answer_wrapper">
+    <%= recipients_select(form, :service_users_ids, @form.available_service_users) %>
+    <%= recipients_select(form, :committee_users_ids, @form.available_committee_users) %>
+    <div class="row column" id="question_answer_wrapper">
       <%= form.translated :editor, :answer, autofocus: true, rows: 15 %>
     </div>
   </div>

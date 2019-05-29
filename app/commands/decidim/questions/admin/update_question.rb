@@ -76,6 +76,7 @@ module Decidim
             body: body_with_hashtags,
             category: form.category,
             recipient: form.recipient,
+            recipient_ids: form.recipient_ids.compact,
             state: form.state,
             published_at: published_at
           )
@@ -85,6 +86,7 @@ module Decidim
           PaperTrail.request(enabled: false) do
             question.update!(
               recipient: form.recipient,
+              recipient_ids: form.recipient_ids.compact,
               state: form.state,
               published_at: published_at
             )
@@ -101,25 +103,16 @@ module Decidim
         end
 
         def notify_recipients
-          return if (question.previous_changes.keys & %w[recipient]).empty?
+          return if (question.previous_changes.keys & %w[recipient recipient_ids]).empty?
 
-          recipients = []
-
-          if form.recipient == 'committee'
-            recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee )
-          elsif form.recipient == 'service'
-            recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :service )
-          end
-
-          if %w[evaluating pending].include?(form.state) && !recipients.empty?
+          if %w[evaluating pending].include?(form.state) && form.recipient_ids.any?
             Decidim::EventsManager.publish(
               event: 'decidim.events.questions.forward_question',
               event_class: Decidim::Questions::Admin::ForwardQuestionEvent,
               resource: question,
-              affected_users: Decidim::User.where(id: recipients.pluck(:decidim_user_id)).to_a
+              affected_users: Decidim::User.where(id: form.recipient_ids).to_a
             )
           end
-
         end
 
         def answer_question
