@@ -28,10 +28,11 @@ module Decidim
             toggle_allow(admin_question_answering_is_enabled?) if permission_action.subject == :question_answer
           end
 
-          if user.admin?
+          if user.admin? || process_admin?
             # Admins can only edit official questions if they are within the
             # time limit.
             allow! if permission_action.subject == :question && permission_action.action == :edit
+            allow! if permission_action.subject == :questions && permission_action.action == :move
             # Every user allowed by the space can update the category of the question
             allow! if permission_action.subject == :question_category && permission_action.action == :update
             # Every user allowed by the space can import questions from another_component

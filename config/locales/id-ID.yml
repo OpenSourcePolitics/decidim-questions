@@ -147,6 +147,8 @@ id-ID:
             change_category: Change category
             merge: Merge into a new one
             merge_button: Merge
+            move: Move questions
+            move_button: Move
             selected: selected
             split: Split questions
             split_button: Split
@@ -177,13 +179,17 @@ id-ID:
           create:
             invalid: There was an error merging the selected questions.
             success: Successfully merged the questions into a new one.
+        questions_moves:
+          create:
+            invalid: Invalid
+            success: Success
         questions_splits:
           create:
             invalid: There was an error spliting the selected questions.
             success: Successfully splitted the questions into new ones.
         shared:
           info_question:
-            created_at: Creation date
+            created_at: Created at
             info_question_bottom:
               created_at: Created at
               published_at: Published at
@@ -195,7 +201,7 @@ id-ID:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Publication date
+            published_at: Published at
       application_helper:
         filter_origin_values:
           all: All

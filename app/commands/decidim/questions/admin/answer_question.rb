@@ -5,6 +5,7 @@ module Decidim
     module Admin
       # A command with all the business logic when an admin answers a question.
       class AnswerQuestion < Rectify::Command
+        include ReferenceMethods
         # Public: Initializes the command.
         #
         # form - A form object with the params.
@@ -23,6 +24,7 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          manage_custom_reference
           answer_question
           notify_committee
           notify_followers
@@ -131,9 +133,7 @@ module Decidim
 
         # Update the publish date when evaluating or accepted
         def published_at
-          if question.state.nil? && %w(evaluating accepted).include?(form.state)
-            Time.current
-          elsif question.state != form.state && %w(accepted).include?(form.state)
+          if question.state != form.state && %w(accepted).include?(form.state)
             Time.current
           else
             question.published_at

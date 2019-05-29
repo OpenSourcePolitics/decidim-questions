@@ -1,68 +1,5 @@
 ---
 sv:
-  activemodel:
-    attributes:
-      collaborative_draft:
-        body: Innehåll
-        category_id: Kategori
-        decidim_scope_id: Omfattning
-        has_address: Har adress
-        state: Tillstånd
-        title: Titel
-        user_group_id: Skapa samarbetsförslag som
-      question:
-        answer: Svara
-        answered_at: Besvarad vid
-        automatic_hashtags: Hashtags läggs till automatiskt
-        body: Innehåll
-        category_id: Kategori
-        has_address: Har adress
-        scope_id: Omfattning
-        state: Status
-        suggested_hashtags: Föreslagna hashtags
-        title: Titel
-        user_group_id: Skapa förslag som
-      question_answer:
-        answer: Svara
-      questions_copy:
-        copy_questions: Jag förstår att detta kommer att importera alla förslag från
-          den valda komponenten till den nuvarande och att den här åtgärden inte kan
-          ångras.
-        origin_component_id: Komponent att kopiera förslagen från
-    errors:
-      models:
-        question:
-          attributes:
-            attachment:
-              needs_to_be_reattached: Behöver återbifogas
-    models:
-      decidim/questions/accepted_question_event: Förslag accepterat
-      decidim/questions/admin/update_question_category_event: Förslagskategori ändrad
-      decidim/questions/creation_enabled_event: Skapande av förslag aktiverat
-      decidim/questions/endorsing_enabled_event: Stöttande av förslag aktiverat
-      decidim/questions/evaluating_question_event: Förslaget utvärderas
-      decidim/questions/publish_question_event: Förslag publicerat
-      decidim/questions/question_endorsed_event: Förslaget stöttat
-      decidim/questions/question_mentioned_event: Förslag nämnt
-      decidim/questions/rejected_question_event: Förslag avvisat
-      decidim/questions/voting_enabled_event: Omröstningar om förslag aktiverat
-  activerecord:
-    models:
-      decidim/questions/collaborative_draft:
-        one: Samarbetsförslag
-        other: Samarbetsförslagen
-      decidim/questions/question:
-        one: Förslag
-        other: Förslagen
-      decidim/questions/question_endorsement:
-        one: Stöd
-        other: Stöd
-      decidim/questions/question_note:
-        one: Anteckning
-        other: Anteckningar
-      decidim/questions/question_vote:
-        one: Röst
-        other: Röster
   decidim:
     admin:
       actions:
@@ -106,283 +43,9 @@ sv:
         participatory_processes: Participatory processes
     components:
       questions:
-        actions:
-          create: Skapa
-          endorse: Stödja
-          vote: Rösta
-          withdraw: Dra tillbaka
         name: Förslag
-        settings:
-          global:
-            amendments_enabled: Ändringar möjliga
-            announcement: Notis
-            attachments_allowed: Tillåt bifogade filer
-            can_accumulate_supports_beyond_threshold: Kan ackumulera stöd bortom tröskeln
-            collaborative_drafts_enabled: Samarbetsutkast aktiverat
-            comments_enabled: Kommentarer aktiverade
-            geocoding_enabled: Geocoding aktiverad
-            minimum_votes_per_user: Minsta antal röster per användare
-            new_question_help_text: Nytt förslag till hjälptext
-            official_questions_enabled: Officiella förslag möjliga
-            participatory_texts_enabled: Deltagande texter aktiverade
-            question_answering_enabled: Svar tlll förslag aktiverat
-            question_edit_before_minutes: Förslag kan redigeras av författare innan
-              så här många minuter passerar
-            question_length: Maximal längd på förslagets innehåll
-            question_limit: Förslagsgräns per användare
-            question_wizard_step_1_help_text: Hjälptext till steget "Skapa" i förslagsguiden
-            question_wizard_step_2_help_text: Hjälptext till steget "Jämför" i förslagsguiden
-            question_wizard_step_3_help_text: Hjälptext till steget "Komplett" i förslagsguiden
-            question_wizard_step_4_help_text: Förslagsguiden "Publicera" steg hjälptext
-            resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för
-              varje förslag
-            threshold_per_question: Tröskel per förslag
-            vote_limit: Röstningsgräns per användare
-          step:
-            announcement: Meddelande
-            automatic_hashtags: Hashtags läggs till i alla förslag
-            comments_blocked: Kommentarer blockerade
-            creation_enabled: Skapande av förslag aktiverat
-            endorsements_blocked: Stöd blockerade
-            endorsements_enabled: Stöd aktiverade
-            question_answering_enabled: Svar på förslag aktiverat
-            suggested_hashtags: Hashtags föreslog användare för nya förslag
-            votes_blocked: Röstande blockerat
-            votes_enabled: Röstning aktiverat
-            votes_hidden: Röster dolda (om röster är aktiverade, kommer detta att
-              gömma antalet röster)
     datetime:
       timeago: Timeago
-    events:
-      questions:
-        collaborative_draft_access_accepted:
-          email_intro: '%{requester_name} har accepterats för att få tillgång till
-            som medskapare till samarbetsutkastet <a href="%{resource_path}">%{resource_title}</a>.'
-          email_outro: Du har fått den här meddelandet eftersom du är en medskapare
-            till <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{requester_name} har fått tillgång som en medskapare till
-            %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
-            har <strong>godkänts för att få tillgång till som medskapare</strong>
-            av samarbetsförslaget <a href="%{resource_path}">%{resource_title}</a>.
-        collaborative_draft_access_rejected:
-          email_intro: '%{requester_name} har avvisad för att få tillgång till som
-            medskapare till <a href="%{resource_path}">%{resource_title}</a> samarbetsförslaget.'
-          email_outro: Du har fått den här notifikationen eftersom du är en samarbetspartner
-            på <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{requester_name} har avvisats för att få tillgång till
-            som medskapare till det samlade utkastet %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
-            har blivit <strong>avvisad för att få tillgång till som medskapare</strong>
-            av samarbetsförslaget <a href="%{resource_path}">%{resource_title}</a>.
-        collaborative_draft_access_requested:
-          email_intro: '%{requester_name} begärd tillgång som medskapare. Du kan <strong>acceptera
-            eller avvisa begäran</strong> från samarbetsutkastssidan<a href="%{resource_path}">%{resource_title}</a>.'
-          email_outro: Du har fått den här notifikationen eftersom du är en samarbetspartner
-            på <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{requester_name} begärde tillgång att bidra till %{resource_title}."
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
-            begärde tillgång för att få bidra till samarbetsutkastet <a href="%{resource_path}">%{resource_title}</a>.
-            Vänligen <strong>acceptera eller avslå begäran</strong>.
-        collaborative_draft_access_requester_accepted:
-          email_intro: Du har accepterats för att få tillgång till som medskapare
-            till samarbetet <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Du har fått den här meddelandet eftersom du bad om att bli
-            en medskapare av <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: Du har accepterats som medskapare av %{resource_title}.
-          notification_title: Du har blivit <strong>accepterad för att få tillgång
-            till som medskapare</strong> av samarbetsförslaget <a href="%{resource_path}">%{resource_title}</a>.
-        collaborative_draft_access_requester_rejected:
-          email_intro: Du har blivit avvisad för att få tillgång till som medskapare
-            till samarbetsförslaget <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Du har fått den här notifikationen eftersom du bad om att bli
-            en medskapare av <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: Du har blivit avvisad som medskapare av %{resource_title}.
-          notification_title: Du har blivit <strong>avvisad för att få tillgång till
-            som medskapare</strong> av samarbetsförslaget <a href="%{resource_path}">%{resource_title}</a>.
-        collaborative_draft_withdrawn:
-          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
-            återtog samarbetsförslaget <a href="%{resource_path}">%{resource_title}</a>.
-          email_outro: Du har fått den här notifikationen eftersom du är en medskapare
-            till <a href="%{resource_path}">%{resource_title}</a>.
-          email_subject: "%{author_name} %{author_nickname} återkallade de %{resource_title}
-            samlade utkasten."
-          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
-            <strong>tillbakadragna</strong> <a href="%{resource_path}">%{resource_title}</a>
-            samarbetsutkast.
-        creation_enabled:
-          email_intro: 'Nu kan du skapa nya förslag på %{participatory_space_title}!
-            Börja delta på den här sidan:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}.
-            Du kan sluta ta emot notifikationer vid föregående länk.
-          email_subject: Förslag som nu finns tillgängliga på %{participatory_space_title}
-          notification_title: Nu kan du lägga fram <a href="%{resource_path}">nya
-            förslag</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
-        endorsing_enabled:
-          email_intro: 'Du kan godkänna förslag på %{participatory_space_title}! Börja
-            delta på den här sidan:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}.
-            Du kan sluta ta emot notifikationen efter föregående länk.
-          email_subject: Förslag till godkännande har startat för %{participatory_space_title}
-          notification_title: Du kan nu börja <a href="%{resource_path}">godkänna
-            förslag</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
-        question_accepted:
-          affected_user:
-            email_intro: 'Ditt förslag "%{resource_title}" har godkänts. Du kan läsa
-              svaret på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du är en författare
-              till "%{resource_title}".
-            email_subject: Ditt förslag har godkänts
-            notification_title: Ditt förslag <a href="%{resource_path}">%{resource_title}</a>
-              har godkänts.
-          follower:
-            email_intro: 'Förslaget "%{resource_title}" har godkänts. Du kan läsa
-              svaret på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}".
-              Du kan sluta följa det från föregående länk.
-            email_subject: Ett förslag som du följer är godkänt
-            notification_title: Förslaget <a href="%{resource_path}">%{resource_title}</a>
-              har godkänts.
-        question_endorsed:
-          email_intro: '%{endorser_name} %{endorser_nickname}, som du följer, har
-            just godkänt förslaget "%{resource_title}" och vi tycker att det kan vara
-            intressant för dig. Kolla in det och bidra med:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{endorser_nickname}.
-            Du kan sluta ta emot meddelanden vid föregående länk.
-          email_subject: "%{endorser_nickname} har godkänt ett nytt förslag"
-          notification_title: '| <a href="%{resource_path}">%{resource_title}</a>
-            förslaget har godkänts av <a href="%{endorser_path}">%{endorser_name}
-            %{endorser_nickname}</a>.'
-        question_evaluating:
-          affected_user:
-            email_intro: 'Ditt förslag "%{resource_title}" utvärderas för närvarande.
-              Du kan söka efter ett svar på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du är en författare
-              till "%{resource_title}".
-            email_subject: Ditt förslag utvärderas
-            notification_title: Ditt förslag <a href="%{resource_path}">%{resource_title}</a>
-              utvärderas.
-          follower:
-            email_intro: 'Förslaget "%{resource_title}" utvärderas för närvarande.
-              Du kan söka efter ett svar på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}".
-              Du kan sluta följa det från föregående länk.
-            email_subject: Ett förslag som du följer utvärderas
-            notification_title: Förslaget <a href="%{resource_path}">%{resource_title}</a>
-              utvärderas.
-        question_mentioned:
-          email_intro: Ditt förslag "%{mentioned_question_title}" har nämnts <a href="%{resource_path}">i
-            det här utrymmet</a> i kommentarerna.
-          email_outro: Du har fått den här meddelandet eftersom du är en författare
-            till "%{resource_title}".
-          email_subject: Ditt förslag "%{mentioned_question_title}" har nämnts
-          notification_title: Ditt förslag "%{mentioned_question_title}" har nämnts
-            <a href="%{resource_path}">i det här utrymmet</a> i kommentarerna.
-        question_published:
-          email_intro: '%{author_name} %{author_nickname}, som du följer, har publicerat
-            ett nytt förslag som heter "%{resource_title}". Kolla in det och bidra
-            med:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{author_nickname}.
-            Du kan sluta ta emot notifikationer från föregående länken.
-          email_subject: Nytt förslag "%{resource_title}" med %{author_nickname}
-          notification_title: Förslaget <a href="%{resource_path}">%{resource_title}</a>
-            publicerades av <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
-        question_published_for_space:
-          email_intro: Förslaget "%{resource_title}" har lagts till i "%{participatory_space_title}"
-            som du följer.
-          email_outro: Du har fått det här meddelandet eftersom du följer "%{participatory_space_title}".
-            Du kan sluta följa det från föregående länken.
-          email_subject: Nytt förslag "%{resource_title}" läggs till %{participatory_space_title}
-          notification_title: Förslaget <a href="%{resource_path}">%{resource_title}</a>
-            har lagts till %{participatory_space_title}
-        question_rejected:
-          affected_user:
-            email_intro: 'Ditt förslag "%{resource_title}" har avvisats. Du kan läsa
-              svaret på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du är en författare
-              till "%{resource_title}".
-            email_subject: Ditt förslag har avslagits
-            notification_title: Ditt förslag <a href="%{resource_path}">%{resource_title}</a>
-              har avvisats.
-          follower:
-            email_intro: 'Förslaget "%{resource_title}" har avslagits. Du kan läsa
-              svaret på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}".
-              Du kan sluta följa det från föregående länk.
-            email_subject: Ett förslag som du följer har avvisats
-            notification_title: Förslaget <a href="%{resource_path}">%{resource_title}</a>
-              har avslagits.
-        question_update_category:
-          email_intro: 'En administratör har uppdaterat kategorin av ditt förslag
-            "%{resource_title}", kolla in det:'
-          email_outro: Du har fått den här meddelandet eftersom du är författaren
-            till förslaget.
-          email_subject: Förslagskategorin %{resource_title} har uppdaterats
-          notification_title: Förslagskategorin <a href="%{resource_path}">%{resource_title}</a>
-            har uppdaterats av en administratör.
-        voting_enabled:
-          email_intro: 'Du kan rösta på förslag på %{participatory_space_title}! Börja
-            delta på den här sidan:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}.
-            Du kan sluta ta emot notifikationer vid föregående länk.
-          email_subject: Omröstningar för förslag har börjat för %{participatory_space_title}
-          notification_title: Du kan nu börja <a href="%{resource_path}">röstningsförslag</a>
-            i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
-    gamification:
-      badges:
-        accepted_questions:
-          conditions:
-          - Välj deltagarutrymme av intresse med inlämning av förslag aktiverade
-          - Försök att lägga fram förslag som kan utföras. På detta sätt är de mer
-            benägna att accepteras.
-          description: Detta märke beviljas när du aktivt deltar med nya förslag och
-            dessa accepteras.
-          description_another: Den här användaren har fått %{score} förslag accepterade.
-          description_own: Du har accepterat %{score} förslag.
-          name: Godkända förslag
-          next_level_in: Få %{score} fler förslag accepterade för att nå nästa nivå!
-          unearned_another: Den här användaren har inte fått några förslag accepterade
-            än.
-          unearned_own: Du har inga förslag accepterade än.
-        question_votes:
-          conditions:
-          - Bläddra och spendera lite tid på att läsa andras förslag
-          - Ge stöd till de förslag du tycker om eller hitta intressanta
-          description: Detta märke beviljas när du stöder andra människors förslag.
-          description_another: Denna användare har gett stöd till %{score} förslag.
-          description_own: Du har gett stöd till %{score} förslag.
-          name: Förslagstjänster
-          next_level_in: Ge stöd till %{score} fler förslag för att nå nästa nivå!
-          unearned_another: Den här användaren har inte stöttat några förslag än.
-          unearned_own: Du har inte stöttat några förslag än.
-        questions:
-          conditions:
-          - Välj deltagarutrymme av intresse med inlämning av förslag aktiverade
-          - Skapa ett nytt förslag
-          description: Detta märke beviljas när du aktivt deltar med nya förslag.
-          description_another: Den här användaren har skapat %{score} förslag.
-          description_own: Du har skapat %{score} förslag.
-          name: Förslag
-          next_level_in: Skapa %{score} fler förslag för att nå nästa nivå!
-          unearned_another: Den här användaren har inte skapat några förslag ännu.
-          unearned_own: Du har inte skapat några förslag än.
-    metrics:
-      accepted_questions:
-        description: Antal förslag accepterade av användarna
-        object: förslag
-        title: Godkända Förslag
-      endorsements:
-        description: Antal anmärkningar som genereras i förslag
-        object: påskrifter
-        title: påskrifter
-      questions:
-        description: Antal förslag som genererats
-        object: förslag
-        title: Förslag
-      votes:
-        description: Antal röster som genereras i förslag från användare
-        object: röster
-        title: Röster
     participatory_processes:
       participatory_process_groups:
         highlighted_questions:
@@ -398,14 +61,10 @@ sv:
         new: Nytt förslag
         participatory_texts: Deltagande texter
         private_discussions: Private discussions
-        private_notes: Privata anteckningar
         title: Åtgärder
       admin:
         actions:
           preview: Förhandsvisa
-        exports:
-          comments: Kommentarer
-          questions: Förslag
         models:
           question:
             name: Förslag
@@ -438,10 +97,6 @@ sv:
           publish:
             invalid: Kunde inte publicera förslag
             success: Alla förslag har publicerats
-          sections:
-            article: "<em>Artikel</em>"
-            section: "<em>Avsnitt:</em> <strong>%{title}</strong>"
-            sub-section: "<em>Underavsnitt:</em> %{title}"
           update:
             success: Deltagande text uppdaterad framgångsrikt.
         question_answers:
@@ -449,7 +104,6 @@ sv:
             accepted: Accepterad
             answer_question: Svara
             cancel: Cancel
-            evaluating: Utvärderas
             rejected: Avslaget
             title: Svar för förslag %{title}
         question_notes:
@@ -482,13 +136,11 @@ sv:
             all: All
             attachment_legend: "(Valfritt) Lägg till en bilaga"
             committee: Committee
-            created_in_meeting: Detta förslag kommer från ett möte
             evaluating: Evaluating
             none: None
             recipient: Recipient
             rejected: Rejected
             select_a_category: Välj en kategori
-            select_a_meeting: Välj ett möte
             service: Service
           index:
             actions: Åtgärder
@@ -496,7 +148,8 @@ sv:
             change_category: Ändra kategori
             merge: Sammanfoga till en ny
             merge_button: Slå ihop
-            select_component: Välj en komponent
+            move: Move questions
+            move_button: Move
             selected: vald
             split: Delade förslag
             split_button: Dela
@@ -526,13 +179,16 @@ sv:
           create:
             invalid: Det fanns ett fel att slå samman de valda förslagen.
             success: Framgångsrikt fusionerade förslagen till en ny.
+        questions_moves:
+          create:
+            invalid: Invalid
+            success: Success
         questions_splits:
           create:
             invalid: Det gick inte att splittra de valda förslagen.
             success: Framgångsrikt splittrade förslagen till nya.
         shared:
           info_question:
-            body: Innehåll
             created_at: Skapandedatum
             info_question_bottom:
               created_at: Created at
@@ -545,26 +201,7 @@ sv:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Publication date
-            question_votes_count: Antal röster
-            questions: Förslag
-      admin_log:
-        question:
-          answer: "%{user_name} svarade på förslaget %{resource_name} på utrymmet
-            %{space_name}"
-          create: "%{user_name} skapade förslaget %{resource_name} på utrymmet %{space_name}
-            som ett officiellt förslag"
-          update: "%{user_name} uppdaterade officiella förslaget %{resource_name}
-            på platsen %{space_name}"
-        question_note:
-          create: "%{user_name} lämnade en privat anteckning på förslaget %{resource_name}
-            på platsen %{space_name}"
-      answers:
-        accepted: Accepterad
-        evaluating: Utvärderas
-        not_answered: Inte besvarad
-        rejected: Avvisade
-        withdrawn: Tillbakadragen
+            published_at: Published at
       application_helper:
         filter_origin_values:
           all: Alla
@@ -625,16 +262,11 @@ sv:
           send: Skicka
           title: Redigera samarbetsutkast
         filters:
-          all: Allt
-          amendment: Tillägg
           category: Kategori
           category_prompt: Kategorifråga
-          open: Öppen
-          published: Publicerad
           related_to: Relaterat till
           search: Sök
           state: Status
-          withdrawn: Tillbakadraget
         filters_small_view:
           close_modal: Stäng modal
           filter: Filtrera
@@ -645,11 +277,6 @@ sv:
           title: Skapa ditt samarbetsutkast
         new_collaborative_draft_button:
           new_collaborative_draft: Nytt samarbetsutkast
-        orders:
-          label: 'Sortera utkast efter:'
-          most_contributed: Mest bidrag
-          random: Slumpmässig
-          recent: Nyligen
         requests:
           accepted_request:
             error: Kunde inte accepteras som samarbetspartner, försök igen senare.
@@ -670,16 +297,12 @@ sv:
           final_question: sista förslaget
           final_question_help_text: Detta utkast är färdigt. Du kan se det slutgiltiga
             förslaget
-          hidden_authors_count:
-            one: och %{count} mer person
-            other: och %{count} fler personer
           info-message: Detta är ett <strong>samlingsförslag</strong> för ett förslag.
             Det innebär att du kan hjälpa deras författare att forma förslaget med
             hjälp av kommentarsektionen nedan eller förbättra det direkt genom att
             begära åtkomst för att redigera det. När författarna ger dig tillgång,
             kan du göra ändringar i detta utkast.
           of_versions: "(av %{number})"
-          publish: Publicera
           publish_info: Publicera den här versionen av utkastet eller
           published_question: publicerat förslag
           request_access: Begär tillgång
@@ -687,7 +310,6 @@ sv:
           see_other_versions: se andra versioner
           version: Version %{number}
           version_history: se versionshistorik för detta förslag
-          withdraw: dra tillbaka utkastet
         states:
           open: Öppen
           published: Publicerad
@@ -724,8 +346,6 @@ sv:
             comments: Kommentarer
             created_at: Created on
             endorsements: Påskrifter
-            id: ID
-            notes: Anteckningar
             official_question: Officiellt förslag
             published_at: Publicerad vid
             scope: Omfattning
@@ -815,11 +435,6 @@ sv:
         new:
           send: Fortsätt
           title: Skapa ditt förslag
-        orders:
-          label: 'Beställ förslag av:'
-          most_voted: Mest röstade
-          random: Slumpmässig
-          recent: Senaste
         participatory_texts:
           index:
             document_index: Dokumentindex
@@ -843,21 +458,12 @@ sv:
           back_to: Tillbaka till
           edit_question: Redigera förslag
           endorsements_list: Förteckning över Stöd
-          hidden_endorsers_count:
-            one: och %{count} mer person
-            other: och %{count} fler personer
           link_to_collaborative_draft_help_text: Detta förslag är resultatet av ett
             samlat förslag. Granska historiken
           link_to_collaborative_draft_text: Se samarbetsutkastet
           question_accepted_reason: 'Detta förslag har godkänts eftersom:'
           question_in_evaluation_reason: Detta förslag utvärderas
           question_rejected_reason: 'Detta förslag har avslagits på grund av att:'
-          report: Rapportera
-          withdraw_btn_hint: Du kan dra tillbaka ditt förslag om du ändrar dig, så
-            länge du inte har fått något stöd. Förslaget är inte borttaget, det kommer
-            att visas i listan över återkallade förslag.
-          withdraw_confirmation: Är du säker på att dra tillbaka detta förslag?
-          withdraw_question: Dra tillbaka förslaget
         tags:
           changed_from: "(ändrad från <u>%{previous_category}</u> av en administratör)"
           filed_as: Arkiverat som
@@ -869,9 +475,6 @@ sv:
           vote: Rösta
           votes_blocked: Röstning inaktiverad
         votes_count:
-          count:
-            one: RÖST
-            other: RÖSTER
           most_popular_question: Mest populära förslaget
           need_more_votes: Behöver fler röster
         voting_rules:
@@ -930,14 +533,6 @@ sv:
         question_note_body: 'Question note content : %{question_note_body}'
         question_note_link: See note
         question_title: 'A new question note has been created : %{question_title}'
-    resource_links:
-      copied_from_component:
-        question_question: Relaterade förslag
-      included_projects:
-        project_result: 'Resultat som visas i detta projekt:'
-      included_questions:
-        question_project: 'Förslag som framgår i dessa projekt:'
-        question_result: 'Förslag som visas i dessa resultat:'
     scopes:
       global: Global
     shared:

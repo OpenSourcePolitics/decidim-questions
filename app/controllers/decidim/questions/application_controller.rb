@@ -25,6 +25,16 @@ module Decidim
       def questions
         Question.where(component: current_component)
       end
+
+      def permissions_context
+        {
+          current_settings: try(:current_settings),
+          component_settings: try(:component_settings),
+          current_organization: try(:current_organization),
+          current_participatory_space: try(:current_participatory_space),
+          current_component: try(:current_component)
+        }
+      end
     end
   end
 end
