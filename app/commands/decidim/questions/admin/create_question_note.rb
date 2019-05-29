@@ -24,6 +24,7 @@ module Decidim
           return broadcast(:invalid) if form.invalid?
 
           create_question_note
+          send_mail_to_users_with_role
 
           broadcast(:ok, question_note)
         end
@@ -45,6 +46,19 @@ module Decidim
               title: question.title
             }
           )
+        end
+
+        def send_mail_to_users_with_role
+          recipients.each do |recipient|
+            Decidim::QuestionsMailer.note_created(recipient, question_note).deliver_later
+          end
+        end
+
+        def recipients
+          Decidim::ParticipatoryProcessUserRole
+              .where(decidim_participatory_process_id: current_participatory_space.id)
+              .map(&:user) - [form.current_user]
+
         end
       end
     end

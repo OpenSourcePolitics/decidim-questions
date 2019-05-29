@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Questions", type: :system do
+describe "Participatory texts", type: :system do
   include_context "with a component"
   let(:manifest_name) { "questions" }
 
@@ -15,6 +15,8 @@ describe "Questions", type: :system do
     expect(prop_block).to have_link(question.emendations.count) if component.settings.amendments_enabled
     expect(prop_block).to have_link("Comment") if component.settings.comments_enabled
     expect(prop_block).to have_link(question.comments.count) if component.settings.comments_enabled
+    expect(prop_block).to have_content(question.body) if question.participatory_text_level == "article"
+    expect(prop_block).not_to have_content(question.body) if question.participatory_text_level != "article"
   end
 
   shared_examples_for "lists all the questions ordered" do
@@ -26,6 +28,46 @@ describe "Questions", type: :system do
       should_have_question("#questions div.hover-section:first-child", questions.first)
       should_have_question("#questions div.hover-section:nth-child(2)", questions[1])
       should_have_question("#questions div.hover-section:last-child", questions.last)
+    end
+
+    context " when participatory text level is not article" do
+      it "not renders the participatory text body" do
+        question_section = questions.first
+        question_section.participatory_text_level = "section"
+        question_section.save!
+        visit_component
+        should_have_question("#questions div.hover-section:first-child", question_section)
+      end
+    end
+
+    context "when participatory text level is article" do
+      it "renders the question body" do
+        question_article = questions.last
+        question_article.participatory_text_level = "article"
+        question_article.save!
+        visit_component
+        should_have_question("#questions div.hover-section:last-child", question_article)
+      end
+    end
+
+    context " when participatory text level is not article" do
+      it "not renders the participatory text body" do
+        question_section = questions.first
+        question_section.participatory_text_level = "section"
+        question_section.save!
+        visit_component
+        should_have_question("#questions div.hover-section:first-child", question_section)
+      end
+    end
+
+    context "when participatory text level is article" do
+      it "renders the question body" do
+        question_article = questions.last
+        question_article.participatory_text_level = "article"
+        question_article.save!
+        visit_component
+        should_have_question("#questions div.hover-section:last-child", question_article)
+      end
     end
   end
 

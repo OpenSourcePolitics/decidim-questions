@@ -8,7 +8,7 @@ module Decidim
 
           def permission_class_chain
             [
-              Decidim::ParticipatoryProcesses::QuestionsPermissions,
+              Decidim::Admin::RolesPermissions,
               Decidim::ParticipatoryProcesses::Permissions,
               Decidim::Admin::Permissions
             ]

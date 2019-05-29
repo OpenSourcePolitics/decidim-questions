@@ -7,6 +7,7 @@ module Decidim
     class QuestionSerializer < Decidim::Exporters::Serializer
       include Decidim::ApplicationHelper
       include Decidim::ResourceHelper
+      include Decidim::TranslationsHelper
 
       # Public: Initializes the serializer with a question.
       def initialize(question)
@@ -19,11 +20,11 @@ module Decidim
           id: question.id,
           category: {
             id: question.category.try(:id),
-            name: question.category.try(:name)
+            name: question.category.try(:name) || empty_translatable
           },
           scope: {
             id: question.scope.try(:id),
-            name: question.scope.try(:name)
+            name: question.scope.try(:name) || empty_translatable
           },
           participatory_space: {
             id: question.participatory_space.id,

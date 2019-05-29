@@ -1,0 +1,612 @@
+---
+ar-SA:
+  activerecord:
+    models:
+      decidim/questions/collaborative_draft: collaborative draft
+  decidim:
+    admin:
+      actions:
+        cancel: Cancel
+        configure: Configure
+        duplicate: Duplicate
+        filter: Filter
+        new_process: New process
+        preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
+      menu:
+        participatory_processes_submenu:
+          attachment_collections: Attachment collections
+          attachment_files: Attachment files
+          attachments: Attachments
+          categories: Categories
+          components: Components
+          info: Info
+          moderations: Moderations
+          private_users: Private users
+          process_admins: Process admins
+          steps: Steps
+          upstream_moderations: Upstream moderations
+      models:
+        participatory_process:
+          fields:
+            created_at: Created at
+            private: Private
+            promoted: Promoted
+            published: Published
+            title: Title
+      participatory_processes:
+        index:
+          not_published: Not published
+          private: Private
+          public: Public
+          published: Published
+      titles:
+        participatory_processes: Participatory processes
+    components:
+      questions:
+        actions:
+          endorse: endorse
+          vote: vote
+        name: Questions
+        settings:
+          global:
+            amendments_enabled: amendments enabled
+            announcement: announcement
+            attachments_allowed: attachments allowed
+            can_accumulate_supports_beyond_threshold: can accumulate supports beyond
+              threshold
+            collaborative_drafts_enabled: collaborative drafts enabled
+            comments_enabled: comments enabled
+            geocoding_enabled: geocoding enabled
+            minimum_votes_per_user: minimum votes per user
+            new_question_help_text: new question help_text
+            official_questions_enabled: official questions enabled
+            participatory_texts_enabled: participatory texts enabled
+            question_answering_enabled: question answering enabled
+            question_answering_roles_enabled: question answering roles enabled
+            question_edit_before_minutes: question edit before minutes
+            question_length: question length
+            question_limit: question limit
+            question_wizard_step_1_help_text: question wizard step 1 help text
+            question_wizard_step_2_help_text: question wizard step 2 help text
+            question_wizard_step_3_help_text: question wizard step 3 help text
+            question_wizard_step_4_help_text: question wizard step 4 help text
+            resources_permissions_enabled: resources permissions enabled
+            threshold_per_question: threshold per question
+            upstream_moderation: upstream moderation
+            vote_limit: vote limit
+          step:
+            announcement: announcement
+            automatic_hashtags: automatic hashtags
+            comments_blocked: comments blocked
+            creation_enabled: creation enabled
+            endorsements_blocked: endorsements blocked
+            endorsements_enabled: endorsements enabled
+            question_answering_enabled: question answering enabled
+            suggested_hashtags: suggested hashtags
+            votes_blocked: votes blocked
+            votes_enabled: votes enabled
+            votes_hidden: votes hidden
+    datetime:
+      timeago: Timeago
+    participatory_processes:
+      participatory_process_groups:
+        highlighted_questions:
+          questions: Questions
+    participatory_spaces:
+      highlighted_questions:
+        see_all: See all (%{count})
+    questions:
+      actions:
+        answer: Answer
+        edit_question: Edit question
+        import: Import from another component
+        new: New question
+        participatory_texts: Participatory texts
+        private_discussions: Private discussions
+        title: Actions
+      admin:
+        actions:
+          preview: Preview
+        exports:
+          comments: comments
+          questions: questions
+        models:
+          question:
+            name: Question
+        participatory_texts:
+          bulk-actions:
+            are_you_sure: Are you sure to discard the whole participatory text draft?
+            discard_all: Discard all
+            import_doc: Import document
+          discard:
+            success: All Participatory text drafts have been discarded.
+          import:
+            invalid: The form is invalid!
+            success: Congratulations, the following sections have been parsed from
+              the imported document, they have been converted to questions. Now you
+              can review and adjust whatever you need before publishing.
+          index:
+            info_1: The following sections have been parsed from the imported document,
+              they have been converted to questions. Now you can review and adjust
+              whatever you need before publishing.
+            publish_document: Publish document
+            save_draft: Save draft
+            title: PREVIEW PARTICIPATORY TEXT
+          new_import:
+            bottom_hint: "(You will be able to preview and sort document sections)"
+            document_legend: 'Add a document lesser than 2MB, each section until 3
+              levels deep will be parsed into Questions. Suported formats are: Markdown'
+            title: ADD DOCUMENT
+            upload_document: Upload document
+          publish:
+            invalid: Could not publish questions
+            success: All questions have been published
+          update:
+            success: Participatory text updated successfully.
+        question_answers:
+          edit:
+            accepted: Accepted
+            answer_question: Answer
+            cancel: Cancel
+            rejected: Rejected
+            title: Answer for question %{title}
+        question_notes:
+          create:
+            error: There's been a problem creating this question note
+            success: Question note successfully created
+          form:
+            note: Note
+            submit: Submit
+          index:
+            answer_title: Answer
+            answered_at: Last edited
+          leave_your_note: Leave your note
+          title: Private notes
+        questions:
+          answer:
+            invalid: There's been a problem answering this question
+            success: Question successfully answered
+          create:
+            invalid: There's been a problem creating this question
+            success: Question successfully created
+          edit:
+            cancel: Cancel
+            content: Content
+            status: Status
+            title: Update question
+            update: Update
+          form:
+            accepted: Accepted
+            all: All
+            attachment_legend: "(Optional) Add an attachment"
+            committee: Committee
+            evaluating: Evaluating
+            none: None
+            recipient: Recipient
+            rejected: Rejected
+            select_a_category: Select a category
+            service: Service
+          index:
+            actions: Actions
+            cancel: Cancel
+            change_category: Change category
+            merge: Merge into a new one
+            merge_button: Merge
+            move: Move questions
+            move_button: Move
+            selected: selected
+            split: Split questions
+            split_button: Split
+            title: Questions
+            update: Update
+          new:
+            content: Content
+            create: Create
+            status: Status
+            title: Create question
+          update_category:
+            invalid: 'These questions already had the %{category} category: %{questions}.'
+            select_a_category: Please select a category
+            select_a_question: Please select a question
+            success: 'Questions successfully updated to the %{category} category:
+              %{questions}.'
+        questions_imports:
+          create:
+            invalid: There's been a problem importing the questions
+            success: "%{number} questions successfully imported"
+          new:
+            create: Import questions
+            no_components: There are no other question components in this participatory
+              space to import the questions from.
+            select_component: Please select a component
+            select_states: Check the states of the questions to import
+        questions_merges:
+          create:
+            invalid: There was an error merging the selected questions.
+            success: Successfully merged the questions into a new one.
+        questions_moves:
+          create:
+            invalid: Invalid
+            success: Success
+        questions_splits:
+          create:
+            invalid: There was an error spliting the selected questions.
+            success: Successfully splitted the questions into new ones.
+        shared:
+          info_question:
+            created_at: Created at
+            info_question_bottom:
+              created_at: Created at
+              published_at: Published at
+              question_votes_count: Question votes count
+            info_question_bottom_full:
+              created_at: Created at
+              published_at: Published at
+              question_votes_count: Question votes count
+            info_question_top:
+              new_question: New question
+              questions: Questions
+            published_at: Published at
+      answers:
+        accepted: accepted
+        evaluating: evaluating
+        not_answered: Not answered
+        rejected: rejected
+      application_helper:
+        filter_origin_values:
+          all: All
+          citizens: Citizens
+          meetings: Meetings
+          official: Official
+          user_groups: User groups
+        filter_state_values:
+          accepted: Accepted
+          all: All
+          evaluating: Evaluating
+          except_rejected: All except rejected
+          rejected: Rejected
+        filter_type_values:
+          all: All
+          amendments: Amendments
+          questions: Questions
+      collaborative_drafts:
+        collaborative_draft:
+          publish:
+            error: There's been errors when publishing the collaborative draft.
+            irreversible_action_modal:
+              body: After publishing the draft as a question, the draft won't be editable
+                anymore. The question won't accept new authors or contributions.
+              cancel: Cancel
+              ok: Publish as a Question
+              title: The following action is irreversible
+            success: Collaborative draft published successfully as a question.
+          view_collaborative_draft: View Collaborative Draft
+          withdraw:
+            error: There's been errors closing the collaborative draft.
+            irreversible_action_modal:
+              body: After closing the draft, the draft won't be editable anymore.
+                The draft won't accept new authors or contributions.
+              cancel: Cancel
+              ok: Withdraw the collaborative draft
+              title: The following action is irreversible
+            success: Collaborative draft withdrawn successfully.
+        compare:
+          mine_is_different: My collaborative draft is different
+          no_similars_found: Well done! No similar collaborative drafts found
+          title: Similar collaborative drafts
+        complete:
+          send: Send
+          title: Complete your collaborative draft
+        count:
+          drafts_count:
+            one: "%{count} collaborative draft"
+            other: "%{count} collaborative draft"
+        create:
+          error: There's been a problem creating this collaborative drafts
+          success: Collaborative draft successfully created.
+        edit:
+          attachment_legend: "(Optional) Add an attachment"
+          back: Back
+          select_a_category: Please select a category
+          send: Send
+          title: Edit collaborative draft
+        filters:
+          all: all
+          category: Category
+          category_prompt: Category Prompt
+          open: open
+          published: published
+          related_to: Related to
+          search: Search
+          state: State
+          withdrawn: withdrawn
+        filters_small_view:
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          unfold: Unfold
+        new:
+          send: Continue
+          title: Create Your collaborative draft
+        new_collaborative_draft_button:
+          new_collaborative_draft: New collaborative draft
+        orders:
+          label: label
+          most_contributed: most_contributed
+          random: random
+          recent: recent
+        requests:
+          accepted_request:
+            error: Could not be accepted as a collaborator, try again later.
+            success: "@%{user} has been accepted as a collaborator successfully"
+          access_requested:
+            error: Your request could not be completed, try again later.
+            success: Your request to collaborate has been sent successfully
+          collaboration_requests:
+            accept_request: Accept
+            reject_request: Reject
+            title: Collaboration requests
+          rejected_request:
+            error: Could not be rejected as a collaborator, try again later.
+            success: "@%{user} has been rejected as a collaborator successfully"
+        show:
+          back: Back
+          edit: Edit collaborative draft
+          final_question: final question
+          final_question_help_text: This draft is finished. You can see the final
+            finished question
+          info-message: This is a <strong>collaborative draft</strong> for a question.
+            This means that you can help their authors to shape the question using
+            the comment section below or improve it directly by requesting access
+            to edit it. Once the authors grant you access, youl'll be able to make
+            changes to this draft.
+          of_versions: "(of %{number})"
+          publish_info: Publish this version of the draft or
+          published_question: published question
+          request_access: Request access
+          requested_access: Access requested
+          see_other_versions: see other versions
+          version: Version %{number}
+          version_history: see version history for this question
+        states:
+          open: Open
+          published: Published
+          withdrawn: Withdrawn
+        update:
+          error: There's been errors when saving the collaborative draft.
+          success: Collaborative draft updated successfully.
+        wizard_aside:
+          back: Back
+          info: You are creating a <strong>collaborative draft</strong>.
+        wizard_steps:
+          see_steps: see steps
+          step_1: Create your collaborative draft
+          step_2: Compare with collaborative drafts
+          step_3: Complete your collaborative draft
+          step_of: Step %{current_step_num} of %{total_steps}
+      create:
+        error: There's been errors when saving the question.
+        success: Question created successfully. Saved as a Draft.
+      destroy_draft:
+        error: There's been errors deleting the question draft.
+        success: Question draft was successfully deleted.
+      last_activity:
+        new_question_at_html: "<span>New question at %{link}</span>"
+      models:
+        collaborative_draft:
+          fields:
+            authors: Authors
+            comments: Comments
+            contributions: Contributions
+        question:
+          fields:
+            category: Category
+            comments: Comments
+            created_at: Created on
+            endorsements: Endorsements
+            official_question: Official question
+            published_at: Published
+            scope: Scope
+            short_ref: N°
+            state: State
+            title: Title
+            votes: Votes
+      new:
+        limit_reached: You can't create new questions since you've exceeded the limit.
+      participatory_text_question:
+        alternative_title: There are no participatory texts at the moment
+        buttons:
+          amend: Amend
+          comment: Comment
+          comments: Comments
+          endorse: Endorse
+      publish:
+        error: There's been errors when publishing the question.
+        success: Question published successfully.
+      question_endorsements:
+        create:
+          error: There's been errors when endorsing the question.
+        identities:
+          done: Done
+          select_identity: Select identity
+      question_endorsements_helper:
+        endorsement_button:
+          already_endorsed: Endorsed
+          endorse: Endorse
+        render_endorsements_button_card_part:
+          endorse: Endorse
+      question_votes:
+        create:
+          error: There's been errors when voting the question.
+      questions:
+        compare:
+          mine_is_different: My question is different
+          no_similars_found: Well done! No similar questions found
+          title: Similar Questions
+        complete:
+          send: Send
+          title: Complete your question
+        count:
+          questions_count:
+            one: "%{count} question"
+            other: "%{count} questions"
+        edit:
+          attachment_legend: "(Optional) Add an attachment"
+          back: Back
+          select_a_category: Please select a category
+          send: Send
+          title: Edit question
+        edit_draft:
+          discard: Discard this draft
+          discard_confirmation: Are you sure you want to discard this question draft?
+          send: Preview
+          title: Edit Question Draft
+        endorsement_identities_cabin:
+          endorse: Endorse
+        endorsements_card_row:
+          comments: Comments
+        filters:
+          activity: Activity
+          amendment_type: Type
+          category: Category
+          category_prompt: Select a category
+          origin: Origin
+          related_to: Related to
+          search: Search
+          state: State
+          type: Type
+          voted: Voted
+        filters_small_view:
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          unfold: Unfold
+        index:
+          collaborative_drafts_list: Access collaborative drafts
+          new_question: New question
+          see_all_withdrawn: See all withdrawn questions
+          view_question: View question
+        linked_questions:
+          question_votes:
+            one: vote
+            other: votes
+        new:
+          send: Continue
+          title: Create Your Question
+        orders:
+          label: label
+          most_voted: most voted
+          random: random
+          recent: recent
+        participatory_texts:
+          index:
+            document_index: Document index
+          view_index:
+            see_index: See index
+        preview:
+          modify: Modify the question
+          publish: Publish
+          question_edit_before_minutes:
+            one: You will be able to edit this question during the first minute after
+              the question is published. Once this time window passes, you will not
+              be able to edit the question.
+            other: You will be able to edit this question during the first %{count}
+              minutes after the question is published. Once this time window passes,
+              you will not be able to edit the question.
+          title: Publish your question
+        question:
+          creation_date: 'Creation: %{date}'
+          view_question: View question
+        show:
+          back_to: Back to
+          edit_question: Edit question
+          endorsements_list: List of Endorsements
+          hidden_endorsers_count: "%{count} hidden endorsers"
+          link_to_collaborative_draft_help_text: This question is the result of a
+            collaborative draft. Review the history
+          link_to_collaborative_draft_text: See the collaborative draft
+          question_accepted_reason: 'This question has been accepted because:'
+          question_in_evaluation_reason: This question is being evaluated
+          question_rejected_reason: 'This question has been rejected because:'
+        tags:
+          changed_from: "(changed from <u>%{previous_category}</u> by an administrator)"
+          filed_as: Filed as
+        vote_button:
+          already_voted: Already voted
+          already_voted_hover: Unvote
+          maximum_votes_reached: Vote limit reached
+          no_votes_remaining: No votes remaining
+          vote: Vote
+          votes_blocked: Voting disabled
+        votes_count:
+          count:
+            one: vote
+            other: votes
+          most_popular_question: Most popular question
+          need_more_votes: Need more votes
+        voting_rules:
+          can_accumulate_supports_beyond_threshold:
+            description: Each question can accumulate more than %{limit} supports
+          minimum_votes_per_user:
+            description: You must distribute a minimum of %{votes} votes among different
+              questions.
+            given_enough_votes: You've given enough supports.
+            supports_remaining: You have to vote %{remaining_votes} more questions
+              for your votes to be taken into account.
+          question_limit:
+            description: You can create up to %{limit} questions.
+          threshold_per_question:
+            description: In order to be validated questions need to reach %{limit}
+              supports
+          title: 'Voting is subject to the following rules:'
+          vote_limit:
+            description: You can vote up to %{limit} questions.
+            left: Remaining
+            votes: Votes
+        wizard_aside:
+          back: Back
+          info: You are creating a <strong>question</strong>.
+        wizard_steps:
+          see_steps: see steps
+          step_1: Create your question
+          step_2: Compare
+          step_3: Complete
+          step_4: Publish your question
+          step_of: Step %{current_step_num} of %{total_steps}
+      update:
+        error: There's been errors when saving the question.
+        success: Question updated successfully.
+      update_draft:
+        error: There's been errors when saving the question draft.
+        success: Question draft updated successfully.
+      versions:
+        changes_at_title: Changes at "%{title}"
+        index:
+          title: Versions
+        stats:
+          back_to_collaborative_draft: Go back to collaborative draft
+          back_to_question: Go back to question
+          number_of_versions: Versions
+          show_all_versions: Show all versions
+          version_author: Version author
+          version_created_at: Version created at
+          version_number: Version number
+          version_number_out_of_total: "%{current_version} out of %{total_count}"
+        version:
+          version_index: Version %{index}
+    questions_mailer:
+      note:
+        created: A new private note has been created
+      note_created:
+        hello: Hello %{name}
+        question_note_body: 'Question note content : %{question_note_body}'
+        question_note_link: See note
+        question_title: 'A new question note has been created : %{question_title}'
+    scopes:
+      global: Global
+    shared:
+      upstream_moderation:
+        pending_info: Pending info

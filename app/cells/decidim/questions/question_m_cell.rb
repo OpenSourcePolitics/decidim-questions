@@ -15,7 +15,11 @@ module Decidim
       private
 
       def title
-        present(model).title
+        if %w(evaluating accepted).include?(model.state)
+          model.short_ref + ' • ' + present(model).title
+        else
+          present(model).title
+        end
       end
 
       def body
@@ -40,7 +44,9 @@ module Decidim
       end
 
       def description
-        truncate(present(model).body, length: 100)
+        html = present(model).body
+        safe = strip_tags(html)
+        truncate(safe, length: 100)
       end
 
       def badge_classes

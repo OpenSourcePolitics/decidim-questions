@@ -5,6 +5,7 @@ module Decidim
     module Admin
       # A command with all the business logic when an admin answers a question.
       class AnswerQuestion < Rectify::Command
+        include ReferenceMethods
         # Public: Initializes the command.
         #
         # form - A form object with the params.
@@ -23,7 +24,9 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          manage_custom_reference
           answer_question
+          notify_committee
           notify_followers
           increment_score
 
@@ -35,7 +38,7 @@ module Decidim
         attr_reader :form, :question
 
         def answer_question
-          return answer_question_temporary if can_manage_process?(role: :service)
+          return answer_question_temporary if !form.current_user.admin && participatory_processes_with_role_privileges(:service).present?
           answer_question_permanently
         end
 
@@ -44,6 +47,24 @@ module Decidim
             state: 'pending',
             answer: @form.answer
           )
+        end
+
+        def notify_committee
+          return unless question.state == 'pending'
+
+          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee ).pluck(:decidim_user_id)
+          recipients += Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :admin ).pluck(:decidim_user_id)
+          recipients += form.current_organization.admins.pluck(:id)
+
+          unless recipients.empty?
+            Decidim::EventsManager.publish(
+              event: 'decidim.events.questions.validate_question',
+              event_class: Decidim::Questions::Admin::ValidateQuestionEvent,
+              resource: question,
+              affected_users: Decidim::User.where(id: recipients).to_a
+            )
+          end
+
         end
 
         def answer_question_permanently
@@ -55,7 +76,8 @@ module Decidim
             question.update!(
               state: @form.state,
               answer: @form.answer,
-              answered_at: Time.current
+              answered_at: Time.current,
+              published_at: published_at
             )
           end
         end
@@ -103,18 +125,19 @@ module Decidim
           end
         end
 
-        # Whether the user can manage the given process or not.
-        def can_manage_process?(role: :any)
-          return unless form.current_user
-          return true if form.current_user.admin?
-
-          participatory_processes_with_role_privileges(role).include? form.current_participatory_space
-        end
-
         # Returns a collection of Participatory processes where the given user has the
         # specific role privilege.
         def participatory_processes_with_role_privileges(role)
           Decidim::ParticipatoryProcessesWithUserRole.for(form.current_user, role)
+        end
+
+        # Update the publish date when evaluating or accepted
+        def published_at
+          if question.state != form.state && %w(accepted).include?(form.state)
+            Time.current
+          else
+            question.published_at
+          end
         end
       end
     end

@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim", branch: "0.16-stable"
+gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim", branch: "0.16-upstream_moderation"
 gem "decidim-questions", path: "."
 
 gem "bootsnap", "~> 1.3"
@@ -19,7 +19,7 @@ gem "faker", "~> 1.9"
 group :development, :test do
   gem "byebug", "~> 10.0", platform: :mri
 
-  gem "decidim-dev", git: "https://github.com/OpenSourcePolitics/decidim", branch: "0.16-stable"
+  gem "decidim-dev", git: "https://github.com/OpenSourcePolitics/decidim", branch: "0.16-upstream_moderation"
 end
 
 group :development do

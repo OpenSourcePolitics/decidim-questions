@@ -1,0 +1,615 @@
+---
+es-MX:
+  activerecord:
+    models:
+      decidim/questions/collaborative_draft: collaborative draft
+  decidim:
+    admin:
+      actions:
+        cancel: Cancel
+        configure: Configure
+        duplicate: Duplicate
+        filter: Filter
+        new_process: New process
+        preview: Preview
+      impersonatable_users:
+        index:
+          search: Search
+      menu:
+        participatory_processes_submenu:
+          attachment_collections: Attachment collections
+          attachment_files: Attachment files
+          attachments: Attachments
+          categories: Categories
+          components: Components
+          info: Info
+          moderations: Moderations
+          private_users: Private users
+          process_admins: Process admins
+          steps: Steps
+          upstream_moderations: Upstream moderations
+      models:
+        participatory_process:
+          fields:
+            created_at: Created at
+            private: Private
+            promoted: Promoted
+            published: Published
+            title: Title
+      participatory_processes:
+        index:
+          not_published: Not published
+          private: Private
+          public: Public
+          published: Published
+      titles:
+        participatory_processes: Participatory processes
+    components:
+      questions:
+        actions:
+          endorse: endorse
+          vote: vote
+        name: Propuestas
+        settings:
+          global:
+            amendments_enabled: amendments enabled
+            announcement: announcement
+            attachments_allowed: attachments allowed
+            can_accumulate_supports_beyond_threshold: can accumulate supports beyond
+              threshold
+            collaborative_drafts_enabled: collaborative drafts enabled
+            comments_enabled: comments enabled
+            geocoding_enabled: geocoding enabled
+            minimum_votes_per_user: minimum votes per user
+            new_question_help_text: new question help_text
+            official_questions_enabled: official questions enabled
+            participatory_texts_enabled: participatory texts enabled
+            question_answering_enabled: question answering enabled
+            question_answering_roles_enabled: question answering roles enabled
+            question_edit_before_minutes: question edit before minutes
+            question_length: question length
+            question_limit: question limit
+            question_wizard_step_1_help_text: question wizard step 1 help text
+            question_wizard_step_2_help_text: question wizard step 2 help text
+            question_wizard_step_3_help_text: question wizard step 3 help text
+            question_wizard_step_4_help_text: question wizard step 4 help text
+            resources_permissions_enabled: resources permissions enabled
+            threshold_per_question: threshold per question
+            upstream_moderation: upstream moderation
+            vote_limit: vote limit
+          step:
+            announcement: announcement
+            automatic_hashtags: automatic hashtags
+            comments_blocked: comments blocked
+            creation_enabled: creation enabled
+            endorsements_blocked: endorsements blocked
+            endorsements_enabled: endorsements enabled
+            question_answering_enabled: question answering enabled
+            suggested_hashtags: suggested hashtags
+            votes_blocked: votes blocked
+            votes_enabled: votes enabled
+            votes_hidden: votes hidden
+    datetime:
+      timeago: Timeago
+    participatory_processes:
+      participatory_process_groups:
+        highlighted_questions:
+          questions: Propuestas
+    participatory_spaces:
+      highlighted_questions:
+        see_all: Ver todo (%{count})
+    questions:
+      actions:
+        answer: Respuesta
+        edit_question: Editar propuesta
+        import: Importar desde otro componente
+        new: Nueva propuesta
+        participatory_texts: Textos participativos
+        private_discussions: Private discussions
+        title: Acciones
+      admin:
+        actions:
+          preview: Previsualizar
+        exports:
+          comments: comments
+          questions: questions
+        models:
+          question:
+            name: Propuesta
+        participatory_texts:
+          bulk-actions:
+            are_you_sure: "¿Estás seguro de descartar todo el borrador del texto participativo?"
+            discard_all: Descartar todo
+            import_doc: Importar documento
+          discard:
+            success: Todos los borradores de textos participativos han sido descartados.
+          import:
+            invalid: "¡El formulario no es válido!"
+            success: Enhorabuena, los párrafos y secciones del documento importado
+              se han convertido correctamente en propuestas. Ahora puedes revisarlas
+              y ajustar las que necesites antes de publicar.
+          index:
+            info_1: Los párrafos y secciones del documento importado se han convertido
+              correctamente en propuestas. Ahora puedes revisarlas y ajustar las que
+              necesites antes de publicar.
+            publish_document: Publicar documento
+            save_draft: Guardar borrador
+            title: PREVISUALIZAR TEXTO PARTICIPATIVO
+          new_import:
+            bottom_hint: "(Podrás previsualizar y ordenar las secciones del documento)"
+            document_legend: 'Añade un documento de menos de 2MB, cada sección hasta
+              3 niveles de profundidad se convertirá en una propuesta. Los formatos
+              admitidos son: Markdown'
+            title: AÑADIR DOCUMENTO
+            upload_document: Subir documento
+          publish:
+            invalid: No se pudieron publicar las propuestas
+            success: Todas las propuestas han sido publicadas
+          update:
+            success: Texto participativo actualizado con éxito.
+        question_answers:
+          edit:
+            accepted: Aceptada
+            answer_question: Respuesta
+            cancel: Cancel
+            rejected: Rechazada
+            title: Responder a la propuesta %{title}
+        question_notes:
+          create:
+            error: Ha habido un problema al crear esta nota de propuesta
+            success: Nota de propuesta creada con éxito
+          form:
+            note: Nota
+            submit: Enviar
+          index:
+            answer_title: Answer
+            answered_at: Last edited
+          leave_your_note: Deja tu nota
+          title: Notas privadas
+        questions:
+          answer:
+            invalid: Ha habido un problema al responder a esta propuesta
+            success: Propuesta respondida con éxito
+          create:
+            invalid: Ha habido un problema al crear esta propuesta
+            success: Propuesta creada correctamente
+          edit:
+            cancel: Cancel
+            content: Content
+            status: Status
+            title: Actualizar propuesta
+            update: Actualizar
+          form:
+            accepted: Accepted
+            all: All
+            attachment_legend: "(Opcional) Añadir un archivo adjunto"
+            committee: Committee
+            evaluating: Evaluating
+            none: None
+            recipient: Recipient
+            rejected: Rejected
+            select_a_category: Selecciona una categoría
+            service: Service
+          index:
+            actions: Acciones
+            cancel: Cancelar
+            change_category: Cambiar categoría
+            merge: Fusionar en una nueva
+            merge_button: Fusionar
+            move: Move questions
+            move_button: Move
+            selected: seleccionado
+            split: Propuestas divididas
+            split_button: Dividir
+            title: Propuestas
+            update: Actualizar
+          new:
+            content: Content
+            create: Crear
+            status: Status
+            title: Crear propuesta
+          update_category:
+            invalid: 'Estas propuestas ya tenían la categoría %{category} : %{questions}.'
+            select_a_category: Por favor selecciona una categoría
+            select_a_question: Por favor selecciona una propuesta
+            success: 'Propuestas actualizadas correctamente en la categoría %{category}:
+              %{questions}.'
+        questions_imports:
+          create:
+            invalid: Ha habido un problema al importar las propuestas
+            success: "%{number} propuestas importadas correctamente"
+          new:
+            create: Importar propuestas
+            no_components: No hay otros componentes propuesta en este espacio participativo
+              desde el que importar.
+            select_component: Por favor selecciona un componente
+            select_states: Verifica los estados de las propuestas para importar
+        questions_merges:
+          create:
+            invalid: Se produjo un error al fusionar las propuestas seleccionadas.
+            success: Las propuestas se fusionaron en una nueva con éxito.
+        questions_moves:
+          create:
+            invalid: Invalid
+            success: Success
+        questions_splits:
+          create:
+            invalid: Hubo un error dividiendo las propuestas seleccionadas.
+            success: Las propuestas se han dividido en otras nuevas con éxito.
+        shared:
+          info_question:
+            created_at: Fecha de creación
+            info_question_bottom:
+              created_at: Created at
+              published_at: Published at
+              question_votes_count: Question votes count
+            info_question_bottom_full:
+              created_at: Created at
+              published_at: Published at
+              question_votes_count: Question votes count
+            info_question_top:
+              new_question: New question
+              questions: Questions
+            published_at: Published at
+      answers:
+        accepted: accepted
+        evaluating: evaluating
+        not_answered: Not answered
+        rejected: rejected
+      application_helper:
+        filter_origin_values:
+          all: Todos
+          citizens: Ciudadanía
+          meetings: Encuentros
+          official: Oficial
+          user_groups: Grupos de Usuarios
+        filter_state_values:
+          accepted: Aceptado
+          all: Todos
+          evaluating: En evaluación
+          except_rejected: Todas excepto las rechazadas
+          rejected: Rechazado
+        filter_type_values:
+          all: Todos
+          amendments: Enmiendas
+          questions: Propuestas
+      collaborative_drafts:
+        collaborative_draft:
+          publish:
+            error: Ha habido errores al publicar el borrador colaborativo.
+            irreversible_action_modal:
+              body: Después de publicar el borrador como una propuesta, dejará de
+                ser editable. La propuesta no aceptará nuevos autores o contribuciones.
+              cancel: Cancelar
+              ok: Publicar como una propuesta
+              title: La siguiente acción es irreversible
+            success: Borrador de colaborativo publicado con éxito como una propuesta.
+          view_collaborative_draft: Ver borrador colaborativo
+          withdraw:
+            error: Ha habido errores al cerrar el borrador colaborativo.
+            irreversible_action_modal:
+              body: Después de cerrar el borrador, dejara de ser editable. El borrador
+                no aceptará nuevos autores o contribuciones.
+              cancel: Cancelar
+              ok: Retirar el borrador colaborativo
+              title: La siguiente acción es irreversible
+            success: Borrador colaborativo retirado con éxito.
+        compare:
+          mine_is_different: Mi borrador colaborativo es diferente
+          no_similars_found: "¡Enhorabuena! No se encontraron borradores colaborativos
+            similares"
+          title: Borradores colaborativos similares
+        complete:
+          send: Enviar
+          title: Completa tu borrador colaborativo
+        count:
+          drafts_count:
+            one: "%{count} borrador colaborativo"
+            other: "%{count} borrador colaborativo"
+        create:
+          error: Ha habido un problema al crear este borradores colaborativo
+          success: Borrador colaborativo creado con éxito.
+        edit:
+          attachment_legend: "(Opcional) Añadir un archivo adjunto"
+          back: Volver
+          select_a_category: Por favor seleccione una categoría
+          send: Enviar
+          title: Editar borrador colaborativo
+        filters:
+          all: all
+          category: Categoría
+          category_prompt: Aviso de categoría
+          open: open
+          published: published
+          related_to: Relacionado con
+          search: Buscar
+          state: Estado
+          withdrawn: withdrawn
+        filters_small_view:
+          close_modal: Cerrar modal
+          filter: Filtrar
+          filter_by: Filtrado por
+          unfold: Desplegar
+        new:
+          send: Continuar
+          title: Crea tu borrador colaborativo
+        new_collaborative_draft_button:
+          new_collaborative_draft: Nuevo borrador colaborativo
+        orders:
+          label: label
+          most_contributed: most_contributed
+          random: random
+          recent: recent
+        requests:
+          accepted_request:
+            error: No se pudo aceptar como contribuidor. Inténtalo de nuevo más tarde.
+            success: "@%{user} ha sido aceptado como contribuidor con éxito"
+          access_requested:
+            error: Tu solicitud no pudo ser completada, intenta de nuevo más tarde.
+            success: Tu solicitud para colaborar ha sido enviada con éxito
+          collaboration_requests:
+            accept_request: Aceptar
+            reject_request: Rechazar
+            title: Solicitudes de contribuciones
+          rejected_request:
+            error: No se pudo rechazar como colaborador, inténtalo de nuevo más tarde.
+            success: "@%{user} ha sido rechazado como contribuidor con éxito"
+        show:
+          back: Volver
+          edit: Editar borrador colaborativo
+          final_question: propuesta final
+          final_question_help_text: Este borrador está terminado. Puedes ver la propuesta
+            final terminada
+          info-message: Este es un <strong>borrador colaborativo</strong> para una
+            propuesta. Esto significa que puede ayudar a sus autores a dar forma a
+            la propuesta usando la sección de comentarios que se encuentra debajo
+            o mejorarla directamente solicitando acceso para editarla. Una vez que
+            los autores le otorguen acceso, podrá realizar cambios en este borrador.
+          of_versions: "(de %{number})"
+          publish_info: Publicar esta versión del borrador o
+          published_question: propuesta publicada
+          request_access: Solicitar acceso
+          requested_access: Acceso solicitado
+          see_other_versions: ver otras versiones
+          version: Versión %{number}
+          version_history: ver el historial de versiones de esta propuesta
+        states:
+          open: Abierto
+          published: Publicado
+          withdrawn: Retirado
+        update:
+          error: Ha habido errores al guardar el borrador colaborativo.
+          success: Borrador colaborativo actualizado con éxito.
+        wizard_aside:
+          back: Volver
+          info: Estás creando un borrador colaborativo <strong></strong>.
+        wizard_steps:
+          see_steps: ver las fases
+          step_1: Crea tu borrador colaborativo
+          step_2: Comparar con borradores colaborativos
+          step_3: Completa tu borrador colaborativo
+          step_of: Paso %{current_step_num} de %{total_steps}
+      create:
+        error: Ha habido errores al guardar la propuesta.
+        success: Propuesta creada con éxito. Guardada como borrador.
+      destroy_draft:
+        error: Se han producido errores al eliminar el borrador de la propuesta.
+        success: El borrador de la propuesta fue eliminado con éxito.
+      last_activity:
+        new_question_at_html: "<span>Nueva propuesta en %{link}</span>"
+      models:
+        collaborative_draft:
+          fields:
+            authors: Autores
+            comments: Comentarios
+            contributions: Contribuciones
+        question:
+          fields:
+            category: Categoría
+            comments: Comentarios
+            created_at: Created on
+            endorsements: Adhesiones
+            official_question: Propuesta oficial
+            published_at: Publicado el
+            scope: Ámbito
+            short_ref: N°
+            state: Estado
+            title: Título
+            votes: Apoyos
+      new:
+        limit_reached: No puedes crear nuevas propuestas ya que has superado el límite.
+      participatory_text_question:
+        alternative_title: No hay textos participativos por el momento
+        buttons:
+          amend: Enmendar
+          comment: Comentario
+          comments: Comentarios
+          endorse: Adherirse
+      publish:
+        error: Ha habido errores al publicar la propuesta.
+        success: Propuesta publicada con éxito.
+      question_endorsements:
+        create:
+          error: Ha habido errores al adherirse a la propuesta.
+        identities:
+          done: Hecho
+          select_identity: Seleccionar identidad
+      question_endorsements_helper:
+        endorsement_button:
+          already_endorsed: Adherido/a
+          endorse: Adherirse
+        render_endorsements_button_card_part:
+          endorse: Adherirse
+      question_votes:
+        create:
+          error: Ha habido errores al apoyar la propuesta.
+      questions:
+        compare:
+          mine_is_different: Mi propuesta es diferente
+          no_similars_found: "¡Bien hecho! No se encontraron propuestas similares"
+          title: Propuestas similares
+        complete:
+          send: Enviar
+          title: Completa tu propuesta
+        count:
+          questions_count:
+            one: "%{count} propuesta"
+            other: "%{count} propuestas"
+        edit:
+          attachment_legend: "(Opcional) Agregar un archivo adjunto"
+          back: Atrás
+          select_a_category: Por favor, selecciona una categoría
+          send: Enviar
+          title: Editar propuesta
+        edit_draft:
+          discard: Descartar este borrador
+          discard_confirmation: "¿Estás seguro que quieres descartar este borrador
+            de propuesta?"
+          send: Previsualizar
+          title: Editar el borrador de la propuesta
+        endorsement_identities_cabin:
+          endorse: Adherirse
+        endorsements_card_row:
+          comments: Comentarios
+        filters:
+          activity: Actividad
+          amendment_type: Tipo
+          category: Categoría
+          category_prompt: Selecciona una categoría
+          origin: Origen
+          related_to: Relacionadas con
+          search: Buscar
+          state: Estado
+          type: Type
+          voted: Apoyadas
+        filters_small_view:
+          close_modal: Cerrar ventana
+          filter: Filtrar
+          filter_by: Filtrar por
+          unfold: Desplegar
+        index:
+          collaborative_drafts_list: Acceder a borradores colaborativos
+          new_question: Nueva propuesta
+          see_all_withdrawn: Ver todas las propuestas retiradas
+          view_question: Ver propuesta
+        linked_questions:
+          question_votes:
+            one: dar apoyo
+            other: apoyos
+        new:
+          send: Continuar
+          title: Crea tu propuesta
+        orders:
+          label: label
+          most_voted: most voted
+          random: random
+          recent: recent
+        participatory_texts:
+          index:
+            document_index: Índice del documento
+          view_index:
+            see_index: Ver índice
+        preview:
+          modify: Modificar la propuesta
+          publish: Publicar
+          question_edit_before_minutes:
+            one: Podrás editar esta propuesta durante el primer minuto posterior a
+              la publicación de la misma. Una vez que pase este tiempo, ya no podrás
+              editarla.
+            other: Podrás editar esta propuesta durante los primeros %{count} minutos
+              después que se publique. Una vez que pase este tiempo, no podrás editar
+              la propuesta.
+          title: Publica tu propuesta
+        question:
+          creation_date: 'Fecha de creación: %{date}'
+          view_question: Ver propuesta
+        show:
+          back_to: Volver a
+          edit_question: Editar propuesta
+          endorsements_list: Lista de adhesiones
+          hidden_endorsers_count: "%{count} hidden endorsers"
+          link_to_collaborative_draft_help_text: Esta propuesta es el resultado de
+            un borrador colaborativo. Revisa el historial
+          link_to_collaborative_draft_text: Ver el borrador colaborativo
+          question_accepted_reason: 'Esta propuesta ha sido aceptada porque:'
+          question_in_evaluation_reason: Esta propuesta está siendo evaluada
+          question_rejected_reason: 'Esta propuesta ha sido rechazada porque:'
+        tags:
+          changed_from: "(cambiado desde <u>%{previous_category}</u> por un administrador)"
+          filed_as: Archivado como
+        vote_button:
+          already_voted: Ya has dado tu apoyo
+          already_voted_hover: Retirar tu apoyo
+          maximum_votes_reached: Límite de apoyos alcanzado
+          no_votes_remaining: No hay votos restantes
+          vote: Dar apoyo
+          votes_blocked: Apoyos desactivados
+        votes_count:
+          count:
+            one: vote
+            other: votes
+          most_popular_question: Propuestas más populares
+          need_more_votes: Necesita más apoyos
+        voting_rules:
+          can_accumulate_supports_beyond_threshold:
+            description: Cada propuesta puede acumular más de %{limit} apoyos
+          minimum_votes_per_user:
+            description: Debes distribuir un mínimo de %{votes} apoyos entre las diferentes
+              propuestas.
+            given_enough_votes: Has dado suficientes apoyos.
+            supports_remaining: Tienes que apoyar %{remaining_votes} propuestas más
+              para que tus apoyos se tengan en cuenta.
+          question_limit:
+            description: Puedes crear hasta %{limit} propuestas.
+          threshold_per_question:
+            description: Para ser validadas, las propuestas deben llegar a un cuórum
+              nínimo de %{limit} apoyos
+          title: 'La recogida de apoyos se rige por las siguientes normas:'
+          vote_limit:
+            description: Puedes apoyar hasta %{limit} propuestas.
+            left: Restante
+            votes: Apoyos
+        wizard_aside:
+          back: Volver
+          info: Estás creando una <strong>propuesta</strong>.
+        wizard_steps:
+          see_steps: ver los pasos
+          step_1: Crear tu propuesta
+          step_2: Comparar
+          step_3: Completar
+          step_4: Publicar tu propuesta
+          step_of: Paso %{current_step_num} de %{total_steps}
+      update:
+        error: Ha habido errores al guardar la propuesta.
+        success: Propuesta actualizada con éxito.
+      update_draft:
+        error: Ha habido errores al guardar el borrador de la propuesta.
+        success: Borrador de propuesta actualizado con éxito.
+      versions:
+        changes_at_title: Cambios en "%{title}"
+        index:
+          title: Versiones
+        stats:
+          back_to_collaborative_draft: Volver al borrador colaborativo
+          back_to_question: Volver a propuesta
+          number_of_versions: Versiones
+          show_all_versions: Mostrar todas las versiones
+          version_author: Autor de la versión
+          version_created_at: Versión creada en
+          version_number: Número de versión
+          version_number_out_of_total: "%{current_version} de %{total_count}"
+        version:
+          version_index: Versión %{index}
+    questions_mailer:
+      note:
+        created: A new private note has been created
+      note_created:
+        hello: Hello %{name}
+        question_note_body: 'Question note content : %{question_note_body}'
+        question_note_link: See note
+        question_title: 'A new question note has been created : %{question_title}'
+    scopes:
+      global: Global
+    shared:
+      upstream_moderation:
+        pending_info: Pending info

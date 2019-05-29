@@ -5,7 +5,6 @@ module Decidim
     module Admin
       class Permissions < Decidim::ParticipatoryProcesses::Permissions
         def permissions
-
           Rails.logger.debug "==========="
           Rails.logger.debug "Decidim::Questions::Admin::Permissions"
           Rails.logger.debug permission_action.inspect
@@ -15,6 +14,7 @@ module Decidim
           return permission_action if permission_action.scope != :admin
 
           has_access? if permission_action.subject == :component && permission_action.action == :read
+          has_access? if permission_action.subject == :question && permission_action.action == :read
 
           if create_permission_action?
             # There's no special condition to create question notes, only
@@ -28,10 +28,11 @@ module Decidim
             toggle_allow(admin_question_answering_is_enabled?) if permission_action.subject == :question_answer
           end
 
-          if user.admin?
+          if user.admin? || process_admin?
             # Admins can only edit official questions if they are within the
             # time limit.
             allow! if permission_action.subject == :question && permission_action.action == :edit
+            allow! if permission_action.subject == :questions && permission_action.action == :move
             # Every user allowed by the space can update the category of the question
             allow! if permission_action.subject == :question_category && permission_action.action == :update
             # Every user allowed by the space can import questions from another_component
@@ -41,15 +42,17 @@ module Decidim
             # Every user allowed by the space can split questions to another component
             allow! if permission_action.subject == :questions && permission_action.action == :split
             if permission_action.subject == :participatory_texts && participatory_texts_are_enabled?
-              # Every user allowed by the space can import participatory texts to questions
-              allow! if permission_action.action == :import
-              # Every user allowed by the space can publish participatory texts to questions
-              allow! if permission_action.action == :publish
+              # Every user allowed by the space can manage (import, update and publish) participatory texts to questions
+              allow! if permission_action.action == :manage
             end
           end
 
           committee_action?
           service_action?
+
+          moderator_action?
+          collaborator_action?
+          process_admin_action?
 
           Rails.logger.debug permission_action.inspect
           Rails.logger.debug "==========="
@@ -59,9 +62,36 @@ module Decidim
 
         private
 
+        def process_admin_action?
+          return unless can_manage_question?(role: :admin)
+
+          allow! if permission_action.subject == :component && permission_action.action == :read
+          allow! if permission_action.subject == :question && permission_action.action == :edit
+          question_actions
+        end
+
+        # A moderator needs to be able to read the question component they are assigned to,
+        # and needs to perform all actions for the moderations of the question component.
+        def moderator_action?
+          return unless can_manage_question?(role: :moderator)
+
+          allow! if permission_action.subject == :moderation
+        end
+
+        # Collaborators can read/preview everything inside their question component.
+        def collaborator_action?
+          return unless can_manage_question?(role: :collaborator)
+
+          allow! if permission_action.action == :read || permission_action.action == :preview
+        end
+
+        def process_admin?
+          can_manage_question?(role: :admin)
+        end
+
         def committee_action?
           return unless can_manage_question?(role: :committee)
-
+          allow! if permission_action.subject == :moderation
           allow! if permission_action.subject == :question && permission_action.action == :edit
           question_actions
         end

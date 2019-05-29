@@ -16,6 +16,13 @@ module Decidim
         expect(question.official?).to be true
       end
 
+      def question_should_conform(section_level, title, body)
+        question = Decidim::Questions::Question.where(component: component).last
+        expect(question.participatory_text_level).to eq(Decidim::Questions::ParticipatoryTextSection::LEVELS[section_level])
+        expect(question.title).to eq(title)
+        expect(question.body).to eq(body)
+      end
+
       let!(:component) { create(:question_component) }
       let(:parser) { MarkdownToQuestions.new(component, create(:user)) }
       let(:items) { [] }
@@ -79,7 +86,6 @@ module Decidim
 
           question = Question.last
           # question titled with its numbering (position)
-          # the paragraph ans question's body
           expect(question.title).to eq("1")
           expect(question.body).to eq(paragraph)
           expect(question.position).to eq(1)
@@ -88,15 +94,85 @@ module Decidim
         end
       end
 
-      describe "images" do
-        let(:image) { "![Important image for Decidim](https://meta.decidim.org/assets/decidim/decidim-logo-1f39092fb3e41d23936dc8aeadd054e2119807dccf3c395de88637e4187f0a3f.svg)" }
+      describe "links are parsed" do
+        let(:text_w_link) { %[This text links to [Meta Decidim](https://meta.decidim.org "Community's meeting point").] }
+
+        before do
+          items << "#{text_w_link}\n"
+        end
+
+        it "contains the link as an html anchor" do
+          should_parse_and_produce_questions(1)
+
+          question = Question.last
+          # question titled with its numbering (position)
+          # the paragraph and question's body
+          expect(question.title).to eq("1")
+          paragraph = %q(This text links to <a href="https://meta.decidim.org" title="Community's meeting point">Meta Decidim</a>.)
+          expect(question.body).to eq(paragraph)
+          expect(question.position).to eq(1)
+          expect(question.participatory_text_level).to eq(ParticipatoryTextSection::LEVELS[:article])
+          should_have_expected_states(question)
+        end
+      end
+
+      describe "images are parsed" do
+        let(:image) { %{Text with ![Important image for Decidim](https://meta.decidim.org/assets/decidim/decidim-logo-1f39092fb3e41d23936dc8aeadd054e2119807dccf3c395de88637e4187f0a3f.svg "Img title").} }
 
         before do
           items << "#{image}\n"
         end
 
-        it "are ignored" do
-          should_parse_and_produce_questions(0)
+        it "contains the image as an html img tag" do
+          should_parse_and_produce_questions(1)
+
+          question = Question.last
+          expect(question.title).to eq("1")
+          paragraph = 'Text with <img src="https://meta.decidim.org/assets/decidim/decidim-logo-1f39092fb3e41d23936dc8aeadd054e2119807dccf3c395de88637e4187f0a3f.svg" alt="Important image for Decidim" title="Img title"/>.'
+          expect(question.body).to eq(paragraph)
+          expect(question.position).to eq(1)
+          expect(question.participatory_text_level).to eq(ParticipatoryTextSection::LEVELS[:article])
+          should_have_expected_states(question)
+        end
+      end
+
+      describe "lists as a whole" do
+        context "when unordered" do
+          let(:list) do
+            <<~EOLIST
+              - one
+              - two
+              - three
+            EOLIST
+          end
+
+          before do
+            items << "#{list}\n"
+          end
+
+          it "are articles" do
+            should_parse_and_produce_questions(1)
+            question_should_conform(:article, "1", list)
+          end
+        end
+
+        context "when ordered" do
+          let(:list) do
+            <<~EOLIST
+              1. one
+              2. two
+              3. three
+            EOLIST
+          end
+
+          before do
+            items << "#{list}\n"
+          end
+
+          it "are articles" do
+            should_parse_and_produce_questions(1)
+            question_should_conform(:article, "1", list)
+          end
         end
       end
     end

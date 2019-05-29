@@ -4,6 +4,7 @@ module Decidim
   module Questions
     # The data store for a Question in the Decidim::Questions component.
     class Question < Questions::ApplicationRecord
+      include Decidim::UpstreamReportable
       include Decidim::Resourceable
       include Decidim::Coauthorable
       include Decidim::HasComponent
@@ -23,15 +24,15 @@ module Decidim
       include Decidim::Questions::ParticipatoryTextSection
       include Decidim::Amendable
 
-      fingerprint fields: %i[title body]
+      fingerprint fields: [:title, :body]
 
       # Add a version on question only if the following fields are modified.
-      VERSIONED_ATTRIBUTES = %i[title body category].freeze
+      VERSIONED_ATTRIBUTES = [:title, :body, :category]
 
       amendable(
-          fields: %i[title body],
-          ignore: %i[published_at reference state answered_at answer],
-          form: 'Decidim::Questions::QuestionForm'
+        fields: [:title, :body],
+        ignore: [:published_at, :reference, :state, :answered_at, :answer],
+        form: 'Decidim::Questions::QuestionForm'
       )
 
       component_manifest_name 'questions'
@@ -59,6 +60,7 @@ module Decidim
       scope :except_withdrawn, -> { where.not(state: 'withdrawn').or(where(state: nil)) }
       scope :drafts, -> { where(published_at: nil) }
       scope :published, -> { where.not(published_at: nil) }
+      scope :state_visible, -> { where.not(state: nil) }
 
       acts_as_list scope: :decidim_component_id
 
@@ -91,6 +93,11 @@ module Decidim
         joins(:coauthorships)
             .where('decidim_coauthorships.coauthorable_type = ?', name)
             .where('decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ', author.id, author.class.base_class.name)
+      end
+
+      def self.upstream_not_hidden_for(user_role)
+        upstream_not_hidden unless %w(admin committee).include?(user_role)
+        all
       end
 
       # Public: Updates the vote count of this question.
@@ -238,6 +245,19 @@ module Decidim
         Arel.sql(query)
       end
 
+      ransacker :is_emendation do |_parent|
+        query = <<-SQL
+        (
+          SELECT EXISTS (
+            SELECT 1 FROM decidim_amendments
+            WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Questions::Question'
+            AND decidim_amendments.decidim_emendation_id = decidim_questions_proposals.id
+          )
+        )
+        SQL
+        Arel.sql(query)
+      end
+
       def self.export_serializer
         Decidim::Questions::QuestionSerializer
       end
@@ -258,10 +278,28 @@ module Decidim
         Time.current < limit
       end
 
+      def short_ref
+        reference.split('-').last
+      end
+
       private
 
       def copied_from_other_component?
         linked_resources(:questions, 'copied_from_component').any?
+      end
+
+      def participatory_space_moderators
+        @participatory_space_moderators ||= get_participatory_space_moderators
+      end
+
+      def get_participatory_space_moderators
+        organization_admins = participatory_space.organization.admins.pluck(:id)
+        process_users = Decidim::ParticipatoryProcessUserRole
+            .where(participatory_process: participatory_space)
+            .where(role: [:admin, :moderator, :committee])
+            .pluck(:decidim_user_id)
+            .uniq
+        Decidim::User.where(id: organization_admins + process_users)
       end
     end
   end

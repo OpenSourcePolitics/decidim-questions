@@ -28,6 +28,9 @@ module Decidim
         Decidim::Questions::Question
           .where(component: @components)
           .published
+          .state_visible
+          .not_hidden
+          .upstream_not_hidden
           .where(
             "GREATEST(#{title_similarity}, #{body_similarity}) >= ?",
             @question.title,

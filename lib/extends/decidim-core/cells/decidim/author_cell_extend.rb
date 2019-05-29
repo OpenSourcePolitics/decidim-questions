@@ -5,7 +5,7 @@ module Decidim
       def creation_date?
         return true if posts_controller?
         return unless from_context
-        return unless proposals_controller? || collaborative_drafts_controller? || questions_controller?
+        return unless proposals_controller? || collaborative_drafts_controller?
         return unless show_action?
         true
       end

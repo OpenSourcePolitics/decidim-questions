@@ -21,6 +21,7 @@ Decidim.register_component(:questions) do |component|
   component.permissions_class_name = "Decidim::Questions::Permissions"
 
   component.settings(:global) do |settings|
+    settings.attribute :upstream_moderation, type: :boolean, default: false
     settings.attribute :vote_limit, type: :integer, default: 0
     settings.attribute :minimum_votes_per_user, type: :integer, default: 0
     settings.attribute :question_limit, type: :integer, default: 0
@@ -74,7 +75,7 @@ Decidim.register_component(:questions) do |component|
   end
 
   component.register_stat :questions_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.except_withdrawn.not_hidden.count
+    Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.state_visible.except_withdrawn.not_hidden.upstream_not_hidden.count
   end
 
   component.register_stat :questions_accepted, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
@@ -82,17 +83,17 @@ Decidim.register_component(:questions) do |component|
   end
 
   component.register_stat :votes_count, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.state_visible.not_hidden.upstream_not_hidden
     Decidim::Questions::QuestionVote.where(question: questions).count
   end
 
   component.register_stat :endorsements_count, priority: Decidim::StatsRegistry::MEDIUM_PRIORITY do |components, start_at, end_at|
-    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).not_hidden
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).not_hidden.upstream_not_hidden
     Decidim::Questions::QuestionEndorsement.where(question: questions).count
   end
 
   component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden
+    questions = Decidim::Questions::FilteredQuestions.for(components, start_at, end_at).published.not_hidden.upstream_not_hidden
     Decidim::Comments::Comment.where(root_commentable: questions).count
   end
 
@@ -160,6 +161,35 @@ Decidim.register_component(:questions) do |component|
     else
       scopes = participatory_space.organization.scopes
       global = nil
+    end
+
+    email = "committee-user-#{participatory_space.underscored_name}-#{participatory_space.id}@example.org"
+    name = "#{Faker::Name.name} #{participatory_space.id} committee"
+
+    if participatory_space.is_a?(Decidim::ParticipatoryProcess)
+      committee_user = Decidim::User.find_or_initialize_by(email: email)
+      committee_user.update!(
+        password: "decidim123456",
+        password_confirmation: "decidim123456",
+        name: name,
+        nickname: Faker::Twitter.unique.screen_name,
+        organization: component.organization,
+        tos_agreement: "1",
+        confirmed_at: Time.current
+      )
+      Decidim::ParticipatoryProcessUserRole.create!(role: "committee", participatory_process: participatory_space, user: committee_user)
+
+      service_user = Decidim::User.find_or_initialize_by(email: email)
+      service_user.update!(
+        password: "decidim123456",
+        password_confirmation: "decidim123456",
+        name: name,
+        nickname: Faker::Twitter.unique.screen_name,
+        organization: component.organization,
+        tos_agreement: "1",
+        confirmed_at: Time.current
+      )
+      Decidim::ParticipatoryProcessUserRole.create!(role: "service", participatory_process: participatory_space, user: service_user)
     end
 
     5.times do |n|

@@ -28,8 +28,8 @@ module Decidim
               modifs << Decidim::Questions::Admin::QuestionForm.new(
                 id: question.id,
                 position: new_positions.shift,
-                title: ::Faker::Lovecraft.fhtagn,
-                body: ::Faker::Lovecraft.fhtagn(5)
+                title: ::Faker::Books::Lovecraft.fhtagn,
+                body: ::Faker::Books::Lovecraft.fhtagn(5)
               )
             end
             modifs

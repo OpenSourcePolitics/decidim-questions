@@ -23,13 +23,15 @@ module Decidim
         attribute :suggested_hashtags, Array[String]
         attribute :state, String
         attribute :recipient, String
+        attribute :committee_users_ids, Array[Integer]
+        attribute :service_users_ids, Array[Integer]
 
         translatable_attribute :answer, String
 
         validates :answer, translatable_presence: true, if: ->(form) { form.state == "rejected" }
         validates :state, presence: true, inclusion: { in: %w(accepted evaluating rejected) }
         validates :recipient, presence: true, inclusion: { in: %w(service committee none) }
-        validates :title, :body, presence: true, etiquette: true
+        validates :title, :body, presence: true
         validates :title, length: { maximum: 150 }
         validates :address, geocoding: true, if: -> { current_component.settings.geocoding_enabled? }
         validates :category, presence: true, if: ->(form) { form.category_id.present? }
@@ -42,10 +44,25 @@ module Decidim
         delegate :categories, to: :current_component
 
         def map_model(model)
-          return unless model.categorization
+          if context.blank?
+            @context = {
+              current_organization: model.organization,
+              current_participatory_space: model.participatory_space,
+              current_component: model.component
+            }
+          end
 
-          self.category_id = model.categorization.decidim_category_id
+          self.category_id = model.categorization.try(:decidim_category_id)
           self.scope_id = model.decidim_scope_id
+          self.state = 'evaluating' if model.try(:state).blank?
+
+          if model.recipient == "committee"
+            self.committee_users_ids = model.recipient_ids
+          elsif model.recipient == "service"
+            self.service_users_ids = model.recipient_ids
+          elsif model.recipient.blank? && state == 'evaluating'
+            self.recipient = 'none'
+          end
 
           @suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
         end
@@ -111,7 +128,47 @@ module Decidim
           @component_suggested_hashtags ||= ordered_hashtag_list(current_component.current_settings.suggested_hashtags)
         end
 
+        def available_committee_users
+          @available_committee_users ||= available_users_for("committee")
+        end
+
+        def available_service_users
+          @available_service_users ||= available_users_for("service")
+        end
+
+        def committee_users_ids
+          fetch_users(@committee_users_ids, available_committee_users)
+        end
+
+        def service_users_ids
+          fetch_users(@service_users_ids, available_service_users)
+        end
+
+        def recipient_ids
+          return committee_users_ids if recipient == "committee"
+          return service_users_ids if recipient == "service"
+
+          []
+        end
+
         private
+
+        def available_users_for(role)
+          return [] unless current_participatory_space.present?
+
+          Decidim::ParticipatoryProcessUserRole
+            .includes(:user)
+            .where(participatory_process: current_participatory_space)
+            .where(role: role).map(&:user)
+        end
+
+        def fetch_users(ids, collection)
+          return [] if ids.blank?
+          return collection.map(&:id) if ids.include?("all")
+
+          ids = ids.compact.map(&:to_i)
+          collection.select { |user| ids.include?(user.id) }.map(&:id)
+        end
 
         def scope_belongs_to_participatory_space_scope
           errors.add(:scope_id, :invalid) if current_participatory_space.out_of_scope?(scope)

@@ -15,17 +15,20 @@ module Decidim
           collection do
             resource :questions_import, only: [:new, :create]
             resource :questions_merge, only: [:create]
+            resource :questions_move, only: [:create]
             resource :questions_split, only: [:create]
           end
           resources :question_answers, only: [:edit, :update]
           resources :question_notes, only: [:index, :create]
         end
         scope "/question_components/:component_id" do
-          resources :participatory_texts, only: :index do
+          resources :participatory_texts, only: [:index] do
             collection do
               get :new_import
               post :import
-              post :publish
+              patch :import
+              post :update
+              post :discard
             end
           end
         end

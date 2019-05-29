@@ -28,6 +28,9 @@ module Decidim
         Question
           .where(component: component)
           .published
+          .state_visible
+          .not_hidden
+          .upstream_not_hidden
       end
     end
   end

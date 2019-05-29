@@ -4,6 +4,15 @@
   url: question_url(@question.id)
 }) %>
 
+<%
+edit_link(
+  resource_locator(@question).edit,
+  :edit,
+  :question,
+  question: @question
+)
+%>
+
 <%= render partial: "voting_rules" %>
 <% if component_settings.participatory_texts_enabled? %>
   <div class="row column">
@@ -13,10 +22,22 @@
   </div>
 <% end %>
 <%= emendation_announcement_for @question %>
-<div class="row column view-header">
-  <h2 class="heading2"><%= present(@question).title(links: true) %></h2>
+<div class="row column">
+  <h2 class="heading2">
+    <% if %w(evaluating accepted).include?(@question.state) %>
+      <%= @question.short_ref + ' • ' %>
+    <% end %>
+    <%= present(@question).title(links: true) %>
+  </h2>
   <% unless component_settings.participatory_texts_enabled? %>
     <%= cell("decidim/coauthorships", @question, has_actions: true, size: 3, context: { current_user: current_user }) %>
+  <% end %>
+</div>
+<div class="row column">
+  <strong><%= t "created_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.created_at, format: :decidim_short %>
+  <% if %w(accepted).include?(@question.state) %>
+    &emsp;
+    <strong><%= t "published_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.published_at, format: :decidim_short %>
   <% end %>
 </div>
 <div class="row">
@@ -73,7 +94,14 @@
   </div>
   <div class="columns mediumlarge-8 mediumlarge-pull-4">
     <div class="section">
+      <% if component_settings.upstream_moderation && @question.upstream_pending? %>
+        <div class="callout warning">
+          <%= t("decidim.shared.upstream_moderation.pending_info") %>
+        </div>
+      <% end %>
+      <br>
       <%== cell("decidim/questions/question_m", @question, full_badge: true).badge %>
+      <br>
       <% unless @question.participatory_text_level == "section" || @question.participatory_text_level == "subsection" %>
         <%= simple_format present(@question).body(links: true) %>
       <% end %>

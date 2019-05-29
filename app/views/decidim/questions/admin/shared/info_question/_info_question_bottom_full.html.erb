@@ -5,7 +5,9 @@
   <div class="row column">
     <div class="body-wrapper">
       <%= icon "double-quote-serif-right" %>
-      <% if question.versions.where.not(object: nil).empty? %>
+      <% if component_settings.upstream_moderation %>
+        <%= present(question).body %>
+      <% elsif question.versions.where.not(object: nil).empty? %>
         <%= present(question).body %>
       <% else %>
         <%= present(question.versions.where.not(object: nil).first.reify).body %>
@@ -16,8 +18,16 @@
 
 <div class="card-section">
   <div class="row column">
+    <strong><%= question.short_ref %></strong>
+  </div>
+  <div class="row column">
     <strong><%= t ".created_at" %>: </strong> <%= l question.created_at, format: :decidim_short %>
   </div>
+  <% if %w(accepted).include?(question.state) %>
+    <div class="row column">
+      <strong><%= t ".published_at" %>: </strong> <%= l question.published_at, format: :decidim_short %>
+    </div>
+  <% end %>
   <div class="row column">
     <strong><%= t ".question_votes_count" %>: </strong> <%= question.question_votes_count %>
   </div>
