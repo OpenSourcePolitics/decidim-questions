@@ -28,6 +28,10 @@ fr:
           steps: Étapes
           upstream_moderations: Modération a priori
       models:
+        participatory_process_user_role:
+          roles:
+            service: service
+            committee: committee
         participatory_process:
           fields:
             created_at: Créé à
