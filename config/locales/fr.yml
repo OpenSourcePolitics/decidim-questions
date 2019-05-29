@@ -1,19 +1,19 @@
 fr:
   activerecord:
     models:
-      decidim/questions/collaborative_draft: collaborative draft
+      decidim/questions/collaborative_draft: propositions collaboratives
   decidim:
     admin:
       actions:
-        cancel: Cancel
+        cancel: Annuler
         configure: Configurer
         duplicate: Dupliquer
-        filter: Filter
+        filter: Filtrer
         new_process: Nouveau processus participatif
         preview: Aperçu
       impersonatable_users:
         index:
-          search: Search
+          search: Rechercher
       menu:
         participatory_processes_submenu:
           attachment_collections: Collection de pièces jointes
@@ -26,7 +26,7 @@ fr:
           private_users: Utilisateurs privés
           process_admins: Administrateurs de processus
           steps: Étapes
-          upstream_moderations: Upstream moderations
+          upstream_moderations: Modération a priori
       models:
         participatory_process:
           fields:
@@ -46,47 +46,47 @@ fr:
     components:
       questions:
         actions:
-          endorse: endorse
+          endorse: soutenir
           vote: vote
         name: Questions
         settings:
           global:
-            amendments_enabled: amendments enabled
-            announcement: announcement
-            attachments_allowed: attachments allowed
-            can_accumulate_supports_beyond_threshold: can accumulate supports beyond threshold
-            collaborative_drafts_enabled: collaborative drafts enabled
-            comments_enabled: comments enabled
-            geocoding_enabled: geocoding enabled
-            minimum_votes_per_user: minimum votes per user
-            new_question_help_text: new question help_text
-            official_questions_enabled: official questions enabled
-            participatory_texts_enabled: participatory texts enabled
-            question_answering_enabled: question answering enabled
-            question_answering_roles_enabled: question answering roles enabled
-            question_edit_before_minutes: question edit before minutes
-            question_length: question length
-            question_limit: question limit
-            question_wizard_step_1_help_text: question wizard step 1 help text
-            question_wizard_step_2_help_text: question wizard step 2 help text
-            question_wizard_step_3_help_text: question wizard step 3 help text
-            question_wizard_step_4_help_text: question wizard step 4 help text
-            resources_permissions_enabled: resources permissions enabled
-            threshold_per_question: threshold per question
-            upstream_moderation: upstream moderation
-            vote_limit: vote limit
+            amendments_enabled: activer le module "Amendements"
+            announcement: message d'annonce
+            attachments_allowed: pièces jointes autorisées
+            can_accumulate_supports_beyond_threshold: peut accumuler des supports au-delà du seuil
+            collaborative_drafts_enabled: activer le module de Questions collaboratives
+            comments_enabled: activer le module de commentaire
+            geocoding_enabled: activer la "Géolocalisation"
+            minimum_votes_per_user: nombre minimum de votes par utilisateur
+            new_question_help_text: texte d'aide à la création d'une nouvelle question
+            official_questions_enabled: autoriser la création de questions officielles
+            participatory_texts_enabled: textes participatifs activés
+            question_answering_enabled: autoriser la réponse officielle aux questions
+            question_answering_roles_enabled: autoriser la réponse officielle aux questions
+            question_edit_before_minutes: délai pour modifier la question
+            question_length: longueur de la question
+            question_limit: limite de question
+            question_wizard_step_1_help_text: texte d'aide à l'étape "Créer" de la création de question
+            question_wizard_step_2_help_text: texte d'aide à l'étape "Comparer" de la création de question
+            question_wizard_step_3_help_text: texte d'aide à l'étape "Compléter" de la création de question
+            question_wizard_step_4_help_text: texte d'aide à l'étape "Publier" de la création de question
+            resources_permissions_enabled: autorisations de ressources activées
+            threshold_per_question: seuil par question
+            upstream_moderation: modération a priori
+            vote_limit: Limite de vote
           step:
-            announcement: announcement
-            automatic_hashtags: automatic hashtags
-            comments_blocked: comments blocked
-            creation_enabled: creation enabled
-            endorsements_blocked: endorsements blocked
-            endorsements_enabled: endorsements enabled
-            question_answering_enabled: question answering enabled
-            suggested_hashtags: suggested hashtags
-            votes_blocked: votes blocked
-            votes_enabled: votes enabled
-            votes_hidden: votes hidden
+            announcement: message d'annonce
+            automatic_hashtags: hashtags automatiques
+            comments_blocked: bloquer la création de nouveaux commentaires
+            creation_enabled: création activée
+            endorsements_blocked: bloquer les soutiens
+            endorsements_enabled: activer le module de "Soutien"
+            question_answering_enabled: autoriser la réponse officielle aux questions
+            suggested_hashtags: suggestions de hashtags
+            votes_blocked: votes bloqués
+            votes_enabled: votes activés
+            votes_hidden: votes masqués
     datetime:
       timeago: "il y a %{time}"
     participatory_processes:
@@ -109,25 +109,25 @@ fr:
         actions:
           preview: Aperçu
         exports:
-          comments: comments
+          comments: Commentaires
           questions: questions
         models:
           question:
             name: Question
         participatory_texts:
           bulk-actions:
-            are_you_sure: Are you sure to discard the whole participatory text draft?
-            discard_all: Discard all
+            are_you_sure: Êtes-vous sûr de vouloir rejeter l'ensemble du texte participatif?
+            discard_all: Tout supprimer
             import_doc: Importer un document
           discard:
-            success: All Participatory text drafts have been discarded.
+            success: Tous les projets de texte participatif ont été rejetés.
           import:
             invalid: Le formulaire est invalide !
             success: Félicitations, les sections suivantes ont été analysées à partir du document importé, elles ont été converties en questions. Maintenant, vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de publier.
           index:
             info_1: Les sections suivantes ont été analysées à partir du document importé et ont été converties en questions. Maintenant, vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de publier.
             publish_document: Publier le document
-            save_draft: Save draft
+            save_draft: Enregistrer le brouillon
             title: APERÇU DU TEXTE PARTICIPATIF
           new_import:
             bottom_hint: "(Vous pourrez prévisualiser et trier les sections de document)"
@@ -138,7 +138,7 @@ fr:
             invalid: Impossible de publier des questions
             success: Toutes les questions ont été publiées
           update:
-            success: Participatory text updated successfully.
+            success: Texte participatif mis à jour avec succès.
         question_answers:
           edit:
             accepted: Reçue
@@ -154,8 +154,8 @@ fr:
             note: Note
             submit: Soumettre
           index:
-            answer_title: Answer
-            answered_at: Last edited
+            answer_title: Réponse
+            answered_at: Dernière édition
           leave_your_note: Laisser une note
           title: Notes privées
         questions:
@@ -173,7 +173,7 @@ fr:
             update: Mettre à jour
           form:
             accepted: Reçue
-            all: All
+            all: Tout
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             committee: Comité de pilotage
             evaluating: A traiter
@@ -183,13 +183,13 @@ fr:
             select_a_category: Sélectionner une catégorie
             service: Service
           index:
-            actions: Actions
+            actions: Titre
             cancel: Annuler
             change_category: Changer de catégorie
             merge: Fusionner dans un nouveau
             merge_button: Fusionner
-            move: Move questions
-            move_button: Move
+            move: Déplacer Question
+            move_button: Déplacer
             selected: choisi
             split: Questions fractionnées
             split_button: Fractionner
@@ -220,32 +220,32 @@ fr:
             success: Fusion des questions dans une seule réussie.
         questions_moves:
           create:
-            invalid: Invalid
-            success: Success
+            invalid: Invalide
+            success: Couleur de succès
         questions_splits:
           create:
             invalid: Une erreur s'est produite lors de la fraction des questions sélectionnées.
             success: Fraction des questions réussie.
         shared:
           info_question:
-            created_at: Created at
+            created_at: Créée le
             info_question_bottom:
               created_at: Créé à
-              published_at: Published at
+              published_at: Publiée à
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               created_at: Créé à
-              published_at: Published at
+              published_at: Publiée à
               question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
               questions: Les questions
-            published_at: Published at
+            published_at: Publiée à
       answers:
-        accepted: accepted
-        evaluating: evaluating
+        accepted: accepté
+        evaluating: en cours d'évaluation
         not_answered: A traiter
-        rejected: rejected
+        rejected: refusée
       application_helper:
         filter_origin_values:
           all: Toutes
@@ -303,15 +303,15 @@ fr:
           send: Envoyer
           title: Modifier la question collaborative
         filters:
-          all: all
+          all: tout
           category: Catégorie
           category_prompt: Catégories
-          open: open
-          published: published
+          open: ouverte
+          published: publiée
           related_to: Liée à
           search: Chercher
           state: État
-          withdrawn: withdrawn
+          withdrawn: retirée
         filters_small_view:
           close_modal: Fermer la fenêtre
           filter: Filtre
@@ -323,10 +323,10 @@ fr:
         new_collaborative_draft_button:
           new_collaborative_draft: Nouvelle question collaborative
         orders:
-          label: label
-          most_contributed: most_contributed
-          random: random
-          recent: recent
+          label: étiquette
+          most_contributed: plus de_contributions
+          random: aléatoire
+          recent: récent
         requests:
           accepted_request:
             error: Votre demande de collaboration n'a pas pu aboutir, veuillez réessayer plus tard.
@@ -389,10 +389,10 @@ fr:
           fields:
             category: Catégorie
             comments: Commentaires
-            created_at: Created on
+            created_at: Créé le
             endorsements: Soutiens
             official_question: Question officielle
-            published_at: Published
+            published_at: Publiée
             scope: Secteur
             short_ref: N°
             state: État
@@ -481,10 +481,10 @@ fr:
           send: Continuer
           title: Poser une question
         orders:
-          label: label
-          most_voted: most voted
-          random: random
-          recent: recent
+          label: Libellé
+          most_voted: les plus votées
+          random: aléatoire
+          recent: récent
         participatory_texts:
           index:
             document_index: Index du document
@@ -504,7 +504,7 @@ fr:
           back_to: Retour à
           edit_question: Modifier la question
           endorsements_list: Liste des soutiens
-          hidden_endorsers_count: "%{count} hidden endorsers"
+          hidden_endorsers_count: "%{count} soutiens cachés"
           link_to_collaborative_draft_help_text: Cette question est le résultat d'une collaboration. Voir l'historique
           link_to_collaborative_draft_text: Voir la question collaborative
           question_accepted_reason: 'Cette question a reçu une réponse car :'
@@ -523,7 +523,7 @@ fr:
         votes_count:
           count:
             one: vote
-            other: votes
+            other: vote
           most_popular_question: Question la plus populaire
           need_more_votes: Besoin de plus de votes
         voting_rules:
@@ -575,14 +575,14 @@ fr:
           version_index: Version %{index}
     questions_mailer:
       note:
-        created: A new private note has been created
+        created: Une nouvelle note de question a été créée
       note_created:
-        hello: Hello %{name}
-        question_note_body: 'Question note content : %{question_note_body}'
-        question_note_link: See note
-        question_title: 'A new question note has been created : %{question_title}'
+        hello: Bonjour %{name}
+        question_note_body: 'Contenu de la note de question : %{question_note_body}'
+        question_note_link: Voir note
+        question_title: 'Une nouvelle note de question a été créée : %{question_title}'
     scopes:
       global: Global
     shared:
       upstream_moderation:
-        pending_info: Pending info
+        pending_info: Info en attente
