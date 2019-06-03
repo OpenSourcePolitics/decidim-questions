@@ -16,19 +16,8 @@ module Decidim
           has_access? if permission_action.subject == :component && permission_action.action == :read
           has_access? if permission_action.subject == :question && permission_action.action == :read
 
-          if create_permission_action?
-            # There's no special condition to create question notes, only
-            # users with access to the admin section can do it.
-            allow! if permission_action.subject == :question_note
-            # Questions can only be created from the admin when the
-            # corresponding setting is enabled.
-            toggle_allow(admin_creation_is_enabled?) if permission_action.subject == :question #
-            # Questions can only be answered from the admin when the
-            # corresponding setting is enabled.
-            toggle_allow(admin_question_answering_is_enabled?) if permission_action.subject == :question_answer
-          end
-
           if user.admin? || process_admin?
+            create_actions
             # Admins can only edit official questions if they are within the
             # time limit.
             allow! if permission_action.subject == :question && permission_action.action == :edit
@@ -62,6 +51,32 @@ module Decidim
 
         private
 
+        def create_actions
+          if create_permission_action?
+            create_note
+            create_question
+            create_question_answer
+          end
+        end
+
+        def create_note
+          # There's no special condition to create question notes, only
+          # users with access to the admin section can do it.
+          allow! if permission_action.subject == :question_note
+        end
+
+        def create_question
+          # Questions can only be created from the admin when the
+          # corresponding setting is enabled.
+          toggle_allow(admin_creation_is_enabled?) if permission_action.subject == :question
+        end
+
+        def create_question_answer
+          # Questions can only be answered from the admin when the
+          # corresponding setting is enabled.
+          toggle_allow(admin_question_answering_is_enabled?) if permission_action.subject == :question_answer
+        end
+
         def process_admin_action?
           return unless can_manage_question?(role: :admin)
 
@@ -75,6 +90,7 @@ module Decidim
         def moderator_action?
           return unless can_manage_question?(role: :moderator)
 
+          create_actions
           allow! if permission_action.subject == :moderation
         end
 
@@ -82,21 +98,30 @@ module Decidim
         def collaborator_action?
           return unless can_manage_question?(role: :collaborator)
 
+          create_actions
           allow! if permission_action.action == :read || permission_action.action == :preview
         end
 
         def process_admin?
           can_manage_question?(role: :admin)
+
+          create_actions
         end
 
         def committee_action?
           return unless can_manage_question?(role: :committee)
+
+          disallow! if permission_action.subject == :question && permission_action.action == :create
+          create_note
+          create_question_answer
           question_actions
         end
 
         def service_action?
           return unless can_manage_question?(role: :service)
 
+          create_note
+          create_question_answer
           question_actions
         end
 
