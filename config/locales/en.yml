@@ -2,7 +2,21 @@
 en:
   activerecord:
     models:
-      decidim/questions/collaborative_draft: collaborative draft
+      decidim/questions/collaborative_draft:
+        one: Collaborative draft
+        other: Collaborative drafts
+      decidim/questions/proposal:
+        one: Question
+        other: Questions
+      decidim/proposals/proposal_endorsement:
+        one: Endorsement
+        other: Endorsements
+      decidim/proposals/proposal_note:
+        one: Note
+        other: Notes
+      decidim/proposals/proposal_vote:
+        one: Vote
+        other: Votes
   decidim:
     admin:
       actions:
@@ -42,6 +56,10 @@ en:
           private: Private
           public: Public
           published: Published
+        participatory_process_user_role:
+          roles:
+            committee: Committee
+            service: Service
       titles:
         participatory_processes: Participatory processes
     components:
@@ -250,6 +268,13 @@ en:
               new_question: New question
               questions: Questions
             published_at: Published at
+      admin_log:
+        question:
+          answer: "%{user_name} answered the %{resource_name} question on the %{space_name} space"
+          create: "%{user_name} created the %{resource_name} question on the %{space_name} space as an official question"
+          update: "%{user_name} updated the %{resource_name} official question on the %{space_name} space"
+        question_note:
+          create:
       answers:
         accepted: accepted
         evaluating: evaluating

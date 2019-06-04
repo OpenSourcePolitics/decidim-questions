@@ -1,19 +1,34 @@
+---
 fr:
   activerecord:
     models:
-      decidim/questions/collaborative_draft: collaborative draft
+      decidim/questions/collaborative_draft:
+        one: Brouillon partagé
+        other: Brouillons partagés
+      decidim/questions/proposal:
+        one: Question
+        other: Questions
+      decidim/proposals/proposal_endorsement:
+        one: Soutien
+        other: Soutiens
+      decidim/proposals/proposal_note:
+        one: Note
+        other: Notes
+      decidim/proposals/proposal_vote:
+        one: Vote
+        other: Votes
   decidim:
     admin:
       actions:
-        cancel: Cancel
+        cancel: Annuler
         configure: Configurer
         duplicate: Dupliquer
-        filter: Filter
+        filter: Filtrer
         new_process: Nouveau processus participatif
         preview: Aperçu
       impersonatable_users:
         index:
-          search: Search
+          search: Rechercher
       menu:
         participatory_processes_submenu:
           attachment_collections: Collection de pièces jointes
@@ -26,7 +41,7 @@ fr:
           private_users: Utilisateurs privés
           process_admins: Administrateurs de processus
           steps: Étapes
-          upstream_moderations: Upstream moderations
+          upstream_moderations: Modération à priori
       models:
         participatory_process:
           fields:
@@ -35,6 +50,10 @@ fr:
             promoted: Promu
             published: Publié
             title: Titre
+        participatory_process_user_role:
+          roles:
+            committee: Comité de pilotage
+            service: Service
       participatory_processes:
         index:
           not_published: Non publié
@@ -46,7 +65,7 @@ fr:
     components:
       questions:
         actions:
-          endorse: endorse
+          endorse: soutenir
           vote: vote
         name: Questions
         settings:
@@ -116,29 +135,36 @@ fr:
             name: Question
         participatory_texts:
           bulk-actions:
-            are_you_sure: Are you sure to discard the whole participatory text draft?
-            discard_all: Discard all
+            are_you_sure: Etes-vous sûr de supprimer le brouillon du texte participatif?
+            discard_all: Tout supprimer
             import_doc: Importer un document
           discard:
-            success: All Participatory text drafts have been discarded.
+            success: Tous les brouillons de texte participatifs ont été rejetés.
           import:
             invalid: Le formulaire est invalide !
-            success: Félicitations, les sections suivantes ont été analysées à partir du document importé, elles ont été converties en questions. Maintenant, vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de publier.
+            success: Félicitations, les sections suivantes ont été analysées à partir
+              du document importé, elles ont été converties en questions. Maintenant,
+              vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de
+              publier.
           index:
-            info_1: Les sections suivantes ont été analysées à partir du document importé et ont été converties en questions. Maintenant, vous pouvez revoir et ajuster tout ce dont vous avez besoin avant de publier.
+            info_1: Les sections suivantes ont été analysées à partir du document
+              importé et ont été converties en questions. Maintenant, vous pouvez
+              revoir et ajuster tout ce dont vous avez besoin avant de publier.
             publish_document: Publier le document
-            save_draft: Save draft
+            save_draft: Enregistrer le brouillon
             title: APERÇU DU TEXTE PARTICIPATIF
           new_import:
             bottom_hint: "(Vous pourrez prévisualiser et trier les sections de document)"
-            document_legend: 'Ajoutez un document inférieur à 2 Mo. Chaque section jusqu’à 3 niveaux sera analysée dans Questions. Les formats supportés sont: Markdown'
+            document_legend: 'Ajoutez un document inférieur à 2 Mo. Chaque section
+              jusqu’à 3 niveaux sera analysée dans Questions. Les formats supportés
+              sont: Markdown'
             title: AJOUTER UN DOCUMENT
             upload_document: Télécharger le document
           publish:
             invalid: Impossible de publier des questions
             success: Toutes les questions ont été publiées
           update:
-            success: Participatory text updated successfully.
+            success: Texte participatif mis à jour avec succès.
         question_answers:
           edit:
             accepted: Reçue
@@ -154,8 +180,8 @@ fr:
             note: Note
             submit: Soumettre
           index:
-            answer_title: Answer
-            answered_at: Last edited
+            answer_title: Réponse
+            answered_at: Dernière édition le
           leave_your_note: Laisser une note
           title: Notes privées
         questions:
@@ -172,7 +198,7 @@ fr:
             title: Mise à jour de la question
             update: Mettre à jour
           form:
-            accepted: Reçue
+            accepted: Retenue
             all: All
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
             committee: Comité de pilotage
@@ -188,8 +214,8 @@ fr:
             change_category: Changer de catégorie
             merge: Fusionner dans un nouveau
             merge_button: Fusionner
-            move: Move questions
-            move_button: Move
+            move: Déplacer la ressource
+            move_button: Déplacer
             selected: choisi
             split: Questions fractionnées
             split_button: Fractionner
@@ -204,14 +230,16 @@ fr:
             invalid: 'Ces questions avaient déjà la catégorie %{category} : %{questions}.'
             select_a_category: Veuillez sélectionner une catégorie
             select_a_question: Veuillez sélectionner une question
-            success: 'Les questions ont bien été mises à jour dans la catégorie %{category} : %{questions}.'
+            success: 'Les questions ont bien été mises à jour dans la catégorie %{category}
+              : %{questions}.'
         questions_imports:
           create:
             invalid: Un problème est survenu lors de l'importation des questions
             success: "%{number} questions importées avec succès"
           new:
             create: Importer des questions
-            no_components: Il n'y a pas d'autre fonctionnalité de question dans cet espace participatif dans laquelle importer.
+            no_components: Il n'y a pas d'autre fonctionnalité de question dans cet
+              espace participatif dans laquelle importer.
             select_component: Veuillez sélectionner une fonctionnalité
             select_states: Vérifiez le statut des questions à importer
         questions_merges:
@@ -220,47 +248,55 @@ fr:
             success: Fusion des questions dans une seule réussie.
         questions_moves:
           create:
-            invalid: Invalid
-            success: Success
+            invalid: Une erreur s'est produite lors du déplacement des ressources
+              sélectionnées.
+            success: Déplacement des ressources réussie
         questions_splits:
           create:
             invalid: Une erreur s'est produite lors de la fraction des questions sélectionnées.
             success: Fraction des questions réussie.
         shared:
           info_question:
-            created_at: Created at
+            created_at: Date de création
             info_question_bottom:
-              created_at: Créé à
-              published_at: Published at
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
-              created_at: Créé à
-              published_at: Published at
+              created_at: Date de soumission
+              published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
               questions: Les questions
-            published_at: Published at
+            published_at: Date de publication
+      admin_log:
+        question:
+          answer: "%{user_name} a répondu à la question %{resource_name} dans l'espace %{space_name}"
+          create: "%{user_name} a créé la question %{resource_name} dans l'espace %{space_name} en tant que question officielle"
+          update: "%{user_name} mis à jour la question officielle %{resource_name} dans l'espace %{space_name}"
+        question_note:
+          create
       answers:
         accepted: accepted
         evaluating: evaluating
-        not_answered: A traiter
+        not_answered: Not answered
         rejected: rejected
       application_helper:
         filter_origin_values:
           all: Toutes
           citizens: Questions citoyennes
-          meetings: Des réunions
+          meetings: Elaborées en réunion publique
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Réponse publiée
+          accepted: Acceptées
           all: Toutes
           evaluating: En attente de réponse
-          except_rejected: Toutes sauf les questions non recevables
-          rejected: Non recevable
+          except_rejected: Toutes sauf les questions rejetées
+          rejected: Rejetées
         filter_type_values:
-          all: Toutes
+          all: Tous
           amendments: Amendements
           questions: Les questions
       collaborative_drafts:
@@ -268,7 +304,9 @@ fr:
           publish:
             error: Il y a eu des erreurs lors de la publication du brouillon collaboratif.
             irreversible_action_modal:
-              body: Après avoir publié le brouillon en tant que question, il ne sera plus modifiable. La question n'acceptera pas de nouveaux auteurs ou contributions.
+              body: Après avoir publié le brouillon en tant que question, il ne sera
+                plus modifiable. La question n'acceptera pas de nouveaux auteurs ou
+                contributions.
               cancel: Annuler
               ok: Publier en tant que question
               title: L'action suivante est irréversible
@@ -277,14 +315,16 @@ fr:
           withdraw:
             error: Il y a eu des erreurs en fermant la question collaborative.
             irreversible_action_modal:
-              body: Après avoir fermé le brouillon, il ne sera plus modifiable. La question n'acceptera pas de nouveaux auteurs ou contributions.
+              body: Après avoir fermé le brouillon, il ne sera plus modifiable. La
+                question n'acceptera pas de nouveaux auteurs ou contributions.
               cancel: Annuler
               ok: Retirer la question collaborative
               title: L'action suivante est irréversible
             success: La question collaborative a bien été retirée.
         compare:
           mine_is_different: Ma question collaborative est différente
-          no_similars_found: Bien joué ! Aucune question collaborative similaire n'a été trouvée
+          no_similars_found: Bien joué ! Aucune question collaborative similaire n'a
+            été trouvée
           title: Questions collaboratives similaires
         complete:
           send: Envoyer
@@ -329,7 +369,8 @@ fr:
           recent: recent
         requests:
           accepted_request:
-            error: Votre demande de collaboration n'a pas pu aboutir, veuillez réessayer plus tard.
+            error: Votre demande de collaboration n'a pas pu aboutir, veuillez réessayer
+              plus tard.
             success: "@%{user} a été accepté comme collaborateur avec succès"
           access_requested:
             error: Votre demande n'a pas pu être complétée, réessayez plus tard.
@@ -345,8 +386,13 @@ fr:
           back: Retour
           edit: Modifier la question collaborative
           final_question: question finale
-          final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la question qui en est issue
-          info-message: Ceci est un <strong>brouillon collaboratif</strong> pour une question. Cela signifie que vous pouvez aider leurs auteurs à façonner la question en utilisant la section commentaire ci-dessous ou l'améliorer directement en demandant l'accès pour la modifier. Une fois que les auteurs vous accordent l'accès, vous pourrez apporter des modifications à ce brouillon.
+          final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la
+            question qui en est issue
+          info-message: Ceci est un <strong>brouillon collaboratif</strong> pour une
+            question. Cela signifie que vous pouvez aider leurs auteurs à façonner
+            la question en utilisant la section commentaire ci-dessous ou l'améliorer
+            directement en demandant l'accès pour la modifier. Une fois que les auteurs
+            vous accordent l'accès, vous pourrez apporter des modifications à ce brouillon.
           of_versions: "(de %{number})"
           publish_info: Publiez cette version du brouillon ou
           published_question: question publiée
@@ -375,7 +421,8 @@ fr:
         error: Il y a eu des erreurs lors de la sauvegarde de la question.
         success: Question créée avec succès. Enregistrée comme brouillon.
       destroy_draft:
-        error: Des erreurs sont survenues lors de la suppression du brouillon de la question.
+        error: Des erreurs sont survenues lors de la suppression du brouillon de la
+          question.
         success: Le brouillon de la question a bien été supprimé.
       last_activity:
         new_question_at_html: "<span>Nouvelle question à %{link}</span>"
@@ -389,17 +436,18 @@ fr:
           fields:
             category: Catégorie
             comments: Commentaires
-            created_at: Created on
+            created_at: Soumise le
             endorsements: Soutiens
             official_question: Question officielle
-            published_at: Published
+            published_at: Publiée
             scope: Secteur
             short_ref: N°
             state: État
             title: Titre
             votes: Votes
       new:
-        limit_reached: Vous ne pouvez pas créer de nouvelles questions car vous avez dépassé le nombre autorisé.
+        limit_reached: Vous ne pouvez pas créer de nouvelles questions car vous avez
+          dépassé le nombre autorisé.
       participatory_text_question:
         alternative_title: Il n'y a pas de textes participatifs pour le moment
         buttons:
@@ -445,7 +493,8 @@ fr:
           title: Modifier la question
         edit_draft:
           discard: Supprimer ce brouillon
-          discard_confirmation: Êtes-vous sûr de vouloir supprimer le brouillon de votre question ?
+          discard_confirmation: Êtes-vous sûr de vouloir supprimer le brouillon de
+            votre question ?
           send: Aperçu
           title: Modifier le brouillon de votre question
         endorsement_identities_cabin:
@@ -494,8 +543,12 @@ fr:
           modify: Modifier la question
           publish: Publier
           question_edit_before_minutes:
-            one: Vous avez la possibilité de modifier cette question dans la première minute suivant sa publication. Une fois ce laps de temps écoulé, vous ne pourrez plus la modifier.
-            other: Vous avez la possibilité de modifier cette question dans les %{count} minutes suivant sa publication. Une fois ce laps de temps écoulé, vous ne pourrez plus la modifier.
+            one: Vous avez la possibilité de modifier cette question dans la première
+              minute suivant sa publication. Une fois ce laps de temps écoulé, vous
+              ne pourrez plus la modifier.
+            other: Vous avez la possibilité de modifier cette question dans les %{count}
+              minutes suivant sa publication. Une fois ce laps de temps écoulé, vous
+              ne pourrez plus la modifier.
           title: Publier la question
         question:
           creation_date: 'Création : %{date}'
@@ -505,11 +558,13 @@ fr:
           edit_question: Modifier la question
           endorsements_list: Liste des soutiens
           hidden_endorsers_count: "%{count} hidden endorsers"
-          link_to_collaborative_draft_help_text: Cette question est le résultat d'une collaboration. Voir l'historique
+          link_to_collaborative_draft_help_text: Cette question est le résultat d'une
+            collaboration. Voir l'historique
           link_to_collaborative_draft_text: Voir la question collaborative
           question_accepted_reason: 'Cette question a reçu une réponse car :'
           question_in_evaluation_reason: Cette question est en cours de traitement
-          question_rejected_reason: 'Cette question est considérée comme non recevable car :'
+          question_rejected_reason: 'Cette question est considérée comme non recevable
+            car :'
         tags:
           changed_from: "(modifié depuis <u>%{previous_category}</u> par un administrateur)"
           filed_as: Classée en tant que
@@ -530,13 +585,16 @@ fr:
           can_accumulate_supports_beyond_threshold:
             description: Chaque question doit rassembler plus de %{limit} votes
           minimum_votes_per_user:
-            description: Vous devez répartir un minimum de %{votes} voix entre différentes questions.
+            description: Vous devez répartir un minimum de %{votes} voix entre différentes
+              questions.
             given_enough_votes: Vous avez donné suffisamment de soutien.
-            supports_remaining: Vous devez voter pour %{remaining_votes} question supplémentaire pour que vos votes soient pris en compte.
+            supports_remaining: Vous devez voter pour %{remaining_votes} question
+              supplémentaire pour que vos votes soient pris en compte.
           question_limit:
             description: Vous pouvez créer jusqu'à %{limit} questions.
           threshold_per_question:
-            description: Pour être reçues, les questions doivent atteindre %{limit} votes
+            description: Pour être retenues, les questions doivent atteindre %{limit}
+              votes
           title: 'Le vote est soumis aux règles suivantes :'
           vote_limit:
             description: Vous pouvez voter pour %{limit} questions au maximum.
@@ -556,7 +614,8 @@ fr:
         error: Des erreurs se sont produites lors de la sauvegarde de la question.
         success: Question mise à jour avec succès.
       update_draft:
-        error: Des erreurs sont survenues lors de la sauvegarde du brouillon de la question.
+        error: Des erreurs sont survenues lors de la sauvegarde du brouillon de la
+          question.
         success: Le brouillon de question a été mis à jour.
       versions:
         changes_at_title: Changements à "%{title}"
@@ -577,10 +636,10 @@ fr:
       note:
         created: A new private note has been created
       note_created:
-        hello: Hello %{name}
-        question_note_body: 'Question note content : %{question_note_body}'
-        question_note_link: See note
-        question_title: 'A new question note has been created : %{question_title}'
+        hello: Bonjour %{name}
+        question_note_body: 'Son contenu est : %{question_note_body}'
+        question_note_link: Voir la note
+        question_title: 'Une nouvelle note a été créée sur la question : %{question_title}'
     scopes:
       global: Global
     shared:
