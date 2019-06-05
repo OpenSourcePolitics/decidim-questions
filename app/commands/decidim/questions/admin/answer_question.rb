@@ -133,7 +133,7 @@ module Decidim
 
         # Update the publish date when evaluating or accepted
         def published_at
-          if question.state != form.state && %w(accepted).include?(form.state)
+          if question.state != form.state && %w(accepted evaluating pending).include?(form.state)
             Time.current
           else
             question.published_at
