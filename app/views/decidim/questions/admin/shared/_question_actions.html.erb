@@ -1,0 +1,19 @@
+<div class="admin-actions">
+  <% unless controller.controller_name == "questions" && controller.action_name == "edit" %>
+    <% if allowed_to? :edit, :question %>
+      <%= link_to t("actions.edit_question", scope: "decidim.questions"), edit_question_path(question), class: "button tiny button--simple btn-edit-question" %>
+    <% end %>
+  <% end %>
+
+  <% unless controller.controller_name == "question_notes" && controller.action_name == "index" %>
+    <% if allowed_to? :create, :question_note %>
+      <%= link_to t("actions.private_discussions", scope: "decidim.questions"), question_question_notes_path(question_id: question.id), class: "button tiny button--simple btn--create-notes" %>
+    <% end %>
+  <% end %>
+
+  <% unless controller.controller_name == "question_answers" && controller.action_name == "edit" %>
+    <% if allowed_to? :create, :question_answer, question: question) and !question.emendation? %>
+      <%= link_to t("actions.answer", scope: "decidim.questions"), edit_question_question_answer_path(question_id: question.id, id: question.id), class: "button tiny button--simple btn-create-answer" %>
+    <% end %>
+  <% end %>
+</div>

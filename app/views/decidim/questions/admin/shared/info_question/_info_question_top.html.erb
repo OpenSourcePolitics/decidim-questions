@@ -1,5 +1,5 @@
-<div class="card-divider">
-  <h2 class="card-title">
+<div class="card-divider question-divider">
+  <h2 class="card-title question-title">
     <%= link_to "#{t ".questions"}", questions_path %>
     &gt;
     <% if question %>
@@ -8,4 +8,5 @@
       <%= t(".new_question") %>
     <% end %>
   </h2>
+  <%= render partial: "decidim/questions/admin/shared/question_actions", locals: { question: question } %>
 </div>
