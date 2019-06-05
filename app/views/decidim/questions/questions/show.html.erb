@@ -23,15 +23,22 @@ edit_link(
 <% end %>
 <%= emendation_announcement_for @question %>
 <div class="row column">
-  <h2 class="heading2"><%= @question.short_ref + ' • ' + present(@question).title(links: true) %></h2>
+  <h2 class="heading2">
+    <% if %w(evaluating accepted).include?(@question.state) %>
+      <%= @question.short_ref + ' • ' %>
+    <% end %>
+    <%= present(@question).title(links: true) %>
+  </h2>
   <% unless component_settings.participatory_texts_enabled? %>
     <%= cell("decidim/coauthorships", @question, has_actions: true, size: 3, context: { current_user: current_user }) %>
   <% end %>
 </div>
 <div class="row column">
   <strong><%= t "created_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.created_at, format: :decidim_short %>
-  &emsp;
-  <strong><%= t "published_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.published_at, format: :decidim_short %>
+  <% if %w(accepted).include?(@question.state) %>
+    &emsp;
+    <strong><%= t "published_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.published_at, format: :decidim_short %>
+  <% end %>
 </div>
 <div class="row">
   <div class="columns section view-side mediumlarge-4 mediumlarge-push-8 large-3 large-push-9">

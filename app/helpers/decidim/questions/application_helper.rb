@@ -165,7 +165,7 @@ module Decidim
       end
 
       def filter_admin_state_values
-        %w(not_answered evaluating accepted rejected withdrawn)
+        %w(not_answered evaluating pending accepted rejected withdrawn)
       end
 
       def categories_for_select(scope)

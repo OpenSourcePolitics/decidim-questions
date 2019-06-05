@@ -24,7 +24,7 @@
     </td>
   <% end %>
   <td>
-    <%= question.short_ref if %w(evaluating accepted).include?(question.state) && !question.emendation?  %><br/>
+    <%= question.short_ref if %w(evaluating pending accepted).include?(question.state) && !question.emendation?  %><br/>
   </td>
   <td>
     <%= present(question).title %><br/>
@@ -70,7 +70,9 @@
   </td>
 
   <td>
-    <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
+    <% if %w(accepted).include?(question.state) %>
+      <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
+    <% end %>
   </td>
 
   <td class="table-list__actions">
@@ -82,7 +84,7 @@
       <%= icon_link_to "chat", question_question_notes_path(question_id: question.id), t("actions.private_discussions", scope: "decidim.questions"), class: "action-icon--index-notes" %>
     <% end %>
 
-    <% if allowed_to? :create, :question_answer and !question.emendation? %>
+    <% if allowed_to?(:create, :question_answer, question: question) and !question.emendation? %>
       <%= icon_link_to "comment-square", edit_question_question_answer_path(question_id: question.id, id: question.id), t("actions.answer", scope: "decidim.questions"), class: " icon--small" %>
     <% else %>
       <%= icon "comment-square", scope: "decidim.questions.admin", class: "action-icon action-icon--disabled" %>

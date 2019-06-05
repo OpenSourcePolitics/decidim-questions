@@ -52,32 +52,32 @@ fr:
   activerecord:
     models:
       decidim/questions/collaborative_draft:
-        one: Question collaborative
-        other: Questions collaboratives
-      decidim/questions/question:
+        one: Brouillon partagé
+        other: Brouillons partagés
+      decidim/questions/proposal:
         one: Question
-        other: Question
-      decidim/questions/question_endorsement:
+        other: Questions
+      decidim/proposals/proposal_endorsement:
         one: Soutien
         other: Soutiens
-      decidim/questions/question_note:
+      decidim/proposals/proposal_note:
         one: Note
-        other: Remarques
-      decidim/questions/question_vote:
+        other: Notes
+      decidim/proposals/proposal_vote:
         one: Vote
         other: Votes
   decidim:
     admin:
       actions:
-        cancel: Cancel
+        cancel: Annuler
         configure: Configurer
         duplicate: Dupliquer
-        filter: Filter
+        filter: Filtrer
         new_process: Nouveau processus participatif
         preview: Aperçu
       impersonatable_users:
         index:
-          search: Search
+          search: Rechercher
       menu:
         participatory_processes_submenu:
           attachment_collections: Collection de pièces jointes
@@ -90,7 +90,7 @@ fr:
           private_users: Utilisateurs privés
           process_admins: Administrateurs de processus
           steps: Étapes
-          upstream_moderations: Upstream moderations
+          upstream_moderations: Modération à priori
       models:
         participatory_process:
           fields:
@@ -114,61 +114,49 @@ fr:
     components:
       questions:
         actions:
-          create: Créer
-          endorse: Soutenir
-          vote: Voter
-          withdraw: Retirer
+          endorse: soutenir
+          vote: vote
         name: Questions
         settings:
           global:
-            amendments_enabled: Activer le module Amendements
-            announcement: Annonce
-            attachments_allowed: Autoriser les pièces jointes
-            can_accumulate_supports_beyond_threshold: Peut accumuler des supports
-              au-delà du seuil
-            collaborative_drafts_enabled: Activer le module de Questions collaboratives
-            comments_enabled: Activer le module de Commentaire
-            geocoding_enabled: Activer le module de Geocoding
-            minimum_votes_per_user: Nombre minimum de votes par utilisateur
-            new_question_help_text: Texte d'aide à la création d'une nouvelle question
-            official_questions_enabled: Autoriser la création de questions officielles
-            participatory_texts_enabled: Activer le module de Textes participatifs
-            question_answering_enabled: Autoriser la réponse officielle aux questions
-            question_answering_roles_enabled: Activer les rôles de \"Comité de pilotage\"
-              et de \"Service\"
-            question_edit_before_minutes: Délai (en minutes) après lequel les auteurs
-              ne peuvent plus modifier leurs questions
-            question_length: Nombre maximum de caractères de la question
-            question_limit: Limite de question par utilisateur
-            question_wizard_step_1_help_text: Texte d'aide à l'étape "Créer" de la
-              création de question
-            question_wizard_step_2_help_text: Texte d'aide à l'étape "Comparer" de
-              la création de question
-            question_wizard_step_3_help_text: Texte d'aide à l'étape "Compléter" de
-              la création de question
-            question_wizard_step_4_help_text: Texte d'aide à l'étape "Publier" de
-              la création de question
-            resources_permissions_enabled: Les autorisations d'actions peuvent être
-              définies pour chaque question
-            threshold_per_question: Seuil par question
-            upstream_moderation: Modération à priori
-            vote_limit: Limite de votes par utilisateur
+            amendments_enabled: amendments enabled
+            announcement: announcement
+            attachments_allowed: attachments allowed
+            can_accumulate_supports_beyond_threshold: can accumulate supports beyond threshold
+            collaborative_drafts_enabled: collaborative drafts enabled
+            comments_enabled: comments enabled
+            geocoding_enabled: geocoding enabled
+            minimum_votes_per_user: minimum votes per user
+            new_question_help_text: new question help_text
+            official_questions_enabled: official questions enabled
+            participatory_texts_enabled: participatory texts enabled
+            question_answering_enabled: question answering enabled
+            question_answering_roles_enabled: question answering roles enabled
+            question_edit_before_minutes: question edit before minutes
+            question_length: question length
+            question_limit: question limit
+            question_wizard_step_1_help_text: question wizard step 1 help text
+            question_wizard_step_2_help_text: question wizard step 2 help text
+            question_wizard_step_3_help_text: question wizard step 3 help text
+            question_wizard_step_4_help_text: question wizard step 4 help text
+            resources_permissions_enabled: resources permissions enabled
+            threshold_per_question: threshold per question
+            upstream_moderation: upstream moderation
+            vote_limit: vote limit
           step:
-            announcement: Annonce
-            automatic_hashtags: Hashtags ajoutés à toutes les questions
-            comments_blocked: Bloquer la création de nouveaux commentaires
-            creation_enabled: Autoriser la création de nouvelles questions
-            endorsements_blocked: Bloquer les soutiens
-            endorsements_enabled: Activer le module de Soutien
-            question_answering_enabled: Autoriser la réponse officielle aux questions
-            suggested_hashtags: Hashtags suggérés aux utilisateurs pour de nouvelles
-              questions
-            votes_blocked: Bloquer les votes
-            votes_enabled: Activer le module de vote simple
-            votes_hidden: Cacher les votes (si le module de votes est activé, le décompte
-              des votes sera caché)
+            announcement: announcement
+            automatic_hashtags: automatic hashtags
+            comments_blocked: comments blocked
+            creation_enabled: creation enabled
+            endorsements_blocked: endorsements blocked
+            endorsements_enabled: endorsements enabled
+            question_answering_enabled: question answering enabled
+            suggested_hashtags: suggested hashtags
+            votes_blocked: votes blocked
+            votes_enabled: votes enabled
+            votes_hidden: votes hidden
     datetime:
-      timeago: il y a %{time}
+      timeago: "il y a %{time}"
     events:
       questions:
         collaborative_draft_access_accepted:
@@ -443,14 +431,13 @@ fr:
         new: Nouvelle question
         participatory_texts: Textes participatifs
         private_discussions: Discussions privées
-        private_notes: Notes privées
         title: Actions
       admin:
         actions:
           preview: Aperçu
         exports:
-          comments: Commentaires
-          questions: Questions
+          comments: comments
+          questions: questions
         models:
           question:
             name: Question
@@ -484,18 +471,13 @@ fr:
           publish:
             invalid: Impossible de publier des questions
             success: Toutes les questions ont été publiées
-          sections:
-            article: "<em>Article</em>"
-            section: "<em>Section :</em> <strong>%{title}</strong>"
-            sub-section: "<em>Sous-section:</em> %{title}"
           update:
             success: Texte participatif mis à jour avec succès.
         question_answers:
           edit:
-            accepted: Retenue
+            accepted: Reçue
             answer_question: Répondre
             cancel: Annuler
-            evaluating: En attente de réponse
             rejected: Non recevable
             title: Réponse à la question %{title}
         question_notes:
@@ -520,26 +502,19 @@ fr:
           edit:
             cancel: Annuler
             content: Contenu
-            publish: Publier
             status: Statut
             title: Mise à jour de la question
             update: Mettre à jour
           form:
-            Comittee: Comité de pilotage
-            Service: Service
             accepted: Retenue
             all: All
             attachment_legend: "(Facultatif) Ajouter une pièce jointe"
-            back: Retour
-            comittee: Comité de pilotage
             committee: Comité de pilotage
-            created_in_meeting: Cette question provient d'une réunion
             evaluating: A traiter
             none: Aucun
             recipient: Destinataire
             rejected: Non recevable
             select_a_category: Sélectionner une catégorie
-            select_a_meeting: Sélectionnez une réunion
             service: Service
           index:
             actions: Actions
@@ -547,8 +522,8 @@ fr:
             change_category: Changer de catégorie
             merge: Fusionner dans un nouveau
             merge_button: Fusionner
-            move: Move questions
-            move_button: Move
+            move: Déplacer la ressource
+            move_button: Déplacer
             select_component: Sélectionnez une fonctionnalité
             selected: choisi
             split: Questions fractionnées
@@ -556,12 +531,8 @@ fr:
             title: Questions
             update: Mettre à jour
           new:
-            attachment_legend: Légende des pièces jointes
             content: Contenu
             create: Créer
-            created_in_meeting: Créé en réunion
-            select_a_category: Sélectionnez une catégorie
-            select_a_meeting: Sélectionnez une réunion
             status: Statut
             title: Créer une question
           update_category:
@@ -586,24 +557,21 @@ fr:
             success: Fusion des questions dans une seule réussie.
         questions_moves:
           create:
-            invalid: Invalid
-            success: Success
+            invalid: Une erreur s'est produite lors du déplacement des ressources
+              sélectionnées.
+            success: Déplacement des ressources réussie
         questions_splits:
           create:
             invalid: Une erreur s'est produite lors de la fraction des questions sélectionnées.
             success: Fraction des questions réussie.
         shared:
           info_question:
-            body: Corps du texte
             created_at: Date de création
             info_question_bottom:
-              body: Corps du texte
               created_at: Date de soumission
               published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
-              author: Auteur
-              body: Corps du texte
               created_at: Date de soumission
               published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
@@ -615,22 +583,16 @@ fr:
             questions: Questions
       admin_log:
         question:
-          answer: "%{user_name} a répondu à la question %{resource_name} sur l'espace
-            %{space_name}"
-          create: "%{user_name} a créé la question %{resource_name} sur l'espace %{space_name}
-            en tant que question officielle"
-          update: "%{user_name} mis à jour le %{resource_name} question officielle
-            sur le %{space_name} espace"
+          answer: "%{user_name} a répondu à la question %{resource_name} dans l'espace %{space_name}"
+          create: "%{user_name} a créé la question %{resource_name} dans l'espace %{space_name} en tant que question officielle"
+          update: "%{user_name} mis à jour la question officielle %{resource_name} dans l'espace %{space_name}"
         question_note:
-          create: "%{user_name} a publié une note privée sur la question %{resource_name}
-            sur l'espace %{space_name}"
+          create
       answers:
-        accepted: Retenue
-        evaluating: En attente de réponse
-        not_answered: A traiter
-        pending: En attente de validation
-        rejected: Non recevable
-        withdrawn: Retirée
+        accepted: accepted
+        evaluating: evaluating
+        not_answered: Not answered
+        rejected: rejected
       application_helper:
         filter_origin_values:
           all: Toutes
@@ -692,17 +654,15 @@ fr:
           send: Envoyer
           title: Modifier la question collaborative
         filters:
-          all: Tout
-          amendment: Amendements
+          all: all
           category: Catégorie
           category_prompt: Catégories
-          open: Ouvrir
-          published: Publiée
+          open: open
+          published: published
           related_to: Liée à
           search: Chercher
           state: État
-          type: Type
-          withdrawn: Retirée
+          withdrawn: withdrawn
         filters_small_view:
           close_modal: Fermer la fenêtre
           filter: Filtre
@@ -714,10 +674,10 @@ fr:
         new_collaborative_draft_button:
           new_collaborative_draft: Nouvelle question collaborative
         orders:
-          label: 'Trier les questions par:'
-          most_contributed: Avec le plus de contribution
-          random: Aléatoire
-          recent: Récente
+          label: label
+          most_contributed: most_contributed
+          random: random
+          recent: recent
         requests:
           accepted_request:
             error: Votre demande de collaboration n'a pas pu aboutir, veuillez réessayer
@@ -739,16 +699,12 @@ fr:
           final_question: question finale
           final_question_help_text: Ce brouillon est terminé. Vous pouvez voir la
             question qui en est issue
-          hidden_authors_count:
-            one: et %{count} personne de plus
-            other: et %{count} autres personnes
           info-message: Ceci est un <strong>brouillon collaboratif</strong> pour une
             question. Cela signifie que vous pouvez aider leurs auteurs à façonner
             la question en utilisant la section commentaire ci-dessous ou l'améliorer
             directement en demandant l'accès pour la modifier. Une fois que les auteurs
             vous accordent l'accès, vous pourrez apporter des modifications à ce brouillon.
           of_versions: "(de %{number})"
-          publish: Publier
           publish_info: Publiez cette version du brouillon ou
           published_question: question publiée
           request_access: Demande de collaboration
@@ -756,7 +712,6 @@ fr:
           see_other_versions: voir d'autres versions
           version: Version %{number}
           version_history: voir l'historique des versions de cette question
-          withdraw: retirer le brouillon
         states:
           open: Ouvrir
           published: Publiée
@@ -890,10 +845,10 @@ fr:
           send: Continuer
           title: Poser une question
         orders:
-          label: 'Trier les questions par :'
-          most_voted: Les plus votées
-          random: Aléatoire
-          recent: Les plus récentes
+          label: label
+          most_voted: most voted
+          random: random
+          recent: recent
         participatory_texts:
           index:
             document_index: Index du document
@@ -917,9 +872,7 @@ fr:
           back_to: Retour à
           edit_question: Modifier la question
           endorsements_list: Liste des soutiens
-          hidden_endorsers_count:
-            one: et %{count} personne de plus
-            other: et %{count} autres personnes
+          hidden_endorsers_count: "%{count} hidden endorsers"
           link_to_collaborative_draft_help_text: Cette question est le résultat d'une
             collaboration. Voir l'historique
           link_to_collaborative_draft_text: Voir la question collaborative
@@ -927,13 +880,6 @@ fr:
           question_in_evaluation_reason: Cette question est en cours de traitement
           question_rejected_reason: 'Cette question est considérée comme non recevable
             car :'
-          report: Signaler
-          withdraw_btn_hint: Si vous changez d'avis et tant que votre question n'a
-            pas reçu de vote, commentaire et/ou soutien, vous pouvez toujours la retirer.
-            Cette dernière ne sera pas supprimée mais elle apparaîtra dans la liste
-            des questions retirées.
-          withdraw_confirmation: Êtes-vous sûr de vouloir retirer cette question ?
-          withdraw_question: Retirer la question
         tags:
           changed_from: "(modifié depuis <u>%{previous_category}</u> par un administrateur)"
           filed_as: Classée en tant que
@@ -946,8 +892,8 @@ fr:
           votes_blocked: Votes désactivés
         votes_count:
           count:
-            one: VOTE
-            other: VOTES
+            one: vote
+            other: votes
           most_popular_question: Question la plus populaire
           need_more_votes: Besoin de plus de votes
         voting_rules:
@@ -1009,14 +955,6 @@ fr:
         question_note_body: 'Son contenu est : %{question_note_body}'
         question_note_link: Voir la note
         question_title: 'Une nouvelle note a été créée sur la question : %{question_title}'
-    resource_links:
-      copied_from_component:
-        question_question: Questions associées
-      included_projects:
-        project_result: 'Réalisations apparaissant dans ce projet :'
-      included_questions:
-        question_project: 'Questions figurant dans ces projets :'
-        question_result: 'Questions figurant dans ces réalisations :'
     scopes:
       global: Global
     shared:
