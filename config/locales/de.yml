@@ -243,12 +243,15 @@ de:
         shared:
           info_question:
             created_at: Erstellungsdatum
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -418,6 +421,7 @@ de:
             comments: Bemerkungen
             created_at: Created on
             endorsements: Empfehlungen
+            first_interacted_at: First interacted at
             official_question: Offizieller Vorschlag
             published_at: Veröffentlicht unter
             scope: Umfang

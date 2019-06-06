@@ -24,7 +24,7 @@
     </td>
   <% end %>
   <td>
-    <%= question.short_ref if %w(evaluating pending accepted).include?(question.state) && !question.emendation?  %><br/>
+    <%= question.short_ref if %w(evaluating pending accepted).include?(question.state) && !question.emendation? %><br/>
   </td>
   <td>
     <%= present(question).title %><br/>
@@ -70,8 +70,8 @@
   </td>
 
   <td>
-    <% if %w(accepted).include?(question.state) %>
-      <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.published_at)) %>
+    <% unless question.first_interacted_at.nil? %>
+      <%= t("decidim.datetime.timeago", time: time_ago_in_words(question.first_interacted_at)) %>
     <% end %>
   </td>
 

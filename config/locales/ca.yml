@@ -239,12 +239,15 @@ ca:
         shared:
           info_question:
             created_at: Data de creació
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -412,6 +415,7 @@ ca:
             comments: Comentaris
             created_at: Created on
             endorsements: Adhesions
+            first_interacted_at: First interacted at
             official_question: Proposta oficial
             published_at: Publicat a
             scope: Àmbit

@@ -44,24 +44,24 @@ module Decidim
 
         def answer_question_temporary
           question.update!(
-            state: 'pending',
-            answer: @form.answer
+              state: 'pending',
+              answer: @form.answer
           )
         end
 
         def notify_committee
           return unless question.state == 'pending'
 
-          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee ).pluck(:decidim_user_id)
-          recipients += Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :admin ).pluck(:decidim_user_id)
+          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee).pluck(:decidim_user_id)
+          recipients += Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :admin).pluck(:decidim_user_id)
           recipients += form.current_organization.admins.pluck(:id)
 
           unless recipients.empty?
             Decidim::EventsManager.publish(
-              event: 'decidim.events.questions.validate_question',
-              event_class: Decidim::Questions::Admin::ValidateQuestionEvent,
-              resource: question,
-              affected_users: Decidim::User.where(id: recipients).to_a
+                event: 'decidim.events.questions.validate_question',
+                event_class: Decidim::Questions::Admin::ValidateQuestionEvent,
+                resource: question,
+                affected_users: Decidim::User.where(id: recipients).to_a
             )
           end
 
@@ -69,15 +69,15 @@ module Decidim
 
         def answer_question_permanently
           Decidim.traceability.perform_action!(
-            'answer',
-            question,
-            form.current_user
+              'answer',
+              question,
+              form.current_user
           ) do
             question.update!(
-              state: @form.state,
-              answer: @form.answer,
-              answered_at: Time.current,
-              published_at: published_at
+                state: @form.state,
+                answer: @form.answer,
+                answered_at: Time.current,
+                first_interacted_at: first_interacted_at
             )
           end
         end
@@ -87,29 +87,29 @@ module Decidim
 
           if question.accepted?
             publish_event(
-              'decidim.events.questions.question_accepted',
-              Decidim::Questions::AcceptedQuestionEvent
+                'decidim.events.questions.question_accepted',
+                Decidim::Questions::AcceptedQuestionEvent
             )
           elsif question.rejected?
             publish_event(
-              'decidim.events.questions.question_rejected',
-              Decidim::Questions::RejectedQuestionEvent
+                'decidim.events.questions.question_rejected',
+                Decidim::Questions::RejectedQuestionEvent
             )
           elsif question.evaluating?
             publish_event(
-              'decidim.events.questions.question_evaluating',
-              Decidim::Questions::EvaluatingQuestionEvent
+                'decidim.events.questions.question_evaluating',
+                Decidim::Questions::EvaluatingQuestionEvent
             )
           end
         end
 
         def publish_event(event, event_class)
           Decidim::EventsManager.publish(
-            event: event,
-            event_class: event_class,
-            resource: question,
-            affected_users: question.notifiable_identities,
-            followers: question.followers - question.notifiable_identities
+              event: event,
+              event_class: event_class,
+              resource: question,
+              affected_users: question.notifiable_identities,
+              followers: question.followers - question.notifiable_identities
           )
         end
 
@@ -132,12 +132,11 @@ module Decidim
         end
 
         # Update the publish date when evaluating or accepted
-        def published_at
-          if question.state != form.state && %w(accepted evaluating pending).include?(form.state)
-            Time.current
-          else
-            question.published_at
-          end
+        def first_interacted_at
+          return question.first_interacted_at unless question.first_interacted_at.nil?
+          return Time.current if question.state != form.state && %w(accepted evaluating).include?(form.state)
+
+          question.first_interacted_at
         end
       end
     end

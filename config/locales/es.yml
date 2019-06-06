@@ -240,12 +240,15 @@ es:
         shared:
           info_question:
             created_at: Fecha de creación
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -410,6 +413,7 @@ es:
             comments: Comentarios
             created_at: Created on
             endorsements: Adhesiones
+            first_interacted_at: First interacted at
             official_question: Propuesta oficial
             published_at: Publicado el
             scope: Ámbito
