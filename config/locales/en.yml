@@ -277,8 +277,9 @@ en:
           create:
       answers:
         accepted: accepted
-        evaluating: evaluating
-        not_answered: Not answered
+        evaluating: not answered
+        not_answered: to be treated
+        pending: pending validation
         rejected: rejected
       application_helper:
         filter_origin_values:
@@ -292,6 +293,7 @@ en:
           all: All
           evaluating: Evaluating
           except_rejected: All except rejected
+          pending: Pending validation
           rejected: Rejected
         filter_type_values:
           all: All

@@ -260,6 +260,64 @@ fr:
               suivre en cliquant sur ce dernier lien.
             email_subject: Une question que vous suivez a reçu une réponse
             notification_title: Une réponse a été publiée pour la question <a href="%{resource_path}">%{resource_title}</a>.
+        question_answered:
+          admin:
+            email_intro: "Le maître d'ouvrage a soumis une réponse à la question %{question_short_ref} :"
+            email_outro: "Cordialement,"
+            email_subject: Proposition de réponse du MO à la question %{question_short_ref}
+            notification_title: Proposition de réponse du MO à la question <a href="%{resource_path}">%{question_short_ref}</a>
+          committee:
+            email_intro: "Le maître d'ouvrage a soumis une réponse à la question %{question_short_ref} :"
+            email_outro: Pour valider la réponse ou demander des compléments <a href="%{question_admin_privates_notes_url}">[cliquez ici]</a>.
+            email_subject: La réponse à la question %{question_short_ref} attend votre validation
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> attend votre validation
+          default:
+            email_intro: La réponse à la question "%{resource_title}" a été envoyée et attend une validation
+            email_outro: "Cordialement,"
+            email_subject: Une réponse attend une validation
+            notification_title: La question <a href="%{resource_path}">%{question_short_ref}</a> a été envoyée et attend une validation.
+          service:
+            email_intro: La réponse à la question %{question_short_ref} a été envoyée
+            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez ici]</a>.
+            email_subject: La réponse à la question %{question_short_ref} a été envoyée
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été envoyée
+        question_answered_committee:
+          admin:
+            email_intro: "La CPDP a soumis une réponse à la question %{question_short_ref} :"
+            email_outro: Pour valider la réponse <a href="%{question_admin_answer_url}">[cliquez ici]</a>. Pour demander des compléments <a href="%{question_admin_privates_notes_url}">[cliquez ici]</a>.
+            email_subject: Proposition de réponse de la CPDP à la question %{question_short_ref}
+            notification_title: Proposition de réponse de la CPDP à la question <a href="%{resource_path}">%{question_short_ref}</a>
+          committee:
+            email_intro: La réponse à la question %{question_short_ref} a été envoyée
+            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez ici]</a>.
+            email_subject: La réponse à la question %{question_short_ref} a été envoyée
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été envoyée
+          default:
+            email_intro: La réponse à la question "%{resource_title}" a été envoyée et attend une validation
+            email_outro: "Cordialement,"
+            email_subject: Une réponse attend une validation
+            notification_title: La question <a href="%{resource_path}">%{question_short_ref}</a> a été envoyée et attend une validation.
+        question_answer_updated:
+          admin:
+            email_intro: "Le maître d'ouvrage a mis à jour la réponse à la question %{question_short_ref} :"
+            email_outro: "Cordialement,"
+            email_subject: "[%{participatory_space_id}] La réponse à la question %{question_short_ref} a été mise à jour"
+            notification_title: '[%{participatory_space_id}] La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour'
+          committee:
+            email_intro: "Le maître d'ouvrage a mis à jour sa réponse à la question %{question_short_ref} :"
+            email_outro: "Vous avez reçu cette notification parce qu'une ressource attend votre validation"
+            email_subject: La réponse à la question %{question_short_ref} a été mise à jour attend votre validation
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour attend votre validation
+          service:
+            email_intro: La réponse à la question %{question_short_ref} a été mise à jour
+            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez ici]</a>.
+            email_subject: La réponse à la question %{question_short_ref} a été mise à jour
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour
+          default:
+            email_intro: La réponse à la question "%{resource_title}" a été mise à jour et attend une validation
+            email_outro: "Cordialement,"
+            email_subject: Une réponse attend une validation
+            notification_title: La question <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour et attend une validation.
         question_endorsed:
           email_intro: '%{endorser_name} %{endorser_nickname}, que vous suivez, vient
             de soutenir la question "%{resource_title}" et nous pensons que cela pourrait
@@ -343,6 +401,7 @@ fr:
         validate_question:
           email_intro: La réponse à la question "%{resource_title}" a été envoyée
             et attend votre validation
+          email_outro: "Vous avez reçu cette notification parce qu'une ressource attend votre validation"
           email_subject: Une réponse attend votre validation
           notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
             a été envoyée et attend votre validation.
@@ -589,10 +648,11 @@ fr:
         question_note:
           create
       answers:
-        accepted: accepted
-        evaluating: evaluating
-        not_answered: Not answered
-        rejected: rejected
+        accepted: Retenue
+        evaluating: En attente de réponse
+        not_answered: A traiter
+        pending: En attente de validation
+        rejected: Retirée
       application_helper:
         filter_origin_values:
           all: Toutes
@@ -601,11 +661,12 @@ fr:
           official: Questions officielles
           user_groups: Groupes d'utilisateurs
         filter_state_values:
-          accepted: Acceptées
+          accepted: Retenues
           all: Toutes
           evaluating: En attente de réponse
           except_rejected: Toutes sauf les questions rejetées
-          rejected: Rejetées
+          pending: En attente de validation
+          rejected: Retirées
         filter_type_values:
           all: Tous
           amendments: Amendements
@@ -735,6 +796,13 @@ fr:
         error: Des erreurs sont survenues lors de la suppression du brouillon de la
           question.
         success: Le brouillon de la question a bien été supprimé.
+      events:
+        admin:
+          workflow_event:
+            email_greeting: Bonjour %{user_name},
+            email_intro: "« %{resource_title} » a été mis à jour. Vous pouvez y accéder ici :"
+            email_outro: Vous recevez cet notification car vous suivez « %{resource_title} ». Vous pouvez vous désabonnez sur cette <a href="%{resource_url}">page</a>.
+            email_subject: Mise à jour de %{resource_title} dans %{participatory_space_slug}
       last_activity:
         new_question_at_html: "<span>Nouvelle question à %{link}</span>"
       models:

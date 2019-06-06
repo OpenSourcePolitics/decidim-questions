@@ -24,6 +24,8 @@ module Decidim
       include Decidim::Questions::ParticipatoryTextSection
       include Decidim::Amendable
 
+      attr_accessor :recipients_info
+
       fingerprint fields: [:title, :body]
 
       # Add a version on question only if the following fields are modified.
@@ -279,7 +281,8 @@ module Decidim
       end
 
       def short_ref
-        reference.split('-').last
+        @prefix ||= component.name[Decidim.config.default_locale.to_s].capitalize[0]
+        reference.match?(%r{#{@prefix}\d+$}) ? reference.split('-').last : ""
       end
 
       private

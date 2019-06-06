@@ -156,7 +156,10 @@ module Decidim
         end
 
         def is_recipient?
-          question.try(:recipients).present? && question.try(:recipients).include?(user)
+          question.try(:recipient).present? &&
+            can_manage_question?(role: question.try(:recipient)) &&
+            question.try(:recipient_ids).present? &&
+            question.try(:recipient_ids).include?(user.id)
         end
       end
     end

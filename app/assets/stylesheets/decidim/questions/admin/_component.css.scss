@@ -59,15 +59,8 @@
   }
 
   .question-title {
-    display: flex;
-    flex-direction: row;
-    width: initial !important;
-
     @include breakpoint(medium down) {
-      flex-direction: initial;
       align-items: flex-end;
-
-      width: 100% !important;
     }
   }
 }

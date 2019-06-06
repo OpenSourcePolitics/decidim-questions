@@ -17,6 +17,7 @@ module Decidim
     autoload :ParticipatoryTextSection, "decidim/questions/participatory_text_section"
     autoload :DocToMarkdown, "decidim/questions/doc_to_markdown"
     autoload :OdtToMarkdown, "decidim/questions/odt_to_markdown"
+    autoload :Events, "decidim/questions/events"
 
     include ActiveSupport::Configurable
 

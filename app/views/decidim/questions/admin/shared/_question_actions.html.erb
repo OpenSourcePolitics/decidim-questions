@@ -12,7 +12,7 @@
   <% end %>
 
   <% unless controller.controller_name == "question_answers" && controller.action_name == "edit" %>
-    <% if allowed_to? :create, :question_answer, question: question) and !question.emendation? %>
+    <% if allowed_to?(:create, :question_answer, question: question) and !question.emendation? %>
       <%= link_to t("actions.answer", scope: "decidim.questions"), edit_question_question_answer_path(question_id: question.id, id: question.id), class: "button tiny button--simple btn-create-answer" %>
     <% end %>
   <% end %>
