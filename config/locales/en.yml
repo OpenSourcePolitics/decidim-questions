@@ -2,7 +2,21 @@
 en:
   activerecord:
     models:
-      decidim/questions/collaborative_draft: collaborative draft
+      decidim/questions/collaborative_draft:
+        one: Collaborative draft
+        other: Collaborative drafts
+      decidim/questions/proposal:
+        one: Question
+        other: Questions
+      decidim/proposals/proposal_endorsement:
+        one: Endorsement
+        other: Endorsements
+      decidim/proposals/proposal_note:
+        one: Note
+        other: Notes
+      decidim/proposals/proposal_vote:
+        one: Vote
+        other: Votes
   decidim:
     admin:
       actions:
@@ -42,6 +56,10 @@ en:
           private: Private
           public: Public
           published: Published
+        participatory_process_user_role:
+          roles:
+            committee: Committee
+            service: Service
       titles:
         participatory_processes: Participatory processes
     components:
@@ -239,6 +257,7 @@ en:
           info_question:
             created_at: Created at
             first_interacted_at: First interacted at
+            created_at: Creation date
             info_question_bottom:
               created_at: Created at
               first_interacted_at: First interacted at
@@ -252,11 +271,19 @@ en:
             info_question_top:
               new_question: New question
               questions: Questions
-            published_at: Published at
+            published_at: Publication date
+      admin_log:
+        question:
+          answer: "%{user_name} answered the %{resource_name} question on the %{space_name} space"
+          create: "%{user_name} created the %{resource_name} question on the %{space_name} space as an official question"
+          update: "%{user_name} updated the %{resource_name} official question on the %{space_name} space"
+        question_note:
+          create:
       answers:
         accepted: accepted
-        evaluating: evaluating
-        not_answered: Not answered
+        evaluating: not answered
+        not_answered: to be treated
+        pending: pending validation
         rejected: rejected
       application_helper:
         filter_origin_values:
@@ -270,6 +297,7 @@ en:
           all: All
           evaluating: Evaluating
           except_rejected: All except rejected
+          pending: Pending validation
           rejected: Rejected
         filter_type_values:
           all: All

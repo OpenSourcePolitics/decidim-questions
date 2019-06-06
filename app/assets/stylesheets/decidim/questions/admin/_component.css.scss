@@ -16,7 +16,7 @@
   margin: .5em 0 1em;
   padding-left: .25em;
 
-  .icon:first-child{
+  .icon:first-child {
     float: left;
     position: relative;
     margin: 0 .25em 0 2px;
@@ -40,9 +40,27 @@
     display: block;
     padding: 2px 8px;
   }
+
   .callout-content.inline {
     input[type="radio"] {
       margin-bottom: .5rem
+    }
+  }
+}
+
+.question-divider {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @include breakpoint(medium down) {
+    flex-direction: column;
+  }
+
+  .question-title {
+    @include breakpoint(medium down) {
+      align-items: flex-end;
     }
   }
 }

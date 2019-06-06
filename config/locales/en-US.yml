@@ -189,6 +189,7 @@ en-US:
             rejected: Rejected
             select_a_category: Select a category
             service: Service
+            all: All users
           index:
             actions: Actions
             cancel: Cancel

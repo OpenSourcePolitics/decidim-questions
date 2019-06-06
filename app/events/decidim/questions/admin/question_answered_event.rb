@@ -3,9 +3,9 @@
 module Decidim
   module Questions
     module Admin
-      class ValidateQuestionEvent < Decidim::Questions::Events::WorkflowEvent
+      class QuestionAnsweredEvent < Decidim::Questions::Events::WorkflowEvent
         def resource_text
-          resource.body
+          question_answer
         end
 
         def resource_url

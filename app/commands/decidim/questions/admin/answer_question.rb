@@ -13,6 +13,7 @@ module Decidim
         def initialize(form, question)
           @form = form
           @question = question
+          @is_update = question.try(:state) == 'pending'
         end
 
         # Executes the command. Broadcasts these events:
@@ -26,8 +27,6 @@ module Decidim
 
           manage_custom_reference
           answer_question
-          notify_committee
-          notify_followers
           increment_score
 
           broadcast(:ok)
@@ -38,40 +37,61 @@ module Decidim
         attr_reader :form, :question
 
         def answer_question
-          return answer_question_temporary if !form.current_user.admin && participatory_processes_with_role_privileges(:service).present?
+          return answer_question_temporary if !(form.current_user.admin || participatory_processes_with_role_privileges(:admin).present?)
           answer_question_permanently
         end
 
         def answer_question_temporary
           question.update!(
-              state: 'pending',
-              answer: @form.answer
+            state: 'pending',
+            answer: @form.answer
           )
+          notify_workflow
         end
 
-        def notify_committee
+        def notify_workflow
           return unless question.state == 'pending'
 
-          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee).pluck(:decidim_user_id)
-          recipients += Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :admin).pluck(:decidim_user_id)
-          recipients += form.current_organization.admins.pluck(:id)
+          recipients = []
+          recipients_info = {}
 
-          unless recipients.empty?
-            Decidim::EventsManager.publish(
-                event: 'decidim.events.questions.validate_question',
-                event_class: Decidim::Questions::Admin::ValidateQuestionEvent,
+          admin_list = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :admin ).pluck(:decidim_user_id)
+          admin_list += form.current_organization.admins.pluck(:id)
+
+          if question.try(:recipient) == 'committee'
+            workflow_event = 'decidim.events.questions.question_answered_committee'
+          else
+            if @is_update
+              workflow_event = 'decidim.events.questions.question_answer_updated'
+            else
+              workflow_event = 'decidim.events.questions.question_answered'
+            end
+            committee_list = Decidim::ParticipatoryProcessUserRole.where(participatory_process: form.current_participatory_space, role: :committee ).pluck(:decidim_user_id)
+            unless committee_list.empty?
+              Decidim::EventsManager.publish(
+                event: workflow_event + ".committee",
+                event_class: Decidim::Questions::Admin::QuestionAnsweredEvent,
                 resource: question,
-                affected_users: Decidim::User.where(id: recipients).to_a
-            )
+                affected_users: Decidim::User.where(id: committee_list).to_a
+              )
+            end
           end
 
+          unless admin_list.empty?
+            Decidim::EventsManager.publish(
+              event: workflow_event + ".admin",
+              event_class: Decidim::Questions::Admin::QuestionAnsweredEvent,
+              resource: question,
+              affected_users: Decidim::User.where(id: admin_list).to_a
+            )
+          end
         end
 
         def answer_question_permanently
           Decidim.traceability.perform_action!(
-              'answer',
-              question,
-              form.current_user
+            'answer',
+            question,
+            form.current_user
           ) do
             question.update!(
                 state: @form.state,
@@ -80,6 +100,7 @@ module Decidim
                 first_interacted_at: first_interacted_at
             )
           end
+          notify_followers
         end
 
         def notify_followers
@@ -87,29 +108,29 @@ module Decidim
 
           if question.accepted?
             publish_event(
-                'decidim.events.questions.question_accepted',
-                Decidim::Questions::AcceptedQuestionEvent
+              'decidim.events.questions.question_accepted',
+              Decidim::Questions::AcceptedQuestionEvent
             )
           elsif question.rejected?
             publish_event(
-                'decidim.events.questions.question_rejected',
-                Decidim::Questions::RejectedQuestionEvent
+              'decidim.events.questions.question_rejected',
+              Decidim::Questions::RejectedQuestionEvent
             )
           elsif question.evaluating?
             publish_event(
-                'decidim.events.questions.question_evaluating',
-                Decidim::Questions::EvaluatingQuestionEvent
+              'decidim.events.questions.question_evaluating',
+              Decidim::Questions::EvaluatingQuestionEvent
             )
           end
         end
 
         def publish_event(event, event_class)
           Decidim::EventsManager.publish(
-              event: event,
-              event_class: event_class,
-              resource: question,
-              affected_users: question.notifiable_identities,
-              followers: question.followers - question.notifiable_identities
+            event: event,
+            event_class: event_class,
+            resource: question,
+            affected_users: question.notifiable_identities,
+            followers: question.followers - question.notifiable_identities
           )
         end
 

@@ -25,7 +25,7 @@ module Decidim
         prefix = resource.component.name[Decidim.config.default_locale.to_s].capitalize[0]
 
         references = Decidim::Questions::Question.where("reference ~* ?", prefix + '\d+$')
-                        .where(component: resource.component, state: ['evaluating','accepted'])
+                        .where(component: resource.component, state: ['evaluating','pending','accepted'])
                         .pluck(:reference)
         references = references.to_a.map do |reference|
           ref = reference.split(prefix).last

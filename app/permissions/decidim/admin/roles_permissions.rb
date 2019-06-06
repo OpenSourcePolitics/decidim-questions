@@ -49,7 +49,6 @@ module Decidim
       def committee_action?
         return unless can_manage_process?(role: :committee)
 
-        allow! if permission_action.subject == :moderation
         questions_action?
       end
 
