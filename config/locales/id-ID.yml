@@ -572,10 +572,9 @@ id-ID:
             success: Successfully splitted the questions into new ones.
         shared:
           info_question:
-            created_at: Created at
-            first_interacted_at: First interacted at
             body: Body
             created_at: Creation date
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
               first_interacted_at: First interacted at

@@ -2,12 +2,6 @@
 en:
   activerecord:
     models:
-      decidim/questions/collaborative_draft:
-        one: Collaborative draft
-        other: Collaborative drafts
-      decidim/questions/proposal:
-        one: Question
-        other: Questions
       decidim/proposals/proposal_endorsement:
         one: Endorsement
         other: Endorsements
@@ -17,6 +11,12 @@ en:
       decidim/proposals/proposal_vote:
         one: Vote
         other: Votes
+      decidim/questions/collaborative_draft:
+        one: Collaborative draft
+        other: Collaborative drafts
+      decidim/questions/proposal:
+        one: Question
+        other: Questions
   decidim:
     admin:
       actions:
@@ -255,9 +255,8 @@ en:
             success: Successfully splitted the questions into new ones.
         shared:
           info_question:
-            created_at: Created at
-            first_interacted_at: First interacted at
             created_at: Creation date
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
               first_interacted_at: First interacted at
@@ -274,11 +273,14 @@ en:
             published_at: Publication date
       admin_log:
         question:
-          answer: "%{user_name} answered the %{resource_name} question on the %{space_name} space"
-          create: "%{user_name} created the %{resource_name} question on the %{space_name} space as an official question"
-          update: "%{user_name} updated the %{resource_name} official question on the %{space_name} space"
+          answer: "%{user_name} answered the %{resource_name} question on the %{space_name}
+            space"
+          create: "%{user_name} created the %{resource_name} question on the %{space_name}
+            space as an official question"
+          update: "%{user_name} updated the %{resource_name} official question on
+            the %{space_name} space"
         question_note:
-          create:
+          create: 
       answers:
         accepted: accepted
         evaluating: not answered
