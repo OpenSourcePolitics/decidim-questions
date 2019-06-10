@@ -2,12 +2,6 @@
 en:
   activerecord:
     models:
-      decidim/questions/collaborative_draft:
-        one: Collaborative draft
-        other: Collaborative drafts
-      decidim/questions/proposal:
-        one: Question
-        other: Questions
       decidim/proposals/proposal_endorsement:
         one: Endorsement
         other: Endorsements
@@ -17,6 +11,12 @@ en:
       decidim/proposals/proposal_vote:
         one: Vote
         other: Votes
+      decidim/questions/collaborative_draft:
+        one: Collaborative draft
+        other: Collaborative drafts
+      decidim/questions/proposal:
+        one: Question
+        other: Questions
   decidim:
     admin:
       actions:
@@ -256,12 +256,15 @@ en:
         shared:
           info_question:
             created_at: Creation date
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -270,11 +273,14 @@ en:
             published_at: Publication date
       admin_log:
         question:
-          answer: "%{user_name} answered the %{resource_name} question on the %{space_name} space"
-          create: "%{user_name} created the %{resource_name} question on the %{space_name} space as an official question"
-          update: "%{user_name} updated the %{resource_name} official question on the %{space_name} space"
+          answer: "%{user_name} answered the %{resource_name} question on the %{space_name}
+            space"
+          create: "%{user_name} created the %{resource_name} question on the %{space_name}
+            space as an official question"
+          update: "%{user_name} updated the %{resource_name} official question on
+            the %{space_name} space"
         question_note:
-          create:
+          create: 
       answers:
         accepted: accepted
         evaluating: not answered
@@ -434,6 +440,7 @@ en:
             comments: Comments
             created_at: Created on
             endorsements: Endorsements
+            first_interacted_at: First interacted at
             official_question: Official question
             published_at: Published
             scope: Scope

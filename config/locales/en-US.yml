@@ -180,7 +180,7 @@ en-US:
             update: Update
           form:
             accepted: Accepted
-            all: All
+            all: All users
             attachment_legend: "(Optional) Add an attachment"
             committee: Committee
             evaluating: Evaluating
@@ -189,7 +189,6 @@ en-US:
             rejected: Rejected
             select_a_category: Select a category
             service: Service
-            all: All users
           index:
             actions: Actions
             cancel: Cancel

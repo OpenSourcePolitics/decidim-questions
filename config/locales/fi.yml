@@ -566,12 +566,15 @@ fi:
           info_question:
             body: Tekstin runko
             created_at: Luonnin ajankohta
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -755,6 +758,7 @@ fi:
             comments: Kommentit
             created_at: Created on
             endorsements: Suositukset
+            first_interacted_at: First interacted at
             id: ID
             notes: Huomautuksia
             official_question: Virallinen ehdotus

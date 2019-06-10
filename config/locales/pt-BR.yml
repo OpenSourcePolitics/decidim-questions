@@ -564,12 +564,15 @@ pt-BR:
           info_question:
             body: Corpo
             created_at: Data de criação
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -754,6 +757,7 @@ pt-BR:
             comments: Comentários
             created_at: Created on
             endorsements: Endossos
+            first_interacted_at: First interacted at
             id: ID
             notes: Notas
             official_question: Proposta oficial

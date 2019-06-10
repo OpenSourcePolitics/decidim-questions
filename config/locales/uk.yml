@@ -581,12 +581,15 @@ uk:
           info_question:
             body: Основний текст
             created_at: Дата створення
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -770,6 +773,7 @@ uk:
             comments: Коментарі
             created_at: Created on
             endorsements: Прояви підтримки
+            first_interacted_at: First interacted at
             id: Псевдонім
             notes: Примітки
             official_question: Службова пропозиція

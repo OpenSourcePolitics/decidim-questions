@@ -575,12 +575,15 @@ ru:
           info_question:
             body: Основной текст
             created_at: Дата создания
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_bottom_full:
               created_at: Created at
+              first_interacted_at: First interacted at
               published_at: Published at
               question_votes_count: Question votes count
             info_question_top:
@@ -764,6 +767,7 @@ ru:
             comments: Комментарии
             created_at: Created on
             endorsements: Выражения поддержки
+            first_interacted_at: First interacted at
             id: Псевдоним
             notes: Примечания
             official_question: Служебное предложение

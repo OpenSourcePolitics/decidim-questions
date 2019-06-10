@@ -94,10 +94,10 @@ module Decidim
             form.current_user
           ) do
             question.update!(
-              state: @form.state,
-              answer: @form.answer,
-              answered_at: Time.current,
-              published_at: published_at
+                state: @form.state,
+                answer: @form.answer,
+                answered_at: Time.current,
+                first_interacted_at: first_interacted_at
             )
           end
           notify_followers
@@ -153,12 +153,11 @@ module Decidim
         end
 
         # Update the publish date when evaluating or accepted
-        def published_at
-          if question.state != form.state && %w(accepted).include?(form.state)
-            Time.current
-          else
-            question.published_at
-          end
+        def first_interacted_at
+          return question.first_interacted_at unless question.first_interacted_at.nil?
+          return Time.current if question.state != form.state && %w(accepted evaluating).include?(form.state)
+
+          question.first_interacted_at
         end
       end
     end
