@@ -108,18 +108,6 @@ module Decidim
         # and needs to perform all actions for the moderations of the question component.
         def moderator_action?
           # return unless can_manage_question?(role: :moderator)
-
-          allow! if permission_action.subject == :component && permission_action.action == :read
-
-          allow! if permission_action.subject == :question && permission_action.action == :read
-
-          if question.try(:state).blank?
-            allow! if permission_action.subject == :question && permission_action.action == :edit
-          end
-
-          allow! if permission_action.subject == :questions && permission_action.action == :read
-          allow! if permission_action.subject == :questions && permission_action.action == :move
-
           allow! if permission_action.subject == :moderation
         end
 

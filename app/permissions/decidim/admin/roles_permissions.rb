@@ -27,7 +27,6 @@ module Decidim
         return unless can_manage_process?(role: :moderator)
 
         allow! if permission_action.subject == :moderation
-        questions_action?
       end
 
       def collaborator_action?
