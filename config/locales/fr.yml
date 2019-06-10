@@ -660,15 +660,15 @@ fr:
         shared:
           info_question:
             created_at: Date de création
-            first_interacted_at: First interacted at
+            first_interacted_at: Date de publication
             info_question_bottom:
               created_at: Date de soumission
-              first_interacted_at: First interacted at
+              first_interacted_at: Date de publication
               published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               created_at: Date de soumission
-              first_interacted_at: First interacted at
+              first_interacted_at: Date de publication
               published_at: Date de publication
               question_votes_count: Décompte des votes pour la question
             info_question_top:
@@ -858,7 +858,7 @@ fr:
             comments: Commentaires
             created_at: Soumise le
             endorsements: Soutiens
-            first_interacted_at: First interacted at
+            first_interacted_at: Date de publication
             id: ID
             notes: Notes
             official_question: Question officielle
