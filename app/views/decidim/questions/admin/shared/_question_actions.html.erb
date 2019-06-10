@@ -1,4 +1,4 @@
-<div class="admin-actions">
+<div class="flex--cc flex-gap--1 admin-actions">
   <% unless controller.controller_name == "questions" && controller.action_name == "edit" %>
     <% if allowed_to? :edit, :question %>
       <%= link_to t("actions.edit_question", scope: "decidim.questions"), edit_question_path(question), class: "button tiny button--simple btn-edit-question" %>

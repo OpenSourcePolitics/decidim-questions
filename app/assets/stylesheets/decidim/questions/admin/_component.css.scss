@@ -48,19 +48,28 @@
   }
 }
 
-.question-divider {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.question-title{
+  @include smallcaps;
 
-  @include breakpoint(medium down) {
-    flex-direction: column;
+  button:not(.clear){
+    @include smallcaps;
   }
 
-  .question-title {
-    @include breakpoint(medium down) {
-      align-items: flex-end;
+  // clearfix if there is no flex--* class in the same element
+  &:not([class*="flex--"]){
+    @include clearfix;
+  }
+
+  font-size: 1rem;
+  width: auto;
+  margin-bottom: 0;
+
+  &--nocaps{
+    text-transform: lowercase;
+    letter-spacing: 0;
+
+    &::first-letter{
+      text-transform: uppercase;
     }
   }
 }
