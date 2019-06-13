@@ -23,7 +23,6 @@ module Decidim
       def committee_users
         "#{admin_module_name}::CommitteeUsers".constantize.for(self)
       end
-
     end # end module ParticipatoryProcessExtends
   end # end module Questions
 end # end module Decidim

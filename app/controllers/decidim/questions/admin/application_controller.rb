@@ -19,10 +19,10 @@ module Decidim
           params["q"].to_unsafe_h.merge(options)
         end
 
-         def drop_query(param = "")
+        def drop_query(param = "")
           return params["q"] if param.blank?
           params["q"].to_unsafe_h.except(param)
-        end
+       end
       end
     end
   end

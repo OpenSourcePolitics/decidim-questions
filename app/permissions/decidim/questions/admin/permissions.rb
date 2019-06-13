@@ -64,7 +64,6 @@ module Decidim
           if permission_action.subject == :participatory_texts && participatory_texts_are_enabled?
             allow! if permission_action.action == :manage
           end
-
         end
 
         def committee_action?
@@ -131,12 +130,12 @@ module Decidim
 
         def admin_creation_is_enabled?
           current_settings.try(:creation_enabled?) &&
-              component_settings.try(:official_questions_enabled)
+            component_settings.try(:official_questions_enabled)
         end
 
         def admin_question_answering_is_enabled?
           current_settings.try(:question_answering_enabled) &&
-              component_settings.try(:question_answering_enabled)
+            component_settings.try(:question_answering_enabled)
         end
 
         def participatory_texts_are_enabled?

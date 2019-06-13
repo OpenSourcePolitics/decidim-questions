@@ -88,8 +88,8 @@ module Decidim
 
       def votes_given
         @votes_given ||= QuestionVote.where(
-            question: Question.where(component: current_component),
-            author: current_user
+          question: Question.where(component: current_component),
+          author: current_user
         ).count
       end
 
@@ -134,8 +134,8 @@ module Decidim
       def filter_origin_values
         base = if component_settings.official_questions_enabled
                  [
-                     ["all", t("decidim.questions.application_helper.filter_origin_values.all")],
-                     ["official", t("decidim.questions.application_helper.filter_origin_values.official")]
+                   ["all", t("decidim.questions.application_helper.filter_origin_values.all")],
+                   ["official", t("decidim.questions.application_helper.filter_origin_values.official")]
                  ]
                else
                  [["all", t("decidim.questions.application_helper.filter_origin_values.all")]]
@@ -148,19 +148,19 @@ module Decidim
 
       def filter_state_values
         [
-            ["except_rejected", t("decidim.questions.application_helper.filter_state_values.except_rejected")],
-            ["accepted", t("decidim.questions.application_helper.filter_state_values.accepted")],
-            ["evaluating", t("decidim.questions.application_helper.filter_state_values.evaluating")],
-            ["rejected", t("decidim.questions.application_helper.filter_state_values.rejected")],
-            ["all", t("decidim.questions.application_helper.filter_state_values.all")]
+          ["except_rejected", t("decidim.questions.application_helper.filter_state_values.except_rejected")],
+          ["accepted", t("decidim.questions.application_helper.filter_state_values.accepted")],
+          ["evaluating", t("decidim.questions.application_helper.filter_state_values.evaluating")],
+          ["rejected", t("decidim.questions.application_helper.filter_state_values.rejected")],
+          ["all", t("decidim.questions.application_helper.filter_state_values.all")]
         ]
       end
 
       def filter_type_values
         [
-            ["all", t("decidim.questions.application_helper.filter_type_values.all")],
-            ["questions", t("decidim.questions.application_helper.filter_type_values.questions")],
-            ["amendments", t("decidim.questions.application_helper.filter_type_values.amendments")]
+          ["all", t("decidim.questions.application_helper.filter_type_values.all")],
+          ["questions", t("decidim.questions.application_helper.filter_type_values.questions")],
+          ["amendments", t("decidim.questions.application_helper.filter_type_values.amendments")]
         ]
       end
 

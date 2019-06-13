@@ -2,7 +2,7 @@
 
 module Decidim
   module Questions
-    class PublishQuestionEvent < Decidim::Events::SimpleEvent
+    class PublishQuestionEvent < Decidim::Questions::Admin::QuestionEvent
       include Decidim::Events::CoauthorEvent
 
       def resource_text

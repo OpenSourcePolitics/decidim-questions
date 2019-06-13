@@ -24,7 +24,7 @@ module Decidim
               role,
               collection.map { |user| [user.name, user.id] }.prepend([t("decidim.questions.admin.questions.form.all"), "all"]),
               { include_blank: false },
-              { multiple: true, class: "chosen-select" }
+              multiple: true, class: "chosen-select"
             )
           end
         end

@@ -16,7 +16,7 @@ module Decidim
 
       def title
         if %w(evaluating accepted).include?(model.state)
-          model.short_ref + ' • ' + present(model).title
+          model.short_ref + " • " + present(model).title
         else
           present(model).title
         end

@@ -50,15 +50,14 @@ module Decidim
 
         def send_mail_to_users_with_role
           recipients.each do |recipient|
-            Decidim::QuestionsMailer.note_created(recipient, question_note).deliver_later
+            Decidim::QuestionsMailer.note_created(recipient, question_note, current_participatory_space).deliver_later
           end
         end
 
         def recipients
           Decidim::ParticipatoryProcessUserRole
-              .where(decidim_participatory_process_id: current_participatory_space.id)
-              .map(&:user) - [form.current_user]
-
+            .where(decidim_participatory_process_id: current_participatory_space.id)
+            .map(&:user) - [form.current_user]
         end
       end
     end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 require "spec_helper"
 
 describe Decidim::Questions::Admin::UpdateQuestion do
@@ -90,7 +89,7 @@ describe Decidim::Questions::Admin::UpdateQuestion do
         let(:state) { "evaluating" }
 
         it "does not trace the update" do
-          expect { command.call }.to_not change(Decidim::ActionLog, :count)
+          expect { command.call }.not_to change(Decidim::ActionLog, :count)
           expect(question.reload.state).to eq("evaluating")
         end
       end
@@ -108,7 +107,7 @@ describe Decidim::Questions::Admin::UpdateQuestion do
         it "notifies them" do
           expect(Decidim::EventsManager).to receive(:publish).with(
             hash_including(
-              event: 'decidim.events.questions.forward_question',
+              event: "decidim.events.questions.forward_question",
               affected_users: array_including(
                 having_attributes(
                   id: committee_user.id,

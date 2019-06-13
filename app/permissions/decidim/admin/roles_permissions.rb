@@ -62,20 +62,11 @@ module Decidim
       # TODO: REVIEW PERMISSIONS
       def questions_action?
         return if permission_action.subject == :process &&
-            [:create, :update].include?(permission_action.action)
+                  [:create, :update].include?(permission_action.action)
 
-        is_allowed = [
-            :participatory_space,
-            :component,
-            :component_data,
-            :questions,
-            :question,
-            :participatory_space,
-            :process
-        ].include?(permission_action.subject)
+        is_allowed = [:participatory_space, :component, :component_data, :questions, :question, :participatory_space, :process].include?(permission_action.subject)
         allow! if is_allowed
       end
-
     end
   end
 end

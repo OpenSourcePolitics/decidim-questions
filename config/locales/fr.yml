@@ -49,6 +49,9 @@ fr:
       decidim/questions/question_mentioned_event: Question mentionnée
       decidim/questions/rejected_question_event: Question non recevable
       decidim/questions/voting_enabled_event: Activer le module de vote simple
+      decidim/questions/admin/upstream_accepted_event: Modération
+      decidim/questions/admin/upstream_pending_event: Modération
+      decidim/questions/admin/upstream_hidden_event: Modération
   activerecord:
     models:
       decidim/proposals/proposal_endorsement:
@@ -160,6 +163,28 @@ fr:
       timeago: il y a %{time}
     events:
       questions:
+        admin:
+          upstream_accepted:
+            email_intro: Votre message a été publié. Vous pouvez le consulter en vous rendant sur <a href="%{resource_url}">cette page</a>.
+            email_outro: Cordialement,
+            email_subject: Nous avons publié votre message sur le site du débat "%{participatory_space_title}"
+            notification_title: Nous avons publié votre <a href="%{resource_url}">message</a> sur le site du débat <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
+          upstream_pending:
+            affected_user:
+              email_intro: >-
+                Nous avons bien reçu votre question et nous vous en remercions.
+                Avant de procéder à sa publication, nous souhaitons nous assurer dans un premier temps
+                que son contenu respecte notre charte de modération.
+                Vous serez informé(e) par e-mail des suites données dans les plus brefs délais.
+                Nous vous remercions de votre participation au débat.
+              email_outro: Cordialement,
+              email_subject: Accusé réception de votre question sur le site du débat "%{participatory_space_title}"
+              notification_title: 'Accusé réception de votre question sur le site du débat <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>.'
+            follower:
+              email_intro: 'Une nouvelle question <a href="%{question_url}">%{question_title}</a> a été soumise par un internaute et requiert votre validation.'
+              email_outro: '<a href="%{question_admin_edit_url}">[Cliquez ici]</a> pour accéder à l''écran de traitement'
+              email_subject: "[%{participatory_space_slug}] Nouvelle question à valider et publier"
+              notification_title: '"<a href="%{resource_path}">%{resource_title}</a>" est en attente de modération.'
         collaborative_draft_access_accepted:
           email_intro: '%{requester_name} a été accepté en tant que collaborateur
             de <a href="%{resource_path}">%{resource_title}</a>.'
@@ -172,9 +197,9 @@ fr:
             href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_rejected:
           email_intro: '%{requester_name} a été refusé d''accès en tant que collaborateur
-            de <a href="%{resource_path}">%{resource_title}</a>.'
+            de <a href="%{resource_url}">%{resource_title}</a>.'
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur
-            de <a href="%{resource_path}">%{resource_title}</a>.
+            de <a href="%{resource_url}">%{resource_title}</a>.
           email_subject: "%{requester_name} a été rejetée pour accéder en tant que
             collaborateur de %{resource_title}."
           notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
@@ -183,34 +208,34 @@ fr:
         collaborative_draft_access_requested:
           email_intro: '%{requester_name} demandé l''accès en tant que collaborateur.
             Vous pouvez <strong>accepter ou rejeter la demande</strong> depuis la
-            page de <a href="%{resource_path}">%{resource_title}</a>.'
+            page de <a href="%{resource_url}">%{resource_title}</a>.'
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur
-            de <a href="%{resource_path}">%{resource_title}</a>.
+            de <a href="%{resource_url}">%{resource_title}</a>.
           email_subject: "%{requester_name} demandé un accès pour collaborer à %{resource_title}."
           notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a>
             demandé un accès pour collaborer à la question <a href="%{resource_path}">%{resource_title}</a>
             . S'il vous plaît <strong>accepter ou rejeter la demande</strong>.
         collaborative_draft_access_requester_accepted:
           email_intro: Vous avez été accepté pour accéder en tant que collaborateur
-            de la question <a href="%{resource_path}">%{resource_title}</a>.
+            de la question <a href="%{resource_url}">%{resource_title}</a>.
           email_outro: Vous avez reçu cette notification car vous avez demandé à devenir
-            collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
+            collaborateur de <a href="%{resource_url}">%{resource_title}</a>.
           email_subject: Vous avez été accepté comme collaborateur de %{resource_title}.
           notification_title: Vous avez été <strong>accepté d'accéder en tant que
             collaborateur</strong> de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_access_requester_rejected:
           email_intro: Vous avez été refusé à accéder en tant que collaborateur de
-            la question <a href="%{resource_path}">%{resource_title}</a>.
+            la question <a href="%{resource_url}">%{resource_title}</a>.
           email_outro: Vous avez reçu cette notification car vous avez demandé à devenir
-            collaborateur de <a href="%{resource_path}">%{resource_title}</a>.
+            collaborateur de <a href="%{resource_url}">%{resource_title}</a>.
           email_subject: Vous avez été rejeté en tant que collaborateur de %{resource_title}.
           notification_title: Vous avez été <strong>rejeté pour accéder en tant que
             collaborateur</strong> de <a href="%{resource_path}">%{resource_title}</a>.
         collaborative_draft_withdrawn:
-          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
-            retiré la question collaborative <a href="%{resource_path}">%{resource_title}</a>.
+          email_intro: <a href="%{author_url}">%{author_name} %{author_nickname}</a>
+            retiré la question collaborative <a href="%{resource_url}">%{resource_title}</a>.
           email_outro: Vous avez reçu cette notification car vous êtes collaborateur
-            de <a href="%{resource_path}">%{resource_title}</a>.
+            de <a href="%{resource_url}">%{resource_title}</a>.
           email_subject: "%{author_name} %{author_nickname} retiré la question collaborative
             %{resource_title}."
           notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a>
@@ -232,15 +257,12 @@ fr:
             lien.
           email_subject: Vous pouvez désormais soutenir des questions dans %{participatory_space_title}
           notification_title: Vous pouvez maintenant commencer à <a href="%{resource_path}">soutenir
-            les questions</a> dans <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+            les questions</a> dans <a href="%{participatory_space_path}">%{participatory_space_title}</a>
         forward_question:
-          email_intro: La question "%{resource_title}" vous a été transmise et attend
-            votre réponse.
-          email_outro: Vous venez de recevoir cette notification parce que vous avez
-            un rôle un jouer dans le traitement de la ressource citées.
-          email_subject: Une question est en attente de traitement
-          notification_title: La question <a href="%{resource_path}">%{resource_title}</a>
-            vous a été transmise et attend votre réponse.
+          email_intro: 'Une nouvelle question : <a href="%{question_url}">%{question_title}</a>, a été soumise par un internaute et requiert une réponse :'
+          email_outro: 'Pour accéder au formulaire de saisie de la réponse, [<a href="%{question_admin_answer_url}">cliquez ici</a>].<br/><br/>Cordialement,'
+          email_subject: "[%{participatory_space_slug}] Réponse à rédiger pour la question %{question_short_ref} %{question_title}"
+          notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Réponse à rédiger pour la question %{question_short_ref} %{question_title}'
         moved_question:
           email_intro: La question "%{resource_title}" a été déplacée dans "%{component_title}".
           email_subject: La question "%{resource_title}" a été déplacée
@@ -248,95 +270,64 @@ fr:
             a été déplacée dans "<a href="%{component_url}">%{component_title}</a>"
         question_accepted:
           affected_user:
-            email_intro: 'Votre question "%{resource_title}" a été retenue. Vous pouvez
-              lire la réponse sur cette page:'
-            email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
-              de "%{resource_title}".
-            email_subject: Une réponse a été publiée pour votre question
-            notification_title: Une réponse a été publiée <a href="%{resource_path}">%{resource_title}</a>
-              pour votre question.
+            email_intro: 'Une réponse à votre question a été publiée. Vous pouvez la consulter en <a href="%{question_url}">cliquant ici</a>.'
+            email_outro: Cordialement,
+            email_subject: Votre question "%{question_title}" a reçu une réponse
+            notification_title: Votre question <a href="%{question_path}">"%{question_title}"</a> a reçu une réponse
           follower:
-            email_intro: 'Une réponse a été publiée pour la question "%{resource_title}".
-              Vous pouvez lire la réponse sur cette page :'
-            email_outro: Vous venez de recevoir cette notification parce que vous
-              suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la
-              suivre en cliquant sur ce dernier lien.
-            email_subject: Une question que vous suivez a reçu une réponse
-            notification_title: Une réponse a été publiée pour la question <a href="%{resource_path}">%{resource_title}</a>.
+            email_intro: 'La réponse à la question <b>%{question_short_ref} %{question_title}</b> a été publiée. Vous pouvez la consulter en vous rendant sur <a href="%{question_url}"">cette page</a>.'
+            email_outro: Cordialement,
+            email_subject: "[%{participatory_space_slug}] La réponse à la question %{question_short_ref} %{question_title} a été publiée"
+            notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> La réponse à la question %{question_short_ref} %{question_title} a été publiée'
         question_answer_updated:
           admin:
-            email_intro: 'Le maître d''ouvrage a mis à jour la réponse à la question
-              %{question_short_ref} :'
+            email_intro: 'La réponse à la question <b>%{question_short_ref} %{question_title}</b> a été mise à jour:'
             email_outro: Cordialement,
-            email_subject: "[%{participatory_space_id}] La réponse à la question %{question_short_ref}
-              a été mise à jour"
-            notification_title: '[%{participatory_space_id}] La réponse à la question
-              <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour'
+            email_subject: "[%{participatory_space_slug}] La réponse à la question %{question_short_ref} %{question_title} a été mise à jour"
+            notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> La réponse à la question %{question_short_ref} %{question_title} a été mise à jour'
           committee:
-            email_intro: 'Le maître d''ouvrage a mis à jour sa réponse à la question
-              %{question_short_ref} :'
-            email_outro: Vous avez reçu cette notification parce qu'une ressource
-              attend votre validation
-            email_subject: La réponse à la question %{question_short_ref} a été mise
-              à jour attend votre validation
-            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a>
-              a été mise à jour attend votre validation
+            email_intro: 'Le maître d''ouvrage a mis à jour la réponse à la question <b>%{question_short_ref} %{question_title}</b>:'
+            email_outro: Cordialement,
+            email_subject: "[%{participatory_space_slug}] La réponse à la question %{question_short_ref} %{question_title} a été mise à jour"
+            notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> La réponse à la question %{question_short_ref} %{question_title} a été mise à jour'
           default:
-            email_intro: La réponse à la question "%{resource_title}" a été mise à
-              jour et attend une validation
+            email_intro: La réponse à la question "%{resource_title}" a été mise à jour et attend une validation
             email_outro: Cordialement,
             email_subject: Une réponse attend une validation
-            notification_title: La question <a href="%{resource_path}">%{question_short_ref}</a>
-              a été mise à jour et attend une validation.
+            notification_title: La question <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour et attend une validation.
           service:
-            email_intro: La réponse à la question %{question_short_ref} a été mise
-              à jour
-            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez
-              ici]</a>.
-            email_subject: La réponse à la question %{question_short_ref} a été mise
-              à jour
-            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a>
-              a été mise à jour
+            email_intro: La réponse à la question %{question_short_ref} a été mise à jour
+            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez ici]</a>.
+            email_subject: La réponse à la question %{question_short_ref} a été mise à jour
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été mise à jour
         question_answered:
           admin:
-            email_intro: 'Le maître d''ouvrage a soumis une réponse à la question
-              %{question_short_ref} :'
+            email_intro: 'Le maître d''ouvrage a soumis une réponse à la question %{question_short_ref} :'
             email_outro: Cordialement,
-            email_subject: Proposition de réponse du MO à la question %{question_short_ref}
-            notification_title: Proposition de réponse du MO à la question <a href="%{resource_path}">%{question_short_ref}</a>
+            email_subject: '[%{participatory_space_slug}] Proposition de réponse du MO à la question %{question_short_ref}'
+            notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Proposition de réponse du MO à la question <a href="%{resource_path}">%{question_short_ref}</a>'
           committee:
-            email_intro: 'Le maître d''ouvrage a soumis une réponse à la question
-              %{question_short_ref} :'
-            email_outro: Pour valider la réponse ou demander des compléments <a href="%{question_admin_privates_notes_url}">[cliquez
-              ici]</a>.
-            email_subject: La réponse à la question %{question_short_ref} attend votre
-              validation
-            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a>
-              attend votre validation
+            email_intro: 'Le maître d''ouvrage a soumis une réponse à la question %{question_short_ref} :'
+            email_outro: Pour valider la réponse ou demander des compléments <a href="%{question_admin_privates_notes_url}">[cliquez ici]</a>.
+            email_subject: '[%{participatory_space_slug}] Proposition de réponse du MO à la question %{question_short_ref}'
+            notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Proposition de réponse du MO à la question <a href="%{resource_path}">%{question_short_ref}</a>'
           default:
-            email_intro: La réponse à la question "%{resource_title}" a été envoyée
-              et attend une validation
+            email_intro: La réponse à la question "%{resource_title}" a été envoyée et attend une validation
             email_outro: Cordialement,
             email_subject: Une réponse attend une validation
             notification_title: La question <a href="%{resource_path}">%{question_short_ref}</a>
               a été envoyée et attend une validation.
           service:
             email_intro: La réponse à la question %{question_short_ref} a été envoyée
-            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez
-              ici]</a>.
+            email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez ici]</a>.
             email_subject: La réponse à la question %{question_short_ref} a été envoyée
-            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a>
-              a été envoyée
+            notification_title: La réponse à la question <a href="%{resource_path}">%{question_short_ref}</a> a été envoyée
         question_answered_committee:
           admin:
-            email_intro: 'La CPDP a soumis une réponse à la question %{question_short_ref}
-              :'
-            email_outro: Pour valider la réponse <a href="%{question_admin_answer_url}">[cliquez
-              ici]</a>. Pour demander des compléments <a href="%{question_admin_privates_notes_url}">[cliquez
-              ici]</a>.
-            email_subject: Proposition de réponse de la CPDP à la question %{question_short_ref}
-            notification_title: Proposition de réponse de la CPDP à la question <a
-              href="%{resource_path}">%{question_short_ref}</a>
+            email_intro: 'La CPDP a soumis une réponse à la question %{question_short_ref} :'
+            email_outro: Pour valider la réponse ou demander des compléments <a href="%{question_admin_privates_notes_url}">[cliquez ici]</a>.
+            email_subject: '[%{participatory_space_slug}] Proposition de réponse de la CPDP à la question %{question_short_ref}'
+            notification_title: '<a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Proposition de réponse de la CPDP à la question <a href="%{resource_path}">%{question_short_ref}</a>'
           committee:
             email_intro: La réponse à la question %{question_short_ref} a été envoyée
             email_outro: Pour modifier votre réponse, <a href="%{question_admin_answer_url}">[cliquez
@@ -408,11 +399,9 @@ fr:
           affected_user:
             email_intro: 'Votre question "%{resource_title}" a été considérée comme
               non recevable. Vous pouvez en consulter la raison sur cette page:'
-            email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur
-              de "%{resource_title}".
-            email_subject: Votre question a été considérée comme non recevable
-            notification_title: Votre question <a href="%{resource_path}">%{resource_title}</a>
-              a été considérée comme non recevable.
+            email_outro: Cordialement,
+            email_subject: Nous n'avons pas publié votre message sur le site du débat "%{participatory_space_title}"
+            notification_title: Rejet de votre question <a href="%{resource_path}">%{resource_title}</a> sur le site du débat <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>.
           follower:
             email_intro: 'La question "%{resource_title}" n''a pas été retenue. Vous
               pouvez lire le commentaire ici :'
@@ -568,10 +557,10 @@ fr:
             success: Texte participatif mis à jour avec succès.
         question_answers:
           edit:
-            accepted: Reçue
+            accepted: Acceptée
             answer_question: Répondre
             cancel: Annuler
-            rejected: Non recevable
+            rejected: Rejetée
             title: Réponse à la question %{title}
         question_notes:
           create:
@@ -691,7 +680,8 @@ fr:
         evaluating: En attente de réponse
         not_answered: A traiter
         pending: En attente de validation
-        rejected: Retirée
+        rejected: Rejetée
+        withdrawn: Retirée
       application_helper:
         filter_origin_values:
           all: Toutes
@@ -1059,14 +1049,14 @@ fr:
           version_index: Version %{index}
     questions_mailer:
       note:
-        created: A new private note has been created
+        created: '[%{participatory_space_slug}] Une nouvelle note privée est disponible pour la question "%{question_title}"'
       note_created:
         hello: Bonjour %{name}
-        question_note_body: 'Son contenu est : %{question_note_body}'
-        question_note_link: Voir la note
-        question_title: 'Une nouvelle note a été créée sur la question : %{question_title}'
+        question_note_body: '%{question_note_body}'
+        question_note_link: Cliquez ici pour accéder aux notes privées de cette question.
+        question_title: 'Une nouvelle note privée est disponible pour la question "%{question_title}"'
     scopes:
       global: Global
     shared:
       upstream_moderation:
-        pending_info: Pending info
+        pending_info: "Votre contribution sera visible une fois qu'elle aura été modérée."

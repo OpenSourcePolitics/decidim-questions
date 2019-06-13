@@ -5,7 +5,6 @@ module Decidim
     module ParticipatoryProcesses
       module Admin
         module UpstreamModerationsControllerExtend
-
           def permission_class_chain
             [
               Decidim::Admin::RolesPermissions,
@@ -13,7 +12,6 @@ module Decidim
               Decidim::Admin::Permissions
             ]
           end
-
         end # end module UpstreamModerationsControllerExtend
       end # end module Admin
     end # end module ParticipatoryProcesses

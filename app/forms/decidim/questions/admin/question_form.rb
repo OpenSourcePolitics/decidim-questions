@@ -54,14 +54,14 @@ module Decidim
 
           self.category_id = model.categorization.try(:decidim_category_id)
           self.scope_id = model.decidim_scope_id
-          self.state = 'evaluating' if model.try(:state).blank?
+          self.state = "evaluating" if model.try(:state).blank?
 
           if model.recipient == "committee"
             self.committee_users_ids = model.recipient_ids
           elsif model.recipient == "service"
             self.service_users_ids = model.recipient_ids
-          elsif model.recipient.blank? && state == 'evaluating'
-            self.recipient = 'none'
+          elsif model.recipient.blank? && state == "evaluating"
+            self.recipient = "none"
           end
 
           @suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
@@ -154,7 +154,7 @@ module Decidim
         private
 
         def available_users_for(role)
-          return [] unless current_participatory_space.present?
+          return [] if current_participatory_space.blank?
 
           Decidim::ParticipatoryProcessUserRole
             .includes(:user)

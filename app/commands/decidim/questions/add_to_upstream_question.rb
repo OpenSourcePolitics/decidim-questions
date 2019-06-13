@@ -22,7 +22,7 @@ module Decidim
         return broadcast(:invalid) unless @question.authored_by?(@current_user)
 
         transaction do
-          @question.add_to_upstream_moderation
+          add_to_upstream_moderation
           @question.update(
             title: reset(:title),
             body: reset(:body),
@@ -31,6 +31,15 @@ module Decidim
         end
 
         broadcast(:ok, @question)
+      end
+
+      def add_to_upstream_moderation
+        Decidim::UpstreamModeration.find_or_create_by!(
+          upstream_reportable: @question,
+          participatory_space: participatory_space
+        ).update!(hidden_at: Time.zone.now)
+
+        send_upstream_notifications
       end
 
       private
@@ -44,6 +53,28 @@ module Decidim
           # rubocop:enable Rails/SkipsModelValidations
         end
         attribute_value
+      end
+
+      def send_upstream_notifications
+        Decidim::EventsManager.publish(
+          event: "decidim.events.questions.admin.upstream_pending",
+          event_class: Decidim::Questions::Admin::UpstreamPendingEvent,
+          resource: @question,
+          affected_users: @question.authors,
+          followers: participatory_space_admins
+        )
+      end
+
+      def participatory_space_admins
+        @participatory_space_admins ||= participatory_space.admins
+      end
+
+      def participatory_space_moderators
+        @participatory_space_moderators ||= participatory_space.moderators
+      end
+
+      def participatory_space
+        @participatory_space ||= @question.try(:component).try(:participatory_space)
       end
     end
   end

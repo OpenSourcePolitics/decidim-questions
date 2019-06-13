@@ -2,7 +2,7 @@
 
 class MigrateQuestionRecipients < ActiveRecord::Migration[5.2]
   def change
-    Decidim::Questions::Question.where(state: "evaluating", recipient: ["committee", "service"]).find_each do |question|
+    Decidim::Questions::Question.where(state: "evaluating", recipient: %w(committee service)).find_each do |question|
       next unless question.component
       next unless question.component.participatory_space
 

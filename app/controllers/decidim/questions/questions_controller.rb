@@ -114,8 +114,7 @@ module Decidim
 
       def publish
         @step = :step_4
-        caller = component_settings.upstream_moderation ? AddToUpstreamQuestion : PublishQuestion
-        caller.call(@question, current_user) do
+        publish_command.call(@question, current_user) do
           on(:ok) do
             flash[:notice] = I18n.t("questions.publish.success", scope: "decidim")
             redirect_to question_path(@question)
@@ -272,6 +271,31 @@ module Decidim
 
       def set_participatory_text
         @participatory_text = Decidim::Questions::ParticipatoryText.find_by(component: current_component)
+      end
+
+      def publish_command
+        return Decidim::Questions::PublishQuestion unless need_moderation?
+        Decidim::Questions::AddToUpstreamQuestion
+      end
+
+      def need_moderation?
+        component_settings.upstream_moderation && !author_has_role?
+      end
+
+      def author_has_role?
+        !(participatory_space_admins & @question.authors).empty?
+      end
+
+      def participatory_space_admins
+        @participatory_space_admins ||= participatory_space.admins
+      end
+
+      def participatory_space_moderators
+        @participatory_space_moderators ||= participatory_space.moderators
+      end
+
+      def participatory_space
+        @participatory_space ||= current_component.participatory_space
       end
     end
   end

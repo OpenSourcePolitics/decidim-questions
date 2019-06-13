@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDecidimQuestions < ActiveRecord::Migration[5.2]
   def change
     create_table "decidim_questions_collaborative_draft_collaborator_requests", force: :cascade do |t|
@@ -51,7 +53,7 @@ class CreateDecidimQuestions < ActiveRecord::Migration[5.2]
       t.datetime "updated_at", null: false
       t.string "decidim_author_type", null: false
       t.index "decidim_question_id, decidim_author_id, COALESCE(decidim_user_group_id, ('-1'::integer)::bigint)", name: "decidim_questions_question_endorsmt_question_auth_ugroup_uniq", unique: true
-      t.index ["decidim_author_id", "decidim_author_type"], name: "index_decidim_questions_question_endorsements_on_decidim_author"
+      t.index %w(decidim_author_id decidim_author_type), name: "index_decidim_questions_question_endorsements_on_decidim_author"
       t.index ["decidim_question_id"], name: "decidim_questions_question_endorsement_question"
       t.index ["decidim_user_group_id"], name: "decidim_questions_question_endorsement_user_group"
     end
@@ -74,7 +76,7 @@ class CreateDecidimQuestions < ActiveRecord::Migration[5.2]
       t.datetime "updated_at", null: false
       t.boolean "temporary", default: false, null: false
       t.index ["decidim_author_id"], name: "decidim_questions_question_vote_author"
-      t.index ["decidim_question_id", "decidim_author_id"], name: "decidim_questions_question_vote_question_author_unique", unique: true
+      t.index %w(decidim_question_id decidim_author_id), name: "decidim_questions_question_vote_question_author_unique", unique: true
       t.index ["decidim_question_id"], name: "decidim_questions_question_vote_question"
     end
 

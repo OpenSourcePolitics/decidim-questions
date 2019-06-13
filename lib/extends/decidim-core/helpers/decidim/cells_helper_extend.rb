@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Decidim::CellsHelper.module_eval do
-
   def questions_controller?
     context[:controller].class.to_s == "Decidim::Questions::QuestionsController"
   end

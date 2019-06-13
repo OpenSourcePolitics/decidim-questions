@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Decidim
   module Questions
     module AuthorCellExtend
-
       def creation_date?
         return true if posts_controller?
         return unless from_context
@@ -9,7 +10,6 @@ module Decidim
         return unless show_action?
         true
       end
-
     end
   end
 end
