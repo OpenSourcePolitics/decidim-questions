@@ -18,6 +18,7 @@ module Decidim
           @question = question
           @attached_to = question
           @state_changed = (@question.state != @form.state)
+          @upstream_notified = []
         end
 
         # Executes the command. Broadcasts these events:
@@ -66,7 +67,6 @@ module Decidim
           #   )
           # end
           answer_question
-          notify_followers
           increment_score
         end
 
@@ -138,9 +138,11 @@ module Decidim
             @question.update!(
               state: @form.state,
               answer: @form.answer,
-              answered_at: Time.current
+              answered_at: Time.current,
+              first_interacted_at: first_interacted_at
             )
           end
+          notify_followers
         end
 
         def notify_followers
@@ -149,28 +151,34 @@ module Decidim
           if @question.accepted?
             publish_event(
               "decidim.events.questions.question_accepted",
-              Decidim::Questions::AcceptedQuestionEvent
+              Decidim::Questions::AcceptedQuestionEvent,
+              @question.notifiable_identities,
+              @question.followers + Decidim::User.where(id: @form.recipient_ids).to_a - @question.notifiable_identities
             )
           elsif @question.rejected?
             publish_event(
               "decidim.events.questions.question_rejected",
-              Decidim::Questions::RejectedQuestionEvent
+              Decidim::Questions::RejectedQuestionEvent,
+              @question.notifiable_identities,
+              @question.followers + Decidim::User.where(id: @form.recipient_ids).to_a - @question.notifiable_identities
             )
           elsif @question.evaluating?
             publish_event(
               "decidim.events.questions.question_evaluating",
-              Decidim::Questions::EvaluatingQuestionEvent
+              Decidim::Questions::EvaluatingQuestionEvent,
+              @question.notifiable_identities - @upstream_notified,
+              @question.followers - (Decidim::User.where(id: @form.recipient_ids).to_a + @question.notifiable_identities)
             )
           end
         end
 
-        def publish_event(event, event_class)
+        def publish_event(event, event_class, affected_users, followers)
           Decidim::EventsManager.publish(
             event: event,
             event_class: event_class,
             resource: @question,
-            affected_users: @question.notifiable_identities,
-            followers: @question.followers + Decidim::User.where(id: @form.recipient_ids).to_a - @question.notifiable_identities
+            affected_users: affected_users.uniq,
+            followers: followers.uniq
           )
         end
 
@@ -222,6 +230,7 @@ module Decidim
             resource: @question,
             affected_users: @question.authors
           )
+          @upstream_notified += @question.authors.kind_of?(Array) ? @question.authors : [@question.authors]
         end
       end
     end

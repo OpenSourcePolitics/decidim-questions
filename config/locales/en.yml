@@ -53,19 +53,19 @@ en:
       decidim/questions/admin/upstream_hidden_event: Moderation
   activerecord:
     models:
-      decidim/proposals/proposal_endorsement:
+      decidim/questions/question_endorsement:
         one: Endorsement
         other: Endorsements
-      decidim/proposals/proposal_note:
+      decidim/questions/question_note:
         one: Note
         other: Notes
-      decidim/proposals/proposal_vote:
+      decidim/questions/question_vote:
         one: Vote
         other: Votes
       decidim/questions/collaborative_draft:
         one: Collaborative draft
         other: Collaborative drafts
-      decidim/questions/proposal:
+      decidim/questions/question:
         one: Question
         other: Questions
   decidim:

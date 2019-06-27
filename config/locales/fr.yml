@@ -54,19 +54,19 @@ fr:
       decidim/questions/admin/upstream_hidden_event: Modération
   activerecord:
     models:
-      decidim/proposals/proposal_endorsement:
+      decidim/questions/question_endorsement:
         one: Soutien
         other: Soutiens
-      decidim/proposals/proposal_note:
+      decidim/questions/question_note:
         one: Note
         other: Notes
-      decidim/proposals/proposal_vote:
+      decidim/questions/question_vote:
         one: Vote
         other: Votes
       decidim/questions/collaborative_draft:
         one: Brouillon partagé
         other: Brouillons partagés
-      decidim/questions/proposal:
+      decidim/questions/question:
         one: Question
         other: Questions
   decidim:
@@ -160,19 +160,19 @@ fr:
             votes_enabled: votes enabled
             votes_hidden: votes hidden
     datetime:
-      timeago: il y a %{time}
+      timeago: 'il y a %{time}'
     events:
       questions:
         admin:
           upstream_accepted:
-            email_intro: Votre message a été publié. Vous pouvez le consulter en vous rendant sur <a href="%{resource_url}">cette page</a>.
-            email_outro: Cordialement,
-            email_subject: Nous avons publié votre message sur le site du débat "%{participatory_space_title}"
-            notification_title: Nous avons publié votre <a href="%{resource_url}">message</a> sur le site du débat <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
+            email_intro: 'Votre question "%{question_title}" a été publiée par les modérateur. Vous serez notifié quand elle recevra une réponse.'
+            email_outro: 'Vous avez reçu cette notification parce que vous êtes l''auteur de "%{resource_title}".'
+            email_subject: 'Nous avons publié votre question "%{question_title}" sur le site du débat "%{participatory_space_title}"'
+            notification_title: 'Votre question <a href="%{question_url}">%{question_title}</a> a été publiée par les modérateur. Vous serez notifié quand elle recevra une réponse.'
           upstream_pending:
             affected_user:
               email_intro: >-
-                Nous avons bien reçu votre question et nous vous en remercions.
+                Nous avons bien reçu votre question "%{question_title}" et nous vous en remercions.
                 Avant de procéder à sa publication, nous souhaitons nous assurer dans un premier temps
                 que son contenu respecte notre charte de modération.
                 Vous serez informé(e) par e-mail des suites données dans les plus brefs délais.
@@ -397,13 +397,13 @@ fr:
             a été publiée dans %{participatory_space_title}
         question_rejected:
           affected_user:
-            email_intro: 'Votre question "%{resource_title}" a été considérée comme
+            email_intro: 'Votre question <b>%{question_title}</b> a été considérée comme
               non recevable. Vous pouvez en consulter la raison sur cette page:'
             email_outro: Cordialement,
             email_subject: Nous n'avons pas publié votre message sur le site du débat "%{participatory_space_title}"
             notification_title: Rejet de votre question <a href="%{resource_path}">%{resource_title}</a> sur le site du débat <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>.
           follower:
-            email_intro: 'La question "%{resource_title}" n''a pas été retenue. Vous
+            email_intro: 'La question <b>%{question_title}</b> n''a pas été retenue. Vous
               pouvez lire le commentaire ici :'
             email_outro: Vous venez de recevoir cette notification parce que vous
               suivez "%{resource_title}". Vous pouvez à tout moment arrêter de la

@@ -49,15 +49,17 @@ module Decidim
         end
 
         def send_mail_to_users_with_role
+
+          recipients = Decidim::ParticipatoryProcessUserRole.where(participatory_process: current_participatory_space, role: :admin).pluck(:decidim_user_id)
+          recipients += @form.current_organization.admins.pluck(:id)
+          recipients += Decidim::ParticipatoryProcessUserRole.where(participatory_process: current_participatory_space, role: :committee).pluck(:decidim_user_id)
+          recipients += question.recipient_ids if question.recipient == 'service'
+
+          recipients = Decidim::User.where(id: recipients.uniq).to_a
+
           recipients.each do |recipient|
             Decidim::QuestionsMailer.note_created(recipient, question_note, current_participatory_space).deliver_later
           end
-        end
-
-        def recipients
-          Decidim::ParticipatoryProcessUserRole
-            .where(decidim_participatory_process_id: current_participatory_space.id)
-            .map(&:user) - [form.current_user]
         end
       end
     end

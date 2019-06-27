@@ -251,7 +251,7 @@ module Decidim
           SELECT EXISTS (
             SELECT 1 FROM decidim_amendments
             WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Questions::Question'
-            AND decidim_amendments.decidim_emendation_id = decidim_questions_proposals.id
+            AND decidim_amendments.decidim_emendation_id = decidim_questions_questions.id
           )
         )
         SQL

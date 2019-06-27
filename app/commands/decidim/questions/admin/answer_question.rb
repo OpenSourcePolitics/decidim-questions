@@ -14,6 +14,7 @@ module Decidim
           @form = form
           @question = question
           @is_update = question.try(:state) == "pending"
+          @upstream_notified = []
         end
 
         # Executes the command. Broadcasts these events:
@@ -56,7 +57,6 @@ module Decidim
           return unless @question.state == "pending"
 
           recipients = []
-          recipients_info = {}
 
           admin_list = Decidim::ParticipatoryProcessUserRole.where(participatory_process: @form.current_participatory_space, role: :admin).pluck(:decidim_user_id)
           admin_list += @form.current_organization.admins.pluck(:id)
@@ -132,8 +132,8 @@ module Decidim
             event: event,
             event_class: event_class,
             resource: @question,
-            affected_users: @question.notifiable_identities,
-            followers: @question.followers - @question.notifiable_identities
+            affected_users: @question.notifiable_identities - @upstream_notified,
+            followers: (@question.followers + Decidim::User.where(id: @question.recipient_ids).to_a - @question.notifiable_identities).uniq
           )
         end
 
@@ -185,6 +185,7 @@ module Decidim
             resource: @question,
             affected_users: @question.authors
           )
+          @upstream_notified += @question.authors.kind_of?(Array) ? @question.authors : [@question.authors]
         end
       end
     end
