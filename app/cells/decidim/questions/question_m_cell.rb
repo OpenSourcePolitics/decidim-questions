@@ -15,7 +15,7 @@ module Decidim
       private
 
       def title
-        if %w(evaluating accepted).include?(model.state)
+        if %w(evaluating accepted pending).include?(model.state)
           model.short_ref + " • " + present(model).title
         else
           present(model).title

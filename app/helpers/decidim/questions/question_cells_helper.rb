@@ -62,6 +62,8 @@ module Decidim
           ["alert"]
         when "evaluating"
           ["warning"]
+        when "pending"
+          ["warning"]
         when "withdrawn"
           ["alert"]
         else
