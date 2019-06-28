@@ -70,7 +70,7 @@ module Decidim
         def edit
           enforce_permission_to :edit, :question
           @form = form(Admin::QuestionForm).from_model(question)
-          @form.attachment = form(AttachmentForm).from_params({})
+          @form.attachment = form(AttachmentForm).from_model(question.attachments.first)
         end
 
         def update
