@@ -156,6 +156,22 @@ module Decidim
               @question.followers + Decidim::User.where(id: @form.recipient_ids).to_a - @question.notifiable_identities
             )
           elsif @question.rejected?
+            if @question.upstream_pending?
+              Decidim.traceability.perform_action!(
+                "hide",
+                @question.upstream_moderation,
+                @form.current_user,
+                extra: {
+                  upstream_reportable_type: @question.class.name
+                }
+              ) do
+                @question.upstream_moderation.update!(
+                  hidden_at: Time.current,
+                  pending: false
+                )
+              end
+            end
+
             publish_event(
               "decidim.events.questions.question_rejected",
               Decidim::Questions::RejectedQuestionEvent,
