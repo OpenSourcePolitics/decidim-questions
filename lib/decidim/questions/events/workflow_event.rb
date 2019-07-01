@@ -7,7 +7,7 @@ module Decidim
         include Decidim::Questions::Events::QuestionEvent
 
         i18n_attributes :user_name, :user_nickname
-        i18n_attributes :participatory_space_slug, :participatory_space_id
+        i18n_attributes :participatory_space_path, :participatory_space_slug, :participatory_space_id
 
         def is_workflow?
           extra.try(:layout) == "workflow"
@@ -27,6 +27,13 @@ module Decidim
 
         def participatory_space_id
           participatory_space.try(:id)
+        end
+
+        # Caches the URL for the resource's participatory space.
+        def participatory_space_path
+          return unless participatory_space
+
+          @participatory_space_path ||= ResourceLocatorPresenter.new(participatory_space).path
         end
 
         private
@@ -49,8 +56,9 @@ module Decidim
             question_admin_privates_notes_url: question_admin_privates_notes_url,
             participatory_space_title: participatory_space_title,
             participatory_space_url: participatory_space_url,
-            participatory_space_slug: participatory_space_url,
-            participatory_space_id: participatory_space_url,
+            participatory_space_path: participatory_space_path,
+            participatory_space_slug: participatory_space_slug,
+            participatory_space_id: participatory_space_id,
             scope: i18n_scope
           }
         end
