@@ -25,6 +25,8 @@ module Decidim
 
       def apply_question_permissions(permission_action)
         case permission_action.action
+        when :show
+          can_see_question?
         when :create
           can_create_question?
         when :edit
@@ -64,6 +66,10 @@ module Decidim
         questions = Question.where(component: component)
         votes_count = QuestionVote.where(author: user, question: questions).size
         component_settings.vote_limit - votes_count
+      end
+
+      def can_see_question?
+        toggle_allow(question && (!question.upstream_moderation_activated? || question.upstream_not_hidden_for?(user)))
       end
 
       def can_create_question?
