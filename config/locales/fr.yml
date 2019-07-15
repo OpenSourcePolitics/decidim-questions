@@ -37,7 +37,8 @@ fr:
               needs_to_be_reattached: Doit être téléchargé de nouveau
     models:
       decidim/questions/accepted_question_event: Question acceptée
-      decidim/questions/admin/moved_question_event: Question moved
+      decidim/questions/admin/question_answered_event: Réponse à une question
+      decidim/questions/admin/moved_question_event: Ressource déplacée
       decidim/questions/admin/update_question_category_event: Catégorie de la question
         modifiée
       decidim/questions/creation_enabled_event: Autoriser la création de nouvelles
@@ -674,7 +675,8 @@ fr:
             %{space_name} en tant que question officielle"
           update: "%{user_name} mis à jour la question officielle %{resource_name}
             dans l'espace %{space_name}"
-        question_note: create
+        question_note:
+          create: "%{user_name} a ajoutée une note privée à la question %{resource_name}  dans l'espace %{space_name}"
       answers:
         accepted: Retenue
         evaluating: En attente de réponse
