@@ -9,7 +9,7 @@ module Decidim
         end
 
         def resource_url
-          EngineRouter.admin_proxy(component).question_question_notes_url(question_id: resource.id, id: resource.id)
+          question_admin_answer_url
         end
       end
     end

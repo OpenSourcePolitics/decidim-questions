@@ -76,6 +76,7 @@ module Decidim
             @form.current_user,
             title: title_with_hashtags,
             body: body_with_hashtags,
+            reference: @question.reference,
             category: @form.category,
             recipient: @form.recipient,
             recipient_ids: @form.recipient_ids.compact,
@@ -87,6 +88,7 @@ module Decidim
         def update_without_versioning
           PaperTrail.request(enabled: false) do
             @question.update!(
+              reference: @question.reference,
               recipient: @form.recipient,
               recipient_ids: @form.recipient_ids.compact,
               state: @form.state,
