@@ -55,7 +55,7 @@ module Decidim
       end
 
       def show
-        # enforce_permission_to :show, :question, question: @question
+        enforce_permission_to :show, :question, question: @question
         @report_form = form(Decidim::ReportForm).from_params(reason: "spam")
       end
 

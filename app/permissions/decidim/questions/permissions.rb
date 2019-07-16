@@ -4,6 +4,7 @@ module Decidim
   module Questions
     class Permissions < Decidim::DefaultPermissions
       def permissions
+        can_see_question? if permission_action.subject == :question && permission_action.action == :show
         return permission_action unless user
 
         # Delegate the admin permission checks to the admin permissions class
@@ -25,8 +26,6 @@ module Decidim
 
       def apply_question_permissions(permission_action)
         case permission_action.action
-        when :show
-          can_see_question?
         when :create
           can_create_question?
         when :edit
@@ -50,6 +49,39 @@ module Decidim
         @question ||= context.fetch(:question, nil)
       end
 
+      # It's an admin user if it's an organization admin or is a space admin
+      # for the current `process`.
+      def admin_user?
+        user.admin? || (process ? can_manage_process?(role: :admin) : has_manageable_processes?)
+      end
+
+      # Checks if it has any manageable process, with any possible role.
+      def has_manageable_processes?(role: :any)
+        return unless user
+
+        participatory_processes_with_role_privileges(role).any?
+      end
+
+      # Whether the user can manage the given process or not.
+      def can_manage_process?(role: :any)
+        return unless user
+
+        participatory_processes_with_role_privileges(role).include? process
+      end
+
+      # Returns a collection of Participatory processes where the given user has the
+      # specific role privilege.
+      def participatory_processes_with_role_privileges(role)
+        Decidim::ParticipatoryProcessesWithUserRole.for(user, role)
+      end
+
+      def public_list_processes_action?
+        return unless permission_action.action == :list &&
+                      permission_action.subject == :process
+
+        allow!
+      end
+
       def voting_enabled?
         return unless current_settings
         current_settings.votes_enabled? && !current_settings.votes_blocked?
@@ -69,7 +101,14 @@ module Decidim
       end
 
       def can_see_question?
-        toggle_allow(question && (!question.upstream_moderation_activated? || question.upstream_not_hidden_for?(user)))
+        return unless question
+        if %w(accepted evaluating rejected).include?(question.state)
+          allow!
+        elsif user
+          toggle_allow(question.authored_by?(user) || admin_user? || can_manage_process?(role: :committee) || can_manage_process?(role: :service) || can_manage_process?(role: :moderator))
+        else
+          disallow!
+        end
       end
 
       def can_create_question?
@@ -152,6 +191,14 @@ module Decidim
         return toggle_allow(false) if collaborative_draft.editable_by?(user)
         return toggle_allow(false) if collaborative_draft.requesters.include? user
         toggle_allow(collaborative_draft && !collaborative_draft.editable_by?(user))
+      end
+
+      def process
+        @process ||= context.fetch(:current_participatory_space, nil) || context.fetch(:process, nil)
+      end
+
+      def process_group
+        @process_group ||= context.fetch(:process_group, nil)
       end
     end
   end
