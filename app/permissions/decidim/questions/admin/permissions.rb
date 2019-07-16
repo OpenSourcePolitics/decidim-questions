@@ -89,12 +89,13 @@ module Decidim
           allow! if permission_action.subject == :component && permission_action.action == :read
           allow! if permission_action.subject == :component && permission_action.action == :manage
 
+          allow! if permission_action.subject == :questions && permission_action.action == :read
+
           allow! if permission_action.subject == :question_note && permission_action.action == :create
 
           if is_recipient?
 
             allow! if permission_action.subject == :question && permission_action.action == :read
-            allow! if permission_action.subject == :questions && permission_action.action == :read
 
             if admin_question_answering_is_enabled?
               allow! if permission_action.subject == :question && permission_action.action == :answer
