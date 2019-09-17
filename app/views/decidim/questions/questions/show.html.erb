@@ -34,7 +34,7 @@ edit_link(
   <% end %>
 </div>
 <div class="row column">
-  <strong><%= t "created_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.created_at, format: :decidim_short %>
+  <strong><%= t "created_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.published_at, format: :decidim_short %>
   <% unless @question.first_interacted_at.nil? %>
     &emsp;
     <strong><%= t "first_interacted_at", scope:"decidim.questions.admin.shared.info_question" %>: </strong> <%= l @question.first_interacted_at, format: :decidim_short %>
