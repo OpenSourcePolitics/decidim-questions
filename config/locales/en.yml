@@ -165,6 +165,13 @@ en:
     datetime:
       timeago: "%{time} ago"
     events:
+      admin:
+        upstream_hidden:
+          affected_users:
+            email_intro: We were unable to publish your comment because its content does not comply with our moderation policy.
+            email_outro: The moderation team
+            email_subject: We did not publish your message on the debate site "%{participatory_space_title}"
+            notification_title: We did not publish your message on the debate site <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
       questions:
         admin:
           upstream_accepted:

@@ -163,6 +163,13 @@ fr:
     datetime:
       timeago: 'il y a %{time}'
     events:
+      admin:
+        upstream_hidden:
+          affected_users:
+            email_intro: Nous n’avons pas pu procéder à la publication de votre commentaire car son contenu ne respecte pas notre charte de modération.
+            email_outro: L'équipe de modération
+            email_subject: Nous n'avons pas publié votre message sur le site du débat "%{participatory_space_title}"
+            notification_title: Nous n'avons pas publié votre message sur le site du débat <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
       questions:
         admin:
           upstream_accepted:
