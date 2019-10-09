@@ -31,6 +31,7 @@ module Decidim
                 url: Decidim::ResourceLocatorPresenter.new(question.participatory_space).url
             },
             nickname: question_nickname,
+            name: question_name,
             component: { id: component.id },
             title: present(question).title,
             body: present(question).body,
@@ -79,6 +80,13 @@ module Decidim
           return author.name if author.respond_to? :name
 
           nil
+        end
+      end
+
+      def question_name
+        authors = question.authors
+        authors.map do |author|
+          author.name
         end
       end
     end
