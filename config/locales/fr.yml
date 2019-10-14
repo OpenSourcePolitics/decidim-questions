@@ -31,7 +31,7 @@ fr:
         participatory_process_user_role:
           roles:
             service: service
-            committee: committee
+            committee: comité
         participatory_process:
           fields:
             created_at: Créé à
