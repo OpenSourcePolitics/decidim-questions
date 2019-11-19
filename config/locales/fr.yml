@@ -1,7 +1,69 @@
 fr:
+  activemodel:
+    attributes:
+      collaborative_draft:
+        body: Body of the text
+        category_id: Category
+        decidim_scope_id: Sector
+        has_address: Enter an address
+        state: State
+        title: Title
+        user_group_id: Create a collaborative question like
+      question:
+        answer: Answer
+        answered_at: Answered to
+        automatic_hashtags: Hashtags added automatically
+        body: Body of the text
+        category_id: Category
+        has_address: Enter an address
+        scope_id: Sector
+        state: State
+        suggested_hashtags: Suggested Hashtags
+        title: Title
+        user_group_id: Create a question as a
+      question_answer:
+        answer: Answer
+      questions_copy:
+        copy_questions: I understand that this will import all questions from the selected functionality to the current functionality and that this action cannot be reversed.
+        origin_component_id: Functionality whose questions are to be copied
+    errors:
+      models:
+        question:
+          attributes:
+            attachment:
+              needs_to_be_reattached: Must be uploaded again
+    models:
+      decidim/questions/accepted_question_event: Question accepted
+      decidim/questions/admin/moved_question_event: Question moved
+      decidim/questions/admin/update_question_category_event: Category of the modified question
+      decidim/questions/creation_enabled_event: Allow the creation of new questions
+      decidim/questions/endorsing_enabled_event: Enable the Support module
+      decidim/questions/evaluating_question_event: Question waiting to be answered
+      decidim/questions/publish_question_event: Published question
+      decidim/questions/question_endorsed_event: Sustained question
+      decidim/questions/question_mentioned_event: Question mentioned
+      decidim/questions/rejected_question_event: Question not admissible
+      decidim/questions/voting_enabled_event: Enable the simple voting module
+      decidim/questions/admin/upstream_accepted_event: Moderation
+      decidim/questions/admin/upstream_pending_event: Moderation
+      decidim/questions/admin/upstream_hidden_event: Moderation
   activerecord:
     models:
-      decidim/questions/collaborative_draft: propositions collaboratives
+      decidim/questions/question_endorsement:
+        one: Endorsement
+        other: Endorsements
+      decidim/questions/question_note:
+        one: Note
+        other: Notes
+      decidim/questions/question_vote:
+        one: Vote
+        other: Votes
+      decidim/questions/collaborative_draft:
+        one: Collaborative draft
+        other: Collaborative drafts
+      decidim/questions/question:
+        one: Question
+        other: Questions
   decidim:
     admin:
       actions:
@@ -30,8 +92,8 @@ fr:
       models:
         participatory_process_user_role:
           roles:
-            service: service
-            committee: comité
+            committee: Steering Committee
+            service: Service
         participatory_process:
           fields:
             created_at: Créé à
@@ -45,6 +107,10 @@ fr:
           private: Privé
           public: Public
           published: Publié
+        participatory_process_user_role:
+          roles:
+            committee: Committee
+            service: Service
       titles:
         participatory_processes: Processus participatifs
     components:
@@ -93,6 +159,259 @@ fr:
             votes_hidden: votes masqués
     datetime:
       timeago: "il y a %{time}"
+    events:
+      admin:
+        upstream_hidden:
+          affected_users:
+            email_intro: We were unable to publish your comment because its content does not comply with our moderation policy.
+            email_outro: The moderation team
+            email_subject: We did not publish your message on the debate site "%{participatory_space_title}"
+            notification_title: We did not publish your message on the debate site <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
+      questions:
+        admin:
+          upstream_accepted:
+            email_intro: Your message has been published. You can consult it by going to <a href="%{resource_url}">this page</a>.
+            email_outro: Sincerely,
+            email_subject: We published your message on the debate site "%{participatory_space_title}"
+            notification_title: We have published your <a href="%{resource_url}">message</a> on the debate site <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
+          upstream_pending:
+            affected_users:
+              email_intro: We have received your question and we thank you for it. Before proceeding with its publication, we would like to ensure that its content complies with our moderation charter. You will be informed by e-mail of the action taken as soon as possible. We thank you for your participation in the debate.
+              email_outro: Sincerely,
+              email_subject: Acknowledged receipt of your question on the debate site "%{participatory_space_title}"
+              notification_title: Acknowledged receipt of your question on the debate site <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>
+            followers:
+              email_intro: A new question <a href="%{url_question}">%{title_question}</a> was submitted by an Internet user and requires your validation.
+              email_outro: <a href="%{manage_resource_url}">[Click here]</a> to access the processing screen
+              email_subject: "%{participatory_space_slug}] New question to validate and publish"
+              notification_title: '"<a href="%{resource_path}">%{resource_title}</a>" is awaiting moderation.'
+        collaborative_draft_access_accepted:
+          email_intro: '%{requester_name} was accepted as a collaborator of <a href="%{resource_path}">%{resource_title}</a>.'
+          email_outro: You received this notification because you are a collaborator of <a href="%{resource_path}">%{resource_title}</a>.
+          email_subject: "%{requester_name} has been accepted to access as a collaborator of %{resource_title}."
+          notification_title: <a href="%{requester_path}">%{requester_name}  %{requester_nickname}</a> has been <strong>admised to access as a collaborator</strong> from <a href="%{resource_path}">%{resource_title}</a>.
+        collaborative_draft_access_rejected:
+          email_intro: '%{requester_name} was denied access as a collaborator of <a href="%{resource_url}">%{resource_title}</a>.'
+          email_outro: You have received this notification because you are a collaborator of <a href="%{resource_url}">%{resource_title}</a>.
+          email_subject: "%{requester_name} was rejected to access as a collaborator of %{resource_title}."
+          notification_title: <a href="%{requester_path}">%{requester_name}  %{requester_nickname}</a> has been <strong> rejected to access as a collaborator </strong> from <a href="%{resource_path}>">%{resource_title}</a>.
+        collaborative_draft_access_requested:
+          email_intro: '%{request_name} requested access as a collaborator. You can <strong>accept or reject the request</strong> from the page of <a href="%{resource_url}">%{resource_title}</a>.'
+          email_outro: You have received this notification because you are a collaborator of <a href="%{resource_url}">%{resource_title}</a>.
+          email_subject: "%{request_name} requested access to collaborate on %{resource_title}."
+          notification_title: <a href="%{requester_path}">%{requester_name}  %{requester_nickname}</a> requested access to collaborate on the question <a href="%{resource_path}">%{resource_title}</a> . Please <strong>accept or reject the request</strong>.
+        collaborative_draft_access_requester_accepted:
+          email_intro: You have been accepted to access as a collaborator of the question <a href="%{resource_url}>">%{resource_title}</a>.
+          email_outro: You received this notification because you requested to become a collaborator of <a href="%{resource_url}>">%{resource_title}</a>.
+          email_subject: You have been accepted as a collaborator of %{resource_title}.
+          notification_title: You have been <strong>accepted to access as a collaborator</strong> from <a href="%{resource_path}">%{resource_title}</a>.
+        collaborative_draft_access_requester_rejected:
+          email_intro: You have been denied access as a contributor to the question <a href="%{resource_url}>">%{resource_title}</a>.
+          email_outro: You received this notification because you requested to become a collaborator of <a href="%{resource_url}>">%{resource_title}</a>.
+          email_subject: You have been rejected as a collaborator of %{resource_title}.
+          notification_title: You have been <strong>rejected to access as a collaborator</strong> from <a href="%{resource_path}">%{resource_title}</a>.
+        collaborative_draft_withdrawn:
+          email_intro: <a href="%{author_url}%{author_name}%{author_name} %{author_nickname}</a> removed the collaborative question <a href="%{resource_url}>%{resource_title}></a>.
+          email_outro: You have received this notification because you are a collaborator of <a href="%{resource_url}">%{resource_title}</a>.
+          email_subject: "%{author_name} %{author_nickname} removed the collaborative question %{resource_title}."
+          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> <strong>withdrawn</strong> the collaborative question <a href="%{resource_path}">%{resource_title}</a>.
+        creation_enabled:
+          email_intro: 'You can now create new questions in %{participatory_space_title} ! Start participating on this page:'
+          email_outro: You received this notification because you are following %{participatory_space_title}. You can stop receiving notifications by clicking on the previous link.
+          email_subject: The questions are now available in %{participatory_space_title}
+          notification_title: You can now create from <a href="%{resource_path}">new questions</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+        endorsing_enabled:
+          email_intro: 'You can support the different questions in %{participatory_space_title} ! Start participating by going to this page:'
+          email_outro: You received this notification because you are following %{participatory_space_title}. You can stop receiving notifications by clicking on this last link.
+          email_subject: You can now support questions in %{participatory_space_title}
+          notification_title: You can now start at <a href="%{resource_path}">support questions</a> in <a href="%{participatory_space_path}">%{participatory_space_title}>
+        forward_question:
+          email_intro: 'A new question: <a href="%{url_question}">%{title_question}</a>, was submitted by an Internet user and requires an answer :'
+          email_outro: To access the response entry form,[<a href="%{question_admin_answer_url}">click here</a>].<br/><br/>>Cordially,
+          email_subject: "%{participatory_space_slug}] Answer to be written for question %{question_short_ref} %{question_title}"
+          notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Answer to be written for question %{question_short_ref} %{question_title}
+        moved_question:
+          email_intro: The question "%{title_resource}" has been moved to "%{title_component}".
+          email_subject: The question "%{resource_title}" has been moved
+          notification_title: The question "<a href="%{resource_path}>%{resource_title}</a>" has been moved to "<a href="%{component_url}">%{component_title}</a>"
+        question_accepted:
+          affected_user:
+            email_intro: An answer to your question has been published. You can consult it in <a href="%{question_url}">clicking here</a>.
+            email_outro: Sincerely,
+            email_subject: Your question "%{title_question}" has been answered
+            notification_title: Your question <a href="%{question_path}">"%{question_title}"</a> has been answered
+          follower:
+            email_intro: The answer to question <b>%{question_short_ref} %{question_title}</b> has been published. You can consult it by going to <a href="%{question_url}"">this page</a>.
+            email_outro: Sincerely,
+            email_subject: "%{participatory_space_slug}] The answer to question %{question_short_ref} %{question_title} was published"
+            notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> The answer to question %{question_short_ref} %{question_title} was published
+        question_answer_updated:
+          admin:
+            email_intro: 'The answer to question <b>%{question_short_ref} %{question_title}</b> has been updated:'
+            email_outro: Sincerely,
+            email_subject: "%{participatory_space_slug}] The answer to question %{question_short_ref} %{question_title} has been updated"
+            notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> The answer to question %{question_short_ref} %{question_title} was updated
+          committee:
+            email_intro: 'The contracting authority updated the answer to question <b>%{question_short_ref} %{question_title}</b>:'
+            email_outro: Sincerely,
+            email_subject: "%{participatory_space_slug}] The answer to question %{question_short_ref} %{question_title} has been updated"
+            notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> The answer to question %{question_short_ref} %{question_title} was updated
+          default:
+            email_intro: The answer to the question "%{resource_title}" has been updated and is awaiting validation
+            email_outro: Sincerely,
+            email_subject: A response is waiting for validation
+            notification_title: The question <a href="%{resource_path}">%{question_short_ref}</a> has been updated and awaits validation.
+          service:
+            email_intro: The answer to question %{question_short_ref} has been updated
+            email_outro: To change your answer, <a href="%{question_admin_answer_url}">[click here]</a>.
+            email_subject: The answer to question %{question_short_ref} has been updated
+            notification_title: The answer to question <a href="%{resource_path}">%{question_short_ref}</a> has been updated
+        question_answered:
+          admin:
+            email_intro: 'The contracting authority submitted an answer to question %{question_short_ref} :'
+            email_outro: Sincerely,
+            email_subject: "%{participatory_space_slug}] Proposed MO response to question %{question_short_ref}"
+            notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Proposed MO response to question <a href="%{resource_path}>%{question_short_ref}</a>
+          committee:
+            email_intro: 'The contracting authority submitted an answer to question %{question_short_ref} :'
+            email_outro: To validate the answer or request additional information <a href="%{question_admin_privates_notes_url}">[click here]</a>.
+            email_subject: "%{participatory_space_slug}] Proposed MO response to question %{question_short_ref}"
+            notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> Proposed MO response to question <a href="%{resource_path}>%{question_short_ref}</a>
+          default:
+            email_intro: The answer to the question "%{resource_title}" has been sent and is awaiting validation
+            email_outro: Sincerely,
+            email_subject: A response is waiting for validation
+            notification_title: The question <a href="%{resource_path}">%{question_short_ref}</a> has been sent and is awaiting validation.
+          service:
+            email_intro: The answer to question %{question_short_ref} was sent
+            email_outro: To change your answer, <a href="%{question_admin_answer_url}">[click here]</a>.
+            email_subject: The answer to question %{question_short_ref} was sent
+            notification_title: The answer to question <a href="%{resource_path}">%{question_short_ref}</a> was sent
+        question_answered_committee:
+          admin:
+            email_intro: 'The CPDP submitted a response to question %{question_short_ref} :'
+            email_outro: To validate the answer or request additional information <a href="%{question_admin_privates_notes_url}">[click here]</a>.
+            email_subject: "%{participatory_space_slug}] Proposed CPDP response to question %{question_short_ref}"
+            notification_title: <a href="%{participatory_space_path}">[%{participatory_space_slug}]</a> CPDP's proposed response to question <a href="%{resource_path}">%{question_short_ref}></a>
+          committee:
+            email_intro: The answer to question %{question_short_ref} was sent
+            email_outro: To change your answer, <a href="%{question_admin_answer_url}">[click here]</a>.
+            email_subject: The answer to question %{question_short_ref} was sent
+            notification_title: The answer to question <a href="%{resource_path}">%{question_short_ref}</a> was sent
+          default:
+            email_intro: The answer to the question "%{resource_title}" has been sent and is awaiting validation
+            email_outro: Sincerely,
+            email_subject: A response is waiting for validation
+            notification_title: The question <a href="%{resource_path}">%{question_short_ref}</a> has been sent and is awaiting validation.
+        question_endorsed:
+          email_intro: '%{endorser_name} %{endorser_nickname}, which you are following, has just supported the question "%{resource_title}" and we think you may be interested. Consult it and contribute:'
+          email_outro: You received this notification because you are following %{endorser_nickname}. You can stop receiving notifications by clicking on this last link.
+          email_subject: "%{endorser_nickname} supported a new question"
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a> was supported by <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.
+        question_evaluating:
+          affected_user:
+            email_intro: 'Your question "%{resource_title}" is being processed. You can search for an answer on this page:'
+            email_outro: You received this notification because you are the author of "%{resource_title}".
+            email_subject: Your question is being processed
+            notification_title: Your question <a href="%{resource_path}">%{resource_title}</a> is being processed.
+          follower:
+            email_intro: 'The question "%{resource_title}" is being processed. You can check this page to see if a response has been made:'
+            email_outro: You have just received this notification because you are following "%{resource_title}". You can stop following it at any time by clicking on this last link.
+            email_subject: A question you are following is being processed
+            notification_title: The question <a href="%{resource_path}">%{resource_title}</a> is being processed.
+        question_mentioned:
+          email_intro: Your question "%{mentioned_question_title}" was mentioned <a href="%{resource_path}"> in the comments for this space</a>.
+          email_outro: You received this notification because you are the author of "%{resource_title}".
+          email_subject: Your question "%{mentioned_question_title}" has been mentioned
+          notification_title: Your question "%{mentioned_question_title}" was mentioned <a href="%{resource_path}">in the comments for this space</a>.
+        question_published:
+          email_intro: '%{author_name} %{author_nickname}, that you are following, has published a new question called "%{resource_title}". Discover it:'
+          email_outro: You received this notification because you are following %{author_nickname}. You can stop receiving notifications by following the previous link.
+          email_subject: New question "%{title_resource}" by %{author_nickname}
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a> was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+        question_published_for_space:
+          email_intro: The question "%{resource_title}" has been published in "%{participatory_space_title}" that you are following.
+          email_outro: You received this notification because you are following "%{participatory_space_title}". You can stop following it by clicking on the previous link.
+          email_subject: New question "%{title_resource}" added to %{participatory_space_title}
+          notification_title: The question <a href="%{resource_path}>%{resource_title}</a> was published in %{participatory_space_title}
+        question_rejected:
+          affected_user:
+            email_intro: 'Your question "%{resource_title}" was considered inadmissible. You can see the reason for this on this page:'
+            email_outro: Sincerely,
+            email_subject: We did not publish your message on the debate site "%{participatory_space_title}"
+            notification_title: Rejection of your question <a href="%{resource_path}">%{resource_title}</a> on the debate site <a href="%{participatory_space_path}">"%{participatory_space_title}"</a>.
+          follower:
+            email_intro: 'The question "%{resource_title}" was not retained. You can read the comment here:'
+            email_outro: You have just received this notification because you are following "%{resource_title}". You can stop following it at any time by clicking on this last link.
+            email_subject: A question you are following has not been retained
+            notification_title: The question <a href="%{resource_path}">%{resource_title}</a> was not retained.
+        question_update_category:
+          email_intro: 'An administrator has updated the category of your question "%{resource_title}". You can access it here:'
+          email_outro: You received this notification because you are the author of the question.
+          email_subject: The question category %{resource_title} has been updated
+          notification_title: The question category <a href="%{resource_path}">%{resource_title}</a> has been updated by an administrator.
+        validate_question:
+          email_intro: The answer to the question "%{resource_title}" has been sent and is waiting for your validation
+          email_outro: You received this notification because a resource is waiting for your validation
+          email_subject: An answer is waiting for your validation
+          notification_title: The question <a href="%{resource_path}">%{resource_title}</a> has been sent and is waiting for your validation.
+        voting_enabled:
+          email_intro: 'You can support the questions of %{participatory_space_title} ! Participate here:'
+          email_outro: You received this notification because you are following %{participatory_space_title}. You can stop receiving notifications by following the previous link.
+          email_subject: You can now vote for questions in %{participatory_space_title}
+          notification_title: You can now start <a href="%{resource_path}">to vote for questions</a> from <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+    gamification:
+      badges:
+        accepted_questions:
+          conditions:
+            - Choose the participation space that interests you with question submission enabled
+            - Try to ask questions that can be asked. This way, they are more likely to be retained and answered.
+          description: This badge is issued when you ask questions and they are retained.
+          description_another: "%{score} questions from this user were retained."
+          description_own: "%{score} of your questions have been retained."
+          name: Questions selected
+          next_level_in: You will reach the next level when %{score} additional questions are selected!
+          unearned_another: No questions from this author have yet been retained.
+          unearned_own: None of your questions have been retained yet.
+        question_votes:
+          conditions:
+            - Navigate and spend time reading other people's questions
+            - Support the questions you like or find interesting
+          description: This badge is issued when you support other people's questions.
+          description_another: This user supported %{score} questions.
+          description_own: You supported %{score} questions.
+          name: Question Supports
+          next_level_in: Support %{score} additional questions to reach the next level!
+          unearned_another: This user has not supported any questions at this time.
+          unearned_own: You have not supported any issues at this time.
+        questions:
+          conditions:
+            - Choose the participation space you are interested in where you can ask questions
+            - Ask a new question
+          description: This badge is issued when you actively participate in new questions.
+          description_another: This user asked %{score} questions.
+          description_own: You asked %{score} questions.
+          name: Questions
+          next_level_in: Ask %{score} additional questions to reach the next level!
+          unearned_another: This user has not yet asked any questions.
+          unearned_own: You haven't asked any questions yet.
+    metrics:
+      accepted_questions:
+        description: Number of questions retained by users
+        object: the questions
+        title: Deducted Questions
+      endorsements:
+        description: Number of supports generated by the questions asked
+        object: backups
+        title: Supporters
+      questions:
+        description: Number of questions asked
+        object: the questions
+        title: The questions
+      votes:
+        description: Number of votes submitted by users for questions
+        object: votes
+        title: Votes
     participatory_processes:
       participatory_process_groups:
         highlighted_questions:
@@ -194,6 +513,7 @@ fr:
             merge_button: Fusionner
             move: Déplacer Question
             move_button: Déplacer
+            select_component: Select a feature
             selected: choisi
             split: Questions fractionnées
             split_button: Fractionner
@@ -232,24 +552,38 @@ fr:
             success: Fraction des questions réussie.
         shared:
           info_question:
-            created_at: Créée le
+            created_at: Creation date
+            first_interacted_at: First interacted at
             info_question_bottom:
               created_at: Créé à
+              first_interacted_at: First interacted at
               published_at: Publiée à
               question_votes_count: Décompte des votes pour la question
             info_question_bottom_full:
               created_at: Créé à
+              first_interacted_at: First interacted at
               published_at: Publiée à
               question_votes_count: Décompte des votes pour la question
             info_question_top:
               new_question: Nouvelle question
               questions: Les questions
-            published_at: Publiée à
+            published_at: Publication date
+            question_votes_count: Number of votes
+            questions: Questions
+      admin_log:
+        question:
+          answer: "%{user_name} answered the %{resource_name} question on the %{space_name} space"
+          create: "%{user_name} created the %{resource_name} question on the %{space_name} space as an official question"
+          update: "%{user_name} updated the %{resource_name} official question on the %{space_name} space"
+        question_note:
+          create:
       answers:
         accepted: accepté
-        evaluating: en cours d'évaluation
-        not_answered: A traiter
+        evaluating: not answered
+        not_answered: to be treated
+        pending: pending validation
         rejected: refusée
+        withdrawn: withdrawn
       application_helper:
         filter_origin_values:
           all: Toutes
@@ -262,6 +596,7 @@ fr:
           all: Toutes
           evaluating: En attente de réponse
           except_rejected: Toutes sauf les questions non recevables
+          pending: Pending validation
           rejected: Non recevable
         filter_type_values:
           all: Toutes
@@ -381,6 +716,13 @@ fr:
       destroy_draft:
         error: Des erreurs sont survenues lors de la suppression du brouillon de la question.
         success: Le brouillon de la question a bien été supprimé.
+      events:
+        admin:
+          workflow_event:
+            email_greeting: Hello %{user_name},
+            email_intro: '"%{title_resource}" has been updated. You can access it here:'
+            email_outro: You receive this notification because you are following "%{resource_title}". You can unsubscribe on this <a href="%{resource_url}">page</a>.
+            email_subject: Update of %{title_resource} in %{participatory_space_slug}
       last_activity:
         new_question_at_html: "<span>Nouvelle question à %{link}</span>"
       models:
@@ -395,8 +737,13 @@ fr:
             comments: Commentaires
             created_at: Créé le
             endorsements: Soutiens
+            first_interacted_at: First interacted at
+            id: ID
+            notes: Notes
             official_question: Question officielle
+            private_discussions: Private discussions
             published_at: Publiée
+            reference: Reference
             scope: Secteur
             short_ref: N°
             state: État
