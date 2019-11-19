@@ -9,7 +9,7 @@ module Decidim
       include Rails.application.routes.mounted_helpers
       include ActionView::Helpers::UrlHelper
       include Decidim::TranslationsHelper
-      
+
       def author
         @author ||= if official?
                       Decidim::Questions::OfficialAuthorPresenter.new

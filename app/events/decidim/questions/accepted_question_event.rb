@@ -2,11 +2,9 @@
 
 module Decidim
   module Questions
-    class AcceptedQuestionEvent < Decidim::Events::SimpleEvent
-      include Decidim::Events::AuthorEvent
-
+    class AcceptedQuestionEvent < Decidim::Questions::Admin::QuestionEvent
       def resource_text
-        translated_attribute(resource.answer)
+        question_answer
       end
 
       def event_has_roles?

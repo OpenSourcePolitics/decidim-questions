@@ -2,7 +2,7 @@
 
 module Decidim
   module Questions
-    class EvaluatingQuestionEvent < Decidim::Events::SimpleEvent
+    class EvaluatingQuestionEvent < Decidim::Questions::Admin::QuestionEvent
       def event_has_roles?
         true
       end

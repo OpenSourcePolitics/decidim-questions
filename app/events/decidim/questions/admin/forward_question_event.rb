@@ -3,21 +3,14 @@
 module Decidim
   module Questions
     module Admin
-      class ForwardQuestionEvent < Decidim::Events::SimpleEvent
-        include Decidim::Events::AuthorEvent
-
-        def email_outro
-          nil
-        end
-
-        def resource_text
-          resource.body
+      class ForwardQuestionEvent < Decidim::Questions::Admin::QuestionEvent
+        def event_has_roles?
+          false
         end
 
         def resource_url
-          EngineRouter.admin_proxy(component).edit_question_question_answer_url(question_id: resource.id, id: resource.id)
+          question_admin_answer_url
         end
-
       end
     end
   end

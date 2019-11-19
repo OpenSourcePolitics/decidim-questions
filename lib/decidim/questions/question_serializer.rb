@@ -17,33 +17,35 @@ module Decidim
       # Public: Exports a hash with the serialized data for this question.
       def serialize
         {
-          id: question.id,
-          category: {
-            id: question.category.try(:id),
-            name: question.category.try(:name) || empty_translatable
-          },
-          scope: {
-            id: question.scope.try(:id),
-            name: question.scope.try(:name) || empty_translatable
-          },
-          participatory_space: {
-            id: question.participatory_space.id,
-            url: Decidim::ResourceLocatorPresenter.new(question.participatory_space).url
-          },
-          component: { id: component.id },
-          title: present(question).title,
-          body: present(question).body,
-          state: question.state.to_s,
-          reference: question.reference,
-          supports: question.question_votes_count,
-          endorsements: question.endorsements.count,
-          comments: question.comments.count,
-          attachments: question.attachments.count,
-          followers: question.followers.count,
-          published_at: question.published_at,
-          url: url,
-          meeting_urls: meetings,
-          related_questions: related_questions
+            id: question.id,
+            category: {
+                id: question.category.try(:id),
+                name: question.category.try(:name) || empty_translatable
+            },
+            scope: {
+                id: question.scope.try(:id),
+                name: question.scope.try(:name) || empty_translatable
+            },
+            participatory_space: {
+                id: question.participatory_space.id,
+                url: Decidim::ResourceLocatorPresenter.new(question.participatory_space).url
+            },
+            nickname: question_nickname,
+            name: question_name,
+            component: { id: component.id },
+            title: present(question).title,
+            body: present(question).body,
+            state: question.state.to_s,
+            reference: question.reference,
+            supports: question.question_votes_count,
+            endorsements: question.endorsements.count,
+            comments: question.comments.count,
+            attachments: question.attachments.count,
+            followers: question.followers.count,
+            published_at: question.published_at,
+            url: url,
+            meeting_urls: meetings,
+            related_questions: related_questions
         }
       end
 
@@ -69,6 +71,23 @@ module Decidim
 
       def url
         Decidim::ResourceLocatorPresenter.new(question).url
+      end
+
+      def question_nickname
+        authors = question.authors
+        authors.map do |author|
+          return author.nickname if author.respond_to? :nickname
+          return author.name if author.respond_to? :name
+
+          nil
+        end
+      end
+
+      def question_name
+        authors = question.authors
+        authors.map do |author|
+          author.name
+        end
       end
     end
   end

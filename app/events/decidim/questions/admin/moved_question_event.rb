@@ -13,7 +13,7 @@ module Decidim
         end
 
         def component_url
-          @component_url  ||= main_component_url(component)
+          @component_url ||= main_component_url(component)
         end
 
         def component_name
@@ -21,10 +21,10 @@ module Decidim
         end
 
         def default_i18n_options
-          super.merge({
+          super.merge(
             component_title: component_name,
             component_url: component_url
-          })
+          )
         end
       end
     end

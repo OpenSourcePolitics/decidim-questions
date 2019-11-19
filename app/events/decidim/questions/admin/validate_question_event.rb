@@ -3,13 +3,7 @@
 module Decidim
   module Questions
     module Admin
-      class ValidateQuestionEvent < Decidim::Events::SimpleEvent
-        include Decidim::Events::AuthorEvent
-
-        def email_outro
-          nil
-        end
-
+      class ValidateQuestionEvent < Decidim::Questions::Events::WorkflowEvent
         def resource_text
           resource.body
         end

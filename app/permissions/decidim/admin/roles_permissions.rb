@@ -27,7 +27,6 @@ module Decidim
         return unless can_manage_process?(role: :moderator)
 
         allow! if permission_action.subject == :moderation
-        questions_action?
       end
 
       def collaborator_action?
@@ -49,7 +48,6 @@ module Decidim
       def committee_action?
         return unless can_manage_process?(role: :committee)
 
-        allow! if permission_action.subject == :moderation
         questions_action?
       end
 
@@ -64,20 +62,11 @@ module Decidim
       # TODO: REVIEW PERMISSIONS
       def questions_action?
         return if permission_action.subject == :process &&
-            [:create, :update].include?(permission_action.action)
+                  [:create, :update].include?(permission_action.action)
 
-        is_allowed = [
-            :participatory_space,
-            :component,
-            :component_data,
-            :questions,
-            :question,
-            :participatory_space,
-            :process
-        ].include?(permission_action.subject)
+        is_allowed = [:participatory_space, :component, :component_data, :questions, :question, :participatory_space, :process].include?(permission_action.subject)
         allow! if is_allowed
       end
-
     end
   end
 end

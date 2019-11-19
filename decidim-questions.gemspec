@@ -8,8 +8,8 @@ require "decidim/questions/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.version = Decidim::Questions.version
-  s.authors = ["moustachu","mako"]
-  s.email = ["git@moustachu.net","mako@osp.cat"]
+  s.authors = %w(moustachu mako)
+  s.email = ["git@moustachu.net", "mako@osp.cat"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/OpenSourcePolitics/decidim-questions"
   s.required_ruby_version = ">= 2.3"

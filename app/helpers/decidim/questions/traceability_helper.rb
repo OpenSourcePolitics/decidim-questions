@@ -10,7 +10,6 @@ module Decidim
       def diff_renderer
         @diff_renderer = Decidim::Questions::DiffRenderer.new(current_version)
       end
-
     end
   end
 end

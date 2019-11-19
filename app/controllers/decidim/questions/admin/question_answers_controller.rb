@@ -8,12 +8,12 @@ module Decidim
         helper_method :question
 
         def edit
-          enforce_permission_to :create, :question_answer
+          enforce_permission_to :create, :question_answer, question: question
           @form = form(Admin::QuestionAnswerForm).from_model(question)
         end
 
         def update
-          enforce_permission_to :create, :question_answer
+          enforce_permission_to :create, :question_answer, question: question
           @form = form(Admin::QuestionAnswerForm).from_params(params)
 
           Admin::AnswerQuestion.call(@form, question) do

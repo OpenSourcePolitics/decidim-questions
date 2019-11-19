@@ -16,7 +16,7 @@
   margin: .5em 0 1em;
   padding-left: .25em;
 
-  .icon:first-child{
+  .icon:first-child {
     float: left;
     position: relative;
     margin: 0 .25em 0 2px;
@@ -40,9 +40,36 @@
     display: block;
     padding: 2px 8px;
   }
+
   .callout-content.inline {
     input[type="radio"] {
       margin-bottom: .5rem
+    }
+  }
+}
+
+.question-title{
+  @include smallcaps;
+
+  button:not(.clear){
+    @include smallcaps;
+  }
+
+  // clearfix if there is no flex--* class in the same element
+  &:not([class*="flex--"]){
+    @include clearfix;
+  }
+
+  font-size: 1rem;
+  width: auto;
+  margin-bottom: 0;
+
+  &--nocaps{
+    text-transform: lowercase;
+    letter-spacing: 0;
+
+    &::first-letter{
+      text-transform: uppercase;
     }
   }
 }
