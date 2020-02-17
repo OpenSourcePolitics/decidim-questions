@@ -23,7 +23,7 @@
   <div class="row column">
     <strong><%= t ".created_at" %>: </strong> <%= l question.created_at, format: :decidim_short %>
   </div>
-  <% if %w(accepted).include?(question.state) %>
+  <% if %w(accepted).include?(question.state) && question.first_interacted_at.present? %>
     <div class="row column">
       <strong><%= t ".first_interacted_at" %>: </strong> <%= l question.first_interacted_at, format: :decidim_short %>
     </div>

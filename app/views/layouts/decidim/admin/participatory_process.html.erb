@@ -20,16 +20,14 @@
           <ul>
             <% current_participatory_space.components.each do |component| %>
               <% if component.manifest.admin_engine %>
-                <% if allowed_to? :read, component.manifest.name %>
-                  <li <% if is_active_link?(manage_component_path(component)) || is_active_link?(decidim_admin_participatory_processes.edit_component_path(current_participatory_space, component)) || is_active_link?(decidim_admin_participatory_processes.edit_component_permissions_path(current_participatory_space, component)) %> class="is-active" <% end %>>
-                    <%= link_to manage_component_path(component) do %>
-                      <%= translated_attribute component.name %>
-                      <% if component.primary_stat.present? %>
-                        <span class="component-counter <%= "component-counter--off" if component.primary_stat.zero? %>"><%= component.primary_stat %></span>
-                      <% end %>
+                <li <% if is_active_link?(manage_component_path(component)) || is_active_link?(decidim_admin_participatory_processes.edit_component_path(current_participatory_space, component)) || is_active_link?(decidim_admin_participatory_processes.edit_component_permissions_path(current_participatory_space, component)) %> class="is-active" <% end %>>
+                  <%= link_to manage_component_path(component) do %>
+                    <%= translated_attribute component.name %>
+                    <% if component.primary_stat.present? %>
+                      <span class="component-counter <%= "component-counter--off" if component.primary_stat.zero? %>"><%= component.primary_stat %></span>
                     <% end %>
-                  </li>
-                <% end %>
+                  <% end %>
+                </li>
               <% end %>
             <% end %>
           </ul>
