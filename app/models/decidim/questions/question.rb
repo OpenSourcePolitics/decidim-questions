@@ -74,7 +74,7 @@ module Decidim
                           datetime: :published_at
                         },
                         index_on_create: ->(question) { question.official? },
-                        index_on_update: ->(question) { question.visible? })
+                        index_on_update: ->(question) { question.visible? && !question.upstream_hidden? })
 
       def self.order_randomly(seed)
         transaction do

@@ -101,6 +101,8 @@ Decidim.register_component(:questions) do |component|
     exports.collection do |component_instance|
       Decidim::Questions::Question
         .published
+        .not_hidden
+        .upstream_not_hidden
         .where(component: component_instance)
         .includes(:category, component: { participatory_space: :organization })
     end
