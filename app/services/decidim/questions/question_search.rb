@@ -14,7 +14,7 @@ module Decidim
       end
 
       def base_query
-        super.upstream_not_hidden
+        super
       end
 
       # Handle the search_text filter

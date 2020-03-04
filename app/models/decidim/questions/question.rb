@@ -74,7 +74,7 @@ module Decidim
                           datetime: :published_at
                         },
                         index_on_create: ->(question) { question.official? },
-                        index_on_update: ->(question) { question.visible? && !question.upstream_hidden? })
+                        index_on_update: ->(question) { question.visible? })
 
       def self.order_randomly(seed)
         transaction do
@@ -100,6 +100,14 @@ module Decidim
       def self.upstream_not_hidden_for(user_role)
         upstream_not_hidden unless %w(admin committee).include?(user_role)
         all
+      end
+
+      def resource_visible?
+        if respond_to?(:published?)
+          published? && state.present? && !hidden? && !upstream_hidden?
+        else
+          true
+        end
       end
 
       # Public: Updates the vote count of this question.

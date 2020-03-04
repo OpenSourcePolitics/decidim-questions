@@ -101,6 +101,7 @@ Decidim.register_component(:questions) do |component|
     exports.collection do |component_instance|
       Decidim::Questions::Question
         .published
+        .state_visible
         .not_hidden
         .upstream_not_hidden
         .where(component: component_instance)
