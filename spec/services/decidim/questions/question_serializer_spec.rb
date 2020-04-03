@@ -62,6 +62,10 @@ module Decidim
         end
 
         it "serializes the date of creation" do
+          expect(serialized).to include(created_at: question.created_at)
+        end
+
+        it "serializes the date of publication" do
           expect(serialized).to include(published_at: question.published_at)
         end
 
