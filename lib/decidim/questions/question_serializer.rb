@@ -42,6 +42,7 @@ module Decidim
             comments: question.comments.count,
             attachments: question.attachments.count,
             followers: question.followers.count,
+            created_at: question.created_at,
             published_at: question.published_at,
             url: url,
             meeting_urls: meetings,
