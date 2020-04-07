@@ -44,6 +44,7 @@ module Decidim
             followers: question.followers.count,
             created_at: question.created_at,
             published_at: question.published_at,
+            moderated_at: question.first_interacted_at,
             url: url,
             meeting_urls: meetings,
             related_questions: related_questions

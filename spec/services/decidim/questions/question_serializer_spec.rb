@@ -69,6 +69,10 @@ module Decidim
           expect(serialized).to include(published_at: question.published_at)
         end
 
+        it "serializes the first interact date" do
+          expect(serialized).to include(moderated_at: question.first_interacted_at)
+        end
+
         it "serializes the url" do
           expect(serialized[:url]).to include("http", question.id.to_s)
         end
