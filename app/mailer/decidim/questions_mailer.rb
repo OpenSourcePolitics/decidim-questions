@@ -8,6 +8,8 @@ module Decidim
     helper_method :question_note_anchor
 
     def note_created(user, question_note, participatory_space)
+      return if user.email.blank?
+
       with_user(user) do
         @organization = user.organization
         @question_note = question_note
