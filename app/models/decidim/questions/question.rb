@@ -61,7 +61,7 @@ module Decidim
       scope :except_rejected, -> { where.not(state: "rejected").or(where(state: nil)) }
       scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
       scope :drafts, -> { where(published_at: nil) }
-      scope :published, -> { where.not(published_at: nil) }
+      scope :published, -> { where.not(published_at: nil).except_rejected.except_withdrawn }
       scope :state_visible, -> { where.not(state: nil) }
 
       acts_as_list scope: :decidim_component_id
