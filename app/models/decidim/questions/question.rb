@@ -287,11 +287,14 @@ module Decidim
       end
 
       def short_ref
-        @prefix ||= component.name[Decidim.config.default_locale.to_s].capitalize[0]
-        reference.match?(/#{@prefix}\d+$/) ? reference.split("-").last : ""
+        reference.match?(/#{prefix}\d+$/) ? reference.split("-").last : ""
       end
 
       private
+
+      def prefix
+        @prefix ||= component.name[Decidim.config.default_locale.to_s].capitalize[0]
+      end
 
       def copied_from_other_component?
         linked_resources(:questions, "copied_from_component").any?
