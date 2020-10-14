@@ -6,7 +6,7 @@ module Decidim
       private
 
       def reference_needs_update?
-        !question.emendation? && !question.short_ref.match?(/\A\D\d+\Z/) && updatable_state?
+        !question.emendation? && !question.short_ref.match?(/\A\D\d+\Z/) && state_needs_reference?
       end
 
       def manage_custom_reference
@@ -38,7 +38,7 @@ module Decidim
         default_ref + "-" + prefix + current_index.to_s
       end
 
-      def updatable_state?
+      def state_needs_reference?
         state_changed_to_evaluating_or_accepted? || existing_state_changed_to_accepted?
       end
 
