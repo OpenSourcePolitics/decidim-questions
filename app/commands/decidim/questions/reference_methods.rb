@@ -5,7 +5,7 @@ module Decidim
     module ReferenceMethods
       private
 
-      def reference_need_update?
+      def reference_needs_update?
         !question.emendation? &&
           !question.short_ref.match?(/\A\D\d+\Z/) &&
           (
@@ -15,7 +15,7 @@ module Decidim
       end
 
       def manage_custom_reference
-        return unless reference_need_update?
+        return unless reference_needs_update?
 
         question.update_column(:reference, custom_reference(question))
       end
