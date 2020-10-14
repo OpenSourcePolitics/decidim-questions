@@ -16,10 +16,10 @@ module Decidim
 
       def manage_custom_reference
         return unless reference_need_update?
-        question.update_column(:reference, get_custom_reference(question))
+        question.update_column(:reference, custom_reference(question))
       end
 
-      def get_custom_reference(resource)
+      def custom_reference(resource)
         return unless resource.class.to_s == "Decidim::Questions::Question"
 
         prefix = resource.component.name[Decidim.config.default_locale.to_s].capitalize[0]
