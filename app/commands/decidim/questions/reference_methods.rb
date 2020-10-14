@@ -29,7 +29,7 @@ module Decidim
                                                  .pluck(:reference)
         references = references.to_a.map do |reference|
           ref = reference.split(prefix).last
-          reference = /\A\d+\Z/.match?(ref) ? ref.to_i : 0
+          /\A\d+\Z/.match?(ref) ? ref.to_i : 0
         end
         references.sort!
 
