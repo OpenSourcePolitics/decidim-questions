@@ -16,6 +16,7 @@ module Decidim
 
       def manage_custom_reference
         return unless reference_need_update?
+
         question.update_column(:reference, custom_reference(question))
       end
 
