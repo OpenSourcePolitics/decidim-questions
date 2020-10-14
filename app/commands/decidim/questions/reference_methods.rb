@@ -27,10 +27,12 @@ module Decidim
         references = Decidim::Questions::Question.where("reference ~* ?", prefix + '\d+$')
                                                  .where(component: resource.component, state: %w(evaluating pending accepted))
                                                  .pluck(:reference)
-        references = references.to_a.map do |reference|
+
+        references.map! do |reference|
           ref = reference.split(prefix).last
           /\A\d+\Z/.match?(ref) ? ref.to_i : 0
         end
+
         references.sort!
 
         current_index = references.empty? ? 0 : references.last
