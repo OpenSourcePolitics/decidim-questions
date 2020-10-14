@@ -24,7 +24,8 @@
     </td>
   <% end %>
   <td>
-    <%= question.short_ref if %w(evaluating pending accepted).include?(question.state) && !question.emendation? %><br/>
+    <%= question_short_ref(question) %>
+    <br/>
   </td>
   <td>
     <%= present(question).title %><br/>

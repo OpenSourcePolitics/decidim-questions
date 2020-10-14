@@ -28,6 +28,12 @@ module Decidim
             )
           end
         end
+
+        def question_short_ref(question)
+          return unless %w(evaluating pending accepted).include?(question.state) && !question.emendation?
+
+          question.short_ref
+        end
       end
     end
   end
