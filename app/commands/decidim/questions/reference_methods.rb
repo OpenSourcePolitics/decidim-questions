@@ -6,12 +6,7 @@ module Decidim
       private
 
       def reference_needs_update?
-        !question.emendation? &&
-          !question.short_ref.match?(/\A\D\d+\Z/) &&
-          (
-            question.state.nil? && %w(evaluating accepted).include?(form.state) ||
-            question.state != form.state && %w(accepted).include?(form.state)
-          )
+        !question.emendation? && !question.short_ref.match?(/\A\D\d+\Z/) && updatable_state?
       end
 
       def manage_custom_reference
@@ -41,6 +36,26 @@ module Decidim
         default_ref = Decidim.reference_generator.call(resource, resource.component)
 
         default_ref + "-" + prefix + current_index.to_s
+      end
+
+      def updatable_state?
+        state_changed_to_evaluating_or_accepted? || existing_state_changed_to_accepted?
+      end
+
+      def state_changed_to_evaluating_or_accepted?
+        question.state.nil? && (evaluating_state? || accepted_state?)
+      end
+
+      def existing_state_changed_to_accepted?
+        question.state != form.state && accepted_state?
+      end
+
+      def evaluating_state?
+        %w(evaluating).include?(form.state)
+      end
+
+      def accepted_state?
+        %w(accepted).include?(form.state)
       end
     end
   end
